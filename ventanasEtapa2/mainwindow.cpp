@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    loginPage = new login(this);
+    loginPage->show();
+    // this->hide();
 }
 
 MainWindow::~MainWindow()
