@@ -1,0 +1,2 @@
+.pro is like a makefile for the project
+
