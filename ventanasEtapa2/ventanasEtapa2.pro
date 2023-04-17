@@ -9,26 +9,68 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    change_password.cpp \
+    consult_record.cpp \
+    consult_requests.cpp \
+    consult_salary.cpp \
+    handle_requests.cpp \
+    human_resources.cpp \
     initial.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
     manage_user.cpp \
-    token.cpp
+    manager.cpp \
+    modify_user.cpp \
+    payment_proof.cpp \
+    request_description.cpp \
+    request_vacations.cpp \
+    salary_proof.cpp \
+    token.cpp \
+    vacation_consult.cpp \
+    work_proof.cpp
 
 HEADERS += \
+    change_password.h \
+    consult_record.h \
+    consult_requests.h \
+    consult_salary.h \
+    handle_requests.h \
+    human_resources.h \
     initial.h \
     login.h \
     mainwindow.h \
     manage_user.h \
-    token.h
+    manager.h \
+    modify_user.h \
+    payment_proof.h \
+    request_description.h \
+    request_vacations.h \
+    salary_proof.h \
+    token.h \
+    vacation_consult.h \
+    work_proof.h
 
 FORMS += \
+    change_password.ui \
+    consult_record.ui \
+    consult_requests.ui \
+    consult_salary.ui \
+    handle_requests.ui \
+    human_resources.ui \
     initial.ui \
     login.ui \
     mainwindow.ui \
     manage_user.ui \
-    token.ui
+    manager.ui \
+    modify_user.ui \
+    payment_proof.ui \
+    request_description.ui \
+    request_vacations.ui \
+    salary_proof.ui \
+    token.ui \
+    vacation_consult.ui \
+    work_proof.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
