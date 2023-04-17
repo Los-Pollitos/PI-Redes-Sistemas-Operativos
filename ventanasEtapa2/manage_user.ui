@@ -1,6 +1,6 @@
 <ui version="4.0">
- <class>crear_borrar</class>
- <widget name="crear_borrar" class="QDialog">
+ <class>manage_user</class>
+ <widget class="QDialog" name="manage_user">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -131,7 +131,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="pushButton_9">
+  <widget class="QPushButton" name="funciones_especiales">
    <property name="geometry">
     <rect>
      <x>110</x>

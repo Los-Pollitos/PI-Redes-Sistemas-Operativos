@@ -25,4 +25,3 @@ void Token::on_validate_label_clicked() {
         QMessageBox::warning(this, "Error", "Token incorrecto");
     }
 }
-

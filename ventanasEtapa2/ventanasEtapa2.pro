@@ -9,25 +9,25 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    crear_borrar.cpp \
     initial.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
+    manage_user.cpp \
     token.cpp
 
 HEADERS += \
-    crear_borrar.h \
     initial.h \
     login.h \
     mainwindow.h \
+    manage_user.h \
     token.h
 
 FORMS += \
-    crear_borrar.ui \
     initial.ui \
     login.ui \
     mainwindow.ui \
+    manage_user.ui \
     token.ui
 
 # Default rules for deployment.
