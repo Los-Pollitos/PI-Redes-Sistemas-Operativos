@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QMessageBox>
 
+#include "initial.h"
+
 namespace Ui {
 class Token;
 }
@@ -20,7 +22,8 @@ private slots:
     void on_validate_label_clicked();
 
 private:
-    Ui::Token *ui;
+    Ui::Token* ui;
+    initial* initial_page;
 };
 
 #endif // TOKEN_H

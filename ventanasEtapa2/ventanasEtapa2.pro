@@ -10,7 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     crear_borrar.cpp \
-    inicial.cpp \
+    initial.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,14 +18,14 @@ SOURCES += \
 
 HEADERS += \
     crear_borrar.h \
-    inicial.h \
+    initial.h \
     login.h \
     mainwindow.h \
     token.h
 
 FORMS += \
     crear_borrar.ui \
-    inicial.ui \
+    initial.ui \
     login.ui \
     mainwindow.ui \
     token.ui
