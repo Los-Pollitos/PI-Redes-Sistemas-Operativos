@@ -18,7 +18,7 @@ public:
     ~human_resources();
 
 private slots:
-    void on_pushButton_3_clicked();
+
 
 private:
     Ui::human_resources *ui;
