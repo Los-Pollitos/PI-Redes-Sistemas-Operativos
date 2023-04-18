@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "manage_user.h"
+#include "handle_requests.h"
 
 namespace Ui {
 class human_resources;
@@ -20,8 +21,11 @@ public:
 private slots:
 
 
+    void on_process_button_clicked();
+
 private:
     Ui::human_resources *ui;
+    handle_requests * request_handler;
 };
 
 #endif // HUMAN_RESOURCES_H
