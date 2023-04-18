@@ -2,6 +2,8 @@
 #define HANDLE_REQUESTS_H
 
 #include <QDialog>
+#include <QPushButton>
+#include <vector>
 
 namespace Ui {
 class handle_requests;
@@ -17,6 +19,8 @@ public:
 
 private:
     Ui::handle_requests *ui;
+    std::vector<QPushButton*> requests_buttons;
+
 };
 
 #endif // HANDLE_REQUESTS_H

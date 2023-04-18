@@ -12,24 +12,24 @@ handle_requests::handle_requests(QWidget *parent) :
     auto * container = new QWidget();
     ui->scrollArea->setWidget( container );
     auto * layout = new QVBoxLayout(container);
-    auto * button1 = new QPushButton( "1", container);
-    auto * button2 = new QPushButton( "2", container);
-    auto * button3 = new QPushButton( "3", container);
-    auto * button4 = new QPushButton( "4", container);
-    auto * button5 = new QPushButton( "5", container);
-    auto * button6 = new QPushButton( "6", container);
-    auto * button7 = new QPushButton( "7", container);
-    auto * button8 = new QPushButton( "8", container);
-    auto * button9 = new QPushButton( "9", container);
-    layout->addWidget( button1 );
-    layout->addWidget( button2 );
-    layout->addWidget( button3 );
-    layout->addWidget( button4 );
-    layout->addWidget( button5 );
-    layout->addWidget( button6 );
-    layout->addWidget( button7 );
-    layout->addWidget( button8 );
-    layout->addWidget( button9 );
+    this->requests_buttons.push_back(new QPushButton( "1", container));
+    this->requests_buttons.push_back(new QPushButton( "2", container));
+    this->requests_buttons.push_back(new QPushButton( "3", container));
+    this->requests_buttons.push_back(new QPushButton( "4", container));
+    this->requests_buttons.push_back(new QPushButton( "5", container));
+    this->requests_buttons.push_back(new QPushButton( "6", container));
+    this->requests_buttons.push_back(new QPushButton( "7", container));
+    this->requests_buttons.push_back(new QPushButton( "8", container));
+    this->requests_buttons.push_back(new QPushButton( "9", container));
+    layout->addWidget(this->requests_buttons[0]);
+    layout->addWidget(this->requests_buttons[1]);
+    layout->addWidget(this->requests_buttons[2]);
+    layout->addWidget(this->requests_buttons[3]);
+    layout->addWidget(this->requests_buttons[4]);
+    layout->addWidget(this->requests_buttons[5]);
+    layout->addWidget(this->requests_buttons[6]);
+    layout->addWidget(this->requests_buttons[7]);
+    layout->addWidget(this->requests_buttons[8]);
 
 
 }

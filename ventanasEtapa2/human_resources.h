@@ -2,7 +2,6 @@
 #define HUMAN_RESOURCES_H
 
 #include <QDialog>
-
 #include "manage_user.h"
 #include "handle_requests.h"
 
