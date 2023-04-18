@@ -13,6 +13,7 @@ SOURCES += \
     consult_record.cpp \
     consult_requests.cpp \
     consult_salary.cpp \
+    description_button.cpp \
     handle_requests.cpp \
     human_resources.cpp \
     initial.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     consult_record.h \
     consult_requests.h \
     consult_salary.h \
+    description_button.h \
     handle_requests.h \
     human_resources.h \
     initial.h \

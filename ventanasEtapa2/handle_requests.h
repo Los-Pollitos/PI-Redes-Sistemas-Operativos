@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <vector>
 
+#include "description_button.h"
+
 namespace Ui {
 class handle_requests;
 }
@@ -19,8 +21,10 @@ public:
 
 private:
     Ui::handle_requests *ui;
-    std::vector<QPushButton*> requests_buttons;
+    std::vector<description_button*> requests_buttons;
 
+protected slots:
+    void show_description(int id, int type);
 };
 
 #endif // HANDLE_REQUESTS_H
