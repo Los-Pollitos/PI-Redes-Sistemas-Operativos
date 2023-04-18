@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <iostream>
 
+
 handle_requests::handle_requests(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::handle_requests) {
@@ -15,14 +16,30 @@ handle_requests::handle_requests(QWidget *parent) :
     this->requests_buttons.push_back(new description_button( "1", container, 1, 2));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
         , &handle_requests::show_description);
-    this->requests_buttons.push_back(new description_button( "2", container, 2, 3));
-    this->requests_buttons.push_back(new description_button( "3", container, 3, 1));
-    this->requests_buttons.push_back(new description_button( "4", container, 4, 1));
-    this->requests_buttons.push_back(new description_button( "5", container, 5, 1));
-    this->requests_buttons.push_back(new description_button( "6", container, 6, 1));
-    this->requests_buttons.push_back(new description_button( "7", container, 7, 1));
-    this->requests_buttons.push_back(new description_button( "8", container, 8, 1));
-    this->requests_buttons.push_back(new description_button( "9", container, 9, 1));
+    this->requests_buttons.push_back(new description_button( "2", container, 2, WORK_PROOF));
+    this->connect(this->requests_buttons[1], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "3", container, 3, REQUEST_VACATIONS));
+    this->connect(this->requests_buttons[2], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "4", container, 4, SALARY_PROOF));
+    this->connect(this->requests_buttons[3], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "5", container, 5, REQUEST_VACATIONS));
+    this->connect(this->requests_buttons[4], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "6", container, 6, PAYMENT_PROOF));
+    this->connect(this->requests_buttons[5], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "7", container, 7, WORK_PROOF));
+    this->connect(this->requests_buttons[6], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "8", container, 8, REQUEST_VACATIONS));
+    this->connect(this->requests_buttons[7], &description_button::pressed, this
+                  , &handle_requests::show_description);
+    this->requests_buttons.push_back(new description_button( "9", container, 9, REQUEST_VACATIONS));
+    this->connect(this->requests_buttons[8], &description_button::pressed, this
+                  , &handle_requests::show_description);
     layout->addWidget(this->requests_buttons[0]);
     layout->addWidget(this->requests_buttons[1]);
     layout->addWidget(this->requests_buttons[2]);
@@ -38,7 +55,13 @@ handle_requests::~handle_requests() {
     delete ui;
 }
 
+
+
 void handle_requests::show_description(int id, int type) {
-    // lo que va a pasar
-    std::cout << "He llegado con " << id << " y " << type << std::endl;
+    // TODO (nosotros): Borrar y cambiar la fecha
+    Q_UNUSED(id)
+    QString descr = "Vacaciones para el dia 8/3/2020";
+    this->description = new request_description(9, 8, 2020, type, descr, nullptr);
+    this->description->setModal(true);
+    this->description->show();
 }
