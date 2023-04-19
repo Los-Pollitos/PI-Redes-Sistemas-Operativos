@@ -29,6 +29,7 @@ public:
 
 private:
     QVBoxLayout * layout;
+    QWidget * container;
     Ui::handle_requests *ui;
     std::vector<description_button*> requests_buttons;
     request_description * description;

@@ -10,8 +10,8 @@ handle_requests::handle_requests(QWidget *parent) :
     ui(new Ui::handle_requests) {
     ui->setupUi(this);
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
-    QWidget * container = new QWidget();
-    ui->scrollArea->setWidget( container );
+    this->container = new QWidget();
+    ui->scrollArea->setWidget(container);
     this->layout = new QVBoxLayout(container);
     this->requests_buttons.push_back(new description_button( "1", container, 0, 2));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
@@ -49,6 +49,7 @@ handle_requests::handle_requests(QWidget *parent) :
     layout->addWidget(this->requests_buttons[6]);
     layout->addWidget(this->requests_buttons[7]);
     layout->addWidget(this->requests_buttons[8]);
+
 }
 
 handle_requests::~handle_requests() {
@@ -66,6 +67,7 @@ void handle_requests::update_scroll() {
             this->layout->addWidget(this->requests_buttons[count]);
         }
     }
+
 }
 
 void handle_requests::show_description(int id, int type) {
