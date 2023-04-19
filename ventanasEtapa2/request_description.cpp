@@ -19,12 +19,16 @@ QString request_type(int type) {
     return string_type;
 }
 
-request_description::request_description(int day, int month, int year, int type, QString user, QString description, QWidget *parent, description_button * parent_button) :
+request_description::request_description(int day, int month, int year,
+        int& type, QString user, QString& description,
+        description_button *& parent_button, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::request_description)
+    ui(new Ui::request_description),
+    parent_button(parent_button),
+    description(description)
 {
     ui->setupUi(this);
-    this->parent_button = parent_button;
+    // this->parent_button = parent_button;
     this->date[0]= day;
     this->date[1] = month;
     this->date[2] = year;
@@ -53,10 +57,12 @@ void request_description::on_buttonBox_accepted() {
     QString password = ui->lineEdit->text();
     if (password == "123") { // TODO(nosotros): password
         QMessageBox::information(this, "Correcto", "Solicitud aceptada");
-        // this->parent_button->setValid(false);
+        std::cout << "Button " << this->parent_button;
+        std::cout << "\n" << this->parent_button->valid << std::endl;
+        this->parent_button->valid = false;
         this->close();
     } else {
-        QMessageBox::warning(this, "Error", "Contraseña incorrecto");
+        QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
 }
 
@@ -66,7 +72,7 @@ void request_description::on_buttonBox_rejected() {
     if (password == "123") { // TODO(nosotros): password
         QMessageBox::information(this, "Correcto", "Solicitud denegada");
         this->close();
-        // this->parent_button->setValid(false);
+        this->parent_button->valid = false;
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecto");
     }

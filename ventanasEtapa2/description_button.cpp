@@ -2,9 +2,9 @@
 
 description_button::description_button(QString name, QWidget * parent, int id, int type):
     QPushButton{name, parent},
+    valid(true),
     identifier(id),
-    type(type),
-    valid(true){
+    type(type) {
 }
 
 void description_button::mousePressEvent(QMouseEvent* e) {
@@ -12,10 +12,3 @@ void description_button::mousePressEvent(QMouseEvent* e) {
     Q_UNUSED(e);
 }
 
-void description_button::setValid(bool valid){
-    this->valid = valid;
-}
-
-bool description_button::getValid() {
-    return this->valid;
-}

@@ -21,7 +21,7 @@ class request_description : public QDialog
 
 public:
     request_description();
-    explicit request_description(int day, int month, int year, int type, QString user, QString description, QWidget *parent = nullptr, description_button * parent_button = nullptr);
+    explicit request_description(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button, QWidget *parent = nullptr);
     ~request_description();
 
 private slots:
