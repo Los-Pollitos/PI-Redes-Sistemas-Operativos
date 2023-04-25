@@ -75,7 +75,8 @@ void handle_requests::show_description(int id, int type) {
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
-    this->description = new request_description(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id],nullptr);
+    this->description = new request_description(nullptr);
+    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id]);
     this->description->setModal(true);
     this->description->show();
     this->update_scroll(); // TODO(nosotros): lograr que sirva

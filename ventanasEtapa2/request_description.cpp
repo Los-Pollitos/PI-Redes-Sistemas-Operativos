@@ -19,16 +19,19 @@ QString request_type(int type) {
     return string_type;
 }
 
-request_description::request_description(int day, int month, int year,
-        int& type, QString user, QString& description,
-        description_button *& parent_button, QWidget *parent) :
+request_description::request_description(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::request_description),
-    parent_button(parent_button),
-    description(description)
-{
+    ui(new Ui::request_description) {
     ui->setupUi(this);
-    // this->parent_button = parent_button;
+}
+
+
+
+void request_description::set_atributes(int day, int month, int year,
+        int& type, QString user, QString& description,
+        description_button *& parent_button) {
+    this->parent_button = parent_button;
+    this->description = description;
     this->date[0]= day;
     this->date[1] = month;
     this->date[2] = year;
@@ -45,7 +48,7 @@ request_description::request_description(int day, int month, int year,
     this->ui->label_fecha->setText(date_string);
     QString type_string = request_type(this->type);
     this->ui->label_tipo->setText(type_string);
-     this->ui->lineEdit->setEchoMode(QLineEdit::Password);
+    this->ui->lineEdit->setEchoMode(QLineEdit::Password);
 }
 
 request_description::~request_description()
