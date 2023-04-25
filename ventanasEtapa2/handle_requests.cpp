@@ -78,11 +78,12 @@ void handle_requests::update_scroll() {
     int length = this->requests_buttons.size();
     for(int count = 0; count < length; ++count) {
         this->layout->removeWidget(this->requests_buttons[count]);
+        this->requests_buttons[count]->hide();
     }
-
     for(int count = 0; count < length; ++count) {
         if (this->requests_buttons[count]->valid) {
             this->layout->addWidget(this->requests_buttons[count]);
+            this->requests_buttons[count]->show();
         }
     }
 
