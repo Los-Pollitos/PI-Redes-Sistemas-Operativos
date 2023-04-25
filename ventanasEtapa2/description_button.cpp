@@ -7,8 +7,14 @@ description_button::description_button(QString name, QWidget * parent, int id, i
     type(type) {
 }
 
+int description_button::getId(){
+    return this->identifier;
+}
+
 void description_button::mousePressEvent(QMouseEvent* e) {
     emit this->pressed(this->identifier, this->type);
     Q_UNUSED(e);
 }
+
+
 

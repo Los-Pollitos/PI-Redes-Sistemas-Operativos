@@ -9,6 +9,7 @@ class description_button : public QPushButton {
 public:
     description_button(QString name, QWidget * parent, int id, int type);
     bool valid;
+    int getId();
 
 protected:
     int identifier;
@@ -17,6 +18,7 @@ protected:
 
 signals:
     void pressed(int id, int type);
+    void disapear(int id);
 
 };
 

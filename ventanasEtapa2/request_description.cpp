@@ -60,10 +60,9 @@ void request_description::on_buttonBox_accepted() {
     QString password = ui->lineEdit->text();
     if (password == "123") { // TODO(nosotros): password
         QMessageBox::information(this, "Correcto", "Solicitud aceptada");
-        std::cout << "Button " << this->parent_button;
-        std::cout << "\n" << this->parent_button->valid << std::endl;
         this->parent_button->valid = false;
         this->close();
+        emit this->parent_button->disapear(this->parent_button->getId());
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
@@ -76,6 +75,7 @@ void request_description::on_buttonBox_rejected() {
         QMessageBox::information(this, "Correcto", "Solicitud denegada");
         this->close();
         this->parent_button->valid = false;
+        emit this->parent_button->disapear(this->parent_button->getId());
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecto");
     }

@@ -30,6 +30,7 @@ private slots:
 
     void on_buttonBox_rejected();
 
+
 private:
     Ui::request_description *ui;
     int date[3];
