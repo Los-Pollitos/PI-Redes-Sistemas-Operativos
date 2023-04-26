@@ -172,22 +172,6 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="employee_id">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>130</y>
-     <width>181</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
@@ -198,7 +182,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="employee_name_2">
+  <widget class="QLineEdit" name="employee_vacations">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -243,7 +227,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="employee_salary_2">
+  <widget class="QLineEdit" name="employee_subordinate">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -253,7 +237,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="employee_name_3">
+  <widget class="QLineEdit" name="password">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -264,6 +248,9 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QLabel" name="label_8">
@@ -282,7 +269,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="return_3">
+  <widget class="QPushButton" name="approve_changes">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -293,6 +280,16 @@
    </property>
    <property name="text">
     <string>Aprobar cambios</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="employee_id">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>130</y>
+     <width>181</width>
+     <height>25</height>
+    </rect>
    </property>
   </widget>
  </widget>
