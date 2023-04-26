@@ -4,6 +4,7 @@
 #include <QMessageBox>
 
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
+    modified_index = 0;
     ui->setupUi(this);
     this->add_data();
 }
@@ -13,6 +14,7 @@ modify_user::~modify_user() {
 }
 
 void modify_user::on_comboBox_activated(int index) {
+    modified_index = index;
     // TODO(nosotros): rellenar info de usuarios con cantidad de usuarios real
     ui->employee_name->setText(this->names[index]);
     ui->employee_id->setReadOnly(true);
@@ -51,9 +53,16 @@ void modify_user::on_approve_changes_clicked() {
     QString password = ui->password->text();
     if (password == "123") { // TODO(nosotros): password
         QMessageBox::information(this, "Correcto", "Cambios aplicados");
-        this->close();
+        this->update_data();
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
 }
 
+void modify_user::update_data() {
+    this->names[modified_index] = ui->employee_name->text();
+    this->job[modified_index] = ui->employee_job->text();
+    this->subordinate[modified_index] = ui->employee_subordinate->text();
+    this->salary[modified_index] = ui->employee_salary->text().toInt();
+    this->vacations[modified_index] = ui->employee_vacations->text().toInt();
+}

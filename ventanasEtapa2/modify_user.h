@@ -7,8 +7,7 @@ namespace Ui {
 class modify_user;
 }
 
-class modify_user : public QDialog
-{
+class modify_user : public QDialog {
     Q_OBJECT
 
 public:
@@ -16,12 +15,13 @@ public:
     ~modify_user();
 
 private slots:
-    void on_comboBox_activated(int index);
     void add_data();
-
+    void update_data();
+    void on_comboBox_activated(int index);
     void on_approve_changes_clicked();
 
 private:
+    int modified_index;
     Ui::modify_user *ui;
     QList<QString> names;
     QList<int> ids;
