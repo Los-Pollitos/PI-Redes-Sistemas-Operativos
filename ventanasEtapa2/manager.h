@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "handle_requests.h"
+
 namespace Ui {
 class manager;
 }
@@ -15,8 +17,12 @@ public:
     explicit manager(QWidget *parent = nullptr);
     ~manager();
 
+private slots:
+    void on_employee_information_2_clicked();
+
 private:
     Ui::manager *ui;
+    handle_requests * request_handler;
 };
 
 #endif // MANAGER_H
