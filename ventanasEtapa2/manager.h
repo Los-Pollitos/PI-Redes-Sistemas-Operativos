@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "handle_requests.h"
+#include "modify_user.h"
 
 namespace Ui {
 class manager;
@@ -20,9 +21,12 @@ public:
 private slots:
     void on_employee_information_2_clicked();
 
+    void on_employee_information_clicked();
+
 private:
-    Ui::manager *ui;
-    handle_requests * request_handler;
+    Ui::manager* ui;
+    handle_requests* request_handler;
+    modify_user* modify_info;
 };
 
 #endif // MANAGER_H
