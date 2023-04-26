@@ -15,6 +15,9 @@ public:
     explicit modify_user(QWidget *parent = nullptr);
     ~modify_user();
 
+private slots:
+    void on_comboBox_activated(int index);
+
 private:
     Ui::modify_user *ui;
 };

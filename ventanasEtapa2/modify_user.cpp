@@ -14,15 +14,17 @@ modify_user::~modify_user() {
 
 void modify_user::on_comboBox_activated(int index) {
     // TODO(nosotros): rellenar info de usuarios con cantidad de usuarios real
-    if (index == 1) {
+    int total_users = 3;
+    if (index == 0) {
         ui->employee_name->setText("Nombre empleado 1");
     } else {
-        if (index == 2) {
+        if (index == 1) {
             ui->employee_name->setText("Nombre empleado 2");
         }
         else {
-            ui->employee_name->setText("Nombre empleado 3");
+            if (index == 2) {
+                ui->employee_name->setText("Nombre empleado 3");
+            }
         }
     }
-
 }
