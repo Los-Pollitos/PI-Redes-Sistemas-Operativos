@@ -41,6 +41,7 @@ HEADERS += \
     human_resources.h \
     initial.h \
     login.h \
+    login_info.h \
     mainwindow.h \
     manage_user.h \
     manager.h \

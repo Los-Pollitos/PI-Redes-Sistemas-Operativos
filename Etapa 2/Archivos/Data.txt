@@ -1,13 +1,13 @@
-rh_carlos.jimenez	(e!zR$Y6/8TSgRs$	1,8,5,19,4,0
-rh_carlos.jimenezramirez	soyCarlos!123	1,4,36,7,82,9
-g_carlos.jimenez	xfrWr^>[99	15,3,42,5,6,7
-g_gerardo.mora	d{QbnP8(}kp	3,24,2,18,12,9
-e_julia.nuñez	Ly=)Z6P4eUE	4,3,22,7,6,5
-e_emma.guzman	3526283_eg@1998	8,6,32,5,2,41
-e_alexa.lopez	&trabajoFeliz34!	10,5,43,6,7,8
-rh_roberto.espinoza	bRc=Q+->6$	76,23,61,5,2,9
-rh_genesis.herrera	contraseña?DeAs1stenteMuySegura	45,0,11,8,5,77
-g_ricardo.gang	r1cardo@gAng_?}	99,1,40,5,0,84
-g_daniel.cabezas	kfc&pollo_las_24horas!	15,25,4,8,10,8
-e_daniela.gomez	123987456@D	8,7,4,35,2,92
-e_fernanda.ferrer	ebdkn3]LD6/LN	7,9,10,2,5,6
+rh_carlos.jimenez	Carlos Jiménez Nuñez	118590672	₡950.900	RRHH	g_gerardo.mora	15	10
+rh_carlos.jimenezramirez	Carlos Jiménez Ramírez	800710541	₡900.128	RRHH	g_carlos.jimenez	15	9
+g_carlos.jimenez	Carlos Jiménez Núñez	117580927	₡1.040.234	Gerente	g_gerardo.mora, g_ricardo.gang	16	0
+g_gerardo.mora	Gerardo Mora Ortiz	223459809	₡1.000.000	Gerente	g_carlos.jimenez	18	5
+e_julia.nuñez	Julia Núñez Solís	509876349	₡325.500	Empleado Regular	g_daniel.cabezas	0	0
+e_emma.guzman	Emma Guzmán Santamaría	345678901	₡300.000	Empleado Regular	g_gerardo.mora, g_daniel.cabezas	13	15
+e_alexa.lopez	Alexandra López Hernández	105503987	₡600.230	Empleado Regular	g_daniel.cabezas	15	15
+rh_roberto.espinoza	Roberto Espinoza Víquez	612589087	₡950.129	RRHH	g_ricardo.gang, g_carlos.jimenez	15	14
+rh_genesis.herrera	Génesis Monserrath Herrera Knyght	512348739	₡1.950.750	RRHH	g_daniel.cabezas, g_ricardo.gang	25	20
+g_ricardo.gang	Ricardo De Jesus Gang Vincenzi	900960738	₡1.540.560	Gerente	g_daniel.cabezas	25	14
+g_daniel.cabezas	Daniel Armando Cabezas Vindas	110810568	₡1.540.560	Gerente	g_ricargo.gang	25	15
+e_daniela.gomez	Daniela Gómez Montealegre	118650508	₡698.000	Empleado Regular	g_ricardo.gang	15	6
+e_fernanda.ferrer	Fernanda Ferrer Figueres	118860202	₡300.000	Empleado Regular	g_gerardo.mora	0	0

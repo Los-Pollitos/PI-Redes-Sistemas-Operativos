@@ -15,7 +15,6 @@ login::login(QWidget *parent) :
     this-> label->hide();  // inicia escondido
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
     this->tokenPage = new Token(this);
-
 }
 
 login::~login()
