@@ -14,6 +14,10 @@ class work_proof : public QDialog
 public:
     explicit work_proof(QWidget *parent = nullptr);
     ~work_proof();
+    int tipo;
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::work_proof *ui;

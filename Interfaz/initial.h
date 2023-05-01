@@ -4,6 +4,9 @@
 #include <QDialog>
 #include "human_resources.h"
 #include "manager.h"
+#include "payment_proof.h"
+#include "salary_proof.h"
+#include "work_proof.h"
 
 namespace Ui {
 class initial;
@@ -20,10 +23,19 @@ public:
 private slots:
     void on_funciones_especiales_clicked();
 
+    void on_pushButton_8_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_4_clicked();
+
 private:
     Ui::initial *ui;
     human_resources * hhrr;
     manager * office_manager;
+    work_proof *workP;
+    payment_proof *paymentP;
+    salary_proof *salaryP;
 };
 
 #endif // INITIAL_H

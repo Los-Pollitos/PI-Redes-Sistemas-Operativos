@@ -15,6 +15,9 @@ public:
     explicit salary_proof(QWidget *parent = nullptr);
     ~salary_proof();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::salary_proof *ui;
 };

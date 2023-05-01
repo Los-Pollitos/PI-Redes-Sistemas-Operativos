@@ -12,3 +12,8 @@ payment_proof::~payment_proof()
 {
     delete ui;
 }
+
+void payment_proof::on_pushButton_clicked()
+{
+    this->close();
+}

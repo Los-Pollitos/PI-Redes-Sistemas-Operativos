@@ -12,3 +12,8 @@ work_proof::~work_proof()
 {
     delete ui;
 }
+
+void work_proof::on_pushButton_clicked()
+{
+    this->close();
+}

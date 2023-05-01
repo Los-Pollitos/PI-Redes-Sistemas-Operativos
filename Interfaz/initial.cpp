@@ -32,3 +32,27 @@ void initial::on_funciones_especiales_clicked() {
     }
 }
 
+
+void initial::on_pushButton_8_clicked()
+{
+    this->workP = new work_proof();
+    this->workP->setModal(true);
+    this->workP->show();
+}
+
+
+void initial::on_pushButton_4_clicked()
+{
+    this->salaryP = new salary_proof();
+    this->salaryP->setModal(true);
+    this->salaryP->show();
+}
+
+
+void initial::on_pushButton_2_clicked()
+{
+    this->paymentP = new payment_proof();
+    this->paymentP->setModal(true);
+    this->paymentP->show();
+}
+

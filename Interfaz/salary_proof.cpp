@@ -12,3 +12,9 @@ salary_proof::~salary_proof()
 {
     delete ui;
 }
+
+void salary_proof::on_pushButton_clicked()
+{
+    this->close();
+}
+

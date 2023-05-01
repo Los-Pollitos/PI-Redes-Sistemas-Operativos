@@ -15,6 +15,9 @@ public:
     explicit payment_proof(QWidget *parent = nullptr);
     ~payment_proof();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::payment_proof *ui;
 };
