@@ -1,3 +1,11 @@
+/*
+Equipo: Los Pollitos
+Cristopher Hernández (C13632)
+Luis Solano (C17634)
+Angie Solís (C17686)
+Emilia Víquez (C18625)
+*/
+
 #include "file_system.h"
 
 FS::FS() {
