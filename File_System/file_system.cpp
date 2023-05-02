@@ -33,6 +33,7 @@ int FS::crear(std::string nombre) {
     this->directorio[posDirectorio].bloque = bloque;
     this->directorio[posDirectorio].nombre = nombre;
     time(&this->directorio[posDirectorio].fecha);
+    this->fat[bloque] = FIN_ARCHIVO;
   }
   return bloque;
 }
@@ -77,7 +78,7 @@ void FS::imprimirUnidad() {
     std::cout << this->fat[i] << " ";
     if ((i+1) % 10 == 0) {
       std::cout << std::endl;
-      for (int j = i-9; j < i; ++j) {
+      for (int j = i-9; j <= i; ++j) {
         std::cout << j << " ";
       }
       std::cout << std::endl;
