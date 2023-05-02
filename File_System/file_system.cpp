@@ -65,5 +65,22 @@ void FS::agregar(std::string nombre, char caracter) {
 }
 
 void FS::imprimirUnidad() {
-
+  std::cout << "Directorio:" << std::endl;
+  for (int i = 0; i < TAMANO_FAT; ++i) {
+    if (this->directorio[i].bloque != VACIO) {
+      std::cout << this->directorio[i].nombre << "  " <<
+        this->directorio[i].bloque << std::endl;
+    }
+  }
+  std::cout << "FAT:" << std::endl;
+  for (int i = 0; i < TAMANO_FAT; ++i) {
+    std::cout << this->fat[i] << " ";
+    if ((i+1) % 10 == 0) {
+      std::cout << std::endl;
+      for (int j = i-9; j < i; ++j) {
+        std::cout << j << " ";
+      }
+      std::cout << std::endl;
+    }
+  }
 }
