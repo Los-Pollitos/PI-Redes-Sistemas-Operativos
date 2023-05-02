@@ -34,7 +34,7 @@ int FS::crear(std::string nombre) {
   if (bloque != -1 && posDirectorio != -1) {
     this->directorio[posDirectorio].bloque = bloque;
     this->directorio[posDirectorio].nombre = nombre;
-    // TODO(nosotros): fecha ?
+    time(this->directorio[posDirectorio].fecha);
   }
   return bloque;
 }
