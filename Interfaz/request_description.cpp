@@ -43,7 +43,6 @@ void request_description::set_atributes(int day, int month, int year,
     date_string += QString::number(month);
     date_string += "/";
     date_string += QString::number(year);
-    std::cout << "descr: " << description.toStdString() << std::endl;  //TODO(us) borrar
     this->ui->label_descripcion->setText(description);
     this->ui->label_fecha->setText(date_string);
     QString type_string = request_type(this->type);
