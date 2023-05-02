@@ -3,17 +3,17 @@
 #include "file_system.h"
 
 int main() {
-  FS *fs = new FS() ;
+  FS *fs = new FS();
 
-  fs->crear("a.dat") ;
-  fs->agregar("a.dat",'a') ;
-  fs->imprimirUnidad() ; //imprime unidad, directorio y tabla fat
+  fs->crear("a.dat");
+  fs->agregar("a.dat",'a');
+  fs->imprimirUnidad(); //imprime unidad, directorio y tabla fat
 
-  fs->crear("b.dat") ;
-  fs->agregar("b.dat", 'b') ;
-  fs->imprimirUnidad() ;
-  fs->agregar("b.dat",'c') ;
-  fs->imprimirUnidad() ;
+  fs->crear("b.dat");
+  fs->agregar("b.dat", 'b');
+  fs->imprimirUnidad();
+  fs->agregar("b.dat",'c');
+  fs->imprimirUnidad();
 }
 
 

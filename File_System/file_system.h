@@ -8,13 +8,12 @@
 
 #include <string>
 
-//RESTRICCIONES
-//1. bloques son de 1 caracter
-//2. Unidad es una matriz de caracteres
-//3. Tamaño máximo 100 caracteres, por el momento
-//4. Usando FAT
-//5. Usando un struct para el directorio (nombre, bloque inicial, fecha, por el momento)
-
+// RESTRICCIONES
+// 1. bloques son de 1 caracter
+// 2. Unidad es una matriz de caracteres
+// 3. Tamaño máximo 100 caracteres, por el momento
+// 4. Usando FAT
+// 5. Usando un struct para el directorio (nombre, bloque inicial, fecha)
 
 struct entradaDirectorio{
   int bloque;
@@ -26,7 +25,7 @@ class FS{
   // variables
   private:
     char** unidad;
-    entradaDirectorio* directorio; // si
+    entradaDirectorio** directorio;
     int* fat;
 
   // métodos
@@ -38,6 +37,7 @@ class FS{
     void imprimirUnidad();
   private:
     int buscarBloque();
+    int buscarDirectorio();
 };
 
 #endif  //FILE_SYSTEM_H
