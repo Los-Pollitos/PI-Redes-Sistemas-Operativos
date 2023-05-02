@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "file_system.h"
 
 int main() {

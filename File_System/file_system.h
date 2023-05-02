@@ -6,6 +6,7 @@
 #define FIN_ARCHIVO -1
 #define VACIO -2
 
+#include <iostream>
 #include <string>
 
 // RESTRICCIONES
@@ -15,17 +16,17 @@
 // 4. Usando FAT
 // 5. Usando un struct para el directorio (nombre, bloque inicial, fecha)
 
-struct entradaDirectorio{
+typedef struct entradaDirectorio{
   int bloque;
   std::string nombre;
   time_t fecha;
-};
+}entradaDirectorio_t;
 
 class FS{
   // variables
   private:
     char** unidad;
-    entradaDirectorio** directorio;
+    entradaDirectorio_t* directorio;
     int* fat;
 
   // métodos

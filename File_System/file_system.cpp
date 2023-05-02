@@ -2,7 +2,7 @@
 
 FS::FS() {
   this->fat = new int [TAMANO_FAT];
-  this->directorio = new entradaDirectorio* [TAMANO_FAT];
+  this->directorio = new entradaDirectorio_t [TAMANO_FAT];
   this->unidad = new char* [TAMANO_MAX];
 
   for(int i = 0; i < TAMANO_FAT; ++i) {
@@ -10,7 +10,6 @@ FS::FS() {
       this->unidad[i] = new char [TAMANO_MAX];
     }
     this->fat[i] = VACIO;
-    this->directorio[i] = new entradaDirectorio;
     this->directorio[i].bloque = VACIO;
   }
 }
@@ -20,7 +19,6 @@ FS::~FS() {
     if (i < TAMANO_MAX) {
       delete this->unidad[i];
     }
-    delete this->directorio[i];
   }
 
   delete [] this->fat;
@@ -34,7 +32,7 @@ int FS::crear(std::string nombre) {
   if (bloque != -1 && posDirectorio != -1) {
     this->directorio[posDirectorio].bloque = bloque;
     this->directorio[posDirectorio].nombre = nombre;
-    time(this->directorio[posDirectorio].fecha);
+    time(&this->directorio[posDirectorio].fecha);
   }
   return bloque;
 }
@@ -51,7 +49,7 @@ int FS::buscarBloque() {
   return bloque;
 }
 
-int buscarDirectorio() {
+int FS::buscarDirectorio() {
   int posDirectorio = -1;
   for (int i = 0; i < TAMANO_FAT; ++i) {
     if (this->directorio[i].bloque == VACIO) {
