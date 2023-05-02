@@ -1,8 +1,12 @@
 #ifndef FILE_SYSTEM_H
 #define FILE_SYSTEM_H
 
-#define MAX_SIZE 10
-#define FAT_SIZE 100
+#define TAMANO_MAX 10
+#define TAMANO_FAT 100
+#define FIN_ARCHIVO -1
+#define VACIO -2
+
+#include <string>
 
 //RESTRICCIONES
 //1. bloques son de 1 caracter
@@ -19,13 +23,13 @@ struct entradaDirectorio{
 };
 
 class FS{
-  // vars
+  // variables
   private:
     char** unidad;
     entradaDirectorio* directorio; // si
     int* fat;
 
-  // methods
+  // métodos
   public:
     FS();
     ~FS();
