@@ -37,15 +37,20 @@ class FS{
     int* fat;
 
   // métodos
+  private:
+    int buscarBloque();
+    int buscarDirectorio();
+    int buscarArchivo(std::string& nombre);
+    int buscarPosFinArchivo(int posFat);
+    void traducirPos(int posicion, int& fila, int& columna);
   public:
     FS();
     ~FS();
     int crear(std::string nombre);
-    void agregar(std::string nombre, char caracter);
+    int agregar(std::string nombre, std::string caracter);
+    void borrar(std::string nombre);  // TODO(nosotros): hacer
+    void borrarProdundo(std::string nombre);  // TODO(nosotros): hacer
     void imprimirUnidad();
-  private:
-    int buscarBloque();
-    int buscarDirectorio();
 };
 
 #endif  //FILE_SYSTEM_H

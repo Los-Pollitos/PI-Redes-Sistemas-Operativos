@@ -69,8 +69,48 @@ int FS::buscarDirectorio() {
   return posDirectorio;
 }
 
-void FS::agregar(std::string nombre, char caracter) {
+int FS::agregar(std::string nombre, std::string caracter) {
+  int posDirectorio = buscarArchivo(nombre);
+  if (posDirectorio == -1) {
+    return posDirectorio;
+  }
+  int posAgregarFat = this->buscarPosFinArchivo(this->directorio[posDirectorio].bloque);
+  int siguienteVacioFat = -1;
+  int fila = -1;
+  int columna = -1;
+  for(int i = 0; i < caracter.length(); ++i) {
+    siguienteVacioFat = this->buscarBloque();
+    if (siguienteVacioFat == -1) {
+      return -1;
+    }
+    this->fat[posAgregarFat] = siguienteVacioFat;
+    this->fat[siguienteVacioFat] = FIN_ARCHIVO;
+    this->traducirPos(posAgregarFat, fila, columna);
+    this->unidad[fila][columna] = caracter[i];
+  }
+}
 
+int FS::buscarArchivo(std::string& nombre) {
+  int posDirectorio = -1;
+  for (int i = 0; i < TAMANO_MAX; ++i) {
+    if (this->directorio[i].nombre == nombre) {
+      posDirectorio = i;
+      break;
+    }
+  }
+  return posDirectorio;
+}
+
+int FS::buscarPosFinArchivo(int posFat) {
+  while(this->fat[posFat] != FIN_ARCHIVO) {
+    posFat = this->fat[posFat];
+  }
+  return posFat;
+}
+
+void FS::traducirPos(int posicion, int& fila, int& columna) {
+  fila = posicion / 10;
+  columna = posicion % 10;
 }
 
 void FS::imprimirUnidad() {
