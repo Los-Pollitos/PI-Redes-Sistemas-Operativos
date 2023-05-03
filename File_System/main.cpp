@@ -12,13 +12,13 @@ int main() {
   FS *fs = new FS();
 
   fs->crear("a.dat");
-  fs->agregar("a.dat",'a');
+  fs->agregar("a.dat","a");
   fs->imprimirUnidad(); //imprime unidad, directorio y tabla fat
 
   fs->crear("b.dat");
-  fs->agregar("b.dat", 'b');
+  fs->agregar("b.dat", "b");
   fs->imprimirUnidad();
-  fs->agregar("b.dat",'c');
+  fs->agregar("b.dat","cc");
   fs->imprimirUnidad();
 }
 

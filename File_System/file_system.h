@@ -13,6 +13,7 @@ Emilia Víquez (C18625)
 #define FIN_ARCHIVO -1
 #define VACIO -2
 
+#include <ctime>
 #include <iostream>
 #include <string>
 
@@ -27,7 +28,7 @@ typedef struct entradaDirectorio{
   int bloque;
   std::string nombre;
   time_t fecha;
-}entradaDirectorio_t;
+} entradaDirectorio_t;
 
 class FS{
   // variables

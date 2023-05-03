@@ -86,13 +86,15 @@ int FS::agregar(std::string nombre, std::string caracter) {
     this->fat[posAgregarFat] = siguienteVacioFat;
     this->fat[siguienteVacioFat] = FIN_ARCHIVO;
     this->traducirPos(posAgregarFat, fila, columna);
+    posAgregarFat = siguienteVacioFat;
     this->unidad[fila][columna] = caracter[i];
   }
+  return posAgregarFat;  // retorna el nuevo final
 }
 
 int FS::buscarArchivo(std::string& nombre) {
   int posDirectorio = -1;
-  for (int i = 0; i < TAMANO_MAX; ++i) {
+  for (int i = 0; i < TAMANO_FAT; ++i) {
     if (this->directorio[i].nombre == nombre) {
       posDirectorio = i;
       break;
@@ -114,16 +116,22 @@ void FS::traducirPos(int posicion, int& fila, int& columna) {
 }
 
 void FS::imprimirUnidad() {
-  std::cout << "Directorio:" << std::endl;
+  std::cout << "\n\nDirectorio:" << std::endl;
   for (int i = 0; i < TAMANO_FAT; ++i) {
     if (this->directorio[i].bloque != VACIO) {
       std::cout << this->directorio[i].nombre << "  " <<
         this->directorio[i].bloque << std::endl;
     }
   }
-  std::cout << "FAT:" << std::endl;
+  std::cout << "\nFAT:" << std::endl;
   for (int i = 0; i < TAMANO_FAT; ++i) {
-    std::cout << this->fat[i] << " ";
+    if (this->fat[i] == VACIO) {
+      std::cout << "  ";
+    } else if (this->fat[i] == FIN_ARCHIVO) {
+      std::cout << "F ";
+    } else {
+      std::cout << this->fat[i] << " ";
+    }
     if ((i+1) % 10 == 0) {
       std::cout << std::endl;
       for (int j = i-9; j <= i; ++j) {
@@ -131,5 +139,16 @@ void FS::imprimirUnidad() {
       }
       std::cout << std::endl;
     }
+  }
+  std::cout << "\nUnidad:" << std::endl;
+  for (int i = 0; i < TAMANO_MAX; ++i) {
+    for (int j = 0; j < TAMANO_MAX; ++j) {
+      std::cout << this->unidad[i][j] << " ";
+    }
+    std::cout << std::endl;
+    for (int j = i*10; j <= i*10+9; ++j) {
+      std::cout << j << " ";
+    }
+    std::cout << std::endl;
   }
 }
