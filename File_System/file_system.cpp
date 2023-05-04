@@ -35,15 +35,16 @@ FS::~FS() {
 }
 
 int FS::crear(std::string nombre) {
-  int bloque = this->buscarBloque();
+  // TODO(nosotros): reconsiderar si esto se queda así
+  // int bloque = this->buscarBloque();
   int posDirectorio = this->buscarDirectorio();
-  if (bloque != -1 && posDirectorio != -1) {
-    this->directorio[posDirectorio].bloque = bloque;
+  if (posDirectorio != -1) {
+    this->directorio[posDirectorio].bloque = FIN_ARCHIVO;
     this->directorio[posDirectorio].nombre = nombre;
     time(&this->directorio[posDirectorio].fecha);
-    this->fat[bloque] = FIN_ARCHIVO;
+    // this->fat[bloque] = FIN_ARCHIVO;
   }
-  return bloque;
+  return posDirectorio;
 }
 
 // busca el bloque vacío más próximo
@@ -74,20 +75,38 @@ int FS::agregar(std::string nombre, std::string caracter) {
   if (posDirectorio == -1) {
     return posDirectorio;
   }
-  int posAgregarFat = this->buscarPosFinArchivo(this->directorio[posDirectorio].bloque);
+  int posAgregarFat = -1;
   int siguienteVacioFat = -1;
-  int fila = -1;
-  int columna = -1;
-  for(int i = 0; i < caracter.length(); ++i) {
+  if (this->directorio[posDirectorio].bloque != FIN_ARCHIVO) {
+    posAgregarFat = this->buscarPosFinArchivo(this->directorio[posDirectorio].bloque);
     siguienteVacioFat = this->buscarBloque();
     if (siguienteVacioFat == -1) {
       return -1;
     }
     this->fat[posAgregarFat] = siguienteVacioFat;
     this->fat[siguienteVacioFat] = FIN_ARCHIVO;
-    this->traducirPos(posAgregarFat, fila, columna);
     posAgregarFat = siguienteVacioFat;
+  } else {
+    posAgregarFat = this->buscarBloque();
+    this->directorio[posDirectorio].bloque =  posAgregarFat;
+  } // después de este if/else, se tiene en posAgregarFat a la próxima
+  // dirección FAT y de la unidad que se quiere modificar
+
+  int fila = -1;
+  int columna = -1;
+  for(int i = 0; i < caracter.length(); ++i) {
+    this->traducirPos(posAgregarFat, fila, columna);
     this->unidad[fila][columna] = caracter[i];
+    this->fat[posAgregarFat] = FIN_ARCHIVO;
+    if (i < caracter.length()-1) {
+      siguienteVacioFat = this->buscarBloque();
+      if (siguienteVacioFat == -1) {
+        return -1;
+      }
+      this->fat[posAgregarFat] = siguienteVacioFat;
+      this->fat[siguienteVacioFat] = FIN_ARCHIVO;
+      posAgregarFat = siguienteVacioFat;
+    }
   }
   return posAgregarFat;  // retorna el nuevo final
 }
@@ -119,8 +138,12 @@ void FS::imprimirUnidad() {
   std::cout << "\n\nDirectorio:" << std::endl;
   for (int i = 0; i < TAMANO_FAT; ++i) {
     if (this->directorio[i].bloque != VACIO) {
-      std::cout << this->directorio[i].nombre << "  " <<
-        this->directorio[i].bloque << std::endl;
+      std::cout << this->directorio[i].nombre << "  ";
+      if (this->directorio[i].bloque != FIN_ARCHIVO) {
+        std::cout<<this->directorio[i].bloque << std::endl;
+      } else {
+        std::cout<<"vacio" << std::endl;
+      }
     }
   }
   std::cout << "\nFAT:" << std::endl;
