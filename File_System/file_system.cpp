@@ -157,8 +157,28 @@ void FS::borrar(std::string nombre) {
 }
 
 void FS::borrarProdundo(std::string nombre) {
-  // TODO(nosotros): Seguir el fat para ir borrando las cositas
+  int posDirectorio = buscarArchivo(nombre);
+  if (posDirectorio == -1) {
+    return;  // Se va del método si el archivo indicado no existía
+  }
+  int posFat = this->directorio[posDirectorio].bloque;
+  this->directorio[posDirectorio].bloque = VACIO;
+  this->directorio[posDirectorio].fecha = 0;
+  this->directorio[posDirectorio].nombre = "";
 
+  int posAux = posFat;
+  int fila = -1;
+  int columna = -1;
+  while (this->fat[posFat] != FIN_ARCHIVO) {
+    this->traducirPos(posFat, fila, columna);
+    this->unidad[fila][columna] = '\0';
+    posAux = this->fat[posFat];
+    this->fat[posFat] = VACIO;
+    posFat = posAux;
+  }
+  this->fat[posFat] = VACIO;
+  this->traducirPos(posFat, fila, columna);
+  this->unidad[fila][columna] = '\0';
 
 }
 
@@ -194,7 +214,11 @@ void FS::imprimirUnidad() {
   std::cout << "\nUnidad:" << std::endl;
   for (int i = 0; i < TAMANO_MAX; ++i) {
     for (int j = 0; j < TAMANO_MAX; ++j) {
-      std::cout << this->unidad[i][j] << " ";
+      if (this->unidad[i][j] != '\0') {
+        std::cout << this->unidad[i][j] << " ";
+      } else {
+        std::cout << "  ";
+      }
     }
     std::cout << std::endl;
     for (int j = i*10; j <= i*10+9; ++j) {

@@ -12,7 +12,7 @@ Emilia Víquez (C18625)
 int main() {
   FS *fs = new FS();
 
-  std::cout << "Se crea el archivo a.dat y se agrega un caracter \'a\'" << std::endl;
+  std::cout << "\n\nSe crea el archivo a.dat y se agrega un caracter \'a\'" << std::endl;
   fs->crear("a.dat");
   fs->agregar("a.dat","a");
   fs->imprimirUnidad(); //imprime unidad, directorio y tabla fat
@@ -26,13 +26,12 @@ int main() {
   fs->agregar("b.dat","cc");
   fs->imprimirUnidad();
 
-  std::cout << "Se borra a.dat" << std::endl;
-  fs->borrar("a.dat");
+  std::cout << "Se borra profundamente a.dat" << std::endl;
+  fs->borrarProdundo("a.dat");
   fs->imprimirUnidad();
 
-  std::cout << "Se crea x.dat con un caracter \'x\'" << std::endl;
+  std::cout << "Se crea x.dat vacio" << std::endl;
   fs->crear("x.dat");
-  fs->agregar("x.dat","x");
   fs->imprimirUnidad();
 
   return 0;
