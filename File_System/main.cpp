@@ -17,20 +17,20 @@ int main() {
   fs->agregar("a.dat","a");
   fs->imprimirUnidad(); //imprime unidad, directorio y tabla fat
 
-  std::cout << "Se crea el archivo b.dat y se agrega: \'b\'" << std::endl;
+  std::cout << "\n\nSe crea el archivo b.dat y se agrega: \'b\'" << std::endl;
   fs->crear("b.dat");
   fs->agregar("b.dat", "b");
   fs->imprimirUnidad();
 
-  std::cout << "Se agrega: \'cc\'  al archivo b.dat" << std::endl;
+  std::cout << "\n\nSe agrega: \'cc\'  al archivo b.dat" << std::endl;
   fs->agregar("b.dat","cc");
   fs->imprimirUnidad();
 
-  std::cout << "Se borra profundamente a.dat" << std::endl;
+  std::cout << "\n\nSe borra profundamente a.dat" << std::endl;
   fs->borrarProdundo("a.dat");
   fs->imprimirUnidad();
 
-  std::cout << "Se crea x.dat vacio" << std::endl;
+  std::cout << "\n\nSe crea x.dat vacio" << std::endl;
   fs->crear("x.dat");
   fs->imprimirUnidad();
 
