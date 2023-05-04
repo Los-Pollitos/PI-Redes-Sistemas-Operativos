@@ -134,6 +134,34 @@ void FS::traducirPos(int posicion, int& fila, int& columna) {
   columna = posicion % 10;
 }
 
+
+void FS::borrar(std::string nombre) {
+  int posDirectorio = buscarArchivo(nombre);
+  if (posDirectorio == -1) {
+    return;  // Se va del método si el archivo indicado no existía
+  }
+  int posFat = this->directorio[posDirectorio].bloque;
+  this->directorio[posDirectorio].bloque = VACIO;
+  // TODO(nosotros): considerar si borrar la fecha y el nombre solo lo hacemos en el profundo o en ambos
+  // en el profundo de fijo, pq puede ser un archivo de contenido sensible que no quiero que nadie sepa ni que existió
+  this->directorio[posDirectorio].fecha = 0;
+  this->directorio[posDirectorio].nombre = "";
+
+  int posAux = posFat;
+  while (this->fat[posFat] != FIN_ARCHIVO) {
+    posAux = this->fat[posFat];
+    this->fat[posFat] = VACIO;
+    posFat = posAux;
+  }
+  this->fat[posFat] = VACIO;
+}
+
+void FS::borrarProdundo(std::string nombre) {
+  // TODO(nosotros): Seguir el fat para ir borrando las cositas
+
+
+}
+
 void FS::imprimirUnidad() {
   std::cout << "\n\nDirectorio:" << std::endl;
   for (int i = 0; i < TAMANO_FAT; ++i) {
