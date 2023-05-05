@@ -36,7 +36,7 @@ FS::~FS() {
 int FS::crear(std::string nombre) {
   int bloque = this->buscarBloque();
   int posDirectorio = this->buscarDirectorio();
-  if (posDirectorio != -1) {
+  if (posDirectorio != -1 && bloque != -1) {
     this->directorio[posDirectorio].bloque = bloque;
     this->directorio[posDirectorio].nombre = nombre;
     time(&this->directorio[posDirectorio].fecha);
@@ -123,8 +123,8 @@ int FS::buscarPosFinArchivo(int posFat) {
 }
 
 void FS::traducirPos(int posicion, int& fila, int& columna) {
-  fila = posicion / 10;
-  columna = posicion % 10;
+  fila = posicion / TAMANO_MAX;
+  columna = posicion % TAMANO_MAX;
 }
 
 
