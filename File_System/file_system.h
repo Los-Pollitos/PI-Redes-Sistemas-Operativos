@@ -12,6 +12,7 @@ Emilia Víquez (C18625)
 #define TAMANO_FAT 100
 #define FIN_ARCHIVO -1
 #define VACIO -2
+#define RESERVADO -3
 
 #include <ctime>
 #include <iostream>
@@ -49,8 +50,8 @@ class FS{
     ~FS();
     int crear(std::string nombre);
     int agregar(std::string nombre, std::string caracter);
-    void borrar(std::string nombre);  // TODO(nosotros): hacer
-    void borrarProdundo(std::string nombre);  // TODO(nosotros): hacer
+    int borrar(std::string nombre);
+    int borrarProfundo(std::string nombre);
     void imprimirUnidad();
 };
 

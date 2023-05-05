@@ -10,34 +10,22 @@ Emilia Víquez (C18625)
 #include <iostream>
 
 int main() {
-  FS *fs = new FS();
-
-  std::cout << "\n\nSe crea el archivo a.dat y se agrega un caracter \'a\'" << std::endl;
-  fs->crear("a.dat");
-  fs->agregar("a.dat","a");
-  fs->imprimirUnidad(); //imprime unidad, directorio y tabla fat
-
-  std::cout << "\n\nSe crea el archivo b.dat y se agrega: \'b\'" << std::endl;
+  // Crear el file system
+  FS* fs = new FS();
+  // Crear dos archivos b.dat y c.dat
+  fs->crear("c.dat");
   fs->crear("b.dat");
-  fs->agregar("b.dat", "b");
+  // Agregar de manera intercambiada contenido a ambos
+  fs->agregar("c.dat", "c");
+  fs->agregar("b.dat", "bb");
+  fs->agregar("c.dat", "cc");
+  // Mostrar la unidad
   fs->imprimirUnidad();
-
-  std::cout << "\n\nSe agrega: \'cc\'  al archivo b.dat" << std::endl;
-  fs->agregar("b.dat","cc");
+  // Borrar c
+  fs->borrarProfundo("c.dat");
   fs->imprimirUnidad();
-
-  std::cout << "\n\nSe borra profundamente a.dat" << std::endl;
-  fs->borrarProdundo("a.dat");
-  fs->imprimirUnidad();
-
-  std::cout << "\n\nSe crea x.dat vacio" << std::endl;
-  fs->crear("x.dat");
-  fs->imprimirUnidad();
-
   return 0;
 }
-
-
 
 /*  IMPRIMIR UNIDAD al final
 
