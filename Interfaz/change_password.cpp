@@ -6,6 +6,7 @@ change_password::change_password(QWidget *parent) :
     ui(new Ui::change_password)
 {
     ui->setupUi(this);
+    this->ui->lineEdit_2->setEchoMode(QLineEdit::Password); // no muestra password
 }
 
 change_password::~change_password()
