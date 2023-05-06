@@ -1,6 +1,8 @@
 #include "login.h"
 #include "ui_login.h"
 #include <QMessageBox>
+#include <fstream>
+#include <iostream>
 
 login::login(QWidget *parent) :
     QDialog(parent),
@@ -25,12 +27,51 @@ login::~login()
     delete tokenPage;
 }
 
+
+
+bool login::validate_data(QString username, QString password) {
+    bool correct = false;
+ //   try {
+        std::ifstream file ("../Etapa2/Archivos/Login.txt");
+        std::string read_data = "";
+        if (file.is_open()) {
+           while (read_data != username.toStdString()) {
+               file >> read_data;
+               if (read_data != username.toStdString()) {
+                   file >> read_data;  // don't keep the password
+                   file >> read_data; // don't keep token
+                   read_data = "";
+               }
+           }
+           // TODO(nosotros): borrar
+           std::cout << "Found user: " << read_data << std::endl;
+           if (read_data == username.toStdString()) {
+               file >> read_data;
+               if (password.toStdString() == read_data) {
+                   correct = true;
+                   this->user_data = new login_info();
+                   this->user_data->user = username.toStdString();
+                   this->user_data->password = password.toStdString();
+                   for (int i = 0; i < TOKEN_SIZE; ++i) {
+                       file >> this->user_data->token[i]; // read token
+                   }
+               }
+           }
+
+        }
+ //   } catch (_exception e) {  // TODO (nosotros): volver después
+ //       std::cerr << "Archivo de login no encontrado" << std::endl;
+ //   }
+       return correct;
+}
+
 void login::on_login_button_clicked() {
     QString username = ui->user_input->text();  // get username
     QString password = ui->password_input->text();
-    this->label->hide();
-    if (username == "yo" && password == "123") {
+    this->label->hide();   
+    if (validate_data(username, password)) {
         this->hide();
+        this->tokenPage->setUserData(this->user_data);
         this->tokenPage->show();
     } else {
         this->label->resize(200, 200); // size of label

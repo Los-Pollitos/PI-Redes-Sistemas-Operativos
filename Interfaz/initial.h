@@ -8,6 +8,7 @@
 #include "salary_proof.h"
 #include "work_proof.h"
 
+
 namespace Ui {
 class initial;
 }
@@ -36,6 +37,7 @@ private:
     work_proof *workP;
     payment_proof *paymentP;
     salary_proof *salaryP;
+    int type_employee;
 };
 
 #endif // INITIAL_H

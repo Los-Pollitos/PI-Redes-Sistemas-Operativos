@@ -5,6 +5,7 @@
 #include <QMessageBox>
 
 #include "initial.h"
+#include "login_info.h"
 
 namespace Ui {
 class Token;
@@ -17,6 +18,7 @@ class Token : public QDialog
 public:
     explicit Token(QWidget *parent = nullptr);
     ~Token();
+    void setUserData(login_info * user_data);
 
 private slots:
     void on_validate_label_clicked();
@@ -24,6 +26,8 @@ private slots:
 private:
     Ui::Token* ui;
     initial* initial_page;
+    login_info * user_data;
+    int pos;
 };
 
 #endif // TOKEN_H

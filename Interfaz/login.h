@@ -3,6 +3,7 @@
 
 #include "change_password.h"
 #include "token.h"
+#include "login_info.h"
 #include <QLabel>
 #include <QDialog>
 
@@ -18,9 +19,11 @@ public:
     explicit login(QWidget *parent = nullptr);
     ~login();
 
+private:
+    bool validate_data(QString username, QString password);
+
 private slots:
     void on_login_button_clicked();
-
     void on_forgot_button_clicked();
 
 private:
@@ -28,6 +31,7 @@ private:
     QLabel *label;
     Token *tokenPage;
     change_password *changePass;
+    login_info * user_data;
 };
 
 #endif // LOGIN_H
