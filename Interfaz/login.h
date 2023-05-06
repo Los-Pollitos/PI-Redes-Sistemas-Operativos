@@ -28,7 +28,6 @@ private slots:
 
 private:
     Ui::login *ui;
-    QLabel *label;
     Token *tokenPage;
     change_password *changePass;
     login_info * user_data;
