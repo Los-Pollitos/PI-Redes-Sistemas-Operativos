@@ -33,17 +33,17 @@ bool login::validate_data(QString username, QString password) {
         if (file.is_open()) {
            while (read_data != username.toStdString()) {
                file >> read_data;
-               std::cout << "Lei: " << read_data << std::endl;
+               // std::cout << "Lei: " << read_data << std::endl;
                if (read_data != username.toStdString()) {
                    file >> read_data;  // don't keep the password
-                   std::cout << "Lei: " << read_data << std::endl;
+                   // std::cout << "Lei: " << read_data << std::endl;
                    file >> read_data; // don't keep token
-                   std::cout << "Lei: " << read_data << std::endl;
+                   // std::cout << "Lei: " << read_data << std::endl;
                    read_data = "";
                }
            }
            // TODO(nosotros): borrar
-           std::cout << "Found user: " << read_data << std::endl;
+           // std::cout << "Found user: " << read_data << std::endl;
            if (read_data == username.toStdString()) {
                file >> read_data;
                if (password.toStdString() == read_data) {
@@ -53,6 +53,7 @@ bool login::validate_data(QString username, QString password) {
                    this->user_data->password = password.toStdString();
                    for (int i = 0; i < TOKEN_SIZE; ++i) {
                        file >> this->user_data->token[i]; // read token
+                       // std::cout << this->user_data->token[i] << std::endl;
                    }
                }
            }

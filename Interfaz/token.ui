@@ -28,10 +28,10 @@
    <widget class="QLabel" name="indicacion_label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>70</y>
       <width>121</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -41,9 +41,9 @@
    <widget class="QLineEdit" name="token_input">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>130</x>
       <y>70</y>
-      <width>71</width>
+      <width>81</width>
       <height>24</height>
      </rect>
     </property>
