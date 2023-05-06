@@ -2,6 +2,7 @@
 #define MODIFY_USER_H
 
 #include <QDialog>
+#include "consult_record.h"
 
 namespace Ui {
 class modify_user;
@@ -20,6 +21,8 @@ private slots:
     void on_comboBox_activated(int index);
     void on_approve_changes_clicked();
 
+    void on_record_clicked();
+
 private:
     int modified_index;
     Ui::modify_user *ui;
@@ -29,7 +32,7 @@ private:
     QList<QString> subordinate;
     QList<int> salary;
     QList<int> vacations;
-    // TODO(Angie): expediente
+    consult_record* record;
 };
 
 #endif // MODIFY_USER_H

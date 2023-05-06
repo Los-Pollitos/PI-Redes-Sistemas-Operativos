@@ -66,3 +66,11 @@ void modify_user::update_data() {
     this->salary[modified_index] = ui->employee_salary->text().toInt();
     this->vacations[modified_index] = ui->employee_vacations->text().toInt();
 }
+
+void modify_user::on_record_clicked() {
+    this->record = new consult_record();
+    this->hide();
+    this->record->setModal(true);
+    this->record->show();
+}
+

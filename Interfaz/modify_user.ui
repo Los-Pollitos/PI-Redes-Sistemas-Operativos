@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>522</width>
-    <height>583</height>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>410</x>
-     <y>550</y>
+     <y>480</y>
      <width>101</width>
      <height>25</height>
     </rect>
@@ -156,32 +156,6 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>320</y>
-     <width>131</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Expediente:</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>320</y>
-     <width>181</width>
-     <height>70</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="employee_vacations">
    <property name="geometry">
     <rect>
@@ -241,7 +215,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>465</y>
+     <y>395</y>
      <width>181</width>
      <height>25</height>
     </rect>
@@ -257,7 +231,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>470</y>
+     <y>400</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -273,7 +247,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>510</y>
+     <y>440</y>
      <width>141</width>
      <height>25</height>
     </rect>
@@ -290,6 +264,19 @@
      <width>181</width>
      <height>25</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="record">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>330</y>
+     <width>181</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Modificar expediente</string>
    </property>
   </widget>
  </widget>
