@@ -5,9 +5,8 @@ initial::initial(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::initial) {
     ui->setupUi(this);
-    if (false) { // TODO(nosotros): completar con permisos de usuario
-        ui->funciones_especiales->hide();
-    }
+    ui->funciones_especiales->hide();
+
 }
 
 initial::~initial() {
@@ -20,8 +19,21 @@ initial::~initial() {
     }
 }
 
+void initial::setUserData(login_info * user_data) {
+    this->user_data = user_data;
+    if (this->user_data->user[0] == 'e') {
+        this->type_employee = EMPLEADO;
+    } else if (this->user_data->user[0] == 'r') {
+        this->type_employee = RECURSOS_HUMANOS;
+        ui->funciones_especiales->show();
+    } else {
+        this->type_employee = GERENTE;
+        ui->funciones_especiales->show();
+    }
+}
+
 void initial::on_funciones_especiales_clicked() {
-    if (true) {  // TODO(nosotros): completar con permisos de usuario
+    if (this->type_employee == RECURSOS_HUMANOS) {  // TODO(nosotros): completar con permisos de usuario
         this->hhrr = new human_resources();
         this->hhrr->setModal(true);
         this->hhrr->show();

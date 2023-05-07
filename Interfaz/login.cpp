@@ -15,6 +15,7 @@ login::login(QWidget *parent) :
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
     this->tokenPage = new Token(this);
     this->changePass = new change_password(this);
+    this->setWindowTitle("Login");
 }
 
 login::~login()

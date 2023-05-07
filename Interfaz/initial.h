@@ -4,9 +4,14 @@
 #include <QDialog>
 #include "human_resources.h"
 #include "manager.h"
+#include "login_info.h"
 #include "payment_proof.h"
 #include "salary_proof.h"
 #include "work_proof.h"
+
+#define EMPLEADO 1
+#define RECURSOS_HUMANOS 2
+#define GERENTE 3
 
 
 namespace Ui {
@@ -20,6 +25,7 @@ class initial : public QDialog
 public:
     explicit initial(QWidget *parent = nullptr);
     ~initial();
+    void setUserData(login_info * user_data);
 
 private slots:
     void on_funciones_especiales_clicked();
@@ -37,6 +43,7 @@ private:
     work_proof *workP;
     payment_proof *paymentP;
     salary_proof *salaryP;
+    login_info * user_data;
     int type_employee;
 };
 

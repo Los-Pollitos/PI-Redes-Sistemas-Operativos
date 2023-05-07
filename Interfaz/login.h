@@ -22,6 +22,8 @@ public:
 private:
     bool validate_data(QString username, QString password);
 
+
+
 private slots:
     void on_login_button_clicked();
     void on_forgot_button_clicked();
