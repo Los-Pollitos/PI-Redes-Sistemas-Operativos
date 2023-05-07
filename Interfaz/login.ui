@@ -96,6 +96,12 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>login_button</tabstop>
+  <tabstop>forgot_button</tabstop>
+  <tabstop>user_input</tabstop>
+  <tabstop>password_input</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
