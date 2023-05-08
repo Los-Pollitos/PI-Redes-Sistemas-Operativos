@@ -18,10 +18,12 @@ public:
     void set_user_data(login_info * user_data);
     ~manage_user();
 
+private:
+    bool find_user(std::string& desired_username);
+    void insert_user(std::string& desired_username, std::string& desired_password);
 
 private slots:
     void on_generate_button_clicked();
-
     void on_delete_button_clicked();
 
 private:
