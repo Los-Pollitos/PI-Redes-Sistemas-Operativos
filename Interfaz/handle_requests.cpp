@@ -70,6 +70,12 @@ handle_requests::handle_requests(QWidget *parent) :
 
 }
 
+
+void handle_requests::set_user_data(login_info * user_data) {
+    this->user_data = user_data;
+}
+
+
 handle_requests::~handle_requests() {
     delete ui;
 }
@@ -80,23 +86,51 @@ void handle_requests::update_scroll() {
         this->layout->removeWidget(this->requests_buttons[count]);
         this->requests_buttons[count]->hide();
     }
+    int index = 0;
     for(int count = 0; count < length; ++count) {
-        if (this->requests_buttons[count]->valid) {
-            this->layout->addWidget(this->requests_buttons[count]);
-            this->requests_buttons[count]->show();
+        if (this->requests_buttons[index]->valid) {
+            this->layout->addWidget(this->requests_buttons[index]);
+            this->requests_buttons[index]->show();
+            ++index;
+        } else {
+            std::cout << "Mando a borrar a  " << this->requests_buttons[index]->getId() << " en la pos " << index << std::endl;
+            // this->layout->removeWidget(this->requests_buttons[index]);
+            //description_button * victim =  requests_buttons[index];
+            this->requests_buttons.erase(this->requests_buttons.begin()+(index-1));
+            //delete victim;
         }
     }
+}
 
+void handle_requests::remove_request(int index) {
+    std::cout << "Voy a borrar widget\n";
+    this->layout->removeWidget(this->requests_buttons[index]);
+    std::cout << "Borre widget y voy con boton\n";
+    description_button * victim =  requests_buttons[index];
+    delete victim;
+    this->requests_buttons[index] = 0;
+    std::cout << "Borre boton \n";
+    if (this->requests_buttons.size() > 1) {
+        for (int element = index; element < this->requests_buttons.size()-1; ++element) {
+            this->requests_buttons[element] = this->requests_buttons[element+1];
+            // this->requests_buttons[element+1] = 0;
+            std::cout << "Movi boton \n";
+        }
+    }
+    if (this->requests_buttons.size() > 0) {
+        this->requests_buttons[this->requests_buttons.size() - 1] = 0;
+        this->requests_buttons.pop_back();
+        std::cout <<"Me quedan: " << this->requests_buttons.size() << " botones\n";
+    }
 }
 
 void handle_requests::show_description(int id, int type) {
-    // TODO (nosotros): Borrar y cambiar la fecha y la descripción (ahora se muere porque la descripción es local)¨
+    // TODO (nosotros): Borrar y cambiar la fecha y la descripción
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
     this->description = new request_description(nullptr);
-    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id]);
+    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_data);
     this->description->setModal(true);
     this->description->show();
-    // this->update_scroll(); // TODO(nosotros): lograr que sirva
 }

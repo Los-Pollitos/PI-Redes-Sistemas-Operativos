@@ -8,6 +8,7 @@
 
 #include "description_button.h"
 #include "request_description.h"
+#include "login_info.h"
 
 #define REQUEST_VACATIONS 1
 #define PAYMENT_PROOF 2
@@ -26,6 +27,7 @@ public:
     explicit handle_requests(QWidget *parent = nullptr);
     void update_scroll();
     ~handle_requests();
+    void set_user_data(login_info * user_data);
 
 private:
     QVBoxLayout * layout;
@@ -33,6 +35,8 @@ private:
     Ui::handle_requests *ui;
     std::vector<description_button*> requests_buttons;
     request_description * description;
+    void remove_request(int index);
+    login_info * user_data;
 
 protected slots:
     void show_description(int id, int type);

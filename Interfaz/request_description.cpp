@@ -29,7 +29,7 @@ request_description::request_description(QWidget *parent) :
 
 void request_description::set_atributes(int day, int month, int year,
         int& type, QString user, QString& description,
-        description_button *& parent_button) {
+        description_button *& parent_button, login_info * user_data) {
     this->parent_button = parent_button;
     this->description = description;
     this->date[0]= day;
@@ -48,6 +48,7 @@ void request_description::set_atributes(int day, int month, int year,
     QString type_string = request_type(this->type);
     this->ui->label_tipo->setText(type_string);
     this->ui->lineEdit->setEchoMode(QLineEdit::Password);
+    this->user_data = user_data;
 }
 
 request_description::~request_description()
@@ -57,7 +58,7 @@ request_description::~request_description()
 
 void request_description::on_buttonBox_accepted() {
     QString password = ui->lineEdit->text();
-    if (password == "123") { // TODO(nosotros): password
+    if (password.toStdString() == this->user_data->password) {
         QMessageBox::information(this, "Correcto", "Solicitud aceptada");
         this->parent_button->valid = false;
         this->close();
@@ -70,7 +71,7 @@ void request_description::on_buttonBox_accepted() {
 
 void request_description::on_buttonBox_rejected() {
     QString password = ui->lineEdit->text();
-    if (password == "123") { // TODO(nosotros): password
+    if (password.toStdString() == this->user_data->password) {
         QMessageBox::information(this, "Correcto", "Solicitud denegada");
         this->close();
         this->parent_button->valid = false;

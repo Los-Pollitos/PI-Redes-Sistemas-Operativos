@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "description_button.h"
+#include "login_info.h"
 
 #define REQUEST_VACATIONS 1
 #define PAYMENT_PROOF 2
@@ -22,7 +23,7 @@ class request_description : public QDialog
 public:
     request_description();
     explicit request_description(QWidget *parent = nullptr);
-    void set_atributes(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button);
+    void set_atributes(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button, login_info * user_data);
     ~request_description();
 
 private slots:
@@ -38,6 +39,7 @@ private:
     description_button * parent_button;
     QString user;
     QString description;
+    login_info * user_data;
 };
 
 #endif // REQUEST_DESCRIPTION_H
