@@ -49,7 +49,7 @@
     <string>Borrar usuario</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="generate_button">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -62,7 +62,7 @@
     <string>Generar</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="delete_button">
    <property name="geometry">
     <rect>
      <x>540</x>
@@ -75,7 +75,7 @@
     <string>Borrar</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -93,10 +93,10 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="create_username"/>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_2"/>
+     <widget class="QLineEdit" name="create_password"/>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_4">
@@ -106,7 +106,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QLineEdit" name="lineEdit_7"/>
+     <widget class="QLineEdit" name="first_rh_password"/>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="user_password_text">
@@ -117,7 +117,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>380</x>
@@ -135,7 +135,7 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit_5"/>
+     <widget class="QLineEdit" name="delete_username"/>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_3">
@@ -145,21 +145,19 @@
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_6"/>
+     <widget class="QLineEdit" name="second_rh_password"/>
     </item>
    </layout>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>lineEdit_7</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>lineEdit_5</tabstop>
-  <tabstop>lineEdit_6</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>lineEdit_3</tabstop>
-  <tabstop>lineEdit_4</tabstop>
+  <tabstop>create_username</tabstop>
+  <tabstop>create_password</tabstop>
+  <tabstop>first_rh_password</tabstop>
+  <tabstop>generate_button</tabstop>
+  <tabstop>delete_username</tabstop>
+  <tabstop>second_rh_password</tabstop>
+  <tabstop>delete_button</tabstop>
  </tabstops>
  <resources/>
  <connections/>

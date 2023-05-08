@@ -24,10 +24,13 @@ private slots:
 
     void on_process_button_clicked();
 
+    void on_manage_user_button_clicked();
+
 private:
-    Ui::human_resources *ui;
-    handle_requests * request_handler;
-    login_info * user_data;
+    Ui::human_resources* ui;
+    handle_requests* request_handler;
+    login_info* user_data;
+    manage_user* user_manager;
 };
 
 #endif // HUMAN_RESOURCES_H
