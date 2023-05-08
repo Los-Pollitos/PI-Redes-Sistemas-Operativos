@@ -23,6 +23,7 @@ void modify_user::on_comboBox_activated(int index) {
     ui->employee_subordinate->setText(this->subordinate[index]);
     ui->employee_salary->setText(QString::number(this->salary[index]));
     ui->employee_vacations->setText(QString::number(this->vacations[index]));
+    ui->record->setPlainText(this->record[index]);
 }
 
 void modify_user::add_data() {
@@ -47,11 +48,15 @@ void modify_user::add_data() {
 
     this->vacations.append(1);
     this->vacations.append(2);
+
+    this->record.append(
+        "Este expleado tiene muchas anotaciones. Anotación 1: llega tarde todos los lunes, parece que se duerme. Anotación 2: parece que tiene vida y se va temprano los viernes.");
+    this->record.append("Es un buen empleado, hace su trabajo.");
 }
 
 void modify_user::on_approve_changes_clicked() {
     QString password = ui->password->text();
-    if (password == "123") { // TODO(nosotros): password
+    if (password.toStdString() == this->user_data->password) {
         QMessageBox::information(this, "Correcto", "Cambios aplicados");
         this->update_data();
     } else {
@@ -67,10 +72,6 @@ void modify_user::update_data() {
     this->vacations[modified_index] = ui->employee_vacations->text().toInt();
 }
 
-void modify_user::on_record_clicked() {
-    this->record = new consult_record();
-    this->hide();
-    this->record->setModal(true);
-    this->record->show();
+void modify_user::set_login_info(login_info* info) {
+    this->user_data = info;
 }
-

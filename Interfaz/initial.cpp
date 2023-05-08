@@ -40,6 +40,7 @@ void initial::on_funciones_especiales_clicked() {
         this->hhrr->show();
     } else {
         this->office_manager = new manager();
+        this->office_manager->set_login_info(this->user_data);
         this->office_manager->setModal(true);
         this->office_manager->show();
     }

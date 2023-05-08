@@ -2,7 +2,7 @@
 #define MODIFY_USER_H
 
 #include <QDialog>
-#include "consult_record.h"
+#include "login_info.h"
 
 namespace Ui {
 class modify_user;
@@ -14,17 +14,17 @@ class modify_user : public QDialog {
 public:
     explicit modify_user(QWidget *parent = nullptr);
     ~modify_user();
+    void set_login_info(login_info* info);
 
 private slots:
-    void add_data();
     void update_data();
     void on_comboBox_activated(int index);
     void on_approve_changes_clicked();
 
-    void on_record_clicked();
-
 private:
     int modified_index;
+    void add_data();
+
     Ui::modify_user *ui;
     QList<QString> names;
     QList<int> ids;
@@ -32,7 +32,8 @@ private:
     QList<QString> subordinate;
     QList<int> salary;
     QList<int> vacations;
-    consult_record* record;
+    QList<QString> record;
+    login_info* user_data;
 };
 
 #endif // MODIFY_USER_H

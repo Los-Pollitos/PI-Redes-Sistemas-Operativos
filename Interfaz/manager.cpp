@@ -22,7 +22,12 @@ void manager::on_employee_information_2_clicked() {
 
 void manager::on_employee_information_clicked() {
     this->modify_info = new modify_user();
+    this->modify_info->set_login_info(this->user_data);
     this->hide();
     this->modify_info->setModal(true);
     this->modify_info->show();
+}
+
+void manager::set_login_info(login_info* info) {
+    this->user_data = info;
 }
