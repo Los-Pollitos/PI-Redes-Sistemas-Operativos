@@ -70,3 +70,11 @@ void initial::on_pushButton_2_clicked()
     this->paymentP->show();
 }
 
+
+void initial::on_pushButton_7_clicked() {
+    this->pending_requests = new consult_requests();
+    this->pending_requests->setModal(true);
+    this->pending_requests->set_user_data(this->user_data);
+    this->pending_requests->show();
+}
+

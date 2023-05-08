@@ -8,6 +8,7 @@
 #include "payment_proof.h"
 #include "salary_proof.h"
 #include "work_proof.h"
+#include "consult_requests.h"
 
 #define EMPLEADO 1
 #define RECURSOS_HUMANOS 2
@@ -36,6 +37,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_pushButton_7_clicked();
+
 private:
     Ui::initial *ui;
     human_resources * hhrr;
@@ -44,6 +47,7 @@ private:
     payment_proof *paymentP;
     salary_proof *salaryP;
     login_info * user_data;
+    consult_requests * pending_requests;
     int type_employee;
 };
 

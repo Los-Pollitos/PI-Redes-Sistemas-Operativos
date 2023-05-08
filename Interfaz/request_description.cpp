@@ -29,13 +29,27 @@ request_description::request_description(QWidget *parent) :
 
 void request_description::set_atributes(int day, int month, int year,
         int& type, QString user, QString& description,
-        description_button *& parent_button, login_info * user_data) {
+        description_button *& parent_button, login_info * user_data,
+        bool admin) {
     this->parent_button = parent_button;
     this->description = description;
     this->date[0]= day;
     this->date[1] = month;
     this->date[2] = year;
     this->type= type;
+    this->admin = admin;
+    if (!this->admin) {
+       this->ui->file_button->setText("Descargar archivo");
+       this->ui->buttonBox->hide();
+       this->ui->password_label->hide();
+       this->ui->lineEdit->hide();
+       this->ui->accept_label->hide();
+    } else {
+        this->ui->accept_button->hide();
+    }
+    if (this->type == REQUEST_VACATIONS) {
+        this->ui->file_button->hide();
+    }
     this->user = user;
     this->description = description;
     QString date_string = QString::number(day);
@@ -78,6 +92,15 @@ void request_description::on_buttonBox_rejected() {
         emit this->parent_button->disapear(this->parent_button->identifier);
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecto");
+    }
+}
+
+
+void request_description::on_file_button_clicked() {
+    if (this->admin) {
+        // TODO(cristopher): hacer lo de subir un archivo
+    } else {
+        // TODO(cristopher): hacer lo de descargar un archivo
     }
 }
 

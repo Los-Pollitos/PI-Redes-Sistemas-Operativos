@@ -35,7 +35,6 @@ private:
     Ui::handle_requests *ui;
     std::vector<description_button*> requests_buttons;
     request_description * description;
-    void remove_request(int index);
     login_info * user_data;
 
 protected slots:

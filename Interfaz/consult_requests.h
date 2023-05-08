@@ -1,7 +1,20 @@
 #ifndef CONSULT_REQUESTS_H
 #define CONSULT_REQUESTS_H
 
+
 #include <QDialog>
+#include <QPushButton>
+#include <vector>
+#include <QVBoxLayout>
+
+#include "description_button.h"
+#include "request_description.h"
+#include "login_info.h"
+
+#define REQUEST_VACATIONS 1
+#define PAYMENT_PROOF 2
+#define WORK_PROOF 3
+#define SALARY_PROOF 4
 
 namespace Ui {
 class consult_requests;
@@ -14,9 +27,18 @@ class consult_requests : public QDialog
 public:
     explicit consult_requests(QWidget *parent = nullptr);
     ~consult_requests();
+    void set_user_data(login_info * user_data);
 
 private:
+    QVBoxLayout * layout;
+    QWidget * container;
     Ui::consult_requests *ui;
+    std::vector<description_button*> requests_buttons;
+    request_description * description;
+    login_info * user_data;
+
+protected slots:
+    void show_description(int id, int type);
 };
 
 #endif // CONSULT_REQUESTS_H

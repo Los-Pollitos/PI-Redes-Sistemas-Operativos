@@ -23,7 +23,7 @@ class request_description : public QDialog
 public:
     request_description();
     explicit request_description(QWidget *parent = nullptr);
-    void set_atributes(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button, login_info * user_data);
+    void set_atributes(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button, login_info * user_data, bool admin);
     ~request_description();
 
 private slots:
@@ -32,10 +32,13 @@ private slots:
     void on_buttonBox_rejected();
 
 
+    void on_file_button_clicked();
+
 private:
     Ui::request_description *ui;
     int date[3];
     int type;
+    bool admin;
     description_button * parent_button;
     QString user;
     QString description;
