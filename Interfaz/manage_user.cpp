@@ -44,7 +44,15 @@ void manage_user::insert_user(std::string& desired_username, std::string& desire
     if (file.is_open()) {
         // Insert username and password
         file << desired_username << '\t' << desired_password << '\t';
-
+        // Generate token
+        int number = 0;
+        for (int i = 0; i < TOKEN_SIZE - 2; ++i) {
+            number = (int)(rand()%100);
+            file << std::to_string(number) << " ";
+        }
+        // Last token position
+        number = (int)(rand()%100);
+        file << std::to_string(number);
         file.close();
     }
 }
