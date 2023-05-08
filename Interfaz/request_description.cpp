@@ -23,6 +23,7 @@ request_description::request_description(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::request_description) {
     ui->setupUi(this);
+    this->uploaded_file = false;
 }
 
 
@@ -73,10 +74,14 @@ request_description::~request_description()
 void request_description::on_buttonBox_accepted() {
     QString password = ui->lineEdit->text();
     if (password.toStdString() == this->user_data->password) {
-        QMessageBox::information(this, "Correcto", "Solicitud aceptada");
-        this->parent_button->valid = false;
-        this->close();
-        emit this->parent_button->disapear(this->parent_button->identifier);
+        if (this->type == REQUEST_VACATIONS || this->uploaded_file == true) {
+            QMessageBox::information(this, "Correcto", "Solicitud aceptada");
+            this->parent_button->valid = false;
+            this->close();
+            emit this->parent_button->disapear(this->parent_button->identifier);
+        } else {
+            QMessageBox::warning(this, "Error", "Debe incluir un archivo de constancia");
+        }
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
@@ -99,6 +104,8 @@ void request_description::on_buttonBox_rejected() {
 void request_description::on_file_button_clicked() {
     if (this->admin) {
         // TODO(cristopher): hacer lo de subir un archivo
+        this->uploaded_file = true; // TODO (cristopher): esto hay que ponerlo true solo si sí subió el archivo
+        // la idea es que el programa no deje aceptar una solicitud de constancia si no ha subido el archivo
     } else {
         // TODO(cristopher): hacer lo de descargar un archivo
     }

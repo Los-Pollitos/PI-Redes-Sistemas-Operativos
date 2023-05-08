@@ -39,6 +39,7 @@ private:
     int date[3];
     int type;
     bool admin;
+    bool uploaded_file;
     description_button * parent_button;
     QString user;
     QString description;
