@@ -35,6 +35,7 @@ void initial::setUserData(login_info * user_data) {
 void initial::on_funciones_especiales_clicked() {
     if (this->type_employee == RECURSOS_HUMANOS) {  // TODO(nosotros): completar con permisos de usuario
         this->hhrr = new human_resources();
+        this->hhrr->set_user_data(this->user_data);
         this->hhrr->setModal(true);
         this->hhrr->show();
     } else {
