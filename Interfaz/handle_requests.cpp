@@ -81,24 +81,19 @@ handle_requests::~handle_requests() {
 }
 
 void handle_requests::update_scroll() {
-    int length = this->requests_buttons.size();
-    for(int count = 0; count < length; ++count) {
-        this->layout->removeWidget(this->requests_buttons[count]);
-        this->requests_buttons[count]->hide();
+    size_t length = this->requests_buttons.size();
+    size_t index = 0;
+    for(size_t count = 0; count < length; ++count) {
+      if (!this->requests_buttons[index]->valid) {
+        this->layout->removeWidget(this->requests_buttons[index]);
+        this->requests_buttons[index]->hide();
+        this->requests_buttons.erase(this->requests_buttons.begin()+(index));
+      } else {
+        ++index;
+      }
     }
-    int index = 0;
-    for(int count = 0; count < length; ++count) {
-        if (this->requests_buttons[index]->valid) {
-            this->layout->addWidget(this->requests_buttons[index]);
-            this->requests_buttons[index]->show();
-            ++index;
-        } else {
-            std::cout << "Mando a borrar a  " << this->requests_buttons[index]->getId() << " en la pos " << index << std::endl;
-            // this->layout->removeWidget(this->requests_buttons[index]);
-            //description_button * victim =  requests_buttons[index];
-            this->requests_buttons.erase(this->requests_buttons.begin()+(index-1));
-            //delete victim;
-        }
+    for (int button = 0; button < this->requests_buttons.size(); ++button) {
+      this->requests_buttons[button]->identifier = button;
     }
 }
 
@@ -113,7 +108,6 @@ void handle_requests::remove_request(int index) {
     if (this->requests_buttons.size() > 1) {
         for (int element = index; element < this->requests_buttons.size()-1; ++element) {
             this->requests_buttons[element] = this->requests_buttons[element+1];
-            // this->requests_buttons[element+1] = 0;
             std::cout << "Movi boton \n";
         }
     }

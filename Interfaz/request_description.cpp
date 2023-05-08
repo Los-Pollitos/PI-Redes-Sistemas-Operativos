@@ -62,7 +62,7 @@ void request_description::on_buttonBox_accepted() {
         QMessageBox::information(this, "Correcto", "Solicitud aceptada");
         this->parent_button->valid = false;
         this->close();
-        emit this->parent_button->disapear(this->parent_button->getId());
+        emit this->parent_button->disapear(this->parent_button->identifier);
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
@@ -75,7 +75,7 @@ void request_description::on_buttonBox_rejected() {
         QMessageBox::information(this, "Correcto", "Solicitud denegada");
         this->close();
         this->parent_button->valid = false;
-        emit this->parent_button->disapear(this->parent_button->getId());
+        emit this->parent_button->disapear(this->parent_button->identifier);
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecto");
     }

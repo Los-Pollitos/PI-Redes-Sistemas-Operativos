@@ -9,10 +9,9 @@ class description_button : public QPushButton {
 public:
     description_button(QString name, QWidget * parent, int id, int type);
     bool valid;
-    int getId();
+    int identifier;
 
 protected:
-    int identifier;
     int type;
     void mousePressEvent(QMouseEvent*e) override;
 
