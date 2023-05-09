@@ -32,7 +32,7 @@ bool login::validate_data(QString username, QString password) {
         std::ifstream file ("../Etapa 2/Archivos/Login.txt");
         std::string read_data = "";
         if (file.is_open()) {
-           while (read_data != username.toStdString()) {
+            while (read_data != username.toStdString() && file) {
                file >> read_data;
                std::cout << "Lei:" << read_data << "." << std::endl;
                if (read_data != username.toStdString()) {
@@ -79,6 +79,8 @@ void login::on_login_button_clicked() {
         this->tokenPage->show();
     } else {
        QMessageBox::warning(this, "Error", "Datos incorrectos");
+       this->ui->user_input->setText("");
+       this->ui->password_input->setText("");
     }
 }
 
