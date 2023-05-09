@@ -15,13 +15,11 @@ SOURCES += \
     consult_salary.cpp \
     description_button.cpp \
     handle_requests.cpp \
-    human_resources.cpp \
     initial.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp \
     manage_user.cpp \
-    manager.cpp \
     modify_user.cpp \
     payment_proof.cpp \
     request_description.cpp \
@@ -38,13 +36,11 @@ HEADERS += \
     consult_salary.h \
     description_button.h \
     handle_requests.h \
-    human_resources.h \
     initial.h \
     login.h \
     login_info.h \
     mainwindow.h \
     manage_user.h \
-    manager.h \
     modify_user.h \
     payment_proof.h \
     request_description.h \
@@ -61,12 +57,10 @@ FORMS += \
     consult_requests.ui \
     consult_salary.ui \
     handle_requests.ui \
-    human_resources.ui \
     initial.ui \
     login.ui \
     mainwindow.ui \
     manage_user.ui \
-    manager.ui \
     modify_user.ui \
     payment_proof.ui \
     request_description.ui \
