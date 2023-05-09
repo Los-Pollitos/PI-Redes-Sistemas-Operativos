@@ -5,7 +5,7 @@
 #include <QMessageBox>
 
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
-    modified_index = 0;
+    modified_index = -1;
     ui->setupUi(this);
 }
 
@@ -42,8 +42,8 @@ void modify_user::read_data() {
             // va a salir con la identificacion
             users_data[i].identification = stoi(temp);
             data >> users_data[i].salary;
-            data >> users_data[i].job;
-            data >> temp; // son las vacaciones asignadas
+            data >> users_data[i].role;
+            data >> temp; // son las vacaciones asignadas, no se necesitan
             data >> users_data[i].available_vacations;
             ++i;
             temp = " ";  // reinicia el valor
@@ -73,35 +73,16 @@ void modify_user::add_data() {
     //     "Este expleado tiene muchas anotaciones. Anotación 1: llega tarde todos los lunes, parece que se duerme. Anotación 2: parece que tiene vida y se va temprano los viernes.");
     // this->record.append("Es un buen empleado, hace su trabajo.");
 
-    // TODO(Angie): solo mostrarle la info al jefe directo
-    // se debe leer el archivo
-    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
-    // TODO(nosotros): try catch
-    int i = 0;
-    std::string temp = " ";
-    if (data.is_open()) {
-        while(data) {
-            // users_data.append(user_data());
-            // file >> users_data[i].user;
-            // file >> temp;
-            while (temp[0] < 48 && temp[0] > 58) {
-                users_data[i].name.append(" ");
-                users_data[i].name.append(temp);
-                // file >> temp;
-            }
-            // va a salir con la identificacion
-            users_data[i].identification = stoi(temp);
-            // file >> users_data[i].salary;
-            // file >> users_data[i].job;
-            // file >> temp; // TODO(Angie). es el jefe
-           //  file >> temp; // son las vacaciones asignadas
-            //file >> users_data[i].available_vacations;
-            ++i;
-        }
-        data.close();
-    }
-
     
+}
+
+// role indicates the role that wants to be analized if the user has
+bool modify_user::mask_role(int user_index, int role) {
+    bool has_role = false;
+    if ((role & users_data[user_index].role) == role) {
+        has_role = true;
+    }
+    return has_role;
 }
 
 void modify_user::on_approve_changes_clicked() {
@@ -123,4 +104,5 @@ void modify_user::update_data() {
 void modify_user::set_login_info(login_info* info) {
     this->user_login = info;
     this->add_data();
+    this->read_data();
 }

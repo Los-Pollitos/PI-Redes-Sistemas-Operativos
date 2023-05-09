@@ -6,6 +6,13 @@
 #include "login_info.h"
 #include "user_data.h"
 
+#define EMPLOYEE 32
+#define HUMAN_RESOURCES 16
+#define SUPERVISOR 8
+#define ADMIN_USER 4
+#define ADMIN_CONFIG 2
+#define DEBUG 1
+
 namespace Ui {
 class modify_user;
 }
@@ -27,6 +34,7 @@ private:
     int modified_index;
     void add_data();
     void read_data();
+    bool mask_role(int user_index, int role);
 
     Ui::modify_user *ui;
     QList<int> ids;

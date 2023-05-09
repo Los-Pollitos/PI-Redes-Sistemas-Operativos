@@ -8,7 +8,7 @@ struct user_data {
     std::string name;
     std::string identification;
     std::string salary;
-    std::string job;
+    int role;
     int available_vacations;
 };
 
