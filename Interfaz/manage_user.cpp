@@ -87,11 +87,49 @@ void manage_user::on_generate_button_clicked() {
     this->ui->create_password->clear();
 }
 
+void manage_user::reinsert_file() {
+    std::ifstream aux_file("../Etapa 2/Archivos/Login.txt");
+    // Truncate the file
+    std::ofstream main_file("../Etapa 2/Archivos/Login.txt", std::fstream::trunc);
+    std::string buffer = "";
+    // Store aux file in main file
+    while (getline(aux_file, buffer)) {
+        buffer.append("\n");
+        main_file << buffer;
+    }
+    aux_file.close();
+    main_file.close();
+}
+
+void manage_user::delete_user(std::string& desired_username) {
+    std::ofstream aux_file("../Etapa 2/Archivos/file.aux");
+    std::ifstream main_file("../Etapa 2/Archivos/Login.txt");
+    std::string buffer = "";
+    // Store file in aux file
+    int pos = 0;
+    while (getline(main_file, buffer)) {
+        pos = buffer.find(desired_username);
+        // Store the information avoiding the desired line
+        if (pos == -1 || pos != 0) {
+            buffer.append("\n");
+            aux_file << buffer;
+        }
+    }
+    aux_file.close();
+    main_file.close();
+    // Reinsert the contents of the file without the deleted user
+    this->reinsert_file();
+}
+
 void manage_user::on_delete_button_clicked() {
     // Get password from text
     QString inserted_password = this->ui->second_rh_password->text();
     if (inserted_password.toStdString() == user_data->password) {
-        std::cout << "Exitos\n";
+        std::string desired_user = this->ui->create_username->text().toStdString();
+        this->delete_user(desired_user);
+        QMessageBox success;
+        success.setText("Usuario eliminado de manera exitosa");
+        success.exec();
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
