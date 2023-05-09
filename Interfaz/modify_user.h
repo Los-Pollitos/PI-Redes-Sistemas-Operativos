@@ -1,8 +1,10 @@
 #ifndef MODIFY_USER_H
 #define MODIFY_USER_H
 
+#include <vector>
 #include <QDialog>
 #include "login_info.h"
+#include "user_data.h"
 
 namespace Ui {
 class modify_user;
@@ -32,6 +34,7 @@ private:
     QList<int> vacations;
     QList<QString> record;
     login_info* user_login;
+    std::vector<user_data> users_data;
 };
 
 #endif // MODIFY_USER_H
