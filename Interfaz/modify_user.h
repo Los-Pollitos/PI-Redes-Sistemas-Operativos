@@ -1,6 +1,7 @@
 #ifndef MODIFY_USER_H
 #define MODIFY_USER_H
 
+#include <string>
 #include <vector>
 #include <QDialog>
 #include "login_info.h"

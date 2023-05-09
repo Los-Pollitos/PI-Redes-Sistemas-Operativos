@@ -2,6 +2,8 @@
 #include "ui_modify_user.h"
 #include <fstream>
 
+#include <iostream>  // TODO(Angie): borrar
+
 #include <QCheckBox>
 #include <QMessageBox>
 
@@ -32,16 +34,18 @@ void modify_user::read_data() {
     std::string temp = " ";
     if (data.is_open()) {
         while(data) {
-             users_data.push_back(user_data());
-             data >> users_data[i].user;
-             data >> temp;
-            while (temp[0] < 48 && temp[0] > 58) {
+            users_data.push_back(user_data());
+            data >> users_data[i].user;
+            data >> temp;
+
+            while (temp[0] < 48 || temp[0] > 58) {
                 users_data[i].name.append(" ");
                 users_data[i].name.append(temp);
                 data >> temp;
             }
+
             // va a salir con la identificacion
-            users_data[i].identification = stoi(temp);
+            users_data[i].identification = std::stoi(temp);
             data >> users_data[i].salary;
             data >> users_data[i].role;
             data >> temp; // son las vacaciones asignadas, no se necesitan
@@ -54,9 +58,13 @@ void modify_user::read_data() {
 }
 
 void modify_user::add_data() {
-    for (int i = 0; i < int(users_data.size()); ++i) {
+    for (size_t i = 0; i < users_data.size(); ++i) {
         // un usuario no se puede modificar a sí mismo
         if (this->users_data[i].user != this->user_login->user) {
+
+            // TODO(Angie): borrar
+            std::cout << "estoy en el for, i = " << i << std::endl;
+
             ui->comboBox->addItem(QString::fromStdString(this->users_data[i].name));
             this->ids.append(this->users_data[i].identification);
             ui->checkbox_admin_users->setCheckState(unmask_role(i, ADMIN_USER));
@@ -105,6 +113,6 @@ void modify_user::update_data() {
 
 void modify_user::set_login_info(login_info* info) {
     this->user_login = info;
-    this->add_data();
     this->read_data();
+    this->add_data();
 }
