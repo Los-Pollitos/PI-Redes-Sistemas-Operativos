@@ -111,15 +111,55 @@ initial::~initial() {
     delete this->user_mod;
 }
 
+
+
+layout->addWidget(this->requests_buttons[]);
+layout->addWidget(this->requests_buttons[]);
+layout->addWidget(this->requests_buttons[]);
+layout->addWidget(this->requests_buttons[]);
+layout->addWidget(this->requests_buttons[]);
+
 void initial::create_windows(int id, int type) {
     // TODO (Nosotros): borrar
    std::cout << id << " " << type << std::endl;
 
-   if (id == USER_MOD){
-       this->user_mod->set_login_info(this->user_data);
-       this->hide();
-       this->user_mod->setModal(true);
-       this->user_mod->show();
+   switch (id) {
+    case WORK_PAGE:
+
+       break;
+    case PAYMENT_PAGE:
+
+      break;
+   case SALARY_PAGE:
+
+     break;
+   case SEE_SALARY:
+
+     break;
+   case PENDING_REQUESTS:
+
+     break;
+   case VACATION_MANGER:
+
+     break;
+   case SEE_VACATIONS:
+
+     break;
+   case SEE_RECORD:
+
+     break;
+   case REQUEST_HANDLER:
+
+     break;
+   case USER_MANAGER:
+
+     break;
+   case USER_MOD:
+     this->user_mod->set_login_info(this->user_data);
+     this->hide();
+     this->user_mod->setModal(true);
+     this->user_mod->show();
+     break;
    }
 }
 
