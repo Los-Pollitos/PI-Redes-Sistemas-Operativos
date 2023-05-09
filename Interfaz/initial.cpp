@@ -112,13 +112,6 @@ initial::~initial() {
 }
 
 
-
-layout->addWidget(this->requests_buttons[]);
-layout->addWidget(this->requests_buttons[]);
-layout->addWidget(this->requests_buttons[]);
-layout->addWidget(this->requests_buttons[]);
-layout->addWidget(this->requests_buttons[]);
-
 void initial::create_windows(int id, int type) {
     // TODO (Nosotros): borrar
    std::cout << id << " " << type << std::endl;
