@@ -13,7 +13,7 @@ login::login(QWidget *parent) :
     //this->ui->pic_label->setPixmap(pix.scaled(ui->pic_label->width(),
     //                                          ui->pic_label->height(),Qt::KeepAspectRatio));
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
-    this->tokenPage = new Token(this);
+    this->tokenPage = new Token(nullptr);
     this->changePass = new change_password(this);
     this->setWindowTitle("Login");
 }
@@ -90,7 +90,7 @@ void login::on_login_button_clicked() {
 
 void login::on_forgot_button_clicked()
 {
-    this->hide();
+    this->changePass->setModal(true);
     this->changePass->show();
 }
 
