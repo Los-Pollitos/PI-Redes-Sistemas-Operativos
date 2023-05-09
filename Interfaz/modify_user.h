@@ -26,7 +26,6 @@ private:
     void add_data();
 
     Ui::modify_user *ui;
-    QList<QString> names;
     QList<int> ids;
     QList<QString> job;
     QList<QString> subordinate;
