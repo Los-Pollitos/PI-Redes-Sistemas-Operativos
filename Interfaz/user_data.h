@@ -6,7 +6,7 @@
 struct user_data {
     std::string user;
     std::string name;
-    std::string identification;
+    int identification;
     std::string salary;
     int role;
     int available_vacations;

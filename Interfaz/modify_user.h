@@ -44,7 +44,7 @@ private:
     QList<int> role_human_resources;
     QList<int> role_debug;
     QList<int> supervisor;
-    QList<int> salary;
+    QList<QString> salary;
     QList<int> vacations;
     QList<QString> record;
     login_info* user_login;

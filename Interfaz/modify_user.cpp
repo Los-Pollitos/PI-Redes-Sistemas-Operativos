@@ -53,33 +53,24 @@ void modify_user::read_data() {
 }
 
 void modify_user::add_data() {
-    // TODO(nosotros): leer de una base de datos
-    // ui->comboBox->addItem("Empleado 1");
-    // ui->comboBox->addItem("Empleado 2");
-
-    // this->ids.append(12345678);
-    // this->ids.append(87654321);
-
-    // this->job.append("Trabajo1");
-    // this->job.append("Trabajo2");
-
-    // this->salary.append(123);
-    // this->salary.append(321);
-
-    // this->vacations.append(1);
-    // this->vacations.append(2);
-
-    // this->record.append(
-    //     "Este expleado tiene muchas anotaciones. Anotación 1: llega tarde todos los lunes, parece que se duerme. Anotación 2: parece que tiene vida y se va temprano los viernes.");
-    // this->record.append("Es un buen empleado, hace su trabajo.");
-
+    for (int i = 0; i < int(users_data.size()); ++i) {
+        // un usuario no se puede modificar a sí mismo
+        if (this->users_data[i].user != this->user_login->user) {
+            ui->comboBox->addItem(QString::fromStdString(this->users_data[i].name));
+            this->ids.append(this->users_data[i].identification);
+            // TODO(Angie): this->job.append("Trabajo1");
+            this->salary.append(QString::fromStdString(this->users_data[i].salary));
+            this->vacations.append(this->users_data[i].available_vacations);
+            // record no es requerido para esta entrega
+        }
+    }
     
 }
 
 // role indicates the role that wants to be analized if the user has
 bool modify_user::mask_role(int user_index, int role) {
     bool has_role = false;
-    if ((role & users_data[user_index].role) == role) {
+    if ((role & this->users_data[user_index].role) == role) {
         has_role = true;
     }
     return has_role;
