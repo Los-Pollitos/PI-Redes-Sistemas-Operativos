@@ -34,7 +34,7 @@ private:
     int modified_index;
     void add_data();
     void read_data();
-    bool mask_role(int user_index, int role);
+    Qt::CheckState unmask_role(int user_index, int role);
 
     Ui::modify_user *ui;
     QList<int> ids;

@@ -2,6 +2,7 @@
 #include "ui_modify_user.h"
 #include <fstream>
 
+#include <QCheckBox>
 #include <QMessageBox>
 
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
@@ -19,7 +20,7 @@ void modify_user::on_comboBox_activated(int index) {
     ui->employee_id->setReadOnly(true);
     ui->employee_id->setText(QString::number(this->ids[index]));
    //  ui->employee_job->setText(this->job[index]);
-    ui->employee_salary->setText(QString::number(this->salary[index]));
+    ui->employee_salary->setText(this->salary[index]);
     ui->employee_vacations->setText(QString::number(this->vacations[index]));
     ui->record->setPlainText(this->record[index]);
 }
@@ -58,22 +59,26 @@ void modify_user::add_data() {
         if (this->users_data[i].user != this->user_login->user) {
             ui->comboBox->addItem(QString::fromStdString(this->users_data[i].name));
             this->ids.append(this->users_data[i].identification);
-            // TODO(Angie): this->job.append("Trabajo1");
+            ui->checkbox_admin_users->setCheckState(unmask_role(i, ADMIN_USER));
+            ui->checkbox_admin_config->setCheckState(unmask_role(i, ADMIN_CONFIG));
+            ui->checkbox_debug->setCheckState(unmask_role(i, DEBUG));
+            ui->checkbox_employee->setCheckState(unmask_role(i, EMPLOYEE));
+            ui->checkbox_human_resources->setCheckState(unmask_role(i, HUMAN_RESOURCES));
+            ui->checkbox_supervisor->setCheckState(unmask_role(i, SUPERVISOR));
             this->salary.append(QString::fromStdString(this->users_data[i].salary));
             this->vacations.append(this->users_data[i].available_vacations);
-            // record no es requerido para esta entrega
+            // TODO(nosotros): record (no es requerido para esta entrega)
         }
     }
-    
 }
 
 // role indicates the role that wants to be analized if the user has
-bool modify_user::mask_role(int user_index, int role) {
-    bool has_role = false;
+Qt::CheckState modify_user::unmask_role(int user_index, int role) {
+    Qt::CheckState state = Qt::Unchecked;
     if ((role & this->users_data[user_index].role) == role) {
-        has_role = true;
+        state = Qt::Checked;
     }
-    return has_role;
+    return state;
 }
 
 void modify_user::on_approve_changes_clicked() {
@@ -87,9 +92,15 @@ void modify_user::on_approve_changes_clicked() {
 }
 
 void modify_user::update_data() {
-    // this->job[modified_index] = ui->employee_job->text();
-    this->salary[modified_index] = ui->employee_salary->text().toInt();
+    this->role_admin_config[modified_index] = ui->checkbox_admin_config->checkState();
+    this->role_admin_users[modified_index] = ui->checkbox_admin_users->checkState();
+    this->role_employee[modified_index] = ui->checkbox_employee->checkState();
+    this->role_human_resources[modified_index] = ui->checkbox_human_resources->checkState();
+    this->role_debug[modified_index] = ui->checkbox_debug->checkState();
+    this->supervisor[modified_index] = ui->checkbox_supervisor->checkState();
+    this->salary[modified_index] = ui->employee_salary->text();
     this->vacations[modified_index] = ui->employee_vacations->text().toInt();
+    // TODO(nosotros): record (no es requerido para esta entrega)
 }
 
 void modify_user::set_login_info(login_info* info) {

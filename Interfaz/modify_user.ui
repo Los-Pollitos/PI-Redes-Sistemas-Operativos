@@ -217,7 +217,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QCheckBox" name="admin_users">
+  <widget class="QCheckBox" name="checkbox_admin_users">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -230,7 +230,7 @@
     <string>Administrador de usuarios</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="admin_config">
+  <widget class="QCheckBox" name="checkbox_admin_config">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -243,7 +243,7 @@
     <string>Aministrador de configuración</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="human_resources">
+  <widget class="QCheckBox" name="checkbox_human_resources">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -256,7 +256,7 @@
     <string>Recursos humanos</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="supervisor">
+  <widget class="QCheckBox" name="checkbox_supervisor">
    <property name="geometry">
     <rect>
      <x>430</x>
@@ -269,7 +269,7 @@
     <string>Supervisor</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="debug">
+  <widget class="QCheckBox" name="checkbox_debug">
    <property name="geometry">
     <rect>
      <x>430</x>
@@ -282,7 +282,7 @@
     <string>Depurador</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="employee_2">
+  <widget class="QCheckBox" name="checkbox_employee">
    <property name="geometry">
     <rect>
      <x>430</x>
