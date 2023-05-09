@@ -24,6 +24,34 @@ void modify_user::on_comboBox_activated(int index) {
     ui->record->setPlainText(this->record[index]);
 }
 
+void modify_user::read_data() {
+    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
+    // TODO(nosotros): try catch
+    int i = 0;
+    std::string temp = " ";
+    if (data.is_open()) {
+        while(data) {
+             users_data.push_back(user_data());
+             data >> users_data[i].user;
+             data >> temp;
+            while (temp[0] < 48 && temp[0] > 58) {
+                users_data[i].name.append(" ");
+                users_data[i].name.append(temp);
+                data >> temp;
+            }
+            // va a salir con la identificacion
+            users_data[i].identification = stoi(temp);
+            data >> users_data[i].salary;
+            data >> users_data[i].job;
+            data >> temp; // son las vacaciones asignadas
+            data >> users_data[i].available_vacations;
+            ++i;
+            temp = " ";  // reinicia el valor
+        }
+        data.close();
+    }
+}
+
 void modify_user::add_data() {
     // TODO(nosotros): leer de una base de datos
     // ui->comboBox->addItem("Empleado 1");

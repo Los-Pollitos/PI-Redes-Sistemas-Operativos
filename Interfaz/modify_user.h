@@ -26,10 +26,16 @@ private slots:
 private:
     int modified_index;
     void add_data();
+    void read_data();
 
     Ui::modify_user *ui;
     QList<int> ids;
-    QList<QString> job;
+    QList<int> role_admin_config;
+    QList<int> role_admin_users;
+    QList<int> role_employee;
+    QList<int> role_human_resources;
+    QList<int> role_debug;
+    QList<int> supervisor;
     QList<int> salary;
     QList<int> vacations;
     QList<QString> record;
