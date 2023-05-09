@@ -88,7 +88,7 @@ void manage_user::on_generate_button_clicked() {
 }
 
 void manage_user::reinsert_file() {
-    std::ifstream aux_file("../Etapa 2/Archivos/Login.txt");
+    std::ifstream aux_file("../Etapa 2/Archivos/file.aux");
     // Truncate the file
     std::ofstream main_file("../Etapa 2/Archivos/Login.txt", std::fstream::trunc);
     std::string buffer = "";
@@ -124,14 +124,20 @@ void manage_user::delete_user(std::string& desired_username) {
 void manage_user::on_delete_button_clicked() {
     // Get password from text
     QString inserted_password = this->ui->second_rh_password->text();
-    if (inserted_password.toStdString() == user_data->password) {
-        std::string desired_user = this->ui->create_username->text().toStdString();
-        this->delete_user(desired_user);
-        QMessageBox success;
-        success.setText("Usuario eliminado de manera exitosa");
-        success.exec();
+    if (inserted_password.toStdString() == this->user_data->password) {
+        std::string desired_user = this->ui->delete_username->text().toStdString();
+        if (desired_user != this->user_data->user) {
+            this->delete_user(desired_user);
+            QMessageBox success;
+            success.setText("Usuario eliminado de manera exitosa");
+            success.exec();
+        } else {
+            QMessageBox::warning(this, "Error", "No se puede eliminar su propio usuario");
+        }
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
+    this->ui->second_rh_password->clear();
+    this->ui->delete_username->clear();
 }
 
