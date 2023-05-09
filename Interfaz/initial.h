@@ -41,13 +41,7 @@ public:
     ~initial();
     void setUserData(login_info * user_data);
     void update_scrollbar();
-
-private slots:
-    void on_funciones_especiales_clicked();
-    void on_pushButton_8_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_7_clicked();
+    void create_windows(int id, int type);
 
 private:
     Ui::initial *ui;

@@ -20,8 +20,8 @@ public:
     void set_login_info(login_info* info);
 
 private slots:
-    void on_employee_information_2_clicked();
-    void on_employee_information_clicked();
+    // void on_employee_information_2_clicked();
+    // void on_employee_information_clicked();
 
 private:
     Ui::manager* ui;

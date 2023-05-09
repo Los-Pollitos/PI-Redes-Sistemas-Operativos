@@ -18,7 +18,7 @@ void modify_user::on_comboBox_activated(int index) {
     // TODO(nosotros): rellenar info de usuarios con cantidad de usuarios real
     ui->employee_id->setReadOnly(true);
     ui->employee_id->setText(QString::number(this->ids[index]));
-    ui->employee_job->setText(this->job[index]);
+   //  ui->employee_job->setText(this->job[index]);
     ui->employee_salary->setText(QString::number(this->salary[index]));
     ui->employee_vacations->setText(QString::number(this->vacations[index]));
     ui->record->setPlainText(this->record[index]);
@@ -53,21 +53,21 @@ void modify_user::add_data() {
     std::string temp = " ";
     if (data.is_open()) {
         while(data) {
-            users_data.append(user_data());
-            file >> users_data[i].user;
-            file >> temp;
+            // users_data.append(user_data());
+            // file >> users_data[i].user;
+            // file >> temp;
             while (temp[0] < 48 && temp[0] > 58) {
                 users_data[i].name.append(" ");
                 users_data[i].name.append(temp);
-                file >> temp;
+                // file >> temp;
             }
             // va a salir con la identificacion
             users_data[i].identification = stoi(temp);
-            file >> users_data[i].salary;
-            file >> users_data[i].job;
-            file >> temp; // TODO(Angie). es el jefe
-            file >> temp; // son las vacaciones asignadas
-            file >> users_data[i].available_vacations;
+            // file >> users_data[i].salary;
+            // file >> users_data[i].job;
+            // file >> temp; // TODO(Angie). es el jefe
+           //  file >> temp; // son las vacaciones asignadas
+            //file >> users_data[i].available_vacations;
             ++i;
         }
         data.close();
@@ -87,7 +87,7 @@ void modify_user::on_approve_changes_clicked() {
 }
 
 void modify_user::update_data() {
-    this->job[modified_index] = ui->employee_job->text();
+    // this->job[modified_index] = ui->employee_job->text();
     this->salary[modified_index] = ui->employee_salary->text().toInt();
     this->vacations[modified_index] = ui->employee_vacations->text().toInt();
 }
