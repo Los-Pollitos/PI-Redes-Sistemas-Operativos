@@ -45,11 +45,19 @@ void request_description::set_atributes(int day, int month, int year,
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
+       this->ui->accept_button->show();
     } else {
+        this->ui->file_button->setText("Adjuntar archivo");
+        this->ui->buttonBox->show();
+        this->ui->password_label->show();
+        this->ui->lineEdit->show();
+        this->ui->accept_label->show();
         this->ui->accept_button->hide();
     }
     if (this->type == REQUEST_VACATIONS) {
         this->ui->file_button->hide();
+    } else {
+        this->ui->file_button->show();
     }
     this->user = user;
     this->description = description;
@@ -72,7 +80,8 @@ request_description::~request_description()
 }
 
 void request_description::on_buttonBox_accepted() {
-    QString password = ui->lineEdit->text();
+    QString password = this->ui->lineEdit->text();
+    this->ui->lineEdit->clear();
     if (password.toStdString() == this->user_data->password) {
         if (this->type == REQUEST_VACATIONS || this->uploaded_file == true) {
             QMessageBox::information(this, "Correcto", "Solicitud aceptada");
@@ -89,7 +98,8 @@ void request_description::on_buttonBox_accepted() {
 
 
 void request_description::on_buttonBox_rejected() {
-    QString password = ui->lineEdit->text();
+    QString password = this->ui->lineEdit->text();
+    this->ui->lineEdit->clear();
     if (password.toStdString() == this->user_data->password) {
         QMessageBox::information(this, "Correcto", "Solicitud denegada");
         this->close();

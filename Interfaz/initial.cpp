@@ -118,38 +118,50 @@ void initial::create_windows(int id, int type) {
 
    switch (id) {
     case WORK_PAGE:
-
-       break;
+      this->work_page->setModal(true);
+      this->work_page->show();
+      break;
     case PAYMENT_PAGE:
-
+      this->payment_page->setModal(true);
+      this->payment_page->show();
       break;
    case SALARY_PAGE:
-
+     this->salary_page->setModal(true);
+     this->salary_page->show();
      break;
    case SEE_SALARY:
-
+     this->see_salary->setModal(true);
+     this->see_salary->show();
      break;
    case PENDING_REQUESTS:
-
+     this->pending_requests->setModal(true);
+     this->pending_requests->set_user_data(this->user_data);
+     this->pending_requests->show();
      break;
    case VACATION_MANGER:
-
+     this->vacation_manager->setModal(true);
+     this->vacation_manager->show();
      break;
    case SEE_VACATIONS:
-
+     this->see_vacations->setModal(true);
+     this->see_vacations->show();
      break;
    case SEE_RECORD:
-
+     this->see_record->setModal(true);
+     this->see_record->show();
      break;
    case REQUEST_HANDLER:
-
+     this->request_handler->set_user_data(this->user_data);
+     this->request_handler->setModal(true);
+     this->request_handler->show();
      break;
-   case USER_MANAGER:
-
+   case USER_MANAGER:  
+     this->user_manager->set_user_data(this->user_data);
+     this->user_manager->setModal(true);
+     this->user_manager->show();
      break;
    case USER_MOD:
      this->user_mod->set_login_info(this->user_data);
-     this->hide();
      this->user_mod->setModal(true);
      this->user_mod->show();
      break;
