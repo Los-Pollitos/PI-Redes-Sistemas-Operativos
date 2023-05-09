@@ -112,6 +112,14 @@ initial::~initial() {
 }
 
 void initial::create_windows(int id, int type) {
+    // TODO (Nosotros): borrar
    std::cout << id << " " << type << std::endl;
+
+   if (id == USER_MOD){
+       this->user_mod->set_login_info(this->user_data);
+       this->hide();
+       this->user_mod->setModal(true);
+       this->user_mod->show();
+   }
 }
 
