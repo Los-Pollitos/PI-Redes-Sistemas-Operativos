@@ -4,7 +4,7 @@ jnuñez	Julia Núñez Solís	509876349	₡325.500	32	0	0
 eguzman	Emma Guzmán Santamaría	345678901	₡300.000	48	13	15
 alopez	Alexandra López Hernández	105503987	₡600.230	40	15	15
 respinoza	Roberto Espinoza Víquez	612589087	₡950.129	36	15	14
-gherrera	Génesis Monserrath Herrera Knyght	512348739	38	₡1.950.750	25	20
+gherrera	Génesis Monserrath Herrera Knyght	512348739	₡1.950.750	38	25	20
 rgang	Ricardo De Jesus Gang Vincenzi	900960738	₡1.540.560	56	25	14
 dcabezas	Daniel Armando Cabezas Vindas	110810568	₡1.540.560	56	25	15
 d_gmora	Gerardo Mora Ortiz	0	₡0	1	0	0

@@ -47,7 +47,7 @@ private:
     QList<int> supervisor;
     QList<QString> salary;
     QList<int> vacations;
-    QList<QString> record;
+    // QList<QString> record; // TODO(Angie): hacer (no es para la etapa 2)
     login_info* user_login;
     std::vector<user_data> users_data;
 };
