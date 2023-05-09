@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>540</height>
+    <width>647</width>
+    <height>567</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="close_session">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>540</x>
      <y>10</y>
      <width>101</width>
      <height>25</height>
@@ -24,19 +24,6 @@
    </property>
    <property name="text">
     <string>Cerrar sesión</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="return_2">
-   <property name="geometry">
-    <rect>
-     <x>410</x>
-     <y>500</y>
-     <width>101</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Volver</string>
    </property>
   </widget>
   <widget class="QLabel" name="employee">
@@ -57,7 +44,7 @@
     <rect>
      <x>180</x>
      <y>45</y>
-     <width>181</width>
+     <width>341</width>
      <height>25</height>
     </rect>
    </property>
@@ -67,7 +54,7 @@
     <rect>
      <x>180</x>
      <y>225</y>
-     <width>181</width>
+     <width>331</width>
      <height>25</height>
     </rect>
    </property>
@@ -125,7 +112,7 @@
     <rect>
      <x>180</x>
      <y>260</y>
-     <width>181</width>
+     <width>331</width>
      <height>25</height>
     </rect>
    </property>
@@ -153,8 +140,8 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>455</y>
-     <width>181</width>
+     <y>475</y>
+     <width>331</width>
      <height>25</height>
     </rect>
    </property>
@@ -169,7 +156,7 @@
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>460</y>
+     <y>480</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -184,8 +171,8 @@
   <widget class="QPushButton" name="approve_changes">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>490</y>
+     <x>260</x>
+     <y>510</y>
      <width>141</width>
      <height>25</height>
     </rect>
@@ -199,7 +186,7 @@
     <rect>
      <x>180</x>
      <y>90</y>
-     <width>181</width>
+     <width>341</width>
      <height>25</height>
     </rect>
    </property>
@@ -225,7 +212,7 @@
     <rect>
      <x>180</x>
      <y>300</y>
-     <width>191</width>
+     <width>331</width>
      <height>141</height>
     </rect>
    </property>
@@ -235,7 +222,7 @@
     <rect>
      <x>190</x>
      <y>130</y>
-     <width>181</width>
+     <width>221</width>
      <height>22</height>
     </rect>
    </property>
@@ -248,7 +235,7 @@
     <rect>
      <x>190</x>
      <y>160</y>
-     <width>191</width>
+     <width>231</width>
      <height>22</height>
     </rect>
    </property>
@@ -261,7 +248,7 @@
     <rect>
      <x>190</x>
      <y>190</y>
-     <width>151</width>
+     <width>221</width>
      <height>22</height>
     </rect>
    </property>
@@ -272,9 +259,9 @@
   <widget class="QCheckBox" name="checkBox_4">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>430</x>
      <y>130</y>
-     <width>77</width>
+     <width>101</width>
      <height>22</height>
     </rect>
    </property>
@@ -285,9 +272,9 @@
   <widget class="QCheckBox" name="checkBox_5">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>430</x>
      <y>160</y>
-     <width>77</width>
+     <width>101</width>
      <height>22</height>
     </rect>
    </property>
@@ -298,9 +285,9 @@
   <widget class="QCheckBox" name="checkBox_6">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>430</x>
      <y>190</y>
-     <width>77</width>
+     <width>101</width>
      <height>22</height>
     </rect>
    </property>
