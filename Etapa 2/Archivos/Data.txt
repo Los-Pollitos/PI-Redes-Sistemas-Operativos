@@ -1,13 +1,10 @@
-rh_carlos.jimenez	Carlos Jiménez Nuñez	118590672	₡950.900	RRHH	g_gerardo.mora	15	10
-rh_carlos.jimenezramirez	Carlos Jiménez Ramírez	800710541	₡900.128	RRHH	g_carlos.jimenez	15	9
-g_carlos.jimenez	Carlos Jiménez Núñez	117580927	₡1.040.234	Gerente	g_gerardo.mora, g_ricardo.gang	16	0
-g_gerardo.mora	Gerardo Mora Ortiz	223459809	₡1.000.000	Gerente	g_carlos.jimenez	18	5
-e_julia.nuñez	Julia Núñez Solís	509876349	₡325.500	Empleado Regular	g_daniel.cabezas	0	0
-e_emma.guzman	Emma Guzmán Santamaría	345678901	₡300.000	Empleado Regular	g_gerardo.mora, g_daniel.cabezas	13	15
-e_alexa.lopez	Alexandra López Hernández	105503987	₡600.230	Empleado Regular	g_daniel.cabezas	15	15
-rh_roberto.espinoza	Roberto Espinoza Víquez	612589087	₡950.129	RRHH	g_ricardo.gang, g_carlos.jimenez	15	14
-rh_genesis.herrera	Génesis Monserrath Herrera Knyght	512348739	₡1.950.750	RRHH	g_daniel.cabezas, g_ricardo.gang	25	20
-g_ricardo.gang	Ricardo De Jesus Gang Vincenzi	900960738	₡1.540.560	Gerente	g_daniel.cabezas	25	14
-g_daniel.cabezas	Daniel Armando Cabezas Vindas	110810568	₡1.540.560	Gerente	g_ricargo.gang	25	15
-e_daniela.gomez	Daniela Gómez Montealegre	118650508	₡698.000	Empleado Regular	g_ricardo.gang	15	6
-e_fernanda.ferrer	Fernanda Ferrer Figueres	118860202	₡300.000	Empleado Regular	g_gerardo.mora	0	0
+cjimenez	Carlos Jiménez Nuñez	118590672	₡950.900	15	10
+gmora	Gerardo Mora Ortiz	223459809	₡1.000.000	18	5
+jnuñez	Julia Núñez Solís	509876349	₡325.500	0	0
+eguzman	Emma Guzmán Santamaría	345678901	₡300.000	13	15
+alopez	Alexandra López Hernández	105503987	₡600.230	15	15
+respinoza	Roberto Espinoza Víquez	612589087	₡950.129	15	14
+gherrera	Génesis Monserrath Herrera Knyght	512348739	₡1.950.750	25	20
+rgang	Ricardo De Jesus Gang Vincenzi	900960738	₡1.540.560	25	14
+dcabezas	Daniel Armando Cabezas Vindas	110810568	₡1.540.560	25	15
+d_gmora Gerardo Mora Ortiz 0 ₡0 0 0
