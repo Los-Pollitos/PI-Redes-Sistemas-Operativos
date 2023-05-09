@@ -19,7 +19,6 @@ void modify_user::on_comboBox_activated(int index) {
     ui->employee_id->setReadOnly(true);
     ui->employee_id->setText(QString::number(this->ids[index]));
     ui->employee_job->setText(this->job[index]);
-    ui->employee_subordinate->setText(this->subordinate[index]);
     ui->employee_salary->setText(QString::number(this->salary[index]));
     ui->employee_vacations->setText(QString::number(this->vacations[index]));
     ui->record->setPlainText(this->record[index]);
@@ -36,9 +35,6 @@ void modify_user::add_data() {
     this->job.append("Trabajo1");
     this->job.append("Trabajo2");
 
-    this->subordinate.append("Yo1");
-    this->subordinate.append("Yo2");
-
     this->salary.append(123);
     this->salary.append(321);
 
@@ -52,7 +48,7 @@ void modify_user::add_data() {
 
 void modify_user::on_approve_changes_clicked() {
     QString password = ui->password->text();
-    if (password.toStdString() == this->user_data->password) {
+    if (password.toStdString() == this->user_login->password) {
         QMessageBox::information(this, "Correcto", "Cambios aplicados");
         this->update_data();
     } else {
@@ -62,11 +58,10 @@ void modify_user::on_approve_changes_clicked() {
 
 void modify_user::update_data() {
     this->job[modified_index] = ui->employee_job->text();
-    this->subordinate[modified_index] = ui->employee_subordinate->text();
     this->salary[modified_index] = ui->employee_salary->text().toInt();
     this->vacations[modified_index] = ui->employee_vacations->text().toInt();
 }
 
 void modify_user::set_login_info(login_info* info) {
-    this->user_data = info;
+    this->user_login = info;
 }

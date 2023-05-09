@@ -51,6 +51,7 @@ HEADERS += \
     request_vacations.h \
     salary_proof.h \
     token.h \
+    user_data.h \
     vacation_consult.h \
     work_proof.h
 

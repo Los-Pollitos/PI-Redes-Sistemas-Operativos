@@ -28,11 +28,10 @@ private:
     Ui::modify_user *ui;
     QList<int> ids;
     QList<QString> job;
-    QList<QString> subordinate;
     QList<int> salary;
     QList<int> vacations;
     QList<QString> record;
-    login_info* user_data;
+    login_info* user_login;
 };
 
 #endif // MODIFY_USER_H
