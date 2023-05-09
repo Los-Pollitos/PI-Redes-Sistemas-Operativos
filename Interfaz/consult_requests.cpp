@@ -11,6 +11,7 @@ consult_requests::consult_requests(QWidget *parent) :
     ui->setupUi(this);
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();
+    this->description = new request_description(nullptr);
     ui->scrollArea->setWidget(container);
     this->layout = new QVBoxLayout(container);
     this->requests_buttons.push_back(new description_button( "1", container, 0, 2));
@@ -67,7 +68,8 @@ void consult_requests::set_user_data(login_info * user_data) {
 
 
 consult_requests::~consult_requests() {
-    delete ui;
+    delete this->ui;
+    delete this->description;
 }
 
 
@@ -76,7 +78,6 @@ void consult_requests::show_description(int id, int type) {
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
-    this->description = new request_description(nullptr);
     this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_data, false);
     this->description->setModal(true);
     this->description->show();

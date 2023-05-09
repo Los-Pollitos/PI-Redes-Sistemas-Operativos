@@ -9,6 +9,7 @@ handle_requests::handle_requests(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::handle_requests) {
     ui->setupUi(this);
+    this->description = new request_description(nullptr);
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();
     ui->scrollArea->setWidget(container);
@@ -78,6 +79,7 @@ void handle_requests::set_user_data(login_info * user_data) {
 
 handle_requests::~handle_requests() {
     delete ui;
+    delete this->description;
 }
 
 void handle_requests::update_scroll() {
@@ -102,7 +104,6 @@ void handle_requests::show_description(int id, int type) {
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
-    this->description = new request_description(nullptr);
     this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_data, true);
     this->description->setModal(true);
     this->description->show();

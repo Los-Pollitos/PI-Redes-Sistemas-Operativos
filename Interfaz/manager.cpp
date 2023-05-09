@@ -5,15 +5,18 @@
 
 manager::manager(QWidget *parent) : QDialog(parent), ui(new Ui::manager) {
     ui->setupUi(this);
+    this->request_handler = new handle_requests();
+    this->modify_info = new modify_user();
 }
 
 manager::~manager()
 {
     delete ui;
+    delete this->request_handler;
+    delete this->modify_info;
 }
 
 void manager::on_employee_information_2_clicked() {
-    this->request_handler = new handle_requests();
     this->hide();
     this->request_handler->setModal(true);
     this->request_handler->show();
@@ -21,7 +24,6 @@ void manager::on_employee_information_2_clicked() {
 
 
 void manager::on_employee_information_clicked() {
-    this->modify_info = new modify_user();
     this->modify_info->set_login_info(this->user_data);
     this->hide();
     this->modify_info->setModal(true);

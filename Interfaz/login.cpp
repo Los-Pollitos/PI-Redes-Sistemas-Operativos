@@ -20,8 +20,12 @@ login::login(QWidget *parent) :
 
 login::~login()
 {
-    delete ui;
-    delete tokenPage;
+    delete this->ui;
+    delete this->tokenPage;
+    if (this->user_data) {
+        delete this->user_data;
+    }
+    delete this->changePass;
 }
 
 

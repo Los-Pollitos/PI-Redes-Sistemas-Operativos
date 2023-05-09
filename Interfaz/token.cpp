@@ -10,11 +10,13 @@ Token::Token(QWidget *parent) :
     ui->setupUi(this);
     this->ui->token_input->setEchoMode(QLineEdit::Password);
     srand (time(NULL));
+    this->initial_page = new initial();
 }
 
 Token::~Token()
 {
-    delete ui;
+    delete this->ui;
+    delete this->initial_page;
 }
 
 void Token::setUserData(login_info * user_data) {
@@ -30,7 +32,6 @@ void Token::on_validate_label_clicked() {
     // TODO (hacer un try catch que haga lo mismo que el else)
     if (std::stoi(tok.toStdString()) == this->user_data->token[this->pos]) {
         this->hide();
-        this->initial_page = new initial();
         this->initial_page->setModal(true);
         this->initial_page->setUserData(this->user_data);
         this->initial_page->exec();
