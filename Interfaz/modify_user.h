@@ -35,7 +35,9 @@ private:
     int modified_index;
     void add_data();
     void read_data();
+    void write_data();
     Qt::CheckState unmask_role(int user_index, int role);
+    void mask_role(int user_index);
 
     Ui::modify_user *ui;
     QList<int> ids;
@@ -44,7 +46,7 @@ private:
     QList<int> role_employee;
     QList<int> role_human_resources;
     QList<int> role_debug;
-    QList<int> supervisor;
+    QList<int> role_supervisor;
     QList<QString> salary;
     QList<int> vacations;
     // QList<QString> record; // TODO(Angie): hacer (no es para la etapa 2)

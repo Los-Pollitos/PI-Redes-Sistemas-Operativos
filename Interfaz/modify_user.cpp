@@ -2,8 +2,6 @@
 #include "ui_modify_user.h"
 #include <fstream>
 
-#include <iostream>  // TODO(Angie): borrar
-
 #include <QCheckBox>
 #include <QMessageBox>
 
@@ -37,10 +35,6 @@ void modify_user::read_data() {
     std::string temp = " ";
     if (data.is_open()) {
         while(data >> temp) {
-
-            // TODO(Angie): borrar
-            std::cout << "lei a: " << temp << std::endl;
-
             users_data.push_back(user_data());
             users_data[i].user = temp;
             users_data[i].name = "";  // se limpia
@@ -69,10 +63,6 @@ void modify_user::add_data() {
     for (size_t i = 0; i < users_data.size(); ++i) {
         // un usuario no se puede modificar a sí mismo
         if (this->users_data[i].user != this->user_login->user) {
-
-            // TODO(Angie): borrar
-            std::cout << "agrego a " << users_data[i].name << std::endl;
-
             ui->comboBox->addItem(QString::fromStdString(this->users_data[i].name));
             this->ids.append(this->users_data[i].identification);
             this->salary.append(QString::fromStdString(this->users_data[i].salary));
@@ -91,6 +81,17 @@ Qt::CheckState modify_user::unmask_role(int user_index, int role) {
     return state;
 }
 
+void modify_user::mask_role(int user_index) {
+    int admin_config = this->role_admin_config[user_index] & ADMIN_CONFIG;
+    int admin_users = this->role_admin_users[user_index] & ADMIN_USER;
+    int employee = this->role_employee[user_index] & EMPLOYEE;
+    int human_resources = this->role_human_resources[user_index] & HUMAN_RESOURCES;
+    int supervisor = this->role_supervisor[user_index] & SUPERVISOR;
+    int debug = this->role_debug[user_index] & DEBUG;
+
+    this->users_data[user_index].role = (admin_config | admin_users | employee | human_resources | supervisor | debug);
+}
+
 void modify_user::on_approve_changes_clicked() {
     QString password = ui->password->text();
     if (password.toStdString() == this->user_login->password) {
@@ -107,12 +108,17 @@ void modify_user::update_data() {
     this->role_employee[modified_index] = ui->checkbox_employee->checkState();
     this->role_human_resources[modified_index] = ui->checkbox_human_resources->checkState();
     this->role_debug[modified_index] = ui->checkbox_debug->checkState();
-    this->supervisor[modified_index] = ui->checkbox_supervisor->checkState();
+    this->role_supervisor[modified_index] = ui->checkbox_supervisor->checkState();
+    this->mask_role(modified_index);
     this->salary[modified_index] = ui->employee_salary->text();
     this->vacations[modified_index] = ui->employee_vacations->text().toInt();
     // TODO(nosotros): record (no es requerido para esta entrega)
 
-    // TODO(Angie): escribir en archivo
+    this->write_data();
+}
+
+void modify_user::write_data() {
+
 }
 
 void modify_user::set_login_info(login_info* info) {
