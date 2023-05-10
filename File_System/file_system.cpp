@@ -1,219 +1,306 @@
 /*
-Equipo: Los Pollitos
-Cristopher Hernández (C13632)
-Luis Solano (C17634)
-Angie Solís (C17686)
-Emilia Víquez (C18625)
-*/
+ * Team: Los Pollitos
+ * Cristopher Hernández (C13632)
+ * Luis Solano (C17634)
+ * Angie Solís (C17686)
+ * Emilia Víquez (C18625)
+ */
 
 #include "file_system.h"
 
+/*
+ * @brief Default constructor
+ */
 FS::FS() {
-  this->fat = new int [TAMANO_FAT];
-  this->directorio = new entradaDirectorio_t [TAMANO_FAT];
-  this->unidad = new char* [TAMANO_MAX];
+  this->fat = new int[MAX_SIZE];
+  this->directory = new directory_entry_t[MAX_SIZE];
+  this->unit = new char[MAX_SIZE];
 
-  for(int i = 0; i < TAMANO_FAT; ++i) {
-    if (i < TAMANO_MAX) {
-      this->unidad[i] = new char [TAMANO_MAX];
-    }
-    this->fat[i] = VACIO;
-    this->directorio[i].bloque = VACIO;
+  for (int i = 0; i < MAX_SIZE; ++i) {
+    this->unit[i] = '\0';
+    this->fat[i] = EMPTY;
+    this->directory[i].block = EMPTY;
   }
 }
 
+/*
+ * @brief Destructor
+ */
 FS::~FS() {
-  for(int i = 0; i < TAMANO_FAT; ++i) {
-    if (i < TAMANO_MAX) {
-      delete this->unidad[i];
-    }
-  }
-  delete [] this->fat;
-  delete [] this->unidad;
-  delete [] this->directorio;
+  delete[] this->fat;
+  delete[] this->unit;
+  delete[] this->directory;
 }
 
-int FS::crear(std::string nombre) {
-  int bloque = this->buscarBloque();
-  int posDirectorio = this->buscarDirectorio();
-  if (posDirectorio != -1 && bloque != -1) {
-    this->directorio[posDirectorio].bloque = bloque;
-    this->directorio[posDirectorio].nombre = nombre;
-    time(&this->directorio[posDirectorio].fecha);
-    // Se utiliza como EOF pero indica que está vacío
-    this->fat[bloque] = RESERVADO;
+/*
+ * @brief Creates a file
+ *
+ * @param name Indicates the name of the file to be addded
+ * @return int The block in which the file was added. Returns -1 if no block was
+ * found.
+ */
+int FS::create(std::string name) {
+  int block = this->search_block(-1);
+  int directory_pos = this->search_directory();
+  if (directory_pos != -1 && block != -1) {
+    this->directory[directory_pos].block = block;
+    this->directory[directory_pos].name = name;
+    this->directory[directory_pos].size = 1;
+    time(&this->directory[directory_pos].date);
+    // Is used as a special case of EOF to indicate an empty spot
+    this->fat[block] = RESERVED;
   }
-  return bloque;
+  return block;
 }
 
-// busca el bloque vacío más próximo
-int FS::buscarBloque() {
-  int bloque = -1;
-  for (int i = 0; i < TAMANO_FAT; ++i) {
-    if (this->fat[i] == VACIO) {
-      bloque = i;
-      break;
-    }
-  }
-  return bloque;
-}
-
-int FS::buscarDirectorio() {
-  int posDirectorio = -1;
-  for (int i = 0; i < TAMANO_FAT; ++i) {
-    if (this->directorio[i].bloque == VACIO) {
-      posDirectorio = i;
-      break;
-    }
-  }
-  return posDirectorio;
-}
-
-int FS::agregar(std::string nombre, std::string caracter) {
-  int posDirectorio = buscarArchivo(nombre);
-  if (posDirectorio == -1) {
-    return posDirectorio;
-  }
-  // Se inserta el primer caracter del archivo
-  int bloque = this->directorio[posDirectorio].bloque;
-  int fila = -1;
-  int columna = -1;
-  int siguienteVacio = -1;
-  for(int i = 0; i < caracter.length(); ++i) {
-    if(this->fat[bloque] != RESERVADO) {
-      // Se va a insertar un caracter y se ocupa un nuevo bloque
-      siguienteVacio = this->buscarBloque();
-      // Si se logra encontrar un error
-      if (siguienteVacio == -1) {
-        return -1;
+/*
+ * @brief Searches for the closest empty block or inside a block an empty
+ * position
+ *
+ * @param position It is s the position of the last used block (if we want to
+ * create a new file, position should be -1)
+ * @return int The initial block of the empty block. Returns -1 if no block was
+ * found.
+ */
+int FS::search_block(int position) {
+  int block = -1;
+  // Search for an empty block to reserve
+  if (position == -1) {
+    for (int i = 0; i < MAX_SIZE && block == -1; i += BLOCK_SIZE) {
+      if (this->fat[i] == EMPTY) {
+        block = i;
       }
-      // Se le establece un nuevo fin de archivo y se le cambia al pasado para
-      // que apunte al siguiente fin de archivo
-      this->fat[siguienteVacio] = FIN_ARCHIVO;
-      this->fat[bloque] = siguienteVacio;
-      this->traducirPos(siguienteVacio, fila, columna);
-      this->unidad[fila][columna] = caracter[i];
-      bloque = siguienteVacio;
-    } else {
-      // Es lo primero insertado al archivo
-      this->fat[bloque] = FIN_ARCHIVO;
-      this->traducirPos(bloque, fila, columna);    
-      this->unidad[fila][columna] = caracter[0];
+    }
+    // Find space in a block reserved
+  } else {
+    // Move inside the desired block size
+    if (position % BLOCK_SIZE != 0) { // we are halfway through the block
+      position = ((int) (position/BLOCK_SIZE)) * BLOCK_SIZE; // we get the beginning of block
+    }
+    for (int i = position; i < position + BLOCK_SIZE && block == -1; ++i) {
+      if (this->fat[i] == EMPTY) {
+        block = i;
+      }
+    }
+    // Check if it was found, if not, then find an empty block
+    if (block == -1) {
+      block = search_block(-1); // if it is still -1, it is full
     }
   }
-  return bloque;
+  return block;
 }
 
-int FS::buscarArchivo(std::string& nombre) {
-  int posDirectorio = -1;
-  for (int i = 0; i < TAMANO_FAT; ++i) {
-    if (this->directorio[i].nombre == nombre) {
-      posDirectorio = i;
-      break;
+/*
+ * @brief Searches the closest empty directory
+ *
+ * @return int The directory found. Returns -1 if no directory was found.
+ */
+int FS::search_directory() {
+  int directory_pos = -1;
+  for (int i = 0; i < MAX_SIZE && directory_pos == -1; ++i) {
+    if (this->directory[i].block == EMPTY) {
+      directory_pos = i;
     }
   }
-  return posDirectorio;
+  return directory_pos;
 }
 
-int FS::buscarPosFinArchivo(int posFat) {
-  while(this->fat[posFat] != FIN_ARCHIVO && this->fat[posFat] != RESERVADO) {
-    posFat = this->fat[posFat];
+/*
+ * @brief Appends data to a file
+ *
+ * @param name Indicates the file that will be modified
+ * @param data Indicates the data that must be added to the file
+ * @return int The last block where the data was added. Returns -1 if no
+ * directory was found.
+ */
+int FS::append(std::string name, std::string data) {
+  // Value to be returned
+  int return_value = 0;
+  int directory_pos = search_file(name);
+  if (directory_pos == -1) {
+    return_value = -1;
+  } else {
+    // The first character is added to the file
+    int block = this->directory[directory_pos].block;
+    int next_empty = -1;
+    bool first_time = true;
+    for (int i = 0; i < data.length() && return_value != -1; ++i) {
+      if (this->fat[block] != RESERVED) {
+        if (first_time) {
+          block = this->search_end_of_file(
+              block, ++this->directory[directory_pos].size);
+          first_time = false;
+        }
+        // A character will be inserted and a new block is required
+        next_empty = this->search_block(block);
+        // If an error is found
+        if (next_empty == -1) {
+          return_value = -1;
+        } else {
+          // A new end of file is set
+          this->fat[next_empty] = END_OF_FILE;
+          // The last block is set to point the new end of file
+          this->fat[block] = next_empty;
+          this->unit[next_empty] = data[i];
+          ++this->directory[directory_pos].size;
+          block = next_empty;
+        }
+      } else {
+        // The first character of the file will be inserted
+        this->fat[block] = END_OF_FILE;
+        this->unit[block] = data[0];
+        first_time = false;
+      }
+    }
+    return_value = block;
   }
-  return posFat;
+  return return_value;
 }
 
-void FS::traducirPos(int posicion, int& fila, int& columna) {
-  fila = posicion / TAMANO_MAX;
-  columna = posicion % TAMANO_MAX;
+/*
+ * @brief Searches the file in the directory
+ *
+ * @return int The position of the directory. Returns -1 if the was not found.
+ */
+int FS::search_file(std::string &name) {
+  int pos_directory = -1;
+  for (int i = 0; i < MAX_SIZE && pos_directory == -1; ++i) {
+    if (this->directory[i].name == name) {
+      pos_directory = i;
+    }
+  }
+  return pos_directory;
 }
 
-
-int FS::borrar(std::string nombre) {
-  int posDirectorio = buscarArchivo(nombre);
-  if (posDirectorio == -1) {
-    return -1;  // Se va del método si el archivo indicado no existía
+/*
+ * @brief Searches the end of file in a position of the FAT table
+ *
+ * @param fat_pos Indicates the starting position to search in the FAT table
+ * @return int The position of the end of file.
+ */
+int FS::search_end_of_file(int fat_pos, int size) {
+  // TODO(nosotros): add size to directory and condition
+  int counter = 0;
+  while (this->fat[fat_pos] != END_OF_FILE && this->fat[fat_pos] != RESERVED) {
+    fat_pos = this->fat[fat_pos];
+    ++counter;
   }
-  int posFat = this->directorio[posDirectorio].bloque;
-  this->directorio[posDirectorio].bloque = VACIO;
-  this->directorio[posDirectorio].fecha = 0;
-  this->directorio[posDirectorio].nombre = "";
-
-  int posAux = posFat;
-  while (this->fat[posFat] != FIN_ARCHIVO && this->fat[posFat] != RESERVADO) {
-    posAux = this->fat[posFat];
-    this->fat[posFat] = VACIO;
-    posFat = posAux;
-  }
-  this->fat[posFat] = VACIO;
-  // Exitoso
-  return 1;
+  // The end of file is not what the size indicates
+  // if (counter < size) {
+  //  fat_pos = -1;
+  // }
+  return fat_pos;
 }
 
-int FS::borrarProfundo(std::string nombre) {
-  int posDirectorio = buscarArchivo(nombre);
-  if (posDirectorio == -1) {
-    return -1;  // Se va del método si el archivo indicado no existía
-  }
-  int posFat = this->directorio[posDirectorio].bloque;
-  this->directorio[posDirectorio].bloque = VACIO;
-  this->directorio[posDirectorio].fecha = 0;
-  this->directorio[posDirectorio].nombre = "";
+/*
+ * @brief Erases a file from directory and FAT table
+ *
+ * @param name Indicates the file that will be erased
+ * @return int Returns 1 is success or -1 if the file was not found in the
+ * directory
+ */
+int FS::erase(std::string name) {
+  int return_value = 1;
+  int directory_pos = search_file(name);
+  // Leaves the method if the file does not exist
+  if (directory_pos == -1) {
+    return_value = -1;
+  } else {
+    int fat_pos = this->directory[directory_pos].block;
+    this->directory[directory_pos].block = EMPTY;
+    this->directory[directory_pos].date = 0;
+    this->directory[directory_pos].name = "";
 
-  int posAux = posFat;
-  int fila = -1;
-  int columna = -1;
-  while (this->fat[posFat] != FIN_ARCHIVO && this->fat[posFat] != RESERVADO) {
-    this->traducirPos(posFat, fila, columna);
-    this->unidad[fila][columna] = '\0';
-    posAux = this->fat[posFat];
-    this->fat[posFat] = VACIO;
-    posFat = posAux;
+    int aux_pos = fat_pos;
+    while (this->fat[fat_pos] != END_OF_FILE &&
+           this->fat[fat_pos] != RESERVED) {
+      aux_pos = this->fat[fat_pos];
+      this->fat[fat_pos] = EMPTY;
+      fat_pos = aux_pos;
+    }
+    this->fat[aux_pos] = EMPTY;
   }
-  this->fat[posFat] = VACIO;
-  this->traducirPos(posFat, fila, columna);
-  this->unidad[fila][columna] = '\0';
-  // Exitoso
-  return 1;
+  // Success
+  return return_value;
 }
 
-void FS::imprimirUnidad() {
-  std::cout << "\n\nDirectorio:" << std::endl;
-  for (int i = 0; i < TAMANO_FAT; ++i) {
-    if (this->directorio[i].bloque != VACIO) {
-      std::cout << this->directorio[i].nombre << "  ";
-      std::cout<< this->directorio[i].bloque << std::endl;
+/*
+ * @brief Erases a file from directory, FAT table and unit
+ *
+ * @param name Indicates the file that will be erased
+ * @return int Returns 1 is success or -1 if the file was not found in the
+ * directory
+ */
+int FS::deep_erase(std::string name) {
+  int directory_pos = search_file(name);
+  int return_value = 1;
+  // Leaves the method if the file does not exist
+  if (directory_pos == -1) {
+    return_value = -1;
+  } else {
+    int fat_pos = this->directory[directory_pos].block;
+    this->directory[directory_pos].block = EMPTY;
+    this->directory[directory_pos].date = 0;
+    this->directory[directory_pos].name = "";
+
+    int aux_pos = fat_pos;
+    int row = -1;
+    int column = -1;
+    while (this->fat[fat_pos] != END_OF_FILE &&
+           this->fat[fat_pos] != RESERVED) {
+      this->unit[fat_pos] = '\0';
+      aux_pos = this->fat[fat_pos];
+      this->fat[fat_pos] = EMPTY;
+      fat_pos = aux_pos;
+    }
+    this->fat[fat_pos] = EMPTY;
+    this->unit[fat_pos] = '\0';
+  }
+  // Success
+  return return_value;
+}
+
+/*
+ * @brief Prints the unit
+ */
+void FS::print_unit() {
+  std::cout << "\n\nDirectory:" << std::endl;
+  for (int i = 0; i < MAX_SIZE; ++i) {
+    if (this->directory[i].block != EMPTY) {
+      std::cout << this->directory[i].name << "  ";
+      std::cout << this->directory[i].block << std::endl;
     }
   }
   std::cout << "\nFAT:" << std::endl;
-  for (int i = 0; i < TAMANO_FAT; ++i) {
-    if (this->fat[i] == VACIO) {
+  for (int i = 0; i < MAX_SIZE; ++i) {
+    if (this->fat[i] == EMPTY) {
       std::cout << "  ";
-    } else if (this->fat[i] == FIN_ARCHIVO || this->fat[i] == RESERVADO) {
+    } else if (this->fat[i] == END_OF_FILE || this->fat[i] == RESERVED) {
       std::cout << "F ";
     } else {
       std::cout << this->fat[i] << " ";
     }
-    if ((i+1) % 10 == 0) {
+    if ((i + 1) % 10 == 0) {
       std::cout << std::endl;
-      for (int j = i-9; j <= i; ++j) {
+      for (int j = i - 9; j <= i; ++j) {
         std::cout << j << " ";
       }
       std::cout << std::endl;
     }
   }
-  std::cout << "\nUnidad:" << std::endl;
-  for (int i = 0; i < TAMANO_MAX; ++i) {
-    for (int j = 0; j < TAMANO_MAX; ++j) {
-      if (this->unidad[i][j] != '\0') {
-        std::cout << this->unidad[i][j] << " ";
-      } else {
-        std::cout << "  ";
+  std::cout << "\nUnit:" << std::endl;
+  for (int i = 0; i < MAX_SIZE; ++i) {
+    if (this->unit[i] != '\0') {
+      std::cout << this->unit[i] << " ";
+    } else {
+      std::cout << "  ";
+    }
+    if ((i + 1) % 10 == 0) {
+      std::cout << std::endl;
+      for (int j = i - 9; j <= i; ++j) {
+        std::cout << j << " ";
       }
+      std::cout << std::endl;
     }
-    std::cout << std::endl;
-    for (int j = i*10; j <= i*10+9; ++j) {
-      std::cout << j << " ";
-    }
-    std::cout << std::endl;
   }
 }

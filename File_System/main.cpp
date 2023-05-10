@@ -11,19 +11,24 @@ Emilia Víquez (C18625)
 
 int main() {
   // Crear el file system
-  FS* fs = new FS();
+  FS *fs = new FS();
   // Crear dos archivos b.dat y c.dat
-  fs->crear("c.dat");
-  fs->crear("b.dat");
+  fs->create("c.dat");
+  fs->create("b.dat");
   // Agregar de manera intercambiada contenido a ambos
-  fs->agregar("c.dat", "c");
-  fs->agregar("b.dat", "bb");
-  fs->agregar("c.dat", "cc");
+  fs->append("c.dat", "ccccccccccc");
+  fs->append("b.dat", "bb");
+  fs->print_unit();
+  fs->append("c.dat", "ccccc");
   // Mostrar la unidad
-  fs->imprimirUnidad();
+  fs->print_unit();
   // Borrar c
-  fs->borrarProfundo("c.dat");
-  fs->imprimirUnidad();
+  fs->deep_erase("c.dat");
+  fs->append("b.dat", "bbbbbbbbbb");
+  fs->append("b.dat", "bbbbbbbbbb");
+  fs->create("luis.txt");
+  fs->append("luis.txt", "luis");
+  fs->print_unit();
   return 0;
 }
 
@@ -35,12 +40,11 @@ Directorio:
 
 FAT
 3 2 x 4 x
-0 1 2 3 4 5 6 7 
+0 1 2 3 4 5 6 7
 
 
 UNIDAD
-c b b 
+c b b
 c c _
 _ _ _
 */
-  
