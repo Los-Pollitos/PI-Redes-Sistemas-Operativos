@@ -106,22 +106,22 @@ void modify_user::on_approve_changes_clicked() {
 void modify_user::update_data() {
     users_data[modified_index].role = 0;
     if (ui->checkbox_admin_config->checkState() == 2) {  // significa que tiene ese rol
-        users_data[modified_index].role += ADMIN_CONFIG;
+        users_data[modified_index].role |= ADMIN_CONFIG;
     }
     if (ui->checkbox_admin_users->checkState() == 2) {
-        users_data[modified_index].role += ADMIN_USER;
+        users_data[modified_index].role |= ADMIN_USER;
     }
     if (ui->checkbox_employee->checkState() == 2) {
-        users_data[modified_index].role += EMPLOYEE;
+        users_data[modified_index].role |= EMPLOYEE;
     }
     if (ui->checkbox_human_resources->checkState() == 2) {
-        users_data[modified_index].role += HUMAN_RESOURCES;
+        users_data[modified_index].role |= HUMAN_RESOURCES;
     }
     if (ui->checkbox_supervisor->checkState() == 2) {
-        users_data[modified_index].role += SUPERVISOR;
+        users_data[modified_index].role |= SUPERVISOR;
     }
     if (ui->checkbox_debug->checkState() == 2) {
-        users_data[modified_index].role += DEBUG;
+        users_data[modified_index].role |= DEBUG;
     }
 
     this->users_data[modified_index].salary = ui->employee_salary->text().toStdString();
