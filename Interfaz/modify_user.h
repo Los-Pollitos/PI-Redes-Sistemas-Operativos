@@ -37,21 +37,11 @@ private:
     void read_data();
     void write_data();
     Qt::CheckState unmask_role(int user_index, int role);
-    void mask_role(int user_index);
 
     Ui::modify_user *ui;
-    QList<int> ids;
-    QList<int> role_admin_config;
-    QList<int> role_admin_users;
-    QList<int> role_employee;
-    QList<int> role_human_resources;
-    QList<int> role_debug;
-    QList<int> role_supervisor;
-    QList<QString> salary;
-    QList<int> vacations;
-    // QList<QString> record; // TODO(Angie): hacer (no es para la etapa 2)
     login_info* user_login;
     std::vector<user_data> users_data;
+    // QList<QString> record; // TODO(Angie): hacer (no es para la etapa 2)
 };
 
 #endif // MODIFY_USER_H
