@@ -8,6 +8,7 @@
 
 
 #include "login_info.h"
+#include "user_data.h"
 #include "payment_proof.h"
 #include "salary_proof.h"
 #include "work_proof.h"
@@ -19,13 +20,6 @@
 #include "modify_user.h"
 #include "request_vacations.h"
 #include "vacation_consult.h"
-
-#define ADMIN_USERS 0
-#define ADMIN_CONFIG 1
-#define SUPERVISOR 2
-#define RRHH 3
-#define DEBUG 4
-#define EMPLOYEE 5
 
 
 namespace Ui {
@@ -39,9 +33,10 @@ class initial : public QDialog
 public:
     explicit initial(QWidget *parent = nullptr);
     ~initial();
-    void setUserData(login_info * user_data);
+    void setUserDataLogin(login_info * user_login);
     void update_scrollbar();
     void create_windows(int id, int type);
+    void read_data();
 
 private:
     Ui::initial *ui;
@@ -49,7 +44,8 @@ private:
     payment_proof *payment_page;
     salary_proof *salary_page;
     consult_salary * see_salary;
-    login_info * user_data;
+    login_info * users_login;
+    user_data * users_data;
     consult_requests * pending_requests;
     consult_record * see_record;
     handle_requests * request_handler;
@@ -59,7 +55,6 @@ private:
     vacation_consult * see_vacations;
     QVBoxLayout * layout;
     QWidget * container;
-    bool roles[6];
     std::vector<description_button*> requests_buttons;
 };
 

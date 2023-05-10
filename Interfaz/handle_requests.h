@@ -27,7 +27,7 @@ public:
     explicit handle_requests(QWidget *parent = nullptr);
     void update_scroll();
     ~handle_requests();
-    void set_user_data(login_info * user_data);
+    void set_user_login(login_info * user_login);
 
 private:
     QVBoxLayout * layout;
@@ -35,7 +35,7 @@ private:
     Ui::handle_requests *ui;
     std::vector<description_button*> requests_buttons;
     request_description * description;
-    login_info * user_data;
+    login_info * user_login;
 
 protected slots:
     void show_description(int id, int type);

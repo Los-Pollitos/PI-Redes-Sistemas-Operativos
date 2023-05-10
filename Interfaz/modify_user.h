@@ -7,12 +7,6 @@
 #include "login_info.h"
 #include "user_data.h"
 
-#define EMPLOYEE 32
-#define HUMAN_RESOURCES 16
-#define SUPERVISOR 8
-#define ADMIN_USER 4
-#define ADMIN_CONFIG 2
-#define DEBUG 1
 
 namespace Ui {
 class modify_user;
@@ -26,6 +20,7 @@ public:
     ~modify_user();
     void set_login_info(login_info* info);
 
+
 private slots:
     void update_data();
     void on_comboBox_activated(int index);
@@ -34,10 +29,9 @@ private slots:
 private:
     int modified_index;
     void add_data();
-    void read_data();
     void write_data();
     Qt::CheckState unmask_role(int user_index, int role);
-
+    void read_data();
     Ui::modify_user *ui;
     login_info* user_login;
     std::vector<user_data> users_data;

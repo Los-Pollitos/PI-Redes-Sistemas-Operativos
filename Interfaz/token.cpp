@@ -33,7 +33,7 @@ void Token::on_validate_label_clicked() {
     if (std::stoi(tok.toStdString()) == this->user_data->token[this->pos]) {
         this->hide();
         this->initial_page->setModal(true);
-        this->initial_page->setUserData(this->user_data);
+        this->initial_page->setUserDataLogin(this->user_data);
         this->initial_page->exec();
     } else {
         QMessageBox::warning(this, "Error", "Token incorrecto");

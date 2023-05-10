@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <iostream>
+#include <fstream>
 
 
 initial::initial(QWidget *parent) :
@@ -75,8 +76,8 @@ initial::initial(QWidget *parent) :
 }
 
 
-void initial::setUserData(login_info * user_data) {
-    this->user_data = user_data;
+void initial::setUserDataLogin(login_info * user_login) {
+    this->users_login = user_login;
 }
 
 
@@ -135,7 +136,7 @@ void initial::create_windows(int id, int type) {
      break;
    case PENDING_REQUESTS:
      this->pending_requests->setModal(true);
-     this->pending_requests->set_user_data(this->user_data);
+     this->pending_requests->set_user_login(this->users_login);
      this->pending_requests->show();
      break;
    case VACATION_MANGER:
@@ -151,20 +152,50 @@ void initial::create_windows(int id, int type) {
      this->see_record->show();
      break;
    case REQUEST_HANDLER:
-     this->request_handler->set_user_data(this->user_data);
+     this->request_handler->set_user_login(this->users_login);
      this->request_handler->setModal(true);
      this->request_handler->show();
      break;
    case USER_MANAGER:  
-     this->user_manager->set_user_data(this->user_data);
+     this->user_manager->set_user_login(this->users_login);
      this->user_manager->setModal(true);
      this->user_manager->show();
      break;
    case USER_MOD:
-     this->user_mod->set_login_info(this->user_data);
+     this->user_mod->set_login_info(this->users_login);
      this->user_mod->setModal(true);
      this->user_mod->show();
      break;
    }
 }
 
+void initial::read_data() {
+    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
+    // TODO(nosotros): try catch
+    int i = 0;
+    std::string temp = " ";
+    if (data.is_open()) {
+        while(data >> temp) {
+            this->users_data = new user_data();
+            this->users_data[i].user = temp;
+            this->users_data[i].name = "";  // se limpia
+            data >> temp;
+
+            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
+                this->users_data[i].name.append(temp);
+                this->users_data[i].name.append(" ");
+                data >> temp;
+            }
+
+            // va a salir con la identificacion
+            this->users_data->identification = std::stoi(temp);
+            data >> users_data->salary;
+            data >> users_data->role;
+            data >> users_data->assigned_vacations;
+            data >> users_data->available_vacations;
+            ++i;
+            temp = " ";  // reinicia el valor
+        }
+        data.close();
+    }
+}

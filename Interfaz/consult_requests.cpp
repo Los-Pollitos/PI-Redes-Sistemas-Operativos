@@ -62,8 +62,8 @@ consult_requests::consult_requests(QWidget *parent) :
 }
 
 
-void consult_requests::set_user_data(login_info * user_data) {
-    this->user_data = user_data;
+void consult_requests::set_user_login(login_info * user_login) {
+    this->users_login = user_login;
 }
 
 
@@ -78,7 +78,7 @@ void consult_requests::show_description(int id, int type) {
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
-    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_data, false);
+    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->users_login, false);
     this->description->setModal(true);
     this->description->show();
 }

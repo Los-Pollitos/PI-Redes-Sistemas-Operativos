@@ -15,7 +15,7 @@ class manage_user : public QDialog
 
 public:
     explicit manage_user(QWidget *parent = nullptr);
-    void set_user_data(login_info * user_data);
+    void set_user_login(login_info * user_login);
     ~manage_user();
 
 private:
@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::manage_user *ui;
-    login_info* user_data;
+    login_info* user_login;
 };
 
 #endif // MANAGE_USER_H

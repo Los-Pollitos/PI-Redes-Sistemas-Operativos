@@ -22,8 +22,8 @@ manage_user::~manage_user() {
     delete this->ui;
 }
 
-void manage_user::set_user_data(login_info* user_data) {
-    this->user_data = user_data;
+void manage_user::set_user_login(login_info* user_login) {
+    this->user_login = user_login;
 }
 
 bool manage_user::find_user(std::string& desired_username) {
@@ -65,7 +65,7 @@ void manage_user::insert_user(std::string& desired_username, std::string& desire
 void manage_user::on_generate_button_clicked() {
     // Get password from text
     QString inserted_password = this->ui->first_rh_password->text();
-    if (inserted_password.toStdString() == user_data->password) {
+    if (inserted_password.toStdString() == user_login->password) {
         // Store the inserted username
         std::string desired_user = this->ui->create_username->text().toStdString();
         std::string desired_password = this->ui->create_password->text().toStdString();
@@ -124,9 +124,9 @@ void manage_user::delete_user(std::string& desired_username) {
 void manage_user::on_delete_button_clicked() {
     // Get password from text
     QString inserted_password = this->ui->second_rh_password->text();
-    if (inserted_password.toStdString() == this->user_data->password) {
+    if (inserted_password.toStdString() == this->user_login->password) {
         std::string desired_user = this->ui->delete_username->text().toStdString();
-        if (desired_user != this->user_data->user) {
+        if (desired_user != this->user_login->user) {
             this->delete_user(desired_user);
             QMessageBox success;
             success.setText("Usuario eliminado de manera exitosa");

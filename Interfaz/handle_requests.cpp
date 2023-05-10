@@ -68,12 +68,11 @@ handle_requests::handle_requests(QWidget *parent) :
     layout->addWidget(this->requests_buttons[6]);
     layout->addWidget(this->requests_buttons[7]);
     layout->addWidget(this->requests_buttons[8]);
-
 }
 
 
-void handle_requests::set_user_data(login_info * user_data) {
-    this->user_data = user_data;
+void handle_requests::set_user_login(login_info * user_login) {
+    this->user_login = user_login;
 }
 
 
@@ -105,7 +104,7 @@ void handle_requests::show_description(int id, int type) {
     QString newString = "Me gusta jugar";
     int new_type = type;
     std::cout << "type: " << new_type << std::endl;
-    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_data, true);
+    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_login, true);
     this->description->setModal(true);
     this->description->show();
 }

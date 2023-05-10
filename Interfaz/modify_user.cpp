@@ -28,36 +28,6 @@ void modify_user::on_comboBox_activated(int index) {
     ui->employee_vacations->setText(QString::number(this->users_data[index].available_vacations));
 }
 
-void modify_user::read_data() {
-    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
-    // TODO(nosotros): try catch
-    int i = 0;
-    std::string temp = " ";
-    if (data.is_open()) {
-        while(data >> temp) {
-            users_data.push_back(user_data());
-            users_data[i].user = temp;
-            users_data[i].name = "";  // se limpia
-            data >> temp;
-
-            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
-                users_data[i].name.append(temp);
-                users_data[i].name.append(" ");
-                data >> temp;
-            }
-
-            // va a salir con la identificacion
-            users_data[i].identification = std::stoi(temp);
-            data >> users_data[i].salary;
-            data >> users_data[i].role;
-            data >> users_data[i].assigned_vacations;
-            data >> users_data[i].available_vacations;
-            ++i;
-            temp = " ";  // reinicia el valor
-        }
-        data.close();
-    }
-}
 
 void modify_user::write_data() {
     std::ofstream file("../Etapa 2/Archivos/Data.txt", std::ofstream::out);
@@ -135,4 +105,35 @@ void modify_user::set_login_info(login_info* info) {
     this->user_login = info;
     this->read_data();
     this->add_data();
+}
+
+void modify_user::read_data() {
+    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
+    // TODO(nosotros): try catch
+    int i = 0;
+    std::string temp = " ";
+    if (data.is_open()) {
+        while(data >> temp) {
+            users_data.push_back(user_data());
+            users_data[i].user = temp;
+            users_data[i].name = "";  // se limpia
+            data >> temp;
+
+            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
+                users_data[i].name.append(temp);
+                users_data[i].name.append(" ");
+                data >> temp;
+            }
+
+            // va a salir con la identificacion
+            users_data[i].identification = std::stoi(temp);
+            data >> users_data[i].salary;
+            data >> users_data[i].role;
+            data >> users_data[i].assigned_vacations;
+            data >> users_data[i].available_vacations;
+            ++i;
+            temp = " ";  // reinicia el valor
+        }
+        data.close();
+    }
 }

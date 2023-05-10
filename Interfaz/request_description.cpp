@@ -30,7 +30,7 @@ request_description::request_description(QWidget *parent) :
 
 void request_description::set_atributes(int day, int month, int year,
         int& type, QString user, QString& description,
-        description_button *& parent_button, login_info * user_data,
+        description_button *& parent_button, login_info * user_login,
         bool admin) {
     this->parent_button = parent_button;
     this->description = description;
@@ -71,7 +71,8 @@ void request_description::set_atributes(int day, int month, int year,
     QString type_string = request_type(this->type);
     this->ui->label_tipo->setText(type_string);
     this->ui->lineEdit->setEchoMode(QLineEdit::Password);
-    this->user_data = user_data;
+    this->user_login = user_login;
+    this->uploaded_file = false;
 }
 
 request_description::~request_description()
@@ -82,7 +83,7 @@ request_description::~request_description()
 void request_description::on_buttonBox_accepted() {
     QString password = this->ui->lineEdit->text();
     this->ui->lineEdit->clear();
-    if (password.toStdString() == this->user_data->password) {
+    if (password.toStdString() == this->user_login->password) {
         if (this->type == REQUEST_VACATIONS || this->uploaded_file == true) {
             QMessageBox::information(this, "Correcto", "Solicitud aceptada");
             this->parent_button->valid = false;
@@ -100,7 +101,7 @@ void request_description::on_buttonBox_accepted() {
 void request_description::on_buttonBox_rejected() {
     QString password = this->ui->lineEdit->text();
     this->ui->lineEdit->clear();
-    if (password.toStdString() == this->user_data->password) {
+    if (password.toStdString() == this->user_login->password) {
         QMessageBox::information(this, "Correcto", "Solicitud denegada");
         this->close();
         this->parent_button->valid = false;
