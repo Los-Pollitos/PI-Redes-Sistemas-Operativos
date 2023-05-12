@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>200</y>
+     <y>250</y>
      <width>89</width>
      <height>25</height>
     </rect>
@@ -78,62 +78,13 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>345</width>
-     <height>112</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="user_name_text">
-      <property name="text">
-       <string>Nombre de usuario:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="create_username"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="create_password"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Contraseña de confirmación:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="first_rh_password"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="user_password_text">
-      <property name="text">
-       <string>Contraseña de usuario:</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
      <x>380</x>
-     <y>90</y>
+     <y>110</y>
      <width>345</width>
-     <height>58</height>
+     <height>71</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout_3">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Usuario a borrar:</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QLineEdit" name="delete_username"/>
     </item>
@@ -146,6 +97,65 @@
     </item>
     <item row="1" column="1">
      <widget class="QLineEdit" name="second_rh_password"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Usuario a borrar:</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>345</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="user_name_text_2">
+      <property name="text">
+       <string>Nombre de trabajor:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="create_name"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="user_name_text">
+      <property name="text">
+       <string>Nombre de usuario:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="create_username"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="user_password_text">
+      <property name="text">
+       <string>Contraseña de usuario:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="create_password"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Contraseña de confirmación:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="first_rh_password"/>
     </item>
    </layout>
   </widget>
