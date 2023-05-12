@@ -29,16 +29,36 @@ login::~login()
 }
 
 void login::set_file_system(FS* file_system) {
+
+    // TODO(nosotros): borrar
+    std::cout << "estoy setteando, me llego: " << file_system << std::endl;
+
     this->file_system = file_system;
 }
 
 bool login::validate_data(QString username, QString password) {
+
+    // TODO(nosotros): borrar
+    std::cout << "estoy en valid valid" << std::endl;
+
     bool answer = false;
     bool found = false;
     std::string buffer = " ";
     // Find the username in the file
+
+    // TODO(nosotros): borrar
+    std::cout << "voy al while" << std::endl;
+
     while (!found && this->file_system->is_eof(username.toStdString(), "Login.txt")) {
+
+        // TODO(nosotros): borrar
+        std::cout << "dentro del while" << std::endl;
+
         buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
+
+        // TODO(nosotros): borrar
+        std::cout << "buffer: " << buffer << std::endl;
+
         if (buffer != username.toStdString()) {
             // Read the rest of the data
             this->file_system->read_line(username.toStdString(), "Login.txt");
@@ -113,8 +133,11 @@ bool login::validate_data_old(QString username, QString password) {
 
 void login::on_login_button_clicked() {
     QString username = ui->user_input->text();  // get username
-    QString password = ui->password_input->text();   
-    std::cout << "Intento de login: " << username.toStdString() << " usuario: " << password.toStdString() << std::endl;
+    QString password = ui->password_input->text();
+
+    // TODO(nostros): borrar
+    std::cout << "Intento de login: " << username.toStdString() << " contrseña: " << password.toStdString() << std::endl;
+
     if (this->validate_data(username, password)) {
         this->hide();
         this->tokenPage->setUserData(this->user_data);
