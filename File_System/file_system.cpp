@@ -6,20 +6,24 @@
  * Emilia Víquez (C18625)
  */
 
-#include "file_system.h"
+// TODO(nosotros): cambiar unidad para que tenga EOF
 
+#include "file_system.h"
 /*
  * @brief Default constructor
  */
 FS::FS() {
-  this->fat = new int[MAX_SIZE];
-  this->directory = new directory_entry_t[MAX_SIZE];
+  this->fat = new int[FAT_SIZE];
+  this->directory =
+      new directory_entry_t[FAT_SIZE]; // fat size because is the same maximum
+                                       // quantity of files
   this->unit = new char[MAX_SIZE];
-
   for (int i = 0; i < MAX_SIZE; ++i) {
     this->unit[i] = '\0';
-    this->fat[i] = EMPTY;
-    this->directory[i].block = EMPTY;
+    if (i < FAT_SIZE) {
+      this->fat[i] = EMPTY;
+      this->directory[i].block = EMPTY;
+    }
   }
 }
 
@@ -40,12 +44,13 @@ FS::~FS() {
  * found.
  */
 int FS::create(std::string name) {
-  int block = this->search_block(-1);
+  int block = this->search_block();
   int directory_pos = this->search_directory();
   if (directory_pos != -1 && block != -1) {
     this->directory[directory_pos].block = block;
     this->directory[directory_pos].name = name;
     this->directory[directory_pos].size = 1;
+    this->directory[directory_pos].is_file = true;
     time(&this->directory[directory_pos].date);
     // Is used as a special case of EOF to indicate an empty spot
     this->fat[block] = RESERVED;
@@ -54,37 +59,15 @@ int FS::create(std::string name) {
 }
 
 /*
- * @brief Searches for the closest empty block or inside a block an empty
- * position
+ * @brief Searches the closest empty block
  *
- * @param position It is s the position of the last used block (if we want to
- * create a new file, position should be -1)
- * @return int The initial block of the empty block. Returns -1 if no block was
- * found.
+ * @return int The block empty block. Returns -1 if no block was found.
  */
-int FS::search_block(int position) {
+int FS::search_block() {
   int block = -1;
-  // Search for an empty block to reserve
-  if (position == -1) {
-    for (int i = 0; i < MAX_SIZE && block == -1; i += BLOCK_SIZE) {
-      if (this->fat[i] == EMPTY) {
-        block = i;
-      }
-    }
-    // Find space in a block reserved
-  } else {
-    // Move inside the desired block size
-    if (position % BLOCK_SIZE != 0) { // we are halfway through the block
-      position = ((int) (position/BLOCK_SIZE)) * BLOCK_SIZE; // we get the beginning of block
-    }
-    for (int i = position; i < position + BLOCK_SIZE && block == -1; ++i) {
-      if (this->fat[i] == EMPTY) {
-        block = i;
-      }
-    }
-    // Check if it was found, if not, then find an empty block
-    if (block == -1) {
-      block = search_block(-1); // if it is still -1, it is full
+  for (int i = 0; i < FAT_SIZE && block == -1; ++i) {
+    if (this->fat[i] == EMPTY) {
+      block = i;
     }
   }
   return block;
@@ -120,39 +103,39 @@ int FS::append(std::string name, std::string data) {
   if (directory_pos == -1) {
     return_value = -1;
   } else {
-    // The first character is added to the file
-    int block = this->directory[directory_pos].block;
-    int next_empty = -1;
-    bool first_time = true;
+    int unit_index = -1;
+    int fat_index = this->directory[directory_pos].block;
     for (int i = 0; i < data.length() && return_value != -1; ++i) {
-      if (this->fat[block] != RESERVED) {
-        if (first_time) {
-          block = this->search_end_of_file(
-              block, ++this->directory[directory_pos].size);
-          first_time = false;
-        }
-        // A character will be inserted and a new block is required
-        next_empty = this->search_block(block);
-        // If an error is found
-        if (next_empty == -1) {
+      if (this->fat[fat_index] == RESERVED) { // first in file
+        this->fat[fat_index] = END_OF_FILE;
+        this->unit[fat_index * BLOCK_SIZE] = data[0];
+        this->unit[fat_index * BLOCK_SIZE + 1] = END_TEXT;
+      } else {
+        fat_index = search_end_of_file_fat(fat_index,
+                                           this->directory[directory_pos].size);
+        unit_index =
+            search_end_of_file(fat_index, this->directory[directory_pos].size);
+        if (unit_index == -1) {
           return_value = -1;
         } else {
-          // A new end of file is set
-          this->fat[next_empty] = END_OF_FILE;
-          // The last block is set to point the new end of file
-          this->fat[block] = next_empty;
-          this->unit[next_empty] = data[i];
-          ++this->directory[directory_pos].size;
-          block = next_empty;
+          if ((unit_index + 1) % BLOCK_SIZE ==
+              0) { // this means we need a new block
+            this->fat[fat_index] = this->search_block();
+            this->unit[unit_index] = data[i];
+            this->fat[this->fat[fat_index]] = END_OF_FILE; // update the eof
+            fat_index = this->fat[fat_index];
+            unit_index = fat_index * BLOCK_SIZE;
+            this->unit[unit_index] = END_TEXT;
+            ++this->directory[directory_pos].size;
+          } else { // this means we have space in the block
+            this->unit[unit_index] = data[i];
+            ++unit_index;
+            this->unit[unit_index] = END_TEXT;
+            ++this->directory[directory_pos].size;
+          }
         }
-      } else {
-        // The first character of the file will be inserted
-        this->fat[block] = END_OF_FILE;
-        this->unit[block] = data[0];
-        first_time = false;
       }
     }
-    return_value = block;
   }
   return return_value;
 }
@@ -162,7 +145,7 @@ int FS::append(std::string name, std::string data) {
  *
  * @return int The position of the directory. Returns -1 if the was not found.
  */
-int FS::search_file(std::string &name) {
+int FS::search_file(std::string& name) {
   int pos_directory = -1;
   for (int i = 0; i < MAX_SIZE && pos_directory == -1; ++i) {
     if (this->directory[i].name == name) {
@@ -172,24 +155,39 @@ int FS::search_file(std::string &name) {
   return pos_directory;
 }
 
+// TODO(nosotros): documentar
 /*
- * @brief Searches the end of file in a position of the FAT table
+ * @brief Searches the end of file in a given position of the FAT table
  *
  * @param fat_pos Indicates the starting position to search in the FAT table
  * @return int The position of the end of file.
  */
-int FS::search_end_of_file(int fat_pos, int size) {
-  // TODO(nosotros): add size to directory and condition
+int FS::search_end_of_file_fat(int fat_pos, int size) {
   int counter = 0;
-  while (this->fat[fat_pos] != END_OF_FILE && this->fat[fat_pos] != RESERVED) {
+  while (this->fat[fat_pos] != END_OF_FILE && this->fat[fat_pos] != RESERVED /*&&
+         counter < size*/) {
     fat_pos = this->fat[fat_pos];
     ++counter;
   }
   // The end of file is not what the size indicates
-  // if (counter < size) {
-  //  fat_pos = -1;
+  // if (counter >= size) {  // TODO(nosotros): arreglar
+  //   fat_pos = -1;
   // }
   return fat_pos;
+}
+
+// TODO(nosotros): documentar
+int FS::search_end_of_file(int fat_block, int size) {
+  int pos_eof = -1;
+
+  for (int i = fat_block * BLOCK_SIZE;
+       i < (fat_block + 1) * BLOCK_SIZE && pos_eof == -1; ++i) {
+    if (this->unit[i] == END_TEXT) {
+      pos_eof = i;
+    }
+  }
+
+  return pos_eof;
 }
 
 /*
@@ -207,10 +205,12 @@ int FS::erase(std::string name) {
     return_value = -1;
   } else {
     int fat_pos = this->directory[directory_pos].block;
+    // Clean the directory
     this->directory[directory_pos].block = EMPTY;
     this->directory[directory_pos].date = 0;
+    this->directory[directory_pos].size = 0;
     this->directory[directory_pos].name = "";
-
+    // Clean the fat
     int aux_pos = fat_pos;
     while (this->fat[fat_pos] != END_OF_FILE &&
            this->fat[fat_pos] != RESERVED) {
@@ -239,40 +239,84 @@ int FS::deep_erase(std::string name) {
     return_value = -1;
   } else {
     int fat_pos = this->directory[directory_pos].block;
+    // Clean the directory
     this->directory[directory_pos].block = EMPTY;
     this->directory[directory_pos].date = 0;
+    this->directory[directory_pos].size = 0;
     this->directory[directory_pos].name = "";
-
+    // Clean the fat
     int aux_pos = fat_pos;
     int row = -1;
     int column = -1;
     while (this->fat[fat_pos] != END_OF_FILE &&
            this->fat[fat_pos] != RESERVED) {
-      this->unit[fat_pos] = '\0';
+      for (int i = fat_pos * BLOCK_SIZE; i < fat_pos * BLOCK_SIZE + BLOCK_SIZE;
+           ++i) { // clean block
+        this->unit[i] = '\0';
+      }
       aux_pos = this->fat[fat_pos];
       this->fat[fat_pos] = EMPTY;
       fat_pos = aux_pos;
     }
+    // We exit when we are still missing the last one
     this->fat[fat_pos] = EMPTY;
-    this->unit[fat_pos] = '\0';
+    for (int i = fat_pos * BLOCK_SIZE; i < fat_pos * BLOCK_SIZE + BLOCK_SIZE;
+         ++i) {
+      this->unit[i] = '\0';
+    }
   }
   // Success
   return return_value;
 }
+
+// TODO(us): documentar
+char FS::read(std::string user, std::string name, int position) {
+  char result = '\0';
+  // Look for file
+  int dir_pos = this->search_file(name);
+  bool has_permission = this->check_permissions(user, name);
+  if (has_permission && /*position < this->directory[dir_pos].size
+      &&*/ this->directory[dir_pos].is_file) {
+    // We need to get to the block
+    int block = (int)(position / BLOCK_SIZE);
+    std::cout << "Block: " << block << std::endl;
+    int actual_fat = this->directory[dir_pos].block;
+    int past_fat = dir_pos;
+    for (int i = 0; i < block; ++i) {
+      past_fat = actual_fat;
+      actual_fat = this->fat[actual_fat];
+    }
+    std::cout << "actual_fat: " << actual_fat << std::endl;
+    // We need to get to the unit
+    int unit_index = -1;
+    if (actual_fat == END_OF_FILE) {
+      unit_index = (position % BLOCK_SIZE) + (past_fat * BLOCK_SIZE);
+    } else {
+      unit_index = (position % BLOCK_SIZE) + (actual_fat * BLOCK_SIZE);
+    }
+    std::cout << "unit_index: " << unit_index << std::endl;
+    result = this->unit[unit_index];
+  }
+  return result;
+}
+
+// TODO(us): hacer y documentar
+bool FS::check_permissions(std::string user, std::string name) { return true; }
 
 /*
  * @brief Prints the unit
  */
 void FS::print_unit() {
   std::cout << "\n\nDirectory:" << std::endl;
-  for (int i = 0; i < MAX_SIZE; ++i) {
+  for (int i = 0; i < FAT_SIZE; ++i) {
     if (this->directory[i].block != EMPTY) {
       std::cout << this->directory[i].name << "  ";
-      std::cout << this->directory[i].block << std::endl;
+      std::cout << this->directory[i].block << "  ";
+      std::cout << "Size: " << this->directory[i].size << std::endl;
     }
   }
   std::cout << "\nFAT:" << std::endl;
-  for (int i = 0; i < MAX_SIZE; ++i) {
+  for (int i = 0; i < FAT_SIZE; ++i) {
     if (this->fat[i] == EMPTY) {
       std::cout << "  ";
     } else if (this->fat[i] == END_OF_FILE || this->fat[i] == RESERVED) {
@@ -293,7 +337,7 @@ void FS::print_unit() {
     if (this->unit[i] != '\0') {
       std::cout << this->unit[i] << " ";
     } else {
-      std::cout << "  ";
+      std::cout << "_ ";
     }
     if ((i + 1) % 10 == 0) {
       std::cout << std::endl;
