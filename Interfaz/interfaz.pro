@@ -14,6 +14,7 @@ SOURCES += \
     consult_requests.cpp \
     consult_salary.cpp \
     description_button.cpp \
+    file_system.cpp \
     handle_requests.cpp \
     initial.cpp \
     login.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     consult_requests.h \
     consult_salary.h \
     description_button.h \
+    file_system.h \
     handle_requests.h \
     initial.h \
     login.h \
