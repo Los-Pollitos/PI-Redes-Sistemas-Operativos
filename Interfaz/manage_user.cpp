@@ -111,7 +111,14 @@ void manage_user::on_generate_button_clicked() {
     this->ui->create_name->clear();
 }
 
-void manage_user::reinsert_file() {
+void manage_user::clean_aux_file() {
+    // Open in truncate mode
+    std::ofstream aux_file("../Etapa 2/Archivos/file.aux", std::fstream::trunc);
+    // Close the file
+    aux_file.close();
+}
+
+void manage_user::reinsert_login_file() {
     std::ifstream aux_file("../Etapa 2/Archivos/file.aux");
     // Truncate the file
     std::ofstream main_file("../Etapa 2/Archivos/Login.txt", std::fstream::trunc);
@@ -123,9 +130,10 @@ void manage_user::reinsert_file() {
     }
     aux_file.close();
     main_file.close();
+    this->clean_aux_file();
 }
 
-void manage_user::delete_user(std::string& desired_username) {
+void manage_user::delete_user_login(std::string& desired_username) {
     std::ofstream aux_file("../Etapa 2/Archivos/file.aux");
     std::ifstream main_file("../Etapa 2/Archivos/Login.txt");
     std::string buffer = "";
@@ -142,7 +150,42 @@ void manage_user::delete_user(std::string& desired_username) {
     aux_file.close();
     main_file.close();
     // Reinsert the contents of the file without the deleted user
-    this->reinsert_file();
+    this->reinsert_login_file();
+}
+
+void manage_user::reinsert_data_file() {
+    std::ifstream aux_file("../Etapa 2/Archivos/file.aux");
+    // Truncate the file
+    std::ofstream main_file("../Etapa 2/Archivos/Data.txt", std::fstream::trunc);
+    std::string buffer = "";
+    // Store aux file in main file
+    while (getline(aux_file, buffer)) {
+        buffer.append("\n");
+        main_file << buffer;
+    }
+    aux_file.close();
+    main_file.close();
+    this->clean_aux_file();
+}
+
+void manage_user::delete_user_data(std::string& desired_username) {
+    std::ofstream aux_file("../Etapa 2/Archivos/file.aux");
+    std::ifstream main_file("../Etapa 2/Archivos/Data.txt");
+    std::string buffer = "";
+    // Store file in aux file
+    int pos = 0;
+    while (getline(main_file, buffer)) {
+        pos = buffer.find(desired_username);
+        // Store the information avoiding the desired line
+        if (pos == -1 || pos != 0) {
+            buffer.append("\n");
+            aux_file << buffer;
+        }
+    }
+    aux_file.close();
+    main_file.close();
+    // Reinsert the contents of the file without the deleted user
+    this->reinsert_data_file();
 }
 
 void manage_user::on_delete_button_clicked() {
@@ -151,7 +194,8 @@ void manage_user::on_delete_button_clicked() {
     if (inserted_password.toStdString() == this->user_login->password) {
         std::string desired_user = this->ui->delete_username->text().toStdString();
         if (desired_user != this->user_login->user) {
-            this->delete_user(desired_user);
+            this->delete_user_login(desired_user);
+            this->delete_user_data(desired_user);
             QMessageBox success;
             success.setText("Usuario eliminado de manera exitosa");
             success.exec();

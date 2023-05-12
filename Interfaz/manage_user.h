@@ -22,8 +22,11 @@ private:
     bool find_user(std::string& desired_username);
     void insert_user_login(std::string& desired_username, std::string& desired_password);
     void insert_user_data(std::string& desired_username, std::string& name, std::string& id);
-    void reinsert_file();
-    void delete_user(std::string& desired_username);
+    void clean_aux_file();
+    void reinsert_login_file();
+    void reinsert_data_file();
+    void delete_user_login(std::string& desired_username);
+    void delete_user_data(std::string& desired_username);
 
 private slots:
     void on_generate_button_clicked();
