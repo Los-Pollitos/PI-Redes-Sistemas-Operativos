@@ -28,9 +28,47 @@ login::~login()
     delete this->changePass;
 }
 
-
+void login::set_file_system(FS* file_system) {
+    this->file_system = file_system;
+}
 
 bool login::validate_data(QString username, QString password) {
+    bool answer = false;
+    bool found = false;
+    std::string buffer = " ";
+    // Find the username in the file
+    while (!found && this->file_system->is_eof(username.toStdString(), "Login.txt")) {
+        buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
+        if (buffer != username.toStdString()) {
+            // Read the rest of the data
+            this->file_system->read_line(username.toStdString(), "Login.txt");
+        } else {
+            found = true;
+        }
+        buffer = " ";
+    }
+    // Compare
+    if (found) {
+        buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
+        if (buffer == password.toStdString()) {
+            // The user was found and is inserted in the struct
+            answer = true;
+            this->user_data = new login_info();
+            this->user_data->user = username.toStdString();
+            this->user_data->password = password.toStdString();
+            // Obtain the token
+            for (int i = 0; i < TOKEN_SIZE; ++i) {
+                this->user_data->token[i] =
+                    std::stoi(this->file_system->read_until(username.toStdString(), "Login.txt", '\t'));
+            }
+        }
+    }
+    // Success
+    return answer;
+}
+
+// TODO(nosotros): borrar
+bool login::validate_data_old(QString username, QString password) {
     bool correct = false;
  //   try {
         std::ifstream file ("../Etapa 2/Archivos/Login.txt");
@@ -88,8 +126,7 @@ void login::on_login_button_clicked() {
     }
 }
 
-void login::on_forgot_button_clicked()
-{
+void login::on_forgot_button_clicked() {
     this->changePass->setModal(true);
     this->changePass->show();
 }

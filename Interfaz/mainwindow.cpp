@@ -7,12 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->loginPage = new login(nullptr);
-    this->loginPage->show();
-
     this->file_system = new FS();
-    this->load_file("../Archivos/login.txt", "login.txt");
-
-    // this->hide();
+    this->loginPage->set_file_system(file_system);
+    this->loginPage->show();
+    this->load_file("../Archivos/Login.txt", "Login.txt");
 }
 
 MainWindow::~MainWindow()
@@ -31,9 +29,6 @@ void MainWindow::load_file(std::string location, std::string file_name) {
             this->file_system->append(file_name, read_line);
             read_line = "";
         }
-
-        this->file_system->print_unit();
-
         file.close();
     }
 }

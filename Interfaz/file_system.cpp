@@ -6,8 +6,6 @@
  * Emilia Víquez (C18625)
  */
 
-// TODO(nosotros): cambiar unidad para que tenga EOF
-
 #include "file_system.h"
 /*
  * @brief Default constructor
@@ -51,6 +49,9 @@ int FS::create(std::string name) {
         this->directory[directory_pos].name = name;
         this->directory[directory_pos].size = 1;
         this->directory[directory_pos].is_file = true;
+        this->directory[directory_pos].read_pointer =
+            this->directory[directory_pos].block * BLOCK_SIZE;
+        this->unit[this->directory[directory_pos].read_pointer] = END_TEXT;
         time(&this->directory[directory_pos].date);
         // Is used as a special case of EOF to indicate an empty spot
         this->fat[block] = RESERVED;
@@ -145,7 +146,7 @@ int FS::append(std::string name, std::string data) {
  *
  * @return int The position of the directory. Returns -1 if the was not found.
  */
-int FS::search_file(std::string& name) {
+int FS::search_file(std::string &name) {
     int pos_directory = -1;
     for (int i = 0; i < MAX_SIZE && pos_directory == -1; ++i) {
         if (this->directory[i].name == name) {
@@ -246,8 +247,6 @@ int FS::deep_erase(std::string name) {
         this->directory[directory_pos].name = "";
         // Clean the fat
         int aux_pos = fat_pos;
-        int row = -1;
-        int column = -1;
         while (this->fat[fat_pos] != END_OF_FILE &&
                this->fat[fat_pos] != RESERVED) {
             for (int i = fat_pos * BLOCK_SIZE; i < fat_pos * BLOCK_SIZE + BLOCK_SIZE;
@@ -275,8 +274,9 @@ char FS::read(std::string user, std::string name, int position) {
     // Look for file
     int dir_pos = this->search_file(name);
     bool has_permission = this->check_permissions(user, name);
-    if (has_permission && /*position < this->directory[dir_pos].size
-      &&*/ this->directory[dir_pos].is_file) {
+    // TODO (Luis): tamaño
+    if (has_permission && /**position < this->directory[dir_pos].size && **/
+                          this->directory[dir_pos].is_file) {
         // We need to get to the block
         int block = (int)(position / BLOCK_SIZE);
         std::cout << "Block: " << block << std::endl;
@@ -302,6 +302,75 @@ char FS::read(std::string user, std::string name, int position) {
 
 // TODO(us): hacer y documentar
 bool FS::check_permissions(std::string user, std::string name) { return true; }
+
+void FS::add_one_read_pointer(int& local_read_pointer) {
+    if (local_read_pointer + 1 % BLOCK_SIZE == 0) { // We need to switch block
+        int aux_fat_position = (int)(local_read_pointer / BLOCK_SIZE); // actual fat
+        // If the end of file was read, we should not be in this while, so
+        // there should always be a new block ahead if we are in this if
+        aux_fat_position = this->fat[aux_fat_position];
+        local_read_pointer =
+            aux_fat_position * BLOCK_SIZE; // new start of block
+    } else {
+        ++local_read_pointer; // we are still in the same block
+    }
+}
+
+// TODO(us): documentar
+// TODO (Luis): tamaño antes de leer
+std::string FS::read_line(std::string user, std::string name) {
+    int dir_pos = this->search_file(name);
+    std::string result = "\0";
+    int local_read_pointer = this->directory[dir_pos].read_pointer;
+    if (check_permissions(user, name)) {
+        while (/**this->directory[dir_pos].read_pointer < local_read_pointer && **/
+                   this->unit[local_read_pointer] != '\n' &&
+               this->unit[local_read_pointer] != END_TEXT) {
+            result += this->unit[local_read_pointer];
+            this->add_one_read_pointer(local_read_pointer);
+        }
+        if (this->unit[local_read_pointer] != END_TEXT) {
+            this->add_one_read_pointer(local_read_pointer);
+        }
+        this->directory[dir_pos].read_pointer = local_read_pointer;
+    }
+    return result;
+}
+
+// TODO(us): documentar
+// TODO (Luis): tamaño antes de leer
+std::string FS::read_until(std::string user, std::string name, char separator) {
+    int dir_pos = this->search_file(name);
+    std::string result = "\0";
+    int local_read_pointer = this->directory[dir_pos].read_pointer;
+    if (check_permissions(user, name)) {
+        while (/**this->directory[dir_pos].read_pointer < local_read_pointer && **/
+                   this->unit[local_read_pointer] != separator
+               && this->unit[local_read_pointer] != END_TEXT
+               && this->unit[local_read_pointer] != '\n') {
+            result += this->unit[local_read_pointer];
+            this->add_one_read_pointer(local_read_pointer);
+        }
+        if (this->unit[local_read_pointer] != END_TEXT) {
+            this->add_one_read_pointer(local_read_pointer);
+        }
+        this->directory[dir_pos].read_pointer = local_read_pointer;
+    }
+    return result;
+}
+
+// TODO(us): documentar
+void FS::reset_read_pointer(std::string user, std::string name) {
+    int directory_pos = this->search_file(name);
+    this->directory[directory_pos].read_pointer =
+        this->directory[directory_pos].block * BLOCK_SIZE;
+}
+
+// TODO(us): documentar
+bool FS::is_eof(std::string user, std::string name) {
+    return (this->unit[this->directory[this->search_file(name)].read_pointer] ==
+            END_TEXT);
+}
 
 /*
  * @brief Prints the unit
