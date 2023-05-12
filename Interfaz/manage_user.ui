@@ -171,6 +171,8 @@
   </widget>
  </widget>
  <tabstops>
+  <tabstop>create_name</tabstop>
+  <tabstop>create_id</tabstop>
   <tabstop>create_username</tabstop>
   <tabstop>create_password</tabstop>
   <tabstop>first_rh_password</tabstop>
