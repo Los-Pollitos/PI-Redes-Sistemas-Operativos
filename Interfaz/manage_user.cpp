@@ -43,22 +43,39 @@ bool manage_user::find_user(std::string& desired_username) {
     return answer;
 }
 
-void manage_user::insert_user(std::string& desired_username, std::string& desired_password) {
-    // Open file to append to it;
-    std::ofstream file("../Etapa 2/Archivos/Login.txt", std::ofstream::app);
-    if (file.is_open()) {
+void manage_user::insert_user_login(std::string& desired_username, std::string& desired_password) {
+    // Open login file to append to it
+    std::ofstream login_file("../Etapa 2/Archivos/Login.txt", std::ofstream::app);
+    if (login_file.is_open()) {
         // Insert username and password
-        file << desired_username << '\t' << desired_password << '\t';
+        login_file << desired_username << '\t' << desired_password << '\t';
         // Generate token
         int number = 0;
         for (int i = 0; i < TOKEN_SIZE - 2; ++i) {
             number = (int)(rand()%100);
-            file << std::to_string(number) << " ";
+            login_file << std::to_string(number) << " ";
         }
         // Last token position
         number = (int)(rand()%100);
-        file << std::to_string(number) << "\n";
-        file.close();
+        login_file << std::to_string(number) << "\n";
+        login_file.close();
+    }
+}
+
+void manage_user::insert_user_data(std::string& desired_username, std::string& name, std::string& id) {
+    // Open data file to append to it
+    std::ofstream data_file("../Etapa 2/Archivos/Data.txt", std::ofstream::app);
+    if (data_file.is_open()) {
+        // Insert username, name and id
+        data_file << desired_username << '\t';
+        data_file << name << '\t';
+        data_file << id << '\t';
+        // Add empty salary
+        data_file << "₡0\t";
+        // Add as normal employee
+        data_file << "32\t";
+        // Add without vacations
+        data_file << "0\t0\n";
     }
 }
 
@@ -67,11 +84,16 @@ void manage_user::on_generate_button_clicked() {
     QString inserted_password = this->ui->first_rh_password->text();
     if (inserted_password.toStdString() == user_login->password) {
         // Store the inserted username
-        std::string desired_user = this->ui->create_username->text().toStdString();
+        std::string desired_username = this->ui->create_username->text().toStdString();
         std::string desired_password = this->ui->create_password->text().toStdString();
         // Find out if the username is new
-        if(!this->find_user(desired_user)) {
-            this->insert_user(desired_user, desired_password);
+        if(!this->find_user(desired_username)) {
+            std::string inserted_name = this->ui->create_name->text().toStdString();
+            std::string inserted_id = this->ui->create_id->text().toStdString();
+            // Insert in login file
+            this->insert_user_login(desired_username, desired_password);
+            // Insert in data file
+            this->insert_user_data(desired_username, inserted_name, inserted_id);
             QMessageBox success;
             success.setText("Usuario creado de manera exitosa");
             success.exec();
@@ -85,6 +107,8 @@ void manage_user::on_generate_button_clicked() {
     this->ui->first_rh_password->clear();
     this->ui->create_username->clear();
     this->ui->create_password->clear();
+    this->ui->create_id->clear();
+    this->ui->create_name->clear();
 }
 
 void manage_user::reinsert_file() {
@@ -137,6 +161,7 @@ void manage_user::on_delete_button_clicked() {
     } else {
         QMessageBox::warning(this, "Error", "Contraseña incorrecta");
     }
+    // Clear the text boxes
     this->ui->second_rh_password->clear();
     this->ui->delete_username->clear();
 }

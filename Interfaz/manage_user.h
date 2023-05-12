@@ -20,7 +20,8 @@ public:
 
 private:
     bool find_user(std::string& desired_username);
-    void insert_user(std::string& desired_username, std::string& desired_password);
+    void insert_user_login(std::string& desired_username, std::string& desired_password);
+    void insert_user_data(std::string& desired_username, std::string& name, std::string& id);
     void reinsert_file();
     void delete_user(std::string& desired_username);
 
