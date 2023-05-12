@@ -30,7 +30,7 @@ void modify_user::on_comboBox_activated(int index) {
 
 
 void modify_user::write_data() {
-    std::ofstream file("../Etapa 2/Archivos/Data.txt", std::ofstream::out);
+    std::ofstream file("../Etapa2/Archivos/Data.txt", std::ofstream::out);
     if (file.is_open()) {
         for (size_t i = 0; i < users_data.size(); ++i) {
             file << this->users_data[i].user << "\t";

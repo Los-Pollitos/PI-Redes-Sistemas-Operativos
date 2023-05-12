@@ -49,7 +49,7 @@ bool login::validate_data(QString username, QString password) {
     // TODO(nosotros): borrar
     std::cout << "voy al while" << std::endl;
 
-    while (!found && this->file_system->is_eof(username.toStdString(), "Login.txt")) {
+    while (!found /*&& this->file_system->is_eof(username.toStdString(), "Login.txt")*/) {
 
         // TODO(nosotros): borrar
         std::cout << "dentro del while" << std::endl;
@@ -79,7 +79,7 @@ bool login::validate_data(QString username, QString password) {
             // Obtain the token
             for (int i = 0; i < TOKEN_SIZE; ++i) {
                 this->user_data->token[i] =
-                    std::stoi(this->file_system->read_until(username.toStdString(), "Login.txt", '\t'));
+                    std::stoi(this->file_system->read_until(username.toStdString(), "Login.txt", ' '));
             }
         }
     }

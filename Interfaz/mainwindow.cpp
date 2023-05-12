@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->file_system = new FS();
-    this->load_file("../Archivos/Login.txt", "Login.txt");
+    this->load_file("../Etapa2/Archivos/Login.txt", "Login.txt");
     this->loginPage = new login(nullptr);
     this->loginPage->set_file_system(file_system);
     this->loginPage->show();
@@ -22,12 +22,16 @@ MainWindow::~MainWindow()
 void MainWindow::load_file(std::string location, std::string file_name) {
 
     // TODO(nosotros): borrar
-    std::cout << "estoy en load file" << std::endl;
+    std::cout << "estoy en load file, location: " << location << std::endl;
 
 
     std::ifstream file(location);
     std::string read_line = "";
     if (file.is_open()) {
+
+        // TODO(nosotros): borrar
+        std::cout << "estoy en el if" << std::endl;
+
         this->file_system->create(file_name);
         while (getline(file, read_line)) {
             read_line += '\n';

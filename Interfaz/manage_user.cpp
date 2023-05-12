@@ -28,7 +28,7 @@ void manage_user::set_user_login(login_info* user_login) {
 
 bool manage_user::find_user(std::string& desired_username) {
     bool answer = false;
-    std::ifstream file ("../Etapa 2/Archivos/Login.txt");
+    std::ifstream file ("../Etapa2/Archivos/Login.txt");
     std::string read_data = "";
     if (file.is_open()) {
         // While there is something to read and not an answer
@@ -45,7 +45,7 @@ bool manage_user::find_user(std::string& desired_username) {
 
 void manage_user::insert_user_login(std::string& desired_username, std::string& desired_password) {
     // Open login file to append to it
-    std::ofstream login_file("../Etapa 2/Archivos/Login.txt", std::ofstream::app);
+    std::ofstream login_file("../Etapa2/Archivos/Login.txt", std::ofstream::app);
     if (login_file.is_open()) {
         // Insert username and password
         login_file << desired_username << '\t' << desired_password << '\t';
@@ -64,7 +64,7 @@ void manage_user::insert_user_login(std::string& desired_username, std::string& 
 
 void manage_user::insert_user_data(std::string& desired_username, std::string& name, std::string& id) {
     // Open data file to append to it
-    std::ofstream data_file("../Etapa 2/Archivos/Data.txt", std::ofstream::app);
+    std::ofstream data_file("../Etapa2/Archivos/Data.txt", std::ofstream::app);
     if (data_file.is_open()) {
         // Insert username, name and id
         data_file << desired_username << '\t';
@@ -113,15 +113,15 @@ void manage_user::on_generate_button_clicked() {
 
 void manage_user::clean_aux_file() {
     // Open in truncate mode
-    std::ofstream aux_file("../Etapa 2/Archivos/file.aux", std::fstream::trunc);
+    std::ofstream aux_file("../Etapa2/Archivos/file.aux", std::fstream::trunc);
     // Close the file
     aux_file.close();
 }
 
 void manage_user::reinsert_login_file() {
-    std::ifstream aux_file("../Etapa 2/Archivos/file.aux");
+    std::ifstream aux_file("../Etapa2/Archivos/file.aux");
     // Truncate the file
-    std::ofstream main_file("../Etapa 2/Archivos/Login.txt", std::fstream::trunc);
+    std::ofstream main_file("../Etapa2/Archivos/Login.txt", std::fstream::trunc);
     std::string buffer = "";
     // Store aux file in main file
     while (getline(aux_file, buffer)) {
@@ -134,8 +134,8 @@ void manage_user::reinsert_login_file() {
 }
 
 void manage_user::delete_user_login(std::string& desired_username) {
-    std::ofstream aux_file("../Etapa 2/Archivos/file.aux");
-    std::ifstream main_file("../Etapa 2/Archivos/Login.txt");
+    std::ofstream aux_file("../Etapa2/Archivos/file.aux");
+    std::ifstream main_file("../Etapa2/Archivos/Login.txt");
     std::string buffer = "";
     // Store file in aux file
     int pos = 0;
@@ -154,9 +154,9 @@ void manage_user::delete_user_login(std::string& desired_username) {
 }
 
 void manage_user::reinsert_data_file() {
-    std::ifstream aux_file("../Etapa 2/Archivos/file.aux");
+    std::ifstream aux_file("../Etapa2/Archivos/file.aux");
     // Truncate the file
-    std::ofstream main_file("../Etapa 2/Archivos/Data.txt", std::fstream::trunc);
+    std::ofstream main_file("../Etapa2/Archivos/Data.txt", std::fstream::trunc);
     std::string buffer = "";
     // Store aux file in main file
     while (getline(aux_file, buffer)) {
@@ -169,8 +169,8 @@ void manage_user::reinsert_data_file() {
 }
 
 void manage_user::delete_user_data(std::string& desired_username) {
-    std::ofstream aux_file("../Etapa 2/Archivos/file.aux");
-    std::ifstream main_file("../Etapa 2/Archivos/Data.txt");
+    std::ofstream aux_file("../Etapa2/Archivos/file.aux");
+    std::ifstream main_file("../Etapa2/Archivos/Data.txt");
     std::string buffer = "";
     // Store file in aux file
     int pos = 0;
