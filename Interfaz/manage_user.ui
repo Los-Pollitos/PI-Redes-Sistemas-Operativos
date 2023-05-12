@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
+    <width>768</width>
     <height>307</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>530</x>
      <y>40</y>
      <width>121</width>
      <height>17</height>
@@ -65,7 +65,7 @@
   <widget class="QPushButton" name="delete_button">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>560</x>
      <y>200</y>
      <width>89</width>
      <height>25</height>
@@ -78,7 +78,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>380</x>
+     <x>400</x>
      <y>110</y>
      <width>345</width>
      <height>71</height>
@@ -110,10 +110,10 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>80</y>
+     <x>20</x>
+     <y>70</y>
      <width>345</width>
-     <height>120</height>
+     <height>151</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -128,33 +128,43 @@
      <widget class="QLineEdit" name="create_name"/>
     </item>
     <item row="1" column="0">
+     <widget class="QLabel" name="user_name_text_3">
+      <property name="text">
+       <string>Identificación:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="create_id"/>
+    </item>
+    <item row="2" column="0">
      <widget class="QLabel" name="user_name_text">
       <property name="text">
        <string>Nombre de usuario:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="2" column="1">
      <widget class="QLineEdit" name="create_username"/>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QLabel" name="user_password_text">
       <property name="text">
        <string>Contraseña de usuario:</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="3" column="1">
      <widget class="QLineEdit" name="create_password"/>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
        <string>Contraseña de confirmación:</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item row="4" column="1">
      <widget class="QLineEdit" name="first_rh_password"/>
     </item>
    </layout>
