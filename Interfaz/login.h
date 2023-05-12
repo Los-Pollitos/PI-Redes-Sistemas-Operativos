@@ -22,7 +22,6 @@ public:
     void set_file_system(FS* file_system);
 
 private:
-    bool validate_data_old(QString username, QString password);  // TODO(nosotros): borrar
     bool validate_data(QString username, QString password);
 
 private slots:

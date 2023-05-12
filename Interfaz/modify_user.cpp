@@ -75,23 +75,33 @@ void modify_user::on_approve_changes_clicked() {
 
 void modify_user::update_data() {
     users_data[modified_index].role = 0;
-    if (ui->checkbox_admin_config->checkState() == 2) {  // significa que tiene ese rol
-        users_data[modified_index].role |= ADMIN_CONFIG;
-    }
-    if (ui->checkbox_admin_users->checkState() == 2) {
-        users_data[modified_index].role |= ADMIN_USER;
-    }
-    if (ui->checkbox_employee->checkState() == 2) {
-        users_data[modified_index].role |= EMPLOYEE;
-    }
-    if (ui->checkbox_human_resources->checkState() == 2) {
-        users_data[modified_index].role |= HUMAN_RESOURCES;
-    }
-    if (ui->checkbox_supervisor->checkState() == 2) {
-        users_data[modified_index].role |= SUPERVISOR;
-    }
+    // si el usuario es Debug, no puede tener más roles
     if (ui->checkbox_debug->checkState() == 2) {
-        users_data[modified_index].role |= DEBUG;
+        users_data[modified_index].role = DEBUG;
+        ui->checkbox_admin_users->setCheckState(unmask_role(modified_index, ADMIN_USER));
+        ui->checkbox_admin_config->setCheckState(unmask_role(modified_index, ADMIN_CONFIG));
+        ui->checkbox_employee->setCheckState(unmask_role(modified_index, EMPLOYEE));
+        ui->checkbox_human_resources->setCheckState(unmask_role(modified_index, HUMAN_RESOURCES));
+        ui->checkbox_supervisor->setCheckState(unmask_role(modified_index, SUPERVISOR));
+    } else {
+        if (ui->checkbox_admin_config->checkState() == 2) {  // significa que tiene ese rol
+            users_data[modified_index].role |= ADMIN_CONFIG;
+        }
+        if (ui->checkbox_admin_users->checkState() == 2) {
+            users_data[modified_index].role |= ADMIN_USER;
+        }
+        if (ui->checkbox_employee->checkState() == 2) {
+            users_data[modified_index].role |= EMPLOYEE;
+        }
+        if (ui->checkbox_human_resources->checkState() == 2) {
+            users_data[modified_index].role |= HUMAN_RESOURCES;
+        }
+        if (ui->checkbox_supervisor->checkState() == 2) {
+            users_data[modified_index].role |= SUPERVISOR;
+        }
+        if (ui->checkbox_debug->checkState() == 2) {
+            users_data[modified_index].role |= DEBUG;
+        }
     }
 
     this->users_data[modified_index].salary = ui->employee_salary->text().toStdString();
@@ -108,7 +118,7 @@ void modify_user::set_login_info(login_info* info) {
 }
 
 void modify_user::read_data() {
-    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
+    std::ifstream data ("../Etapa2/Archivos/Data.txt");
     // TODO(nosotros): try catch
     int i = 0;
     std::string temp = " ";
