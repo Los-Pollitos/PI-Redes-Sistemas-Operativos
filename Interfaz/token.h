@@ -19,6 +19,7 @@ public:
     explicit Token(QWidget *parent = nullptr);
     ~Token();
     void setUserData(login_info * user_data);
+    void setParent_Button(logout_button * parent_button);
 
 private slots:
     void on_validate_label_clicked();
@@ -28,6 +29,7 @@ private:
     initial* initial_page;
     login_info * user_data;
     int pos;
+    logout_button* parent_button;
 };
 
 #endif // TOKEN_H

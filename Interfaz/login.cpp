@@ -15,6 +15,9 @@ login::login(QWidget *parent) :
     this->tokenPage = new Token(nullptr);
     this->changePass = new change_password(this);
     this->setWindowTitle("Login");
+    this->request_button = new logout_button("Logout");
+    this->connect(this->request_button, &logout_button::pressed, this
+                  , &login::generate_new);
 }
 
 login::~login() {
@@ -24,6 +27,7 @@ login::~login() {
         delete this->user_data;
     }
     delete this->changePass;
+    delete this->request_button;
 }
 
 void login::set_file_system(FS* file_system) {
@@ -76,6 +80,7 @@ void login::on_login_button_clicked() {
     if (this->validate_data(username, password)) {
         this->hide();
         this->tokenPage->setUserData(this->user_data);
+        this->tokenPage->setParent_Button(this->request_button);
         this->tokenPage->show();
     } else {
        QMessageBox::warning(this, "Error", "Datos incorrectos");
@@ -87,5 +92,12 @@ void login::on_login_button_clicked() {
 void login::on_forgot_button_clicked() {
     this->changePass->setModal(true);
     this->changePass->show();
+}
+
+void login::generate_new(){
+    delete this->user_data;
+    this->ui->user_input->setText("");
+    this->ui->password_input->setText("");
+    this->show();
 }
 

@@ -27,6 +27,7 @@ private:
 private slots:
     void on_login_button_clicked();
     void on_forgot_button_clicked();
+    void generate_new();
 
 private:
     Ui::login* ui;
@@ -34,6 +35,7 @@ private:
     change_password* changePass;
     login_info* user_data;
     FS* file_system;
+    logout_button* request_button;
 };
 
 #endif // LOGIN_H

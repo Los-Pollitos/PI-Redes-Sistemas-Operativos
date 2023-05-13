@@ -72,12 +72,15 @@ initial::initial(QWidget *parent) :
         , &initial::create_windows);
 
     this->update_scrollbar();
-
 }
 
 
 void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;
+}
+
+void initial::setParent_Button(logout_button * parent_button){
+    this->parent_button = parent_button;
 }
 
 
@@ -199,3 +202,11 @@ void initial::read_data() {
         data.close();
     }
 }
+
+void initial::on_pushButton_clicked()
+{
+    emit this->parent_button->pressed();
+    this->hide();
+    this->parent_button->valid = false;
+}
+

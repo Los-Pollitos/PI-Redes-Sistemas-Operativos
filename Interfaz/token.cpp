@@ -17,6 +17,7 @@ Token::~Token()
 {
     delete this->ui;
     delete this->initial_page;
+    delete this->parent_button;
 }
 
 void Token::setUserData(login_info * user_data) {
@@ -27,6 +28,10 @@ void Token::setUserData(login_info * user_data) {
     this->ui->indicacion_label->setText("Fila: " + QString::number(fila) + " Columna: " + QString::number(columna));
 }
 
+void Token::setParent_Button(logout_button * parent_button){
+    this->parent_button = parent_button;
+}
+
 void Token::on_validate_label_clicked() {
     QString tok = ui->token_input->text();
     // TODO (hacer un try catch que haga lo mismo que el else)
@@ -34,6 +39,7 @@ void Token::on_validate_label_clicked() {
         this->hide();
         this->initial_page->setModal(true);
         this->initial_page->setUserDataLogin(this->user_data);
+        this->initial_page->setParent_Button(this->parent_button);
         this->initial_page->exec();
     } else {
         QMessageBox::warning(this, "Error", "Token incorrecto");

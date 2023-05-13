@@ -20,6 +20,7 @@
 #include "modify_user.h"
 #include "request_vacations.h"
 #include "vacation_consult.h"
+#include "logout_button.h"
 
 
 namespace Ui {
@@ -33,10 +34,14 @@ class initial : public QDialog
 public:
     explicit initial(QWidget *parent = nullptr);
     ~initial();
+    void setParent_Button(logout_button * parent_button);
     void setUserDataLogin(login_info * user_login);
     void update_scrollbar();
     void create_windows(int id, int type);
     void read_data();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::initial *ui;
@@ -56,6 +61,7 @@ private:
     QVBoxLayout * layout;
     QWidget * container;
     std::vector<description_button*> requests_buttons;
+    logout_button * parent_button;
 };
 
 #endif // INITIAL_H
