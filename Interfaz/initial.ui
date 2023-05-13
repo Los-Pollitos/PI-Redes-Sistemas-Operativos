@@ -62,6 +62,19 @@
     <string>Bienvenido</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>288</x>
+     <y>10</y>
+     <width>101</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cerrar sesión</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

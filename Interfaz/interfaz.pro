@@ -18,6 +18,7 @@ SOURCES += \
     handle_requests.cpp \
     initial.cpp \
     login.cpp \
+    logout_button.cpp \
     main.cpp \
     mainwindow.cpp \
     manage_user.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     initial.h \
     login.h \
     login_info.h \
+    logout_button.h \
     mainwindow.h \
     manage_user.h \
     modify_user.h \
