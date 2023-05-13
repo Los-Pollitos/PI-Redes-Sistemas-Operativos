@@ -31,14 +31,11 @@ login::~login() {
 }
 
 void login::set_file_system(FS* file_system) {
-
-    // TODO(nosotros): borrar
-    std::cout << "estoy setteando, me llego: " << file_system << std::endl;
-
     this->file_system = file_system;
 }
 
 bool login::validate_data(QString username, QString password) {
+    this->file_system->reset_read_pointer(username.toStdString(), "Login.txt");
     bool answer = false;
     bool found = false;
     std::string buffer = " ";

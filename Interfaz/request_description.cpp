@@ -1,7 +1,6 @@
 #include "request_description.h"
 #include "ui_request_description.h"
 
-#include <iostream>  //TODO(nosotros): Borrar
 #include <QMessageBox>
 
 QString request_type(int type) {
@@ -114,11 +113,13 @@ void request_description::on_buttonBox_rejected() {
 
 void request_description::on_file_button_clicked() {
     if (this->admin) {
-        // TODO(cristopher): hacer lo de subir un archivo
-        this->uploaded_file = true; // TODO (cristopher): esto hay que ponerlo true solo si sí subió el archivo
-        // la idea es que el programa no deje aceptar una solicitud de constancia si no ha subido el archivo
+        // TODO(cristopher): hacer lo de subir un archivo (no es para esta entrega)
+        this->uploaded_file = true;
+        // TODO (cristopher): esto hay que ponerlo true solo si sí subió el archivo
+        // la idea es que el programa no deje aceptar una solicitud de constancia si
+        // no ha subido el archivo (no es para esta entrega)
     } else {
-        // TODO(cristopher): hacer lo de descargar un archivo
+        // TODO(cristopher): hacer lo de descargar un archivo (no es para esta entrega)
     }
 }
 

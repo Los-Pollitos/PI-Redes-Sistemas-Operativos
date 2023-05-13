@@ -61,6 +61,7 @@ private:
     QVBoxLayout * layout;
     QWidget * container;
     std::vector<description_button*> requests_buttons;
+    description_button * update_buttons;
     logout_button * parent_button;
 };
 

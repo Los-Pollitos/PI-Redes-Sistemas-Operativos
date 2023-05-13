@@ -1,5 +1,6 @@
 #include "token.h"
 #include "ui_token.h"
+#include <iostream>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
 
@@ -34,14 +35,20 @@ void Token::setParent_Button(logout_button * parent_button){
 
 void Token::on_validate_label_clicked() {
     QString tok = ui->token_input->text();
-    // TODO (hacer un try catch que haga lo mismo que el else)
-    if (std::stoi(tok.toStdString()) == this->user_data->token[this->pos]) {
-        this->hide();
-        this->initial_page->setModal(true);
-        this->initial_page->setUserDataLogin(this->user_data);
-        this->initial_page->setParent_Button(this->parent_button);
-        this->initial_page->exec();
-    } else {
-        QMessageBox::warning(this, "Error", "Token incorrecto");
+    try {
+        if (std::stoi(tok.toStdString()) == this->user_data->token[this->pos]) {
+            this->ui->token_input->clear();
+            this->hide();
+            this->initial_page->setUserDataLogin(this->user_data);
+            this->initial_page->setParent_Button(this->parent_button);
+            this->initial_page->setModal(true);
+            this->initial_page->show();
+            // this->initial_page->exec();
+        } else {
+            QMessageBox::warning(this, "Error", "Token incorrecto");
+        }
+    } catch (const std::runtime_error& exception) {
+       std::cerr << exception.what() << std::endl;
     }
+
 }

@@ -21,31 +21,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::load_file(std::string location, std::string file_name) {
 
-    // TODO(nosotros): borrar
-    std::cout << "estoy en load file, location: " << location << std::endl;
-
-
     std::ifstream file(location);
     std::string read_line = "";
     if (file.is_open()) {
-
-        // TODO(nosotros): borrar
-       // std::cout << "estoy en el if" << std::endl;
-
         this->file_system->create(file_name);
         while (getline(file, read_line)) {
             read_line += '\n';
-
-            // TODO(nosotros):
-            // std::cout << "voy a meter: " << read_line;
-
             this->file_system->append(file_name, read_line);
             read_line = "";
         }
-
-        // TODO(nostros): borrar
-        // this->file_system->print_unit();
-
         file.close();
     }
 }

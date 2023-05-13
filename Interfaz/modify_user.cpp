@@ -1,7 +1,8 @@
 #include "modify_user.h"
 #include "ui_modify_user.h"
-#include <fstream>
 
+#include <fstream>
+#include <iostream>
 #include <QCheckBox>
 #include <QMessageBox>
 
@@ -119,31 +120,35 @@ void modify_user::set_login_info(login_info* info) {
 
 void modify_user::read_data() {
     std::ifstream data ("../Etapa2/Archivos/Data.txt");
-    // TODO(nosotros): try catch
-    int i = 0;
-    std::string temp = " ";
-    if (data.is_open()) {
-        while(data >> temp) {
-            users_data.push_back(user_data());
-            users_data[i].user = temp;
-            users_data[i].name = "";  // se limpia
-            data >> temp;
-
-            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
-                users_data[i].name.append(temp);
-                users_data[i].name.append(" ");
+    try {
+        int i = 0;
+        std::string temp = " ";
+        if (data.is_open()) {
+            while(data >> temp) {
+                users_data.push_back(user_data());
+                users_data[i].user = temp;
+                users_data[i].name = "";  // se limpia
                 data >> temp;
-            }
 
-            // va a salir con la identificacion
-            users_data[i].identification = std::stoi(temp);
-            data >> users_data[i].salary;
-            data >> users_data[i].role;
-            data >> users_data[i].assigned_vacations;
-            data >> users_data[i].available_vacations;
-            ++i;
-            temp = " ";  // reinicia el valor
+                while (temp[0] < 48 || temp[0] > 58) {  // no es un número
+                    users_data[i].name.append(temp);
+                    users_data[i].name.append(" ");
+                    data >> temp;
+                }
+
+                // va a salir con la identificacion
+                users_data[i].identification = std::stoi(temp);
+                data >> users_data[i].salary;
+                data >> users_data[i].role;
+                data >> users_data[i].assigned_vacations;
+                data >> users_data[i].available_vacations;
+                ++i;
+                temp = " ";  // reinicia el valor
+            }
+            data.close();
         }
-        data.close();
+    } catch (const std::runtime_error& exception) {
+      std::cerr << exception.what() << std::endl;
     }
+
 }

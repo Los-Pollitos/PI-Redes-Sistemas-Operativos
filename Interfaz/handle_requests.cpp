@@ -99,11 +99,10 @@ void handle_requests::update_scroll() {
 }
 
 void handle_requests::show_description(int id, int type) {
-    // TODO (nosotros): Borrar y cambiar la fecha y la descripción
+    // TODO (nosotros): Borrar y cambiar la fecha y la descripción (se realizará cuando se tengan los datos del servidor)
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
-    std::cout << "type: " << new_type << std::endl;
     this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_login, true);
     this->description->setModal(true);
     this->description->show();

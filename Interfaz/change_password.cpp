@@ -27,55 +27,55 @@ change_password::~change_password()
 
 bool change_password::change_data(QString username, QString password) {
     bool success = false;
-    //   try {
-    std::ifstream file("../Etapa 2/Archivos/Login.txt");
-    std::string read_data = "";
-    std::string buffer = "";
-    if (file.is_open()) {
-        while (file) {
-            file >> read_data;
-            if (read_data != username.toStdString()) {
-                buffer += read_data;
+    try {
+        std::ifstream file("../Etapa 2/Archivos/Login.txt");
+        std::string read_data = "";
+        std::string buffer = "";
+        if (file.is_open()) {
+            while (file) {
                 file >> read_data;
-                buffer += " " + read_data;
-                for (int i = 0; i < TOKEN_SIZE; ++i) {
+                if (read_data != username.toStdString()) {
+                    buffer += read_data;
                     file >> read_data;
                     buffer += " " + read_data;
-                }
-                read_data = "";
-            } else {
-                std::cout << read_data << std::endl;
-                buffer += read_data;
-                file >> read_data;
-                buffer += " " + password.toStdString();
-                for (int i = 0; i < TOKEN_SIZE; ++i) {
-                    file >> read_data;
-                    this->token[i] = std::stoi(read_data);
-                    buffer += " " + read_data;
+                    for (int i = 0; i < TOKEN_SIZE; ++i) {
+                        file >> read_data;
+                        buffer += " " + read_data;
+                    }
+                    read_data = "";
+                } else {
                     std::cout << read_data << std::endl;
+                    buffer += read_data;
+                    file >> read_data;
+                    buffer += " " + password.toStdString();
+                    for (int i = 0; i < TOKEN_SIZE; ++i) {
+                        file >> read_data;
+                        this->token[i] = std::stoi(read_data);
+                        buffer += " " + read_data;
+                        std::cout << read_data << std::endl;
+                    }
+                    read_data = "";
+                    if (std::stoi(this->ui->lineEdit_3->text().toStdString()) == this->token[pos])
+                        success = true;
                 }
-                read_data = "";
-                if (std::stoi(this->ui->lineEdit_3->text().toStdString()) == this->token[pos])
-                    success = true;
+                buffer += "\n";
             }
-            buffer += "\n";
-        }
-        file.close();
+            file.close();
 
-        std::ofstream ofs("../Etapa 2/Archivos/Login.txt");
+            std::ofstream ofs("../Etapa 2/Archivos/Login.txt");
 
-        if (!ofs.is_open())
-        {
-            std::cerr << "Error cambiando contraseña" << std::endl;
+            if (!ofs.is_open())
+            {
+                std::cerr << "Error cambiando contraseña" << std::endl;
+            }
+            ofs << buffer;
+            ofs.close();
+        } else {
+            std::cerr << "Archivo de login no encontrado" << std::endl;
         }
-        ofs << buffer;
-        ofs.close();
-    } else {
-        std::cerr << "Archivo de login no encontrado" << std::endl;
+    } catch (const std::runtime_error& exception) {
+        std::cerr << exception.what() << std::endl;
     }
-    //   } catch (_exception e) {  // TODO (nosotros): volver después
-    //       std::cerr << "Archivo de login no encontrado" << std::endl;
-    //   }
     return success;
 }
 

@@ -28,6 +28,11 @@ initial::initial(QWidget *parent) :
     this->see_vacations = new vacation_consult();
     this->users_data = new user_data();
 
+    this->update_buttons =  new description_button("Manejador de botones", nullptr, -1, 0);
+    this->connect(this->update_buttons, &description_button::update_all, this
+       , &initial::update_scrollbar);
+    this->update_buttons->hide();
+
     this->requests_buttons.push_back(new description_button( "Constancia Laboral", container, WORK_PAGE, 0));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
        , &initial::create_windows);
@@ -72,23 +77,6 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[10], &description_button::pressed, this
         , &initial::create_windows);
 
-    this->update_scrollbar();
-}
-
-
-void initial::setUserDataLogin(login_info * user_login) {
-    this->users_login = user_login;
-    std::cout <<"voy a irme a leer los datos\n";
-    this->read_data();
-}
-
-void initial::setParent_Button(logout_button * parent_button){
-    this->parent_button = parent_button;
-}
-
-
-void initial::update_scrollbar() {
-    // TODO (nosotros): poner ifs
     layout->addWidget(this->requests_buttons[WORK_PAGE]);
     layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
     layout->addWidget(this->requests_buttons[SALARY_PAGE]);
@@ -98,8 +86,79 @@ void initial::update_scrollbar() {
     layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
     layout->addWidget(this->requests_buttons[SEE_RECORD]);
     layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
+    layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
     layout->addWidget(this->requests_buttons[USER_MANAGER]);
     layout->addWidget(this->requests_buttons[USER_MOD]);
+
+}
+
+
+void initial::setUserDataLogin(login_info * user_login) {
+    this->users_login = user_login;
+    this->read_data();
+    emit this->update_buttons->update_all();
+}
+
+void initial::setParent_Button(logout_button * parent_button){
+    this->parent_button = parent_button;
+    emit this->update_buttons->update_all();
+}
+
+
+void initial::update_scrollbar() {
+    if ((this->users_data->role & EMPLOYEE) == EMPLOYEE) {
+        layout->addWidget(this->requests_buttons[WORK_PAGE]);
+        layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
+        layout->addWidget(this->requests_buttons[SALARY_PAGE]);
+        layout->addWidget(this->requests_buttons[SEE_SALARY]);
+        layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
+        layout->addWidget(this->requests_buttons[VACATION_MANGER]);
+        layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
+        layout->addWidget(this->requests_buttons[SEE_RECORD]);
+        this->requests_buttons[WORK_PAGE]->show();
+        this->requests_buttons[PAYMENT_PAGE]->show();
+        this->requests_buttons[SALARY_PAGE]->show();
+        this->requests_buttons[SEE_SALARY]->show();
+        this->requests_buttons[PENDING_REQUESTS]->show();
+        this->requests_buttons[VACATION_MANGER]->show();
+        this->requests_buttons[SEE_VACATIONS]->show();
+        this->requests_buttons[SEE_RECORD]->show();
+    } else {
+        this->layout->removeWidget(this->requests_buttons[WORK_PAGE]);
+        this->requests_buttons[WORK_PAGE]->hide();
+        this->layout->removeWidget(this->requests_buttons[PAYMENT_PAGE]);
+        this->requests_buttons[PAYMENT_PAGE]->hide();
+        this->layout->removeWidget(this->requests_buttons[SALARY_PAGE]);
+        this->requests_buttons[SALARY_PAGE]->hide();
+        this->layout->removeWidget(this->requests_buttons[SEE_SALARY]);
+        this->requests_buttons[SEE_SALARY]->hide();
+        this->layout->removeWidget(this->requests_buttons[PENDING_REQUESTS]);
+        this->requests_buttons[PENDING_REQUESTS]->hide();
+        this->layout->removeWidget(this->requests_buttons[VACATION_MANGER]);
+        this->requests_buttons[VACATION_MANGER]->hide();
+        this->layout->removeWidget(this->requests_buttons[SEE_VACATIONS]);
+        this->requests_buttons[SEE_VACATIONS]->hide();
+        this->layout->removeWidget(this->requests_buttons[SEE_RECORD]);
+        this->requests_buttons[SEE_RECORD]->hide();
+    }
+    if (((this->users_data->role & SUPERVISOR) == SUPERVISOR) || ((this->users_data->role & HUMAN_RESOURCES) == HUMAN_RESOURCES)) {
+         layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
+         this->requests_buttons[REQUEST_HANDLER]->show();
+    } else {
+        this->layout->removeWidget(this->requests_buttons[REQUEST_HANDLER]);
+        this->requests_buttons[REQUEST_HANDLER]->hide();
+    }
+    if (((this->users_data->role & HUMAN_RESOURCES) == HUMAN_RESOURCES) || ((this->users_data->role & ADMIN_USER) == ADMIN_USER)) {
+        layout->addWidget(this->requests_buttons[USER_MANAGER]);
+        layout->addWidget(this->requests_buttons[USER_MOD]);
+        this->requests_buttons[USER_MANAGER]->show();
+        this->requests_buttons[USER_MOD]->show();
+    } else {
+        this->layout->removeWidget(this->requests_buttons[USER_MANAGER]);
+        this->requests_buttons[USER_MANAGER]->hide();
+        this->layout->removeWidget(this->requests_buttons[USER_MOD]);
+        this->requests_buttons[USER_MOD]->hide();
+    }
 }
 
 
@@ -117,13 +176,12 @@ initial::~initial() {
     delete this->see_vacations;
     delete this->user_mod;
     delete this->users_data;
+    delete this->update_buttons;
 }
 
 
 void initial::create_windows(int id, int type) {
-    // TODO (Nosotros): borrar
-   std::cout << id << " " << type << std::endl;
-
+   (void) type;
    switch (id) {
     case WORK_PAGE:
       this->work_page->setModal(true);
@@ -177,40 +235,45 @@ void initial::create_windows(int id, int type) {
 }
 
 void initial::read_data() {
-    std::ifstream data ("../Etapa 2/Archivos/Data.txt");
-    // TODO(nosotros): try catch
-    //int i = 0;
-    std::cout << "voy a read_data\n";
-    std::string temp = " ";
-    if (data.is_open()) {
-        while(data >> temp && temp != this->users_login->user) {
-
-//            this->users_data[i].user = temp;
-//            this->users_data[i].name = "";  // se limpia
-//            data >> temp;
-
-//            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
-//                this->users_data[i].name.append(temp);
-//                this->users_data[i].name.append(" ");
-//                data >> temp;
-//            }
-
-//            // va a salir con la identificacion
-//            this->users_data->identification = std::stoi(temp);
-//            data >> users_data->salary;
-//            data >> users_data->role;
-//            data >> users_data->assigned_vacations;
-//            data >> users_data->available_vacations;
-//            ++i;
-//            temp = " ";  // reinicia el valor
+    std::ifstream data ("../Etapa2/Archivos/Data.txt");
+    try {
+        std::string temp = " ";
+        if (data.is_open()) {
+            while(data >> temp && temp != this->users_login->user) { /* Read until user is found*/}
+            this->users_data->user = temp;
+            this->users_data->name = "";  // se limpia
+            data >> temp;
+            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
+                this->users_data->name.append(temp);
+                this->users_data->name.append(" ");
+                data >> temp;
+            }
+            users_data->identification = std::stoi(temp);
+            data >> users_data->salary;
+            data >> users_data->role;
+            data >> users_data->assigned_vacations;
+            data >> users_data->available_vacations;
+            temp = " ";
+            data.close();
         }
-        data.close();
+    } catch (const std::runtime_error& exception) {
+      std::cerr << exception.what() << std::endl;
     }
 }
 
-void initial::on_pushButton_clicked()
-{
+
+// Logout
+void initial::on_pushButton_clicked() {
     emit this->parent_button->pressed();
+    // Clean user data
+    this->users_data->user = "\0";
+    this->users_data->name = "\0";
+    this->users_data->identification = 0;
+    this->users_data->salary = "\0";
+    this->users_data->role = 0;
+    this->users_data->assigned_vacations = 0;
+    this->users_data->available_vacations = 0;
+    // Hide initial window
     this->hide();
     this->parent_button->valid = false;
 }

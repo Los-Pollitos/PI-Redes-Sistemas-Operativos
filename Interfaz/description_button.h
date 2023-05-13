@@ -9,11 +9,11 @@
 #define SALARY_PAGE 2
 #define SEE_SALARY 3
 #define PENDING_REQUESTS 4
-#define SEE_RECORD 5
-#define REQUEST_HANDLER 6
-#define USER_MANAGER 7
-#define VACATION_MANGER 8
-#define SEE_VACATIONS 9
+#define VACATION_MANGER 5
+#define SEE_VACATIONS 6
+#define SEE_RECORD 7
+#define REQUEST_HANDLER 8
+#define USER_MANAGER 9
 #define USER_MOD 10
 
 
@@ -31,6 +31,7 @@ protected:
 signals:
     void pressed(int id, int type);
     void disapear(int id);
+    void update_all();
 
 };
 

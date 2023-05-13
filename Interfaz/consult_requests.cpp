@@ -74,7 +74,7 @@ consult_requests::~consult_requests() {
 
 
 void consult_requests::show_description(int id, int type) {
-    // TODO (nosotros): Borrar y cambiar la fecha y la descripción
+    // TODO (nosotros): Borrar y cambiar la fecha y la descripción (se realizará cuando se tengan los datos del servidor)
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
