@@ -95,6 +95,7 @@ void login::on_forgot_button_clicked() {
 }
 
 void login::generate_new(){
+    this->file_system->reset_read_pointer(user_data->user, "Login.txt");
     delete this->user_data;
     this->ui->user_input->setText("");
     this->ui->password_input->setText("");
