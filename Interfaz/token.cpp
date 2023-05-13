@@ -43,7 +43,6 @@ void Token::on_validate_label_clicked() {
             this->initial_page->setParent_Button(this->parent_button);
             this->initial_page->setModal(true);
             this->initial_page->show();
-            // this->initial_page->exec();
         } else {
             QMessageBox::warning(this, "Error", "Token incorrecto");
         }
