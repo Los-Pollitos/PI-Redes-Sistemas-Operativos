@@ -26,6 +26,7 @@ initial::initial(QWidget *parent) :
     this->user_mod = new modify_user();
     this->vacation_manager = new request_vacations();
     this->see_vacations = new vacation_consult();
+    this->users_data = new user_data();
 
     this->requests_buttons.push_back(new description_button( "Constancia Laboral", container, WORK_PAGE, 0));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
@@ -77,6 +78,8 @@ initial::initial(QWidget *parent) :
 
 void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;
+    std::cout <<"voy a irme a leer los datos\n";
+    this->read_data();
 }
 
 void initial::setParent_Button(logout_button * parent_button){
@@ -113,6 +116,7 @@ initial::~initial() {
     delete this->vacation_manager;
     delete this->see_vacations;
     delete this->user_mod;
+    delete this->users_data;
 }
 
 
@@ -175,29 +179,30 @@ void initial::create_windows(int id, int type) {
 void initial::read_data() {
     std::ifstream data ("../Etapa 2/Archivos/Data.txt");
     // TODO(nosotros): try catch
-    int i = 0;
+    //int i = 0;
+    std::cout << "voy a read_data\n";
     std::string temp = " ";
     if (data.is_open()) {
-        while(data >> temp) {
-            this->users_data = new user_data();
-            this->users_data[i].user = temp;
-            this->users_data[i].name = "";  // se limpia
-            data >> temp;
+        while(data >> temp && temp != this->users_login->user) {
 
-            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
-                this->users_data[i].name.append(temp);
-                this->users_data[i].name.append(" ");
-                data >> temp;
-            }
+//            this->users_data[i].user = temp;
+//            this->users_data[i].name = "";  // se limpia
+//            data >> temp;
 
-            // va a salir con la identificacion
-            this->users_data->identification = std::stoi(temp);
-            data >> users_data->salary;
-            data >> users_data->role;
-            data >> users_data->assigned_vacations;
-            data >> users_data->available_vacations;
-            ++i;
-            temp = " ";  // reinicia el valor
+//            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
+//                this->users_data[i].name.append(temp);
+//                this->users_data[i].name.append(" ");
+//                data >> temp;
+//            }
+
+//            // va a salir con la identificacion
+//            this->users_data->identification = std::stoi(temp);
+//            data >> users_data->salary;
+//            data >> users_data->role;
+//            data >> users_data->assigned_vacations;
+//            data >> users_data->available_vacations;
+//            ++i;
+//            temp = " ";  // reinicia el valor
         }
         data.close();
     }
