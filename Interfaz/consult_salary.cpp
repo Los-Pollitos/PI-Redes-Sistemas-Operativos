@@ -6,6 +6,7 @@ consult_salary::consult_salary(QWidget *parent) :
     ui(new Ui::consult_salary)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Consultar Salario Base");
 }
 
 consult_salary::~consult_salary()

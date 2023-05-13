@@ -9,6 +9,7 @@ handle_requests::handle_requests(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::handle_requests) {
     ui->setupUi(this);
+    this->setWindowTitle("Procesar Solicitudes");
     this->description = new request_description(nullptr);
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();
@@ -93,7 +94,8 @@ void handle_requests::update_scroll() {
         ++index;
       }
     }
-    for (int button = 0; button < this->requests_buttons.size(); ++button) {
+    int amount_buttons = this->requests_buttons.size();
+    for (int button = 0; button < amount_buttons; ++button) {
       this->requests_buttons[button]->identifier = button;
     }
 }

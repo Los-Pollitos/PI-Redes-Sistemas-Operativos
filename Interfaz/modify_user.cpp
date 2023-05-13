@@ -9,6 +9,7 @@
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
     this->modified_index = -1;
     ui->setupUi(this);
+    this->setWindowTitle("Modificar usuarios");
 }
 
 modify_user::~modify_user() {

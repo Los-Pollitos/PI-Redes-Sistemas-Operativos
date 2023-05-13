@@ -22,6 +22,7 @@ request_description::request_description(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::request_description) {
     ui->setupUi(this);
+    this->setWindowTitle("Descripción");
     this->uploaded_file = false;
 }
 

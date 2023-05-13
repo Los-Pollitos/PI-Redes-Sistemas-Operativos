@@ -6,6 +6,7 @@ salary_proof::salary_proof(QWidget *parent) :
     ui(new Ui::salary_proof)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Constancia salarial");
 }
 
 salary_proof::~salary_proof()

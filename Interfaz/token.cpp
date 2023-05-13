@@ -11,6 +11,7 @@ Token::Token(QWidget *parent) :
     ui->setupUi(this);
     this->ui->token_input->setEchoMode(QLineEdit::Password);
     srand (time(NULL));
+    this->setWindowTitle("Ingreso de token");
     this->initial_page = new initial();
 }
 

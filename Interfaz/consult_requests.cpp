@@ -9,6 +9,7 @@ consult_requests::consult_requests(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::consult_requests) {
     ui->setupUi(this);
+    this->setWindowTitle("Consultar Solicitudes");
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();
     this->description = new request_description(nullptr);

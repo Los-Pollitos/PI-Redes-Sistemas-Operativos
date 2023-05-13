@@ -6,6 +6,7 @@ work_proof::work_proof(QWidget *parent) :
     ui(new Ui::work_proof)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Constancia laboral");
 }
 
 work_proof::~work_proof()

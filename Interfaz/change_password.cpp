@@ -11,6 +11,7 @@ change_password::change_password(QWidget *parent) :
     ui(new Ui::change_password)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Cambiar contraseña");
     this->ui->lineEdit_2->setEchoMode(QLineEdit::Password); // no muestra password
     this->ui->lineEdit_3->setEchoMode(QLineEdit::Password); // no muestra token
     this->ui->lineEdit_4->setEchoMode(QLineEdit::Password); // no muestra confirmacion
@@ -28,7 +29,7 @@ change_password::~change_password()
 bool change_password::change_data(QString username, QString password) {
     bool success = false;
     try {
-        std::ifstream file("../Etapa 2/Archivos/Login.txt");
+        std::ifstream file("../Etapa2/Archivos/Login.txt");
         std::string read_data = "";
         std::string buffer = "";
         if (file.is_open()) {
@@ -62,7 +63,7 @@ bool change_password::change_data(QString username, QString password) {
             }
             file.close();
 
-            std::ofstream ofs("../Etapa 2/Archivos/Login.txt");
+            std::ofstream ofs("../Etapa2/Archivos/Login.txt");
 
             if (!ofs.is_open())
             {

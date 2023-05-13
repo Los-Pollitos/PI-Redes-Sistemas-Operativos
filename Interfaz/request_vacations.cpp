@@ -6,6 +6,7 @@ request_vacations::request_vacations(QWidget *parent) :
     ui(new Ui::request_vacations)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Solicitud de vacaciones");
 }
 
 request_vacations::~request_vacations()

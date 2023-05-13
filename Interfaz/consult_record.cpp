@@ -6,6 +6,7 @@ consult_record::consult_record(QWidget *parent) :
     ui(new Ui::consult_record)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Consultar expediente");
 }
 
 consult_record::~consult_record()

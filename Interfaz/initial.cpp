@@ -10,6 +10,7 @@ initial::initial(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::initial) {
     ui->setupUi(this);
+    this->setWindowTitle("Inicio");
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();
     ui->scrollArea->setWidget(container);

@@ -12,6 +12,7 @@ manage_user::manage_user(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::manage_user) {
     this->ui->setupUi(this);
+    this->setWindowTitle("Administrar usuarios");
     // Hide passwords
     this->ui->first_rh_password->setEchoMode(QLineEdit::Password);
     this->ui->second_rh_password->setEchoMode(QLineEdit::Password);
