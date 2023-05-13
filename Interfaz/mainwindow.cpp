@@ -30,21 +30,21 @@ void MainWindow::load_file(std::string location, std::string file_name) {
     if (file.is_open()) {
 
         // TODO(nosotros): borrar
-        std::cout << "estoy en el if" << std::endl;
+       // std::cout << "estoy en el if" << std::endl;
 
         this->file_system->create(file_name);
         while (getline(file, read_line)) {
             read_line += '\n';
 
             // TODO(nosotros):
-            std::cout << "voy a meter: " << read_line;
+            // std::cout << "voy a meter: " << read_line;
 
             this->file_system->append(file_name, read_line);
             read_line = "";
         }
 
         // TODO(nostros): borrar
-        this->file_system->print_unit();
+        // this->file_system->print_unit();
 
         file.close();
     }

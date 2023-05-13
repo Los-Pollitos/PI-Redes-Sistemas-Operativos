@@ -180,14 +180,12 @@ int FS::search_end_of_file_fat(int fat_pos, int size) {
 // TODO(nosotros): documentar
 int FS::search_end_of_file(int fat_block, int size) {
     int pos_eof = -1;
-
     for (int i = fat_block * BLOCK_SIZE;
          i < (fat_block + 1) * BLOCK_SIZE && pos_eof == -1; ++i) {
         if (this->unit[i] == END_TEXT) {
             pos_eof = i;
         }
     }
-
     return pos_eof;
 }
 
