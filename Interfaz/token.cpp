@@ -22,8 +22,8 @@ Token::~Token()
         this->ui = 0;
     }
     if (this->initial_page) {
-        delete this->initial_page;
-        this->initial_page = 0;
+       delete this->initial_page;
+       this->initial_page = 0;
     }
 }
 

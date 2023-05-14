@@ -23,14 +23,6 @@ login::~login() {
       delete this->ui;
       this->ui = 0;
     }
-    if (this->token_page) {
-        delete this->token_page;
-        this->token_page = 0;
-    }
-    if (this->user_data) {
-        delete this->user_data;
-        this->user_data = 0;
-    }
     if (this->change_pass) {
         delete this->change_pass;
         this->change_pass = 0;
@@ -38,6 +30,10 @@ login::~login() {
     if (this->request_button) {
        delete this->request_button;
        this->request_button = 0;
+    }
+    if (this->token_page) {
+       delete this->token_page;
+       this->token_page = 0;
     }
 }
 

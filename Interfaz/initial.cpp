@@ -165,8 +165,8 @@ void initial::update_scrollbar() {
 
 initial::~initial() {
     if (this->ui) {
-       // delete this->ui;
-        // this->ui = 0;
+       delete this->ui;
+        this->ui = 0;
     }
     if (this->work_page) {
         delete this->work_page;
@@ -185,16 +185,16 @@ initial::~initial() {
         this->see_salary = 0;
     }
     if (this->pending_requests) {
-        // delete this->pending_requests;
-        // this->pending_requests = 0;
+        delete this->pending_requests;
+        this->pending_requests = 0;
     }
     if (this->see_record) {
         delete this->see_record;
         this->see_record = 0;
     }
     if (this->request_handler) {
-        // delete this->request_handler;
-        // this->request_handler = 0;
+        delete this->request_handler;
+        this->request_handler = 0;
     }
     if (this->user_manager) {
         delete this->user_manager;
@@ -214,7 +214,7 @@ initial::~initial() {
      }
      if (this->users_data) {
         delete this->users_data;
-        delete this->users_data;
+        this->users_data = 0;
      }
      if (this->update_buttons) {
         delete this->update_buttons;
