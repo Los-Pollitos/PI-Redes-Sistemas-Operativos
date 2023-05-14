@@ -34,7 +34,7 @@ initial::initial(QWidget *parent) :
        , &initial::update_scrollbar);
     this->update_buttons->hide();
 
-    this->requests_buttons.push_back(new description_button( "Constancia Laboral", container, WORK_PAGE, 0));
+    this->requests_buttons.push_back(new description_button( "Constancia laboral", container, WORK_PAGE, 0));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
        , &initial::create_windows);
 

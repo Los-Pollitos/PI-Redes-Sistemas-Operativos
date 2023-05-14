@@ -6,9 +6,9 @@ login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login) {
     ui->setupUi(this);
-    //QPixmap pix ("C:/Users/emili/Downloads/a.png");
-    //this->ui->pic_label->setPixmap(pix.scaled(ui->pic_label->width(),
-    //                                          ui->pic_label->height(),Qt::KeepAspectRatio));
+    QPixmap pix ("../img/pollitos_incorporated_icon.png");
+    this->ui->pic_label->setPixmap(pix.scaled(ui->pic_label->width(),
+                                               ui->pic_label->height(),Qt::KeepAspectRatio));
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
     this->tokenPage = new Token(nullptr);
     this->changePass = new change_password(this);
