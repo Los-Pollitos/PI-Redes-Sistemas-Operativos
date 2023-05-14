@@ -35,32 +35,6 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="close_session">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>10</y>
-     <width>101</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cerrar sesión</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="return_2">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>270</y>
-     <width>101</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Volver</string>
-   </property>
-  </widget>
   <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
     <rect>
