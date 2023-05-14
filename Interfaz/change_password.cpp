@@ -38,21 +38,29 @@ bool change_password::change_data(QString username, QString password) {
                 if (read_data != username.toStdString()) {
                     buffer += read_data;
                     file >> read_data;
-                    buffer += " " + read_data;
+                    buffer += "\t" + read_data;
                     for (int i = 0; i < TOKEN_SIZE; ++i) {
                         file >> read_data;
-                        buffer += " " + read_data;
+                        if (i == 0) {
+                            buffer += "\t" + read_data;
+                        } else {
+                            buffer += " " + read_data;
+                        }
                     }
                     read_data = "";
                 } else {
                     std::cout << read_data << std::endl;
                     buffer += read_data;
                     file >> read_data;
-                    buffer += " " + password.toStdString();
+                    buffer += "\t" + password.toStdString();
                     for (int i = 0; i < TOKEN_SIZE; ++i) {
                         file >> read_data;
                         this->token[i] = std::stoi(read_data);
-                        buffer += " " + read_data;
+                        if (i == 0) {
+                            buffer += "\t" + read_data;
+                        } else {
+                            buffer += " " + read_data;
+                        }
                         std::cout << read_data << std::endl;
                     }
                     read_data = "";
