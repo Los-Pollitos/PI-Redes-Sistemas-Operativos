@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <iostream>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -10,9 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->file_system = new FS();
     this->load_file("../Etapa2/Archivos/Login.txt", "Login.txt");
-
-    std::cout << "volvi de load file" << std::endl;
-
     this->loginPage = new login(nullptr);
     this->loginPage->set_file_system(file_system);
     this->loginPage->show();

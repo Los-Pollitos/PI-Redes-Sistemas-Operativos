@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>20</x>
      <y>70</y>
      <width>361</width>
-     <height>211</height>
+     <height>391</height>
     </rect>
    </property>
    <property name="widgetResizable">
@@ -31,7 +31,7 @@
       <x>0</x>
       <y>0</y>
       <width>359</width>
-      <height>209</height>
+      <height>389</height>
      </rect>
     </property>
     <widget class="QScrollBar" name="verticalScrollBar">
@@ -40,7 +40,7 @@
        <x>340</x>
        <y>0</y>
        <width>16</width>
-       <height>201</height>
+       <height>391</height>
       </rect>
      </property>
      <property name="orientation">

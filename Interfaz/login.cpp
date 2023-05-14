@@ -34,7 +34,7 @@ void login::set_file_system(FS* file_system) {
 
 bool login::validate_data(QString username, QString password) {
     bool answer = false;
-    this->file_system->open(this->user_data->user, "Login.txt");
+    this->file_system->open(username.toStdString(), "Login.txt");
     if (this->file_system->is_open("Login.txt")) {
         this->file_system->reset_file_pointer(username.toStdString(), "Login.txt");
         bool found = false;
