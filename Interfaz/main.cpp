@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QIcon icon(":/icons/icon.gif");
+    QIcon icon(":/icons/pollitos_incorporated_icon.png");
     a.setWindowIcon(icon);
     a.setApplicationName("PollitosIncorporated");
 
