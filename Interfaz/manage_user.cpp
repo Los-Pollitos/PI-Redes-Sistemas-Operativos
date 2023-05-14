@@ -217,7 +217,7 @@ void manage_user::delete_user_data(std::string& desired_username) {
 void manage_user::delete_user_file_system(std::string& desired_username) {
     std::vector<std::string>container;
     std::string buffer = "";
-    this->file_system->reset_read_pointer(desired_username, "Login.txt");
+    this->file_system->reset_file_pointer(desired_username, "Login.txt");
     // Store everything except the desired username
     while (!this->file_system->is_eof(desired_username, "Login.txt")) {
         buffer = this->file_system->read_until(desired_username, "Login.txt", '\t');

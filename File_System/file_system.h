@@ -65,7 +65,6 @@ class FS {
     int search_end_of_file(int fat_pos, int size);
     int search_end_of_file_fat(int fat_pos, int size);
     int handle_open_close(std::string user, std::string name, bool open);
-    int is_open(std::string name);
     bool check_permission(std::string user, std::string name, int permission);
     void add_one_local_read_pointer(int& local_read_pointer);
     void add_one_local_write_pointer(int& local_write_pointer);
@@ -91,6 +90,7 @@ class FS {
     std::string read_line(std::string user, std::string name); 
     std::string read_until(std::string user, std::string name, char separator);
     bool is_eof(std::string user, std::string name);
+    int is_open(std::string name);
     void print_unit();
     void print_open_file_table();
     void reset_file_pointer(std::string user, std::string name);

@@ -206,7 +206,7 @@ int FS::write(std::string user, std::string name, std::string line) {
     int current_fat = (int)(local_write_pointer / BLOCK_SIZE);
     if (this->fat[current_fat] != RESERVED) {
       // Write until the end of file block is found
-      int i;
+      size_t i;
       for (i = 0;
            i < line.length() && this->unit[local_write_pointer] != END_TEXT;
            ++i) {

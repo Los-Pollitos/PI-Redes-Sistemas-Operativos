@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     QIcon icon(":/icons/icon.gif");
     a.setWindowIcon(icon);
-    a.setApplicationName("LosPollitosIncorporated");
+    a.setApplicationName("PollitosIncorporated");
 
     MainWindow w;
     w.hide();

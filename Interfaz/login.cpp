@@ -35,37 +35,41 @@ void login::set_file_system(FS* file_system) {
 }
 
 bool login::validate_data(QString username, QString password) {
-    this->file_system->reset_read_pointer(username.toStdString(), "Login.txt");
     bool answer = false;
-    bool found = false;
-    std::string buffer = " ";
+    this->file_system->open(this->user_data->user, "Login.txt");
+    if (this->file_system->is_open("Login.txt")) {
+        this->file_system->reset_file_pointer(username.toStdString(), "Login.txt");
+        bool found = false;
+        std::string buffer = " ";
 
-    // Find the username in the file
-    while (!found && !this->file_system->is_eof(username.toStdString(), "Login.txt")) {
-        buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
-        if (buffer != username.toStdString()) {
-            // Read the rest of the data
-            this->file_system->read_line(username.toStdString(), "Login.txt");
-        } else {
-            found = true;
+        // Find the username in the file
+        while (!found && !this->file_system->is_eof(username.toStdString(), "Login.txt")) {
+            buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
+            if (buffer != username.toStdString()) {
+                // Read the rest of the data
+                this->file_system->read_line(username.toStdString(), "Login.txt");
+            } else {
+                found = true;
+            }
+            buffer = " ";
         }
-        buffer = " ";
-    }
-    // Compare
-    if (found) {
-        buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
-        if (buffer == password.toStdString()) {
-            // The user was found and is inserted in the struct
-            answer = true;
-            this->user_data = new login_info();
-            this->user_data->user = username.toStdString();
-            this->user_data->password = password.toStdString();
-            // Obtain the token
-            for (int i = 0; i < TOKEN_SIZE; ++i) {
-                this->user_data->token[i] =
-                    std::stoi(this->file_system->read_until(username.toStdString(), "Login.txt", ' '));
+        // Compare
+        if (found) {
+            buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
+            if (buffer == password.toStdString()) {
+                // The user was found and is inserted in the struct
+                answer = true;
+                this->user_data = new login_info();
+                this->user_data->user = username.toStdString();
+                this->user_data->password = password.toStdString();
+                // Obtain the token
+                for (int i = 0; i < TOKEN_SIZE; ++i) {
+                    this->user_data->token[i] =
+                        std::stoi(this->file_system->read_until(username.toStdString(), "Login.txt", ' '));
+                }
             }
         }
+        this->file_system->close(this->user_data->user, "Login.txt");
     }
     // Success
     return answer;
@@ -92,7 +96,7 @@ void login::on_forgot_button_clicked() {
 }
 
 void login::generate_new(){
-    this->file_system->reset_read_pointer(user_data->user, "Login.txt");
+    this->file_system->reset_file_pointer(user_data->user, "Login.txt");
     delete this->user_data;
     this->ui->user_input->setText("");
     this->ui->password_input->setText("");
