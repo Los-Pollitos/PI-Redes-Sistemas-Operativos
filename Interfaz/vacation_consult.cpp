@@ -13,7 +13,9 @@ vacation_consult::vacation_consult(QWidget *parent) :
     ui->name->setReadOnly(true);
 }
 
-vacation_consult::~vacation_consult()
-{
-    delete ui;
+vacation_consult::~vacation_consult() {
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }

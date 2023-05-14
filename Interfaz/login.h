@@ -31,8 +31,8 @@ private slots:
 
 private:
     Ui::login* ui;
-    Token* tokenPage;
-    change_password* changePass;
+    Token* token_page;
+    change_password* change_pass;
     login_info* user_data;
     FS* file_system;
     logout_button* request_button;

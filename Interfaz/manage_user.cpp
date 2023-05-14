@@ -19,7 +19,10 @@ manage_user::manage_user(QWidget *parent) :
 }
 
 manage_user::~manage_user() {
-    delete this->ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }
 
 void manage_user::set_file_system(FS* file_system) {

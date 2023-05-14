@@ -77,7 +77,10 @@ void request_description::set_atributes(int day, int month, int year,
 
 request_description::~request_description()
 {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }
 
 void request_description::on_buttonBox_accepted() {

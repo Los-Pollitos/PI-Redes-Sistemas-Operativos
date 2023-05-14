@@ -164,20 +164,62 @@ void initial::update_scrollbar() {
 
 
 initial::~initial() {
-    delete ui;
-    delete this->work_page;
-    delete this->payment_page;
-    delete this->salary_page;
-    delete this->see_salary;
-    delete this->pending_requests;
-    delete this->see_record;
-    delete this->request_handler;
-    delete this->user_manager;
-    delete this->vacation_manager;
-    delete this->see_vacations;
-    delete this->user_mod;
-    delete this->users_data;
-    delete this->update_buttons;
+    if (this->ui) {
+       // delete this->ui;
+        // this->ui = 0;
+    }
+    if (this->work_page) {
+        delete this->work_page;
+        this->work_page = 0;
+    }
+    if (this->payment_page) {
+        delete this->payment_page;
+        this->payment_page = 0;
+    }
+    if (this->salary_page) {
+        delete this->salary_page;
+        this->salary_page = 0;
+    }
+    if (this->see_salary) {
+        delete this->see_salary;
+        this->see_salary = 0;
+    }
+    if (this->pending_requests) {
+        // delete this->pending_requests;
+        // this->pending_requests = 0;
+    }
+    if (this->see_record) {
+        delete this->see_record;
+        this->see_record = 0;
+    }
+    if (this->request_handler) {
+        // delete this->request_handler;
+        // this->request_handler = 0;
+    }
+    if (this->user_manager) {
+        delete this->user_manager;
+        this->user_manager = 0;
+     }
+    if (this->vacation_manager) {
+        delete this->vacation_manager;
+        this->vacation_manager = 0;
+    }
+    if (this->see_vacations) {
+        delete this->see_vacations;
+        this->see_vacations = 0;
+     }
+    if (this->user_mod) {
+        delete this->user_mod;
+        this->user_mod = 0;
+     }
+     if (this->users_data) {
+        delete this->users_data;
+        delete this->users_data;
+     }
+     if (this->update_buttons) {
+        delete this->update_buttons;
+        this->update_buttons = 0;
+     }
 }
 
 

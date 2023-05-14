@@ -8,15 +8,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->file_system = new FS();
     this->load_file("../Etapa2/Archivos/Login.txt", "Login.txt");
-    this->loginPage = new login(nullptr);
+    this->loginPage = new login();
     this->loginPage->set_file_system(file_system);
     this->loginPage->show();
 }
 
 MainWindow::~MainWindow() {
-    delete this->loginPage;
-    delete this->ui;
-    delete this->file_system;
+    if (this->ui) {
+     delete this->ui;
+     this->ui = 0;
+    }
+    if (this->file_system) {
+        delete this->file_system;
+        this->file_system = 0;
+    }
+    if (this->loginPage) {
+        delete this->loginPage;
+        this->loginPage = 0;
+    }
 }
 
 void MainWindow::load_file(std::string location, std::string file_name) {

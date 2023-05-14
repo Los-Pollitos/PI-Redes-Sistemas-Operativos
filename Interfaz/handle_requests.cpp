@@ -78,8 +78,14 @@ void handle_requests::set_user_login(login_info * user_login) {
 
 
 handle_requests::~handle_requests() {
-    delete ui;
-    delete this->description;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
+    if (this->description) {
+       delete this->description;
+       this->description = 0;
+    }
 }
 
 void handle_requests::update_scroll() {

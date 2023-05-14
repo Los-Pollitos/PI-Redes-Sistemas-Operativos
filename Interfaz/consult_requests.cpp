@@ -69,8 +69,14 @@ void consult_requests::set_user_login(login_info * user_login) {
 
 
 consult_requests::~consult_requests() {
-    delete this->ui;
-    delete this->description;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
+    if (this->description) {
+        delete this->description;
+        this->description = 0;
+    }
 }
 
 

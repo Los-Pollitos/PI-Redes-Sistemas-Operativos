@@ -10,8 +10,8 @@ login::login(QWidget *parent) :
     this->ui->pic_label->setPixmap(pix.scaled(ui->pic_label->width(),
                                                ui->pic_label->height(),Qt::KeepAspectRatio));
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
-    this->tokenPage = new Token(nullptr);
-    this->changePass = new change_password(this);
+    this->token_page = new Token(nullptr);
+    this->change_pass = new change_password(this);
     this->setWindowTitle("Login");
     this->request_button = new logout_button("Logout");
     this->connect(this->request_button, &logout_button::pressed, this
@@ -19,13 +19,26 @@ login::login(QWidget *parent) :
 }
 
 login::~login() {
-    delete this->ui;
-    delete this->tokenPage;
+    if (this->ui) {
+      delete this->ui;
+      this->ui = 0;
+    }
+    if (this->token_page) {
+        delete this->token_page;
+        this->token_page = 0;
+    }
     if (this->user_data) {
         delete this->user_data;
+        this->user_data = 0;
     }
-    delete this->changePass;
-    delete this->request_button;
+    if (this->change_pass) {
+        delete this->change_pass;
+        this->change_pass = 0;
+    }
+    if (this->request_button) {
+       delete this->request_button;
+       this->request_button = 0;
+    }
 }
 
 void login::set_file_system(FS* file_system) {
@@ -78,9 +91,9 @@ void login::on_login_button_clicked() {
     QString password = ui->password_input->text();
     if (this->validate_data(username, password)) {
         this->hide();
-        this->tokenPage->setUserData(this->user_data);
-        this->tokenPage->setParent_Button(this->request_button);
-        this->tokenPage->show();
+        this->token_page->setUserData(this->user_data);
+        this->token_page->setParent_Button(this->request_button);
+        this->token_page->show();
     } else {
        QMessageBox::warning(this, "Error", "Datos incorrectos");
        this->ui->user_input->setText("");
@@ -89,8 +102,8 @@ void login::on_login_button_clicked() {
 }
 
 void login::on_forgot_button_clicked() {
-    this->changePass->setModal(true);
-    this->changePass->show();
+    this->change_pass->setModal(true);
+    this->change_pass->show();
 }
 
 void login::generate_new(){

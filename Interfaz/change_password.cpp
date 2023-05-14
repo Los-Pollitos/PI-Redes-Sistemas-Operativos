@@ -23,7 +23,10 @@ change_password::change_password(QWidget *parent) :
 
 change_password::~change_password()
 {
-    delete ui;
+    if (this->ui) {
+        delete ui;
+        this->ui = 0;
+    }
 }
 
 bool change_password::change_data(QString username, QString password) {

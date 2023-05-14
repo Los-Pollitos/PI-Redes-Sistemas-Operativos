@@ -17,9 +17,14 @@ Token::Token(QWidget *parent) :
 
 Token::~Token()
 {
-    delete this->ui;
-    delete this->initial_page;
-    delete this->parent_button;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
+    if (this->initial_page) {
+        delete this->initial_page;
+        this->initial_page = 0;
+    }
 }
 
 void Token::setUserData(login_info * user_data) {
