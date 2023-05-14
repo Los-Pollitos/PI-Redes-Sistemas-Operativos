@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>request_vacations</class>
  <widget class="QDialog" name="request_vacations">
@@ -5,13 +6,85 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>500</width>
     <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QLabel" name="label_start">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>70</y>
+     <width>231</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Fecha de inicio de las vacaciones:</string>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="start_date">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>65</y>
+     <width>110</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="end_date">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>125</y>
+     <width>110</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_end">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>130</y>
+     <width>231</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Fecha de inicio de las vacaciones:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="reset">
+   <property name="geometry">
+    <rect>
+     <x>108</x>
+     <y>210</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reestablecer</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="confirm">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>210</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Confirmar</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

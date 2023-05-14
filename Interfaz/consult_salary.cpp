@@ -7,6 +7,10 @@ consult_salary::consult_salary(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Consultar Salario Base");
+    ui->base_salary->setReadOnly(true);
+    ui->salary->setReadOnly(true);
+    ui->id->setReadOnly(true);
+    ui->name->setReadOnly(true);
 }
 
 consult_salary::~consult_salary()

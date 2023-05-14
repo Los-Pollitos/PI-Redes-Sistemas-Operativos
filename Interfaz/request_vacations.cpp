@@ -1,3 +1,5 @@
+#include <QPushButton>
+
 #include "request_vacations.h"
 #include "ui_request_vacations.h"
 
@@ -7,6 +9,8 @@ request_vacations::request_vacations(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Solicitud de vacaciones");
+    ui->reset->setStyleSheet("background-color: red");
+    ui->confirm->setStyleSheet("background-color: green");
 }
 
 request_vacations::~request_vacations()
