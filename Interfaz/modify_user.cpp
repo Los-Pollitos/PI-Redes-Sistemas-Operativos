@@ -49,7 +49,7 @@ void modify_user::write_data() {
 
 void modify_user::add_data() {
     for (size_t i = 0; i < users_data.size(); ++i) {
-        // un usuario no se puede modificar a sí mismo
+        // an user can not modify itself
         if (this->users_data[i].user != this->user_login->user) {
             ui->comboBox->addItem(QString::fromStdString(this->users_data[i].name));
         }
@@ -77,8 +77,8 @@ void modify_user::on_approve_changes_clicked() {
 
 void modify_user::update_data() {
     users_data[modified_index].role = 0;
-    // si el usuario es Debug, no puede tener más roles
-    if (ui->checkbox_debug->checkState() == 2) {
+    // if the user is Debug, it can not have more roles
+    if (ui->checkbox_debug->checkState() == 2) {  // the 2 indicates the user has that role
         users_data[modified_index].role = DEBUG;
         ui->checkbox_admin_users->setCheckState(unmask_role(modified_index, ADMIN_USER));
         ui->checkbox_admin_config->setCheckState(unmask_role(modified_index, ADMIN_CONFIG));
@@ -86,7 +86,7 @@ void modify_user::update_data() {
         ui->checkbox_human_resources->setCheckState(unmask_role(modified_index, HUMAN_RESOURCES));
         ui->checkbox_supervisor->setCheckState(unmask_role(modified_index, SUPERVISOR));
     } else {
-        if (ui->checkbox_admin_config->checkState() == 2) {  // significa que tiene ese rol
+        if (ui->checkbox_admin_config->checkState() == 2) {
             users_data[modified_index].role |= ADMIN_CONFIG;
         }
         if (ui->checkbox_admin_users->checkState() == 2) {
@@ -128,23 +128,23 @@ void modify_user::read_data() {
             while(data >> temp) {
                 users_data.push_back(user_data());
                 users_data[i].user = temp;
-                users_data[i].name = "";  // se limpia
+                users_data[i].name = "";
                 data >> temp;
 
-                while (temp[0] < 48 || temp[0] > 58) {  // no es un número
+                while (temp[0] < 48 || temp[0] > 58) {  // not a number
                     users_data[i].name.append(temp);
                     users_data[i].name.append(" ");
                     data >> temp;
                 }
 
-                // va a salir con la identificacion
+                // temp will have the identification
                 users_data[i].identification = std::stoi(temp);
                 data >> users_data[i].salary;
                 data >> users_data[i].role;
                 data >> users_data[i].assigned_vacations;
                 data >> users_data[i].available_vacations;
                 ++i;
-                temp = " ";  // reinicia el valor
+                temp = " ";  // restarts the value
             }
             data.close();
         }
