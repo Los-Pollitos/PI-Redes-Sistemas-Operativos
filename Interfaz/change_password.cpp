@@ -84,8 +84,13 @@ bool change_password::change_data(QString username, QString password) {
 
 void change_password::on_pushButton_reinicarContra_clicked()
 {
-    if (this->ui->lineEdit_2->text() != this->ui->lineEdit_4->text()){
+    if (this->ui->lineEdit->text() == "" || this->ui->lineEdit_2->text() == "" ||
+            this->ui->lineEdit_3->text() == "" || this->ui->lineEdit_4->text() == ""){
+        QMessageBox::warning(this, "Error", "Datos incompletos");
+
+    } else if(this->ui->lineEdit_2->text() != this->ui->lineEdit_4->text()) {
         QMessageBox::warning(this, "Error", "Las contraseñas no son iguales");
+
     } else {
         if (this->change_data(this->ui->lineEdit->text(), this->ui->lineEdit_2->text())) {
             this->hide();
