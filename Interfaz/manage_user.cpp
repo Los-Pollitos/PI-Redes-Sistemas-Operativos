@@ -23,6 +23,10 @@ manage_user::~manage_user() {
     delete this->ui;
 }
 
+void manage_user::set_file_system(FS* file_system) {
+    this->file_system = file_system;
+}
+
 void manage_user::set_user_login(login_info* user_login) {
     this->user_login = user_login;
 }
@@ -42,6 +46,28 @@ bool manage_user::find_user(std::string& desired_username) {
         file.close();
     }
     return answer;
+}
+
+void manage_user::insert_user_file_system(std::string& desired_username, std::string& desired_password) {
+    // Open file
+    std::string buffer = "";
+    buffer.append(desired_username);
+    buffer.append("\t");
+    buffer.append(desired_password);
+    buffer.append("\t");
+    // Generate token
+    int number = 0;
+    for (int i = 0; i < TOKEN_SIZE - 2; ++i) {
+        number = (int)(rand()%100);
+        buffer.append(std::to_string(number));
+        buffer.append(" ");
+    }
+    // Last token position
+    number = (int)(rand()%100);
+    buffer.append(std::to_string(number));
+    buffer.append("\n");
+    this->file_system->append("Login.txt", buffer);
+    // Close file
 }
 
 void manage_user::insert_user_login(std::string& desired_username, std::string& desired_password) {
