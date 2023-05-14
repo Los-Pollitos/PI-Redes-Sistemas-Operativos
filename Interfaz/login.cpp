@@ -6,7 +6,7 @@ login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login) {
     ui->setupUi(this);
-    QPixmap pix ("../img/pollitos_incorporated_icon.png");
+    QPixmap pix (":/icons/pollitos_incorporated_icon.png");
     this->ui->pic_label->setPixmap(pix.scaled(ui->pic_label->width(),
                                                ui->pic_label->height(),Qt::KeepAspectRatio));
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
