@@ -52,7 +52,6 @@ bool change_password::change_data(QString username, QString password) {
                     }
                     read_data = "";
                 } else {
-                    std::cout << read_data << std::endl;
                     buffer += read_data;
                     file >> read_data;
                     buffer += "\t" + password.toStdString();
@@ -64,7 +63,6 @@ bool change_password::change_data(QString username, QString password) {
                         } else {
                             buffer += " " + read_data;
                         }
-                        std::cout << read_data << std::endl;
                     }
                     read_data = "";
                     if (std::stoi(this->ui->lineEdit_3->text().toStdString()) == this->token[pos])

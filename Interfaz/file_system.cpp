@@ -217,7 +217,6 @@ int FS::write(std::string user, std::string name, std::string line) {
       this->directory[directory_position].file_pointer = local_write_pointer;
       // end text has been reached before the whole line was written
       if (i < line.length()) {
-        std::cout << "EN IF\n";
         line = line.substr(i);
         this->append(name, line);
         // Update the pointer

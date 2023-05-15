@@ -85,6 +85,7 @@ bool login::validate_data(QString username, QString password) {
 }
 
 void login::on_login_button_clicked() {
+    this->refresh_file_system();
     QString username = ui->user_input->text();  // get username
     QString password = ui->password_input->text();
     if (this->validate_data(username, password)) {
@@ -112,3 +113,28 @@ void login::generate_new(){
     this->show();
 }
 
+void login::load_file(std::string location, std::string file_name) {
+    std::ifstream file(location);
+    std::string read_line = "";
+    if (file.is_open()) {
+       this->file_system->create(file_name);
+       this->file_system->open("", file_name);
+       if (this->file_system->is_open(file_name)) {
+            while (getline(file, read_line)) {
+                read_line += '\n';
+                this->file_system->append(file_name, read_line);
+                read_line = "";
+            }
+            this->file_system->close("", file_name);
+       }
+       file.close();
+    }
+}
+
+void login::refresh_file_system() {
+    if (this->file_system->open("", "Login.txt") != -1) {  // the file exists
+       this->file_system->close("", "Login.txt");
+       this->file_system->erase("Login.txt");
+    }
+    this->load_file("../Etapa2/Archivos/Login.txt", "Login.txt");
+}
