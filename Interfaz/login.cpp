@@ -50,15 +50,21 @@ bool login::validate_data(QString username, QString password) {
         std::string buffer = " ";
 
         // Find the username in the file
-        while (!found && !this->file_system->is_eof(username.toStdString(), "Login.txt")) {
+        bool end_of_file = this->file_system->is_eof(username.toStdString(), "Login.txt");
+        while (end_of_file == false && found == false) {
             buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
             if (buffer != username.toStdString()) {
                 // Read the rest of the data
-                this->file_system->read_line(username.toStdString(), "Login.txt");
+                buffer = this->file_system->read_line(username.toStdString(), "Login.txt");
             } else {
                 found = true;
             }
             buffer = " ";
+            end_of_file = this->file_system->is_eof(username.toStdString(), "Login.txt");
+            // This if should not be needed, but QT seems not to identify a wrong user without it
+            if (end_of_file == true && found == false) {
+                return false;
+            }
         }
         // Compare
         if (found) {
@@ -103,7 +109,7 @@ void login::on_forgot_button_clicked() {
 }
 
 void login::generate_new(){
-    this->file_system->reset_file_pointer(user_data->user, "Login.txt");
+    // this->file_system->reset_file_pointer(user_data->user, "Login.txt");
     delete this->user_data;
     this->ui->user_input->setText("");
     this->ui->password_input->setText("");

@@ -555,8 +555,7 @@ std::string FS::read_line(std::string user, std::string name) {
     // is right
     if (check_permission(user, name, 1) && this->directory[dir_pos].is_file &&
         this->directory[dir_pos].path == this->actual_path) {
-      while (/**this->directory[dir_pos].file_pointer < local_read_pointer &&*/
-             this->unit[local_read_pointer] != '\n' &&
+      while (this->unit[local_read_pointer] != '\n' &&
              this->unit[local_read_pointer] != END_TEXT) {
         result += this->unit[local_read_pointer];
         this->add_one_local_read_pointer(local_read_pointer);
@@ -629,8 +628,10 @@ bool FS::is_eof(std::string user, std::string name) {
   bool result = false;
   int directory_pos = this->search_file(name);
   if (this->directory[directory_pos].is_file) {
-    result =
-        this->unit[this->directory[directory_pos].file_pointer] == END_TEXT;
+      char temp = this->unit[this->directory[directory_pos].file_pointer];
+      if ( temp == END_TEXT) {
+          result = true;
+      }
   }
   return result;
 }
