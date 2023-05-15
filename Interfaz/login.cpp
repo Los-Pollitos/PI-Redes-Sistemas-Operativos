@@ -61,10 +61,6 @@ bool login::validate_data(QString username, QString password) {
             }
             buffer = " ";
             end_of_file = this->file_system->is_eof(username.toStdString(), "Login.txt");
-            // This if should not be needed, but QT seems not to identify a wrong user without it
-            if (end_of_file == true && found == false) {
-                return false;
-            }
         }
         // Compare
         if (found) {
@@ -82,7 +78,7 @@ bool login::validate_data(QString username, QString password) {
                 }
             }
         }
-        this->file_system->close(this->user_data->user, "Login.txt");
+        this->file_system->close(username.toStdString(), "Login.txt");
     }
     // Success
     return answer;

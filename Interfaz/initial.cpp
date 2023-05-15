@@ -91,6 +91,8 @@ initial::initial(QWidget *parent) :
     layout->addWidget(this->requests_buttons[USER_MANAGER]);
     layout->addWidget(this->requests_buttons[USER_MOD]);
 
+    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
+
 }
 
 

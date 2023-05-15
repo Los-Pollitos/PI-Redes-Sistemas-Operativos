@@ -68,11 +68,8 @@ class FS {
     bool check_permission(std::string user, std::string name, int permission);
     void add_one_local_read_pointer(int& local_read_pointer);
     void add_one_local_write_pointer(int& local_write_pointer);
-    // For folders  TODO(nosotros): documentar todo
     bool can_show(std::string user, std::string name);
     bool is_valid_path(std::string path);
-    // TODO(emilia): considerar si se ocupa 
-    // bool is_in_folder(std::string user, std::string path, std::string name);
   
   public:
     // Public methods
