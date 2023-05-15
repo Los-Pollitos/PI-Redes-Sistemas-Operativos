@@ -48,35 +48,39 @@ FS::~FS() {
  * @param name Indicates the name of the file to be addded
  * @param is_file Is true if we are creating a file, false if it is a folder
  * @return int The block in which the file was added. Returns -1 if no block was
- * found.
+ * found or if there was already a file with that name.
  */
 int FS::create(std::string name, bool is_file) {
-  int directory_pos = this->search_directory();
-  int block = this->search_block();
-  if (directory_pos != -1 && (block != -1 || !is_file)) {
-    if (is_file) {
-      this->directory[directory_pos].block = block;
-      // Reserved is a special case of EOF to indicate an empty spot
-      this->fat[block] = RESERVED;
-      this->directory[directory_pos].file_pointer =
-          this->directory[directory_pos].block * BLOCK_SIZE;
-      this->unit[this->directory[directory_pos].file_pointer] = END_TEXT;
-      this->directory[directory_pos].size = 1;
-      // Open file table setup
-      this->open_file_table[directory_pos].name = name;
-      this->open_file_table[directory_pos].open_count = 0;
-    } else {
-      this->directory[directory_pos].block = FOLDER;
-      this->directory[directory_pos].size = 0;
-      // the other atributes will not be accessed when treating a folder
+  int block = -1;
+  if (this->search_file(name) == -1) {
+    int directory_pos = this->search_directory();
+    block = this->search_block();
+    if (directory_pos != -1 && (block != -1 || !is_file)) {
+      if (is_file) {
+        this->directory[directory_pos].block = block;
+        // Reserved is a special case of EOF to indicate an empty spot
+        this->fat[block] = RESERVED;
+        this->directory[directory_pos].file_pointer =
+            this->directory[directory_pos].block * BLOCK_SIZE;
+        this->unit[this->directory[directory_pos].file_pointer] = END_TEXT;
+        this->directory[directory_pos].size = 1;
+        // Open file table setup
+        this->open_file_table[directory_pos].name = name;
+        this->open_file_table[directory_pos].open_count = 0;
+      } else {
+        this->directory[directory_pos].block = FOLDER;
+        this->directory[directory_pos].size = 0;
+        // the other atributes will not be accessed when treating a folder
+      }
+      this->directory[directory_pos].name = name;
+      this->directory[directory_pos].is_file = is_file;
+      time(&this->directory[directory_pos].date);
+      this->directory[directory_pos].path = actual_path;
     }
-    this->directory[directory_pos].name = name;
-    this->directory[directory_pos].is_file = is_file;
-    time(&this->directory[directory_pos].date);
-    this->directory[directory_pos].path = actual_path;
   }
   return block;
 }
+
 
 /*
  * @brief Searches the closest empty block
