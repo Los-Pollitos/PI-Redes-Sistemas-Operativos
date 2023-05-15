@@ -23,6 +23,7 @@ public:
 
 private slots:
     void on_validate_label_clicked();
+    void on_cancel_button_clicked();
 
 private:
     Ui::Token* ui;
