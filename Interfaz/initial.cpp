@@ -34,6 +34,10 @@ initial::initial(QWidget *parent) :
        , &initial::update_scrollbar);
     this->update_buttons->hide();
 
+    this->requests_buttons.push_back(new description_button( "Funciones de empleado:", container, EMPLOYEE_SEP, 0));
+    this->requests_buttons[EMPLOYEE_SEP]->setEnabled(false);
+    this->requests_buttons[EMPLOYEE_SEP]->setStyleSheet(QString("QPushButton {border: 0px;}"));
+
     this->requests_buttons.push_back(new description_button( "Constancia laboral", container, WORK_PAGE, 0));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
        , &initial::create_windows);
@@ -66,9 +70,17 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[7], &description_button::pressed, this
        , &initial::create_windows);
 
+    this->requests_buttons.push_back(new description_button( "Funciones de supervisor:", container, SUPERVISOR_SEP, 0));
+    this->requests_buttons[SUPERVISOR_SEP]->setEnabled(false);
+    this->requests_buttons[SUPERVISOR_SEP]->setStyleSheet(QString("QPushButton {border: 0px;}"));
+
     this->requests_buttons.push_back(new description_button( "Procesar solicitudes", container, REQUEST_HANDLER, 0));
     this->connect(this->requests_buttons[8], &description_button::pressed, this
        , &initial::create_windows);
+
+    this->requests_buttons.push_back(new description_button( "Manejo de usuarios:", container, USER_SEP, 0));
+    this->requests_buttons[USER_SEP]->setEnabled(false);
+    this->requests_buttons[USER_SEP]->setStyleSheet(QString("QPushButton {border: 0px;}"));
 
     this->requests_buttons.push_back(new description_button( "Crear y borrar usuarios", container, USER_MANAGER, 0));
     this->connect(this->requests_buttons[9], &description_button::pressed, this
@@ -78,18 +90,10 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[10], &description_button::pressed, this
         , &initial::create_windows);
 
-    layout->addWidget(this->requests_buttons[WORK_PAGE]);
-    layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
-    layout->addWidget(this->requests_buttons[SALARY_PAGE]);
-    layout->addWidget(this->requests_buttons[SEE_SALARY]);
-    layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
-    layout->addWidget(this->requests_buttons[VACATION_MANGER]);
-    layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
-    layout->addWidget(this->requests_buttons[SEE_RECORD]);
-    layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
-    layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
-    layout->addWidget(this->requests_buttons[USER_MANAGER]);
-    layout->addWidget(this->requests_buttons[USER_MOD]);
+
+    for (size_t i = 0; i < this->requests_buttons.size(); ++i) {
+        layout->addWidget(this->requests_buttons[i]);
+    }
 
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 
@@ -110,14 +114,16 @@ void initial::setParent_Button(logout_button * parent_button){
 
 void initial::update_scrollbar() {
     if ((this->users_data->role & EMPLOYEE) == EMPLOYEE) {
-        layout->addWidget(this->requests_buttons[WORK_PAGE]);
-        layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
-        layout->addWidget(this->requests_buttons[SALARY_PAGE]);
-        layout->addWidget(this->requests_buttons[SEE_SALARY]);
-        layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
-        layout->addWidget(this->requests_buttons[VACATION_MANGER]);
-        layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
-        layout->addWidget(this->requests_buttons[SEE_RECORD]);
+        this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
+        this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
+        this->layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
+        this->layout->addWidget(this->requests_buttons[SALARY_PAGE]);
+        this->layout->addWidget(this->requests_buttons[SEE_SALARY]);
+        this->layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
+        this->layout->addWidget(this->requests_buttons[VACATION_MANGER]);
+        this->layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
+        this->layout->addWidget(this->requests_buttons[SEE_RECORD]);
+        this->requests_buttons[EMPLOYEE_SEP]->show();
         this->requests_buttons[WORK_PAGE]->show();
         this->requests_buttons[PAYMENT_PAGE]->show();
         this->requests_buttons[SALARY_PAGE]->show();
@@ -127,6 +133,8 @@ void initial::update_scrollbar() {
         this->requests_buttons[SEE_VACATIONS]->show();
         this->requests_buttons[SEE_RECORD]->show();
     } else {
+        this->layout->removeWidget(this->requests_buttons[EMPLOYEE_SEP]);
+        this->requests_buttons[EMPLOYEE_SEP]->hide();
         this->layout->removeWidget(this->requests_buttons[WORK_PAGE]);
         this->requests_buttons[WORK_PAGE]->hide();
         this->layout->removeWidget(this->requests_buttons[PAYMENT_PAGE]);
@@ -145,18 +153,26 @@ void initial::update_scrollbar() {
         this->requests_buttons[SEE_RECORD]->hide();
     }
     if (((this->users_data->role & SUPERVISOR) == SUPERVISOR) || ((this->users_data->role & HUMAN_RESOURCES) == HUMAN_RESOURCES)) {
-         layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
-         this->requests_buttons[REQUEST_HANDLER]->show();
+        this->layout->addWidget(this->requests_buttons[SUPERVISOR_SEP]);
+        this->requests_buttons[SUPERVISOR_SEP]->show();
+        this->layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
+        this->requests_buttons[REQUEST_HANDLER]->show();
     } else {
+        this->layout->removeWidget(this->requests_buttons[SUPERVISOR_SEP]);
+        this->requests_buttons[SUPERVISOR_SEP]->hide();
         this->layout->removeWidget(this->requests_buttons[REQUEST_HANDLER]);
         this->requests_buttons[REQUEST_HANDLER]->hide();
     }
     if (((this->users_data->role & HUMAN_RESOURCES) == HUMAN_RESOURCES) || ((this->users_data->role & ADMIN_USER) == ADMIN_USER)) {
-        layout->addWidget(this->requests_buttons[USER_MANAGER]);
-        layout->addWidget(this->requests_buttons[USER_MOD]);
+        this->layout->addWidget(this->requests_buttons[USER_SEP]);
+        this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
+        this->layout->addWidget(this->requests_buttons[USER_MOD]);
+        this->requests_buttons[USER_SEP]->show();
         this->requests_buttons[USER_MANAGER]->show();
         this->requests_buttons[USER_MOD]->show();
     } else {
+        this->layout->removeWidget(this->requests_buttons[USER_SEP]);
+        this->requests_buttons[USER_SEP]->hide();
         this->layout->removeWidget(this->requests_buttons[USER_MANAGER]);
         this->requests_buttons[USER_MANAGER]->hide();
         this->layout->removeWidget(this->requests_buttons[USER_MOD]);

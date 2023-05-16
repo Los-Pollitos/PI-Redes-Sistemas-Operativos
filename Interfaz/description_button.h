@@ -4,17 +4,20 @@
 #include <QPushButton>
 #include <QWidget>
 
-#define WORK_PAGE 0
-#define PAYMENT_PAGE 1
-#define SALARY_PAGE 2
-#define SEE_SALARY 3
-#define PENDING_REQUESTS 4
-#define VACATION_MANGER 5
-#define SEE_VACATIONS 6
-#define SEE_RECORD 7
-#define REQUEST_HANDLER 8
-#define USER_MANAGER 9
-#define USER_MOD 10
+#define EMPLOYEE_SEP 0
+#define WORK_PAGE 1
+#define PAYMENT_PAGE 2
+#define SALARY_PAGE 3
+#define SEE_SALARY 4
+#define PENDING_REQUESTS 5
+#define VACATION_MANGER 6
+#define SEE_VACATIONS 7
+#define SEE_RECORD 8
+#define SUPERVISOR_SEP 9
+#define REQUEST_HANDLER 10
+#define USER_SEP 11
+#define USER_MANAGER 12
+#define USER_MOD 13
 
 
 class description_button : public QPushButton {
