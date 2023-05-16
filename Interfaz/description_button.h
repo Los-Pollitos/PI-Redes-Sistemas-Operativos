@@ -4,20 +4,22 @@
 #include <QPushButton>
 #include <QWidget>
 
-#define EMPLOYEE_SEP 0
-#define WORK_PAGE 1
-#define PAYMENT_PAGE 2
-#define SALARY_PAGE 3
-#define SEE_SALARY 4
-#define PENDING_REQUESTS 5
-#define VACATION_MANGER 6
-#define SEE_VACATIONS 7
-#define SEE_RECORD 8
-#define SUPERVISOR_SEP 9
-#define REQUEST_HANDLER 10
-#define USER_SEP 11
-#define USER_MANAGER 12
-#define USER_MOD 13
+enum type_button {
+     EMPLOYEE_SEP = 0,
+     WORK_PAGE,
+     PAYMENT_PAGE,
+     SALARY_PAGE,
+     SEE_SALARY,
+     PENDING_REQUESTS,
+     VACATION_MANGER,
+     SEE_VACATIONS,
+     SEE_RECORD,
+     SUPERVISOR_SEP,
+     REQUEST_HANDLER,
+     USER_SEP,
+     USER_MANAGER,
+     USER_MOD,
+};
 
 
 class description_button : public QPushButton {

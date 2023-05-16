@@ -39,35 +39,35 @@ initial::initial(QWidget *parent) :
     this->requests_buttons[EMPLOYEE_SEP]->setStyleSheet(QString("QPushButton {border: 0px;}"));
 
     this->requests_buttons.push_back(new description_button( "Constancia laboral", container, WORK_PAGE, 0));
-    this->connect(this->requests_buttons[0], &description_button::pressed, this
+    this->connect(this->requests_buttons[WORK_PAGE], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Constancia de pago", container, PAYMENT_PAGE, 0));
-    this->connect(this->requests_buttons[1], &description_button::pressed, this
+    this->connect(this->requests_buttons[PAYMENT_PAGE], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Constancia salarial", container, SALARY_PAGE, 0));
-    this->connect(this->requests_buttons[2], &description_button::pressed, this
+    this->connect(this->requests_buttons[SALARY_PAGE], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Consultar salario", container, SEE_SALARY, 0));
-    this->connect(this->requests_buttons[3], &description_button::pressed, this
+    this->connect(this->requests_buttons[SEE_SALARY], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Ver solicitudes", container, PENDING_REQUESTS, 0));
-    this->connect(this->requests_buttons[4], &description_button::pressed, this
+    this->connect(this->requests_buttons[PENDING_REQUESTS], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Solicitar vacaciones", container, VACATION_MANGER, 0));
-    this->connect(this->requests_buttons[5], &description_button::pressed, this
+    this->connect(this->requests_buttons[VACATION_MANGER], &description_button::pressed, this
            , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Saldo de vacaciones", container, SEE_VACATIONS, 0));
-    this->connect(this->requests_buttons[6], &description_button::pressed, this
+    this->connect(this->requests_buttons[SEE_VACATIONS], &description_button::pressed, this
            , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Ver anotaciones al expediente", container, SEE_RECORD, 0));
-    this->connect(this->requests_buttons[7], &description_button::pressed, this
+    this->connect(this->requests_buttons[SEE_RECORD], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Funciones de supervisor:", container, SUPERVISOR_SEP, 0));
@@ -75,7 +75,7 @@ initial::initial(QWidget *parent) :
     this->requests_buttons[SUPERVISOR_SEP]->setStyleSheet(QString("QPushButton {border: 0px;}"));
 
     this->requests_buttons.push_back(new description_button( "Procesar solicitudes", container, REQUEST_HANDLER, 0));
-    this->connect(this->requests_buttons[8], &description_button::pressed, this
+    this->connect(this->requests_buttons[REQUEST_HANDLER], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Manejo de usuarios:", container, USER_SEP, 0));
@@ -83,11 +83,11 @@ initial::initial(QWidget *parent) :
     this->requests_buttons[USER_SEP]->setStyleSheet(QString("QPushButton {border: 0px;}"));
 
     this->requests_buttons.push_back(new description_button( "Crear y borrar usuarios", container, USER_MANAGER, 0));
-    this->connect(this->requests_buttons[9], &description_button::pressed, this
+    this->connect(this->requests_buttons[USER_MANAGER], &description_button::pressed, this
        , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Modificar usuarios", container, USER_MOD, 0));
-    this->connect(this->requests_buttons[10], &description_button::pressed, this
+    this->connect(this->requests_buttons[USER_MOD], &description_button::pressed, this
         , &initial::create_windows);
 
 
