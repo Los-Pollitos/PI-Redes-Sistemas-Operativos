@@ -52,7 +52,7 @@ FS::~FS() {
  */
 int FS::create(std::string name, bool is_file) {
   int block = -1;
-  if (this->search_file(name) == -1) {
+  // if (this->search_file(name) == -1) {
     int directory_pos = this->search_directory();
     block = this->search_block();
     if (directory_pos != -1 && (block != -1 || !is_file)) {
@@ -77,7 +77,7 @@ int FS::create(std::string name, bool is_file) {
       time(&this->directory[directory_pos].date);
       this->directory[directory_pos].path = actual_path;
     }
-  }
+ // }
   return block;
 }
 

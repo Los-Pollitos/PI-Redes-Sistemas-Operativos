@@ -59,7 +59,7 @@ void manage_user::insert_user_file_system(std::string& desired_username, std::st
     buffer.append("\t");
     // Generate token
     int number = 0;
-    for (int i = 0; i < TOKEN_SIZE - 2; ++i) {
+    for (int i = 0; i < TOKEN_SIZE - 1; ++i) {
         number = (int)(rand()%100);
         buffer.append(std::to_string(number));
         buffer.append(" ");
@@ -80,7 +80,7 @@ void manage_user::insert_user_login(std::string& desired_username, std::string& 
         login_file << desired_username << '\t' << desired_password << '\t';
         // Generate token
         int number = 0;
-        for (int i = 0; i < TOKEN_SIZE - 2; ++i) {
+        for (int i = 0; i < TOKEN_SIZE - 1; ++i) {
             number = (int)(rand()%100);
             login_file << std::to_string(number) << " ";
         }
