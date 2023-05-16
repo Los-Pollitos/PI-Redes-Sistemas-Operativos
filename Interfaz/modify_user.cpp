@@ -13,7 +13,10 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
 }
 
 modify_user::~modify_user() {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }
 
 void modify_user::on_comboBox_activated(int index) {

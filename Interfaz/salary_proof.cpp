@@ -11,7 +11,10 @@ salary_proof::salary_proof(QWidget *parent) :
 
 salary_proof::~salary_proof()
 {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }
 
 void salary_proof::on_pushButton_clicked()

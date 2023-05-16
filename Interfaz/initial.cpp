@@ -34,7 +34,7 @@ initial::initial(QWidget *parent) :
        , &initial::update_scrollbar);
     this->update_buttons->hide();
 
-    this->requests_buttons.push_back(new description_button( "Constancia Laboral", container, WORK_PAGE, 0));
+    this->requests_buttons.push_back(new description_button( "Constancia laboral", container, WORK_PAGE, 0));
     this->connect(this->requests_buttons[0], &description_button::pressed, this
        , &initial::create_windows);
 
@@ -90,6 +90,8 @@ initial::initial(QWidget *parent) :
     layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
     layout->addWidget(this->requests_buttons[USER_MANAGER]);
     layout->addWidget(this->requests_buttons[USER_MOD]);
+
+    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 
 }
 
@@ -164,20 +166,62 @@ void initial::update_scrollbar() {
 
 
 initial::~initial() {
-    delete ui;
-    delete this->work_page;
-    delete this->payment_page;
-    delete this->salary_page;
-    delete this->see_salary;
-    delete this->pending_requests;
-    delete this->see_record;
-    delete this->request_handler;
-    delete this->user_manager;
-    delete this->vacation_manager;
-    delete this->see_vacations;
-    delete this->user_mod;
-    delete this->users_data;
-    delete this->update_buttons;
+    if (this->ui) {
+       delete this->ui;
+        this->ui = 0;
+    }
+    if (this->work_page) {
+        delete this->work_page;
+        this->work_page = 0;
+    }
+    if (this->payment_page) {
+        delete this->payment_page;
+        this->payment_page = 0;
+    }
+    if (this->salary_page) {
+        delete this->salary_page;
+        this->salary_page = 0;
+    }
+    if (this->see_salary) {
+        delete this->see_salary;
+        this->see_salary = 0;
+    }
+    if (this->pending_requests) {
+        delete this->pending_requests;
+        this->pending_requests = 0;
+    }
+    if (this->see_record) {
+        delete this->see_record;
+        this->see_record = 0;
+    }
+    if (this->request_handler) {
+        delete this->request_handler;
+        this->request_handler = 0;
+    }
+    if (this->user_manager) {
+        delete this->user_manager;
+        this->user_manager = 0;
+     }
+    if (this->vacation_manager) {
+        delete this->vacation_manager;
+        this->vacation_manager = 0;
+    }
+    if (this->see_vacations) {
+        delete this->see_vacations;
+        this->see_vacations = 0;
+     }
+    if (this->user_mod) {
+        delete this->user_mod;
+        this->user_mod = 0;
+     }
+     if (this->users_data) {
+        delete this->users_data;
+        this->users_data = 0;
+     }
+     if (this->update_buttons) {
+        delete this->update_buttons;
+        this->update_buttons = 0;
+     }
 }
 
 

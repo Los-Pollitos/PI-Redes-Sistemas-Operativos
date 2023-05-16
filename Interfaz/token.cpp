@@ -13,13 +13,19 @@ Token::Token(QWidget *parent) :
     srand (time(NULL));
     this->setWindowTitle("Ingreso de token");
     this->initial_page = new initial();
+    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 }
 
 Token::~Token()
 {
-    delete this->ui;
-    delete this->initial_page;
-    delete this->parent_button;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
+    if (this->initial_page) {
+       delete this->initial_page;
+       this->initial_page = 0;
+    }
 }
 
 void Token::setUserData(login_info * user_data) {
@@ -52,3 +58,13 @@ void Token::on_validate_label_clicked() {
     }
 
 }
+
+
+
+
+void Token::on_cancel_button_clicked() {
+    emit this->parent_button->pressed();
+    this->hide();
+    this->parent_button->valid = false;
+}
+

@@ -5,6 +5,8 @@
 #include "file_system.h"
 #include "token.h"
 #include "login_info.h"
+
+#include <fstream>
 #include <QLabel>
 #include <QDialog>
 
@@ -23,6 +25,8 @@ public:
 
 private:
     bool validate_data(QString username, QString password);
+    void load_file(std::string location, std::string file_name);
+    void refresh_file_system();
 
 private slots:
     void on_login_button_clicked();
@@ -31,8 +35,8 @@ private slots:
 
 private:
     Ui::login* ui;
-    Token* tokenPage;
-    change_password* changePass;
+    Token* token_page;
+    change_password* change_pass;
     login_info* user_data;
     FS* file_system;
     logout_button* request_button;

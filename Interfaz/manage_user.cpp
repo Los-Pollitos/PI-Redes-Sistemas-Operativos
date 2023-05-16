@@ -1,10 +1,9 @@
 #include "manage_user.h"
 #include "ui_manage_user.h"
 
+#include <vector>
 #include <fstream>
 #include <string>
-//TODO(Luis): borrar
-#include <iostream>
 #include <stdlib.h>     /* srand, rand */
 #include <QMessageBox>
 
@@ -20,7 +19,14 @@ manage_user::manage_user(QWidget *parent) :
 }
 
 manage_user::~manage_user() {
-    delete this->ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
+}
+
+void manage_user::set_file_system(FS* file_system) {
+    this->file_system = file_system;
 }
 
 void manage_user::set_user_login(login_info* user_login) {
@@ -42,6 +48,28 @@ bool manage_user::find_user(std::string& desired_username) {
         file.close();
     }
     return answer;
+}
+
+void manage_user::insert_user_file_system(std::string& desired_username, std::string& desired_password) {
+    // Open file
+    std::string buffer = "";
+    buffer.append(desired_username);
+    buffer.append("\t");
+    buffer.append(desired_password);
+    buffer.append("\t");
+    // Generate token
+    int number = 0;
+    for (int i = 0; i < TOKEN_SIZE - 2; ++i) {
+        number = (int)(rand()%100);
+        buffer.append(std::to_string(number));
+        buffer.append(" ");
+    }
+    // Last token position
+    number = (int)(rand()%100);
+    buffer.append(std::to_string(number));
+    buffer.append("\n");
+    this->file_system->append("Login.txt", buffer);
+    // Close file
 }
 
 void manage_user::insert_user_login(std::string& desired_username, std::string& desired_password) {
@@ -187,6 +215,33 @@ void manage_user::delete_user_data(std::string& desired_username) {
     main_file.close();
     // Reinsert the contents of the file without the deleted user
     this->reinsert_data_file();
+}
+
+void manage_user::delete_user_file_system(std::string& desired_username) {
+    std::vector<std::string>container;
+    std::string buffer = "";
+    this->file_system->reset_file_pointer(desired_username, "Login.txt");
+    // Store everything except the desired username
+    while (!this->file_system->is_eof(desired_username, "Login.txt")) {
+        buffer = this->file_system->read_until(desired_username, "Login.txt", '\t');
+        if (buffer != desired_username) {
+            // Read the rest of the data and store it
+            container.push_back(buffer);
+            buffer = this->file_system->read_line(desired_username, "Login.txt");
+            container.push_back(buffer);
+        } else {
+            // Read the entire line without storing it
+            this->file_system->read_line(desired_username, "Login.txt");
+        }
+        buffer = " ";
+    }
+    this->file_system->deep_erase("Login.txt");
+    this->file_system->create("Login.txt");
+    // Add everything again
+    int size = container.size();
+    for (int i = 0; i < size; ++i) {
+        this->file_system->append("Login.txt", container[i]);
+    }
 }
 
 void manage_user::on_delete_button_clicked() {

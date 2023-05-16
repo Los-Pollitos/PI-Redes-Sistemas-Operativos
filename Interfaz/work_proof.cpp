@@ -9,9 +9,11 @@ work_proof::work_proof(QWidget *parent) :
     this->setWindowTitle("Constancia laboral");
 }
 
-work_proof::~work_proof()
-{
-    delete ui;
+work_proof::~work_proof() {
+    if (this->ui) {
+        delete ui;
+        this->ui = 0;
+     }
 }
 
 void work_proof::on_pushButton_clicked()

@@ -15,5 +15,8 @@ request_vacations::request_vacations(QWidget *parent) :
 
 request_vacations::~request_vacations()
 {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }

@@ -15,5 +15,8 @@ consult_salary::consult_salary(QWidget *parent) :
 
 consult_salary::~consult_salary()
 {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }

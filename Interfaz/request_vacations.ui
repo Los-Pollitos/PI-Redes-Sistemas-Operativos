@@ -56,7 +56,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Fecha de inicio de las vacaciones:</string>
+    <string>Fecha de fin de las vacaciones:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="reset">

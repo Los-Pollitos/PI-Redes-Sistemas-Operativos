@@ -11,7 +11,10 @@ payment_proof::payment_proof(QWidget *parent) :
 
 payment_proof::~payment_proof()
 {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
 }
 
 void payment_proof::on_pushButton_clicked()

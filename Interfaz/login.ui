@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>450</width>
     <height>300</height>
    </rect>
   </property>
@@ -26,8 +26,8 @@
   <widget class="QLabel" name="user_label">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>80</y>
+     <x>210</x>
+     <y>50</y>
      <width>157</width>
      <height>25</height>
     </rect>
@@ -39,8 +39,8 @@
   <widget class="QLineEdit" name="user_input">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>80</y>
+     <x>300</x>
+     <y>50</y>
      <width>108</width>
      <height>24</height>
     </rect>
@@ -49,8 +49,8 @@
   <widget class="QLabel" name="password_label">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>130</y>
+     <x>210</x>
+     <y>100</y>
      <width>91</width>
      <height>25</height>
     </rect>
@@ -62,9 +62,9 @@
   <widget class="QPushButton" name="forgot_button">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>230</y>
-     <width>131</width>
+     <x>240</x>
+     <y>200</y>
+     <width>141</width>
      <height>24</height>
     </rect>
    </property>
@@ -75,9 +75,9 @@
   <widget class="QPushButton" name="login_button">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>190</y>
-     <width>131</width>
+     <x>240</x>
+     <y>160</y>
+     <width>141</width>
      <height>24</height>
     </rect>
    </property>
@@ -88,11 +88,45 @@
   <widget class="QLineEdit" name="password_input">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>130</y>
+     <x>300</x>
+     <y>100</y>
      <width>108</width>
      <height>24</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>180</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>URW Gothic</family>
+     <pointsize>13</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Los Pollitos Inc.</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="pic_label">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>50</y>
+     <width>151</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

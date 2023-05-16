@@ -11,5 +11,8 @@ consult_record::consult_record(QWidget *parent) :
 
 consult_record::~consult_record()
 {
-    delete ui;
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+     }
 }
