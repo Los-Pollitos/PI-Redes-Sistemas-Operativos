@@ -9,9 +9,12 @@
 #include <unistd.h>
 
 #define BUF_SIZE 1024
+#define PORT_NUM 1500
+#define CLIENT 0
+#define LOGIN 1
+#define DATA 2
 
 int main() {
-  int portNum = 1500; // port to run
   char buffer[BUF_SIZE];
 
   struct sockaddr_in server_addr;
@@ -20,23 +23,23 @@ int main() {
   int client = socket(AF_INET, SOCK_STREAM, 0);
 
   if (client < 0) {
-    std::cerr << "\nError establishing socket..." << std::endl;
+    std::cerr << "\nIntermediary: Error establishing socket..." << std::endl;
     return -1;
   }
-  std::cout << "Server was initialized propperly" << std::endl;
+  std::cout << "Intermediary: Server was initialized propperly" << std::endl;
 
   server_addr.sin_family = AF_INET;  // always set to this
   server_addr.sin_addr.s_addr = htons(INADDR_ANY); // IP of host as a port number
-  server_addr.sin_port = htons(portNum);
+  server_addr.sin_port = htons(PORT_NUM);
 
   // Binding the socket to an address 
   if ((bind(client, (struct sockaddr*)&server_addr,sizeof(server_addr))) < 0)  {
-    std::cerr << "Error binding connection, the socket has already been established..." << std::endl;
+    std::cerr << "Intermediary: Error binding connection, the socket has already been established..." << std::endl;
     return -1;
   }
 
   socklen_t size = sizeof(server_addr);
-  std::cout << "Looking for clients..." << std::endl;
+  std::cout << "Intermediary: Looking for clients..." << std::endl;
   listen(/*socket file descriptor*/client,
      /*number of conections that the server can handle (max is 5)*/ 1);
 
@@ -47,29 +50,29 @@ int main() {
 
   // first check if it is valid or not
   if (server < 0) {
-    std::cerr << "Error on accepting connection..." << std::endl;
+    std::cerr << "Intermediray:Error on accepting connection..." << std::endl;
   }
 
   // while there is a conection
   bool isExit = false;
   while (server > 0 && !isExit) {
     // say hello
-    strcpy(buffer, "=> Server connected...\n");
+    strcpy(buffer, "Intermediary: Server connected...\n");
     send(server, buffer, BUF_SIZE, 0);
-    std::cout << "=> Connected with the client #" << clientCount << ", you are good to go..." << std::endl;
+    std::cout << "Intermediary: Connected with the client #" << clientCount << ", you are good to go..." << std::endl;
 
     do {
       recv(server, buffer, BUF_SIZE, 0);
-      std::cout << "Server recibió: " << buffer << " ";
+      std::cout << "Intermediary: Server received: " << buffer << " \n";
       if (*buffer == '#') {
           isExit = true;
       }
     } while (*buffer != '#');
     
     // inet_ntoa converts packet data to IP, which was taken from client
-    std::cout << "\n\n=> Connection terminated with IP " << inet_ntoa(server_addr.sin_addr);
+    std::cout << "\n\n Intermediary: Connection terminated with IP " << inet_ntoa(server_addr.sin_addr);
     close(server);
-    std::cout << "\nGoodbye..." << std::endl;
+    std::cout << "\nIntermediary: Goodbye..." << std::endl;
   }
   close(client);
   return 0;
