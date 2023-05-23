@@ -55,7 +55,7 @@ int main() {
 
   // while there is a conection
   bool isExit = false;
-  while (server > 0 && !isExit) {
+  while (server > 0) {
     // say hello
     strcpy(buffer, "Intermediary: Server connected...\n");
     send(server, buffer, BUF_SIZE, 0);
@@ -70,10 +70,10 @@ int main() {
     } while (*buffer != '#');
     
     // inet_ntoa converts packet data to IP, which was taken from client
-    std::cout << "\n\n Intermediary: Connection terminated with IP " << inet_ntoa(server_addr.sin_addr);
-    close(server);
-    std::cout << "\nIntermediary: Goodbye..." << std::endl;
+    close(client);
   }
-  close(client);
+  std::cout << "\n\n Intermediary: Connection terminated with IP " << inet_ntoa(server_addr.sin_addr);
+  close(server);
+  std::cout << "\nIntermediary: Goodbye..." << std::endl;
   return 0;
 }

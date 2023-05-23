@@ -13,6 +13,13 @@
 #define TO_LOGIN 0
 #define TO_DATA 1
 
+#define IS_LOGIN 0
+#define CHANGE_PASS 1
+#define SEE_VACATIONS 2
+#define ASK_VACATIONS 3
+#define SEE_RECORD 4
+
+
 int main() {
   char buffer[BUF_SIZE];
   char* ip = (char*)"127.0.0.";
