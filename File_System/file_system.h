@@ -68,11 +68,8 @@ class FS {
     bool check_permission(std::string user, std::string name, int permission);
     void add_one_local_read_pointer(int& local_read_pointer);
     void add_one_local_write_pointer(int& local_write_pointer);
-    // For folders  TODO(nosotros): documentar todo
     bool can_show(std::string user, std::string name);
     bool is_valid_path(std::string path);
-    // TODO(emilia): considerar si se ocupa 
-    // bool is_in_folder(std::string user, std::string path, std::string name);
   
   public:
     // Public methods
@@ -82,6 +79,7 @@ class FS {
     int create(std::string name, bool is_file = true);
     int open(std::string user, std::string name);
     int close(std::string user, std::string name);
+    int is_open(std::string name);
     int write(std::string user, std::string name, std::string line);
     int append(std::string name, std::string character);
     int erase(std::string name);
@@ -90,7 +88,6 @@ class FS {
     std::string read_line(std::string user, std::string name); 
     std::string read_until(std::string user, std::string name, char separator);
     bool is_eof(std::string user, std::string name);
-    int is_open(std::string name);
     void print_unit();
     void print_open_file_table();
     void reset_file_pointer(std::string user, std::string name);
@@ -104,6 +101,11 @@ class FS {
     bool set_path(std::string user, std::string path);
     bool delete_folder(std::string user, std::string folder);
     bool move(std::string user, std::string name, std::string new_abs_path);
+
+    // For permissions
+    bool can_change_permissions(std::string user, std::string name);
+    bool modify_permissions(std::string user, std::string name, int new_user, int new_group, int new_all);
+    bool get_permissions(std::string user, std::string name, int& result_user, int& result_group, int& result_all);
 };
 
 #endif // FILE_SYSTEM_H
