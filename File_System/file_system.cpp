@@ -48,35 +48,98 @@ FS::~FS() {
  * @param name Indicates the name of the file to be addded
  * @param is_file Is true if we are creating a file, false if it is a folder
  * @return int The block in which the file was added. Returns -1 if no block was
- * found.
+ * found or if there was already a file with that name.
  */
 int FS::create(std::string name, bool is_file) {
-  int directory_pos = this->search_directory();
-  int block = this->search_block();
-  if (directory_pos != -1 && (block != -1 || !is_file)) {
-    if (is_file) {
-      this->directory[directory_pos].block = block;
-      // Reserved is a special case of EOF to indicate an empty spot
-      this->fat[block] = RESERVED;
-      this->directory[directory_pos].file_pointer =
-          this->directory[directory_pos].block * BLOCK_SIZE;
-      this->unit[this->directory[directory_pos].file_pointer] = END_TEXT;
-      this->directory[directory_pos].size = 1;
-      // Open file table setup
-      this->open_file_table[directory_pos].name = name;
-      this->open_file_table[directory_pos].open_count = 0;
-    } else {
-      this->directory[directory_pos].block = FOLDER;
-      this->directory[directory_pos].size = 0;
-      // the other atributes will not be accessed when treating a folder
+  int block = -1;
+  if (this->search_file(name) == -1) {
+    int directory_pos = this->search_directory();
+    block = this->search_block();
+    if (directory_pos != -1 && (block != -1 || !is_file)) {
+      if (is_file) {
+        this->directory[directory_pos].block = block;
+        // Reserved is a special case of EOF to indicate an empty spot
+        this->fat[block] = RESERVED;
+        this->directory[directory_pos].file_pointer =
+            this->directory[directory_pos].block * BLOCK_SIZE;
+        this->unit[this->directory[directory_pos].file_pointer] = END_TEXT;
+        this->directory[directory_pos].size = 1;
+        // Open file table setup
+        this->open_file_table[directory_pos].name = name;
+        this->open_file_table[directory_pos].open_count = 0;
+      } else {
+        this->directory[directory_pos].block = FOLDER;
+        this->directory[directory_pos].size = 0;
+        // the other atributes will not be accessed when treating a folder
+      }
+      this->directory[directory_pos].name = name;
+      this->directory[directory_pos].is_file = is_file;
+      time(&this->directory[directory_pos].date);
+      this->directory[directory_pos].path = actual_path;
     }
-    this->directory[directory_pos].name = name;
-    this->directory[directory_pos].is_file = is_file;
-    time(&this->directory[directory_pos].date);
-    this->directory[directory_pos].path = actual_path;
   }
   return block;
 }
+
+/*
+ * @brief Indicates if a user can change the permissions of a file
+ *
+ * @param user Indicates the user, in order to check permission
+ * @param name Indicates the file whose permissions want to be changed
+ * @return bool true if the user has permissions, false if they do not
+ */
+bool FS::can_change_permissions(std::string user, std::string name) {
+  (void) user;
+  (void) name;
+  return true;
+}
+
+
+/*
+ * @brief Modifies permissions of a file
+ *
+ * @param user Indicates the user, in order to check permission
+ * @param name Indicates the file whose permissions want to be changed
+ * @param new_user New user permissions
+ * @param new_group New group permissions 
+ * @param new_all New other permissions
+ * @return bool true if the action could be performed, false it not
+ */
+bool FS::modify_permissions(std::string user, std::string name, int new_user, int new_group, int new_all) {
+  bool result = false;
+  int pos_dir = this->search_file(name);
+  if (pos_dir != -1 && this->can_change_permissions(user, name)) {
+    this->directory[pos_dir].permissions[0] = new_user;
+    this->directory[pos_dir].permissions[1] = new_group;
+    this->directory[pos_dir].permissions[2] = new_all;
+    result = true;
+  }
+  return result;
+}
+
+
+/*
+ * @brief Indicates the permissions of a file
+ *
+ * @param user Indicates the user, in order to check permission
+ * @param name Indicates the file whose permissions want to be asked
+ * @param new_user variable to store user permissions
+ * @param new_group variable to store group permissions 
+ * @param new_all variable to store other permissions
+ * @return bool true if the action could be performed, false it not
+ */
+bool FS::get_permissions(std::string user, std::string name, int& result_user, int& result_group, int& result_all) {
+  bool result = false;
+  int pos_dir = this->search_file(name);
+  if (pos_dir != -1 && this->can_change_permissions(user, name)) {
+    result_user = this->directory[pos_dir].permissions[0];
+    result_group = this->directory[pos_dir].permissions[1];
+    result_all = this->directory[pos_dir].permissions[2];
+    result = true;
+  }
+  return result;
+}
+
 
 /*
  * @brief Searches the closest empty block
@@ -100,7 +163,7 @@ int FS::search_block() {
  */
 int FS::search_directory() {
   int directory_pos = -1;
-  for (int i = 0; i < MAX_SIZE && directory_pos == -1; ++i) {
+  for (int i = 0; i < DIR_SIZE && directory_pos == -1; ++i) {
     if (this->directory[i].block == EMPTY) {
       directory_pos = i;
     }
@@ -217,7 +280,6 @@ int FS::write(std::string user, std::string name, std::string line) {
       this->directory[directory_position].file_pointer = local_write_pointer;
       // end text has been reached before the whole line was written
       if (i < line.length()) {
-        std::cout << "EN IF\n";
         line = line.substr(i);
         this->append(name, line);
         // Update the pointer
@@ -413,6 +475,7 @@ int FS::deep_erase(std::string name) {
     this->directory[directory_pos].date = 0;
     this->directory[directory_pos].size = 0;
     this->directory[directory_pos].name = "";
+    this->directory[directory_pos].path = "";
     // Clean the open file table
     this->open_file_table[directory_pos].name = "";
     this->open_file_table[directory_pos].open_count = 0;
@@ -668,11 +731,11 @@ void FS::print_unit() {
                 << "  ";
       if (this->directory[i].block != FOLDER) {
         std::cout << this->directory[i].block << "  ";
+        std::cout << "Size: " << this->directory[i].size << std::endl;
       } else {
         std::cout << "Folder"
-                  << "  ";
+                  << std::endl;
       }
-      std::cout << "Size: " << this->directory[i].size << std::endl;
     }
   }
   std::cout << "\nFAT:" << std::endl;
@@ -811,7 +874,7 @@ bool FS::set_path(std::string user, std::string path) {
 bool FS::is_valid_path(std::string path) {
   bool result = false;
   for (int i = 0; i < DIR_SIZE && !result; ++i) {
-    if (this->directory[i].path == path) {
+    if (this->directory[i].block != EMPTY && this->directory[i].path == path) {
       result = true;
     }
   }
@@ -847,15 +910,44 @@ bool FS::is_valid_path(std::string path) {
   return result;
 }
 
-// TODO(emilia): hacer
+
 /*
- * @brief Deletes a folder
+ * @brief Deletes a folder. After this method, it is recomended that the user sets the
+ * path in which they want to be.
  *
  * @param user Indicates the username
  * @param folder Indicates the folder that will be deleted
  * @return bool True if the folder was deleted. False if not
  */
-bool FS::delete_folder(std::string user, std::string folder) { return true; }
+bool FS::delete_folder(std::string user, std::string folder) {
+  bool result = false;
+  std::string path = "";
+  int dir_folder = 0;
+  if (can_show(user, folder) && folder != "ROOT") {
+    for (int i = 0; i < DIR_SIZE && !result; ++i){
+      if (this->directory[i].name == folder) {
+        path = this->directory[i].path + "/" + this->directory[i].name;
+        dir_folder = i;
+        result = true;
+      }
+    }
+    for (int i = 0; i < DIR_SIZE; ++i){
+      if (this->directory[i].path == path) {
+        if (this->directory[i].is_file)
+          this->erase(this->directory[i].name);
+        else
+          this->delete_folder(user, this->directory[i].name);
+      }
+    }
+    this->directory[dir_folder].name = "";
+    this->directory[dir_folder].date = 0;
+    this->directory[dir_folder].size = 0;
+    this->directory[dir_folder].block = EMPTY;
+    this->directory[dir_folder].path = "";
+  }
+  this->up_folder();
+  return result;
+}
 
 /*
  * @brief Check if the usesr has permission to access a folder
