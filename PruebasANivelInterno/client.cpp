@@ -20,7 +20,7 @@ int main() {
   } else {
     ipServidor.sin_family = AF_INET;
     ipServidor.sin_port = htons(1337);
-    ipServidor.sin_addr.s_addr = inet_addr("10.1.35.9");
+    ipServidor.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
