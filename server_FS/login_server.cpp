@@ -93,7 +93,46 @@ void login_server::answer_request() {
 
 // TODO(nostros): documentar
 void login_server::validate_data() {
-  // TODO(nosotros): hacer
+    std::string username = "";
+    std::string password = "";
+    bool found_comma = false;
+    int contador_hash = 0;
+    for (int i = 0; i < DATA_SIZE && contador_hash < HASH_SIZE; ++i) {
+      if (data[i] == ',') {
+        found_comma = true;
+      } else if (found_comma == true) {
+        password += data[i];
+        contador_hash++;
+      } else {
+        username += data[i];
+      }
+    }
+    this->file_system->open(username, "Login.txt");
+    if (this->file_system->is_open("Login.txt")) {
+        this->file_system->reset_file_pointer(username, "Login.txt");
+        bool found = false;
+        std::string buffer = " ";
+
+        // Find the username in the file
+        bool end_of_file = this->file_system->is_eof(username, "Login.txt");
+        while (end_of_file == false && found == false) {
+            buffer = this->file_system->read_until(username, "Login.txt", '\t');
+            if (buffer != username) {
+                // Read the rest of the data
+                buffer = this->file_system->read_line(username, "Login.txt");
+            } else {
+                found = true;
+            }
+            buffer = " ";
+            end_of_file = this->file_system->is_eof(username, "Login.txt");
+        }
+        // Compare
+        if (found) {
+            buffer = this->file_system->read_until(username, "Login.txt", '\t');
+        }  // TODO(nosotros): hacer
+        this->file_system->close(username, "Login.txt");
+    }
+    // Success
   write(this->connection, this->data, strlen(this->data));
 }
 

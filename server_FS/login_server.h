@@ -10,6 +10,7 @@
 #define LOGIN_SERVER
 
 #define DATA_SIZE 256
+#define HASH_SIZE 30
 
 #include "file_system.h"
 
