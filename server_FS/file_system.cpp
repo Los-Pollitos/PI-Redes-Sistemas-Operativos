@@ -1025,11 +1025,10 @@ void FS::write_unit() {
   for (int i = 0; i < DIR_SIZE; ++i) {
     if (this->directory[i].block != EMPTY) {
       file << this->directory[i].name << this->directory[i].path
-           << this->directory[i].block
-           << this->directory[i].size << this->directory[i].is_file
-           << this->directory[i].permissions[0]
+           << this->directory[i].block << this->directory[i].size
+           << this->directory[i].is_file << this->directory[i].permissions[0]
            << this->directory[i].permissions[1]
-           << this->directory[i].permissions[2]<< std::endl;
+           << this->directory[i].permissions[2] << std::endl;
     }
   }
 }
@@ -1037,12 +1036,16 @@ void FS::write_unit() {
 // TODO(nosotros): documentar
 void FS::load_unit() {
   std::ifstream file("fs_image.dat");
-  char space = ' ';
   std::string buffer;
   std::getline(file, buffer);
   int buffer_count = 0;
   for (int i = 0; i < FAT_SIZE; ++i) {
-    this->fat[i] = buffer[buffer_count];
+    if (buffer[buffer_count] == '-') {
+      ++buffer_count;
+      this->fat[i] = -1*(std::stoi(&buffer[buffer_count]));
+    } else {
+      this->fat[i] = (std::stoi(&buffer[buffer_count]));
+    }
   }
   for (int i = 0; i < MAX_SIZE; ++i) {
     if (i >= buffer.length()) {
@@ -1056,16 +1059,18 @@ void FS::load_unit() {
   int pos_directory = 0;
   std::string temp;
   while (!file.eof()) {
-    file >> this->directory[pos_directory].name >> this->directory[pos_directory].path
-          >> this->directory[pos_directory].block
-          >> this->directory[pos_directory].size;
+    file >> this->directory[pos_directory].name >>
+        this->directory[pos_directory].path >>
+        this->directory[pos_directory].block >>
+        this->directory[pos_directory].size;
     std::getline(file, temp, ' ');
-    this->directory[pos_directory].is_file = (bool) (temp[0]  + 48);
-    file >> this->directory[pos_directory].permissions[0]
-          >> this->directory[pos_directory].permissions[1]
-          >> this->directory[pos_directory].permissions[2];
+    this->directory[pos_directory].is_file = (bool)(std::stoi(&temp[0]));
+    file >> this->directory[pos_directory].permissions[0] >>
+        this->directory[pos_directory].permissions[1] >>
+        this->directory[pos_directory].permissions[2];
     if (this->directory[pos_directory].is_file == true) {
-      this->directory[pos_directory].file_pointer =  this->directory[pos_directory].block * BLOCK_SIZE;
+      this->directory[pos_directory].file_pointer =
+          this->directory[pos_directory].block * BLOCK_SIZE;
     }
     ++pos_directory;
   }
