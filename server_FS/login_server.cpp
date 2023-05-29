@@ -11,23 +11,51 @@
 /*
  * @brief Default constructor
  */
+// TODO(nosotros): bool de que no haga nada si no hay archivo
 login_server::login_server() {
   // Create the file system
   this->file_system = new FS();
   this->connection = -1;
   this->message_count = 0;
 
-  // TODO(nosotros): Load the file system
+  // Load the file system from image
+  std::ifstream current_file("fs_image.dat");
+  if (current_file.is_open()) {
+    current_file.close();
+    this->file_system->load_unit();
+  } else {
+    // Load the file system from file
+    this->load_from_file();
+  }
 }
 
 /*
  * @brief Destructor
  */
 login_server::~login_server() {
-  // TODO(nosotros): Unload the file system
-
+  // Unload the image of the file system
+  this->file_system->write_unit();
   // Delete the file system
   delete this->file_system;
+}
+
+// TODO(nostros): documentar
+void login_server::load_from_file() {
+  std::ifstream file("Login.txt");
+  if (file.is_open()) {
+    std::string buffer;
+    // Create the file in the file system
+    this->file_system->create("Login.txt", true);
+    this->file_system->open("Server", "Login.txt");
+    while (std::getline(file, buffer)) {
+      this->file_system->append("Login.txt", buffer);
+    }
+    this->file_system->close("Server", "Login.txt");
+    // Unload the image of the file system
+    this->file_system->write_unit();
+  } else {
+    std::cerr << "No hay archivo de Login.txt" << std::endl;
+  }
 }
 
 // TODO(nostros): documentar
@@ -94,17 +122,17 @@ void login_server::answer_request() {
 // TODO(nostros): documentar
 void login_server::validate_data() {
   std::string username = "";
-  std::string password = "";
+  std::string hash = "";
   bool found_comma = false;
-  int contador_hash = 0;
-  for (int i = 0; i < DATA_SIZE && contador_hash < HASH_SIZE; ++i) {
-    if (data[i] == ',') {
+  int hash_counter = 0;
+  for (int i = 0; i < DATA_SIZE && hash_counter < HASH_SIZE; ++i) {
+    if (this->data[i] == ',') {
       found_comma = true;
     } else if (found_comma == true) {
-      password += data[i];
-      contador_hash++;
+      hash += this->data[i];
+      hash_counter++;
     } else {
-      username += data[i];
+      username += this->data[i];
     }
   }
   this->file_system->open(username, "Login.txt");

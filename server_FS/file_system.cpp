@@ -1012,31 +1012,29 @@ bool FS::move(std::string user, std::string name, std::string new_abs_path) {
   return result;
 }
 
-/*
- * @brief Prints the unit
- */
+// TODO(nosotros): documentar
 void FS::write_unit() {
   std::ofstream file("fs_image.dat");
-  char space = ' ';
   for (int i = 0; i < FAT_SIZE; ++i) {
     file << this->fat[i];
   }
   for (int i = 0; i < MAX_SIZE; ++i) {
-    file << this->unit[i] << space;
+    file << this->unit[i];
   }
   file << std::endl;
   for (int i = 0; i < DIR_SIZE; ++i) {
     if (this->directory[i].block != EMPTY) {
-      file << this->directory[i].name << space << this->directory[i].path
-           << space << this->directory[i].block << space
-           << this->directory[i].size << space << this->directory[i].is_file
-           << this->directory[i].permissions[0] << space
-           << this->directory[i].permissions[1] << space
+      file << this->directory[i].name << this->directory[i].path
+           << this->directory[i].block
+           << this->directory[i].size << this->directory[i].is_file
+           << this->directory[i].permissions[0]
+           << this->directory[i].permissions[1]
            << this->directory[i].permissions[2]<< std::endl;
     }
   }
 }
 
+// TODO(nosotros): documentar
 void FS::load_unit() {
   std::ifstream file("fs_image.dat");
   char space = ' ';

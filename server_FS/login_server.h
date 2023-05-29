@@ -30,6 +30,10 @@ private:
   int message_count;
   struct sockaddr_storage ipRemoto;
 
+  // Methods
+  //TODO(nosotros): hacer
+  void load_from_file();
+
 public:
   login_server();
   ~login_server();
