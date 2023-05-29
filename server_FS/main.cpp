@@ -13,14 +13,14 @@ int main() {
   // Create the file system
   FS *fs = new FS();
 
-  // fs->set_path("cjimenez", "Root");
-  // fs->create("1.dat");
-  // fs->create("11.dat");
-  // fs->create("F1", false);
-  // fs->change_folder("cjimenez", "F1");
-  // fs->create("2.dat");
-  // fs->create("22.dat");
-  // fs->create("F2", false);
+  fs->set_path("cjimenez", "Root");
+  fs->create("1.dat");
+  fs->create("11.dat");
+  fs->create("F1", false);
+  fs->change_folder("cjimenez", "F1");
+  fs->create("2.dat");
+  fs->create("22.dat");
+  fs->create("F2", false);
 
   // std::cout << "\ntrato de crear archivo con mismo nombre. Pude (-1 significa "
   //              "que no pude)? "
@@ -66,7 +66,7 @@ int main() {
   // fs->list("cjimenez");
   // std::cout << "Si me trato de mover a F1, puedo? " << fs->set_path("cjimenez", "Root/F1") << std::endl;
 
-  fs->set_path("user", "Root/F2");
+  fs->set_path("user", "Root");
   // std::cout << "Cargo archivo de usuarios (a F2) con sus hash e imprimo todo:";
   fs->create("users.dat");
   fs->open("user", "users.dat");
@@ -81,30 +81,11 @@ int main() {
   fs->append("users.dat", "dcabezas,d7b5221b92b1be0572afc5980df5e0,56\n");
   fs->append("users.dat", "d_gmora,746af3077841560d8ae21ba6afb0cd,1\n");
 
+  fs->print_unit();
   fs->write_unit();
 
-  // std::cout << "\n\nPrueba de metodo write:\n";
-  // fs->create("prueba");
-  // fs->open("prueba", "prueba");
-  // std::cout << "En Folder2 actualmente:\n";
-  // fs->list("prueba");
-  // std::cout << std::endl;
-  // fs->write("prueba", "prueba", "probandoprobandoprobando");
-  // fs->reset_file_pointer("prueba", "prueba");
-  // std::cout << "Prueba tiene: " << fs->read_line("prueba", "prueba") << std::endl;
-  // fs->reset_file_pointer("prueba", "prueba");
-  // fs->write("prueba", "prueba", "12345678");
-  // fs->write("prueba", "prueba", "91234567");
-  // fs->write("prueba", "prueba", "123456bb");
-  // fs->write("prueba", "prueba", "1234567cc");
-  // fs->write("prueba", "prueba", "hola");
-  // std::cout << "Estoy en eof? "<< fs->is_eof("prueba", "prueba") << std::endl; 
-  // fs->reset_file_pointer("prueba", "prueba");
-  // fs->write("prueba", "prueba", "funcionabien");
-  // fs->reset_file_pointer("prueba", "prueba");
-  // std::cout << "Prueba tiene: " << fs->read_line("pruebal", "prueba") << std::endl;
-
- // fs->print_unit();
+  fs->load_unit();
+  fs->print_unit();
 
   delete fs;
   return 0;
