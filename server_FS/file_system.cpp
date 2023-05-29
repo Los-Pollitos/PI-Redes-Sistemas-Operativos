@@ -1016,32 +1016,34 @@ bool FS::move(std::string user, std::string name, std::string new_abs_path) {
 void FS::write_unit() {
   std::ofstream file("fs_image.dat");
   for (int i = 0; i < FAT_SIZE; ++i) {
+    std::cout << "FAT: " << fat[i] << std::endl; 
     file << this->fat[i];
   }
   for (int i = 0; i < MAX_SIZE; ++i) {
+    std::cout << "UNIT: " << unit[i] << std::endl; 
     file << this->unit[i];
   }
   file << std::endl;
-  char space = ' ';
-  for (int i = 0; i < DIR_SIZE; ++i) {
-    if (this->directory[i].block != EMPTY) {
-      file << this->directory[i].name
-           << space
-           << this->directory[i].path
-           << space
-           << this->directory[i].block
-           << space
-           << this->directory[i].size
-           << space 
-           << this->directory[i].is_file
-           << space
-           << this->directory[i].permissions[0]
-           << space 
-           << this->directory[i].permissions[1]
-           << space 
-           << this->directory[i].permissions[2] << std::endl;
-    }
-  }
+  // char space = ' ';
+  // for (int i = 0; i < DIR_SIZE; ++i) {
+  //   if (this->directory[i].block != EMPTY) {
+  //     file << this->directory[i].name
+  //          << space
+  //          << this->directory[i].path
+  //          << space
+  //          << this->directory[i].block
+  //          << space
+  //          << this->directory[i].size
+  //          << space 
+  //          << this->directory[i].is_file
+  //          << space
+  //          << this->directory[i].permissions[0]
+  //          << space 
+  //          << this->directory[i].permissions[1]
+  //          << space 
+  //          << this->directory[i].permissions[2] << std::endl;
+  //   }
+  // }
 }
 
 // TODO(nosotros): documentar
@@ -1067,22 +1069,22 @@ void FS::load_unit() {
       this->unit[i] = buffer[buffer_count];
     }
   }
-  int pos_directory = 0;
-  std::string temp;
-  while (!file.eof()) {
-    file >> this->directory[pos_directory].name >>
-        this->directory[pos_directory].path >>
-        this->directory[pos_directory].block >>
-        this->directory[pos_directory].size;
-    std::getline(file, temp, ' ');
-    this->directory[pos_directory].is_file = (bool)(std::atoi(&temp[0]));
-    file >> this->directory[pos_directory].permissions[0] >>
-        this->directory[pos_directory].permissions[1] >>
-        this->directory[pos_directory].permissions[2];
-    if (this->directory[pos_directory].is_file == true) {
-      this->directory[pos_directory].file_pointer =
-          this->directory[pos_directory].block * BLOCK_SIZE;
-    }
-    ++pos_directory;
-  }
+  // int pos_directory = 0;
+  // std::string temp;
+  // while (!file.eof()) {
+  //   file >> this->directory[pos_directory].name >>
+  //       this->directory[pos_directory].path >>
+  //       this->directory[pos_directory].block >>
+  //       this->directory[pos_directory].size;
+  //   std::getline(file, temp, ' ');
+  //   this->directory[pos_directory].is_file = (bool)(std::atoi(&temp[0]));
+  //   file >> this->directory[pos_directory].permissions[0] >>
+  //       this->directory[pos_directory].permissions[1] >>
+  //       this->directory[pos_directory].permissions[2];
+  //   if (this->directory[pos_directory].is_file == true) {
+  //     this->directory[pos_directory].file_pointer =
+  //         this->directory[pos_directory].block * BLOCK_SIZE;
+  //   }
+  //   ++pos_directory;
+  // }
 }
