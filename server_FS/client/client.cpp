@@ -41,6 +41,12 @@ int main() {
       adapt_data(datos, new_info);
       std::cout << "Voy a mandar: " << datos << std::endl;
       write(s, datos, strlen(datos));
+
+      if ((n = read(s, datos, sizeof(datos))) > 0) {
+        // connection es socket cliente
+        std::cout << "Recibi: " << datos << std::endl;
+      }
+      
       memset(datos, '0', sizeof(datos));
       datos[0] = '#';
       std::cout << "Voy a mandar: " << datos << std::endl;
@@ -51,6 +57,5 @@ int main() {
       }
     }
   }
-
   return resultado;
 }

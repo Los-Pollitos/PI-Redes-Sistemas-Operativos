@@ -112,18 +112,19 @@ void login_server::answer_request() {
     std::cout << "Recibi: " << this->data << std::endl;
     if (this->data[0] == '#') {
       close(this->connection);
-    }
-    // Obtain information from buffer
-    std::string username = "";
-    std::string hash = "";
-    this->find_data(username, hash);
-    
-    // TODO(nosotros): BORRAR
-    std::cout << "username:" << username << "\n";
-    std::cout << "hash:" << hash << "\n";
+    } else {
+      // Obtain information from buffer
+      std::string username = "";
+      std::string hash = "";
+      this->find_data(username, hash);
+      
+      // TODO(nosotros): BORRAR
+      std::cout << "username:" << username << "\n";
+      std::cout << "hash:" << hash << "\n";
 
-    // TODO(nosotros): descomentar
-    // validate_data();
+      // TODO(nosotros): descomentar
+      this->validate_data(username, hash);
+    }
   }
 }
 
@@ -143,6 +144,9 @@ void login_server::find_data(std::string& username, std::string& hash) {
 void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
   if (this->file_system->is_open("Login.txt")) {
+    // TODO(nosotros): BORRAR
+    std::cout << "Si abri archivo " << std::endl;
+
     this->file_system->reset_file_pointer("Server", "Login.txt");
     bool found = false;
     std::string buffer = " ";
@@ -170,6 +174,7 @@ void login_server::validate_data(std::string& username, std::string& hash) {
         this->data[0] = '1';
       }
     }
+    std::cout << "voy a mandar un " << this->data[0] << std::endl;
     write(this->connection, this->data, strlen(this->data));
     this->file_system->close("Server", "Login.txt");
   }
