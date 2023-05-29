@@ -1022,12 +1022,23 @@ void FS::write_unit() {
     file << this->unit[i];
   }
   file << std::endl;
+  char space = ' ';
   for (int i = 0; i < DIR_SIZE; ++i) {
     if (this->directory[i].block != EMPTY) {
-      file << this->directory[i].name << this->directory[i].path
-           << this->directory[i].block << this->directory[i].size
-           << this->directory[i].is_file << this->directory[i].permissions[0]
+      file << this->directory[i].name
+           << space
+           << this->directory[i].path
+           << space
+           << this->directory[i].block
+           << space
+           << this->directory[i].size
+           << space 
+           << this->directory[i].is_file
+           << space
+           << this->directory[i].permissions[0]
+           << space 
            << this->directory[i].permissions[1]
+           << space 
            << this->directory[i].permissions[2] << std::endl;
     }
   }

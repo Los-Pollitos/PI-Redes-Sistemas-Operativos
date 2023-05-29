@@ -17,10 +17,8 @@ void adapt_data(char* data, string& new_info) {
 int main() {
   int resultado = 0;
   int s = 0, n = 0; // s:socket  n: contador
-  char datos[MAX_SIZE];  // para escribir lo que se lee
+  char* data = new char[MAX_SIZE];  // para escribir lo que se lee
   struct sockaddr_in ipServidor;
-
-  // memset(datos, '0', sizeof(datos));
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     cout << "Error de creación de socket" << endl;
@@ -35,27 +33,28 @@ int main() {
       cout << endl << "Error de conexión por IP o puerto" << endl;
       resultado = 2;
     } else {
-      // Se logró pegar, se sacan datos
-      memset(datos, '0', sizeof(datos));
+      // Se logró pegar, se sacan data
+      memset(data, '0', MAX_SIZE);
       string new_info = "cjimenez,78e8ee0b2f67531b8eda7678fa42fb";
-      adapt_data(datos, new_info);
-      std::cout << "Voy a mandar: " << datos << std::endl;
-      write(s, datos, strlen(datos));
+      adapt_data(data, new_info);
+      std::cout << "Voy a mandar: " << data << std::endl;
+      write(s, data, strlen(data));
 
-      if ((n = read(s, datos, sizeof(datos))) > 0) {
+      if ((n = read(s, data, MAX_SIZE)) > 0) {
         // connection es socket cliente
-        std::cout << "Recibi: " << datos << std::endl;
+        std::cout << "Recibi: " << data << std::endl;
       }
       
-      memset(datos, '0', sizeof(datos));
-      datos[0] = '#';
-      std::cout << "Voy a mandar: " << datos << std::endl;
-      write(s, datos, strlen(datos));
+      memset(data, '0', MAX_SIZE);
+      data[0] = '#';
+      std::cout << "Voy a mandar: " << data << std::endl;
+      write(s, data, strlen(data));
       // No se logró leer
       if (n < 0) {
         cout << endl << "Error de lectura" << endl;
       }
     }
+    delete [] data;
   }
   return resultado;
 }

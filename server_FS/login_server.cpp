@@ -135,7 +135,7 @@ void login_server::find_data(std::string& username, std::string& hash) {
       username += this->data[i];
     }
   }
-  for (int j = i + 1; j < HASH_SIZE; ++j) {
+  for (int j = i + 1; j < HASH_SIZE + i + 1; ++j) {
     hash += this->data[j];
   }
 }
@@ -155,26 +155,42 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
     while (end_of_file == false && found == false) {
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
+
+      // TODO(us): borrar
+      std::cout << "buffer: " << buffer << "\nusername: " << username << "\n  son iguales: " << (username==buffer) << std::endl;
+
       if (buffer != username) {
         // Read the rest of the data
         buffer = this->file_system->read_line("Server", "Login.txt");
       } else {
         found = true;
+
+        // TODO(us): borrar
+        std::cout << "estoy en else___________________________________________________________________________________" << std::endl;
       }
       buffer = " ";
       end_of_file = this->file_system->is_eof("Server", "Login.txt");
     }
     //TODO(nosotros): definir si cambiar por \0
     memset(this->data, '0', sizeof(this->data));
+
     // Compare
     if (found) {
       // buffer has username, now we want hash
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
-      if (buffer  == hash) {
+
+      // TODO(us): borrar
+      std::cout << "buffer: " << buffer << "\nhash: " << hash << "\n  son iguales: " << (hash==buffer) << std::endl;
+
+      if (buffer == hash) {
         this->data[0] = '1';
+
+        // TODO(us): borrar
+        std::cout << "estoy en if" << std::endl;
+
       }
     }
-    std::cout << "voy a mandar un " << this->data[0] << std::endl;
+    std::cout << "voy a mandar un " << this->data << std::endl;
     write(this->connection, this->data, strlen(this->data));
     this->file_system->close("Server", "Login.txt");
   }
