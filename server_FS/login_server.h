@@ -32,14 +32,14 @@ class login_server {
 
     // Methods
     void load_from_file();
-    void find_data(std::string& username,  std::string& password);
+    void find_data(std::string& username,  std::string& hash);
 
   public:
     login_server();
     ~login_server();
     void wait_for_request();
     void answer_request();
-    void validate_data();
+    void validate_data(std::string& username, std::string& hash);
 };
 
 #endif // LOGIN_SERVER

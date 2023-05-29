@@ -115,19 +115,19 @@ void login_server::answer_request() {
     }
     // Obtain information from buffer
     std::string username = "";
-    std::string password = "";
-    this->find_data(username, password);
+    std::string hash = "";
+    this->find_data(username, hash);
     
     // TODO(nosotros): BORRAR
     std::cout << "username:" << username << "\n";
-    std::cout << "password:" << password << "\n";
+    std::cout << "hash:" << hash << "\n";
 
     // TODO(nosotros): descomentar
     // validate_data();
   }
 }
 
-void login_server::find_data(std::string& username, std::string& password) {
+void login_server::find_data(std::string& username, std::string& hash) {
   int i;
   for (i = 0; i < DATA_SIZE && this->data[i] != ','; ++i) {
     if (this->data[i] != ',') {
@@ -135,26 +135,12 @@ void login_server::find_data(std::string& username, std::string& password) {
     }
   }
   for (int j = i + 1; j < HASH_SIZE; ++j) {
-    password += this->data[j];
+    hash += this->data[j];
   }
 }
 
 // TODO(nostros): documentar
-void login_server::validate_data() {
-  std::string username = "";
-  std::string hash = "";
-  bool found_comma = false;
-  int hash_counter = 0;
-  for (int i = 0; i < DATA_SIZE && hash_counter < HASH_SIZE; ++i) {
-    if (this->data[i] == ',') {
-      found_comma = true;
-    } else if (found_comma == true) {
-      hash += this->data[i];
-      hash_counter++;
-    } else {
-      username += this->data[i];
-    }
-  }
+void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
   if (this->file_system->is_open("Login.txt")) {
     this->file_system->reset_file_pointer("Server", "Login.txt");
@@ -174,14 +160,19 @@ void login_server::validate_data() {
       buffer = " ";
       end_of_file = this->file_system->is_eof("Server", "Login.txt");
     }
+    //TODO(nosotros): definir si cambiar por \0
+    memset(this->data, '0', sizeof(this->data));
     // Compare
     if (found) {
+      // buffer has username, now we want hash
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
-      // TODO(nosotros): hacer
+      if (buffer  == hash) {
+        this->data[0] = '1';
+      }
     }
+    write(this->connection, this->data, strlen(this->data));
     this->file_system->close("Server", "Login.txt");
   }
-  write(this->connection, this->data, strlen(this->data));
 }
 
 int main() {
