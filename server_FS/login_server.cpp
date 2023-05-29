@@ -112,10 +112,30 @@ void login_server::answer_request() {
     std::cout << "Recibi: " << this->data << std::endl;
     if (this->data[0] == '#') {
       close(this->connection);
-      std::cout << "Voy a apagar" << std::endl;
     }
-    // validate data:
-    validate_data();
+    // Obtain information from buffer
+    std::string username = "";
+    std::string password = "";
+    this->find_data(username, password);
+    
+    // TODO(nosotros): BORRAR
+    std::cout << "username:" << username << "\n";
+    std::cout << "password:" << password << "\n";
+
+    // TODO(nosotros): descomentar
+    // validate_data();
+  }
+}
+
+void login_server::find_data(std::string& username, std::string& password) {
+  int i;
+  for (i = 0; i < DATA_SIZE && this->data[i] != ','; ++i) {
+    if (this->data[i] != ',') {
+      username += this->data[i];
+    }
+  }
+  for (int j = i + 1; j < HASH_SIZE; ++j) {
+    password += this->data[j];
   }
 }
 
@@ -135,31 +155,31 @@ void login_server::validate_data() {
       username += this->data[i];
     }
   }
-  this->file_system->open(username, "Login.txt");
+  this->file_system->open("Server", "Login.txt");
   if (this->file_system->is_open("Login.txt")) {
-    this->file_system->reset_file_pointer(username, "Login.txt");
+    this->file_system->reset_file_pointer("Server", "Login.txt");
     bool found = false;
     std::string buffer = " ";
 
     // Find the username in the file
-    bool end_of_file = this->file_system->is_eof(username, "Login.txt");
+    bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
     while (end_of_file == false && found == false) {
-      buffer = this->file_system->read_until(username, "Login.txt", '\t');
+      buffer = this->file_system->read_until("Server", "Login.txt", ',');
       if (buffer != username) {
         // Read the rest of the data
-        buffer = this->file_system->read_line(username, "Login.txt");
+        buffer = this->file_system->read_line("Server", "Login.txt");
       } else {
         found = true;
       }
       buffer = " ";
-      end_of_file = this->file_system->is_eof(username, "Login.txt");
+      end_of_file = this->file_system->is_eof("Server", "Login.txt");
     }
     // Compare
     if (found) {
-      buffer = this->file_system->read_until(username, "Login.txt", '\t');
+      buffer = this->file_system->read_until("Server", "Login.txt", ',');
       // TODO(nosotros): hacer
     }
-    this->file_system->close(username, "Login.txt");
+    this->file_system->close("Server", "Login.txt");
   }
   write(this->connection, this->data, strlen(this->data));
 }

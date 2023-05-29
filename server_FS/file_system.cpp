@@ -1042,9 +1042,9 @@ void FS::load_unit() {
   for (int i = 0; i < FAT_SIZE; ++i) {
     if (buffer[buffer_count] == '-') {
       ++buffer_count;
-      this->fat[i] = -1*(std::stoi(&buffer[buffer_count]));
+      this->fat[i] = -1*(std::atoi(&buffer[buffer_count]));
     } else {
-      this->fat[i] = (std::stoi(&buffer[buffer_count]));
+      this->fat[i] = (std::atoi(&buffer[buffer_count]));
     }
   }
   for (int i = 0; i < MAX_SIZE; ++i) {
@@ -1064,7 +1064,7 @@ void FS::load_unit() {
         this->directory[pos_directory].block >>
         this->directory[pos_directory].size;
     std::getline(file, temp, ' ');
-    this->directory[pos_directory].is_file = (bool)(std::stoi(&temp[0]));
+    this->directory[pos_directory].is_file = (bool)(std::atoi(&temp[0]));
     file >> this->directory[pos_directory].permissions[0] >>
         this->directory[pos_directory].permissions[1] >>
         this->directory[pos_directory].permissions[2];

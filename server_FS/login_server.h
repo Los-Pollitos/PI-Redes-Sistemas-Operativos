@@ -22,24 +22,24 @@
 #include <unistd.h>
 
 class login_server {
-private:
-  // Atributes
-  FS *file_system;
-  int connection;
-  char data[DATA_SIZE];
-  int message_count;
-  struct sockaddr_storage ipRemoto;
+  private:
+    // Atributes
+    FS *file_system;
+    int connection;
+    char data[DATA_SIZE];
+    int message_count;
+    struct sockaddr_storage ipRemoto;
 
-  // Methods
-  //TODO(nosotros): hacer
-  void load_from_file();
+    // Methods
+    void load_from_file();
+    void find_data(std::string& username,  std::string& password);
 
-public:
-  login_server();
-  ~login_server();
-  void wait_for_request();
-  void answer_request();
-  void validate_data();
+  public:
+    login_server();
+    ~login_server();
+    void wait_for_request();
+    void answer_request();
+    void validate_data();
 };
 
 #endif // LOGIN_SERVER
