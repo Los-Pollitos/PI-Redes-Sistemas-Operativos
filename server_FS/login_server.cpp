@@ -11,7 +11,6 @@
 /*
  * @brief Default constructor
  */
-// TODO(nosotros): bool de que no haga nada si no hay archivo
 login_server::login_server() {
   // Create the file system
   this->file_system = new FS();
@@ -72,7 +71,7 @@ void login_server::wait_for_request() {
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
 
-  sleep(1); // TODO(nosotros): ver si quitar
+  sleep(1);
   socklen_t l = sizeof(this->ipRemoto);
   char strIpRemoto[INET6_ADDRSTRLEN];
   int port;
@@ -85,7 +84,7 @@ void login_server::wait_for_request() {
     if (this->connection != -1) {
       answer_request();
     }
-    sleep(1); // TODO(nosotros): pensar en quitar
+    sleep(1);
   }
 
   std::cout << std::endl << "[SERVIDOR DETENIDO]" << std::endl;
@@ -117,12 +116,6 @@ void login_server::answer_request() {
       std::string username = "";
       std::string hash = "";
       this->find_data(username, hash);
-      
-      // TODO(nosotros): BORRAR
-      std::cout << "username:" << username << "\n";
-      std::cout << "hash:" << hash << "\n";
-
-      // TODO(nosotros): descomentar
       this->validate_data(username, hash);
     }
   }
@@ -144,9 +137,6 @@ void login_server::find_data(std::string& username, std::string& hash) {
 void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
   if (this->file_system->is_open("Login.txt")) {
-    // TODO(nosotros): BORRAR
-    std::cout << "Si abri archivo " << std::endl;
-
     this->file_system->reset_file_pointer("Server", "Login.txt");
     bool found = false;
     std::string buffer = " ";
@@ -155,42 +145,25 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
     while (end_of_file == false && found == false) {
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
-
-      // TODO(us): borrar
-      std::cout << "buffer: " << buffer << "\nusername: " << username << "\n  son iguales: " << (username==buffer) << std::endl;
-
       if (buffer != username) {
         // Read the rest of the data
         buffer = this->file_system->read_line("Server", "Login.txt");
       } else {
         found = true;
-
-        // TODO(us): borrar
-        std::cout << "estoy en else___________________________________________________________________________________" << std::endl;
       }
       buffer = " ";
       end_of_file = this->file_system->is_eof("Server", "Login.txt");
     }
-    //TODO(nosotros): definir si cambiar por \0
     memset(this->data, '0', sizeof(this->data));
 
     // Compare
     if (found) {
       // buffer has username, now we want hash
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
-
-      // TODO(us): borrar
-      std::cout << "buffer: " << buffer << "\nhash: " << hash << "\n  son iguales: " << (hash==buffer) << std::endl;
-
       if (buffer == hash) {
         this->data[0] = '1';
-
-        // TODO(us): borrar
-        std::cout << "estoy en if" << std::endl;
-
       }
     }
-    std::cout << "voy a mandar un " << this->data << std::endl;
     write(this->connection, this->data, strlen(this->data));
     this->file_system->close("Server", "Login.txt");
   }
@@ -202,68 +175,3 @@ int main() {
   delete server;
 }
 
-/*
-// TODO(nosotros): CAMBIAR Y BORRAR
-int main() {
-  char datos[256]; // lo que es enviado al cliente
-  int socketServidor = 0;
-  int conexion = -1; // cliente
-  int n = 0;
-  struct sockaddr_in ip;
-
-  // wait:
-  socketServidor = socket(AF_INET, SOCK_STREAM, 0);
-
-  memset(&ip, '0', sizeof(ip));
-  memset(datos, '0', sizeof(datos));
-  ip.sin_family = AF_INET;
-  ip.sin_addr.s_addr = htonl(INADDR_ANY);
-  ip.sin_port = htons(1337);
-
-  bind(socketServidor, (struct sockaddr *)&ip, sizeof(ip));
-  listen(socketServidor, 20);
-
-  // Cantidad de mensajes recibidos
-  int msjs = 0;
-  sleep(1);
-  struct sockaddr_storage ipRemoto;
-  socklen_t l = sizeof(ipRemoto);
-  char strIpRemoto[INET6_ADDRSTRLEN];
-  int port;
-  cout << endl << "[SERVIDOR ESCUCHANDO]" << endl;
-  while (msjs < 5000) {
-    // Se busca una conexión
-    conexion = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
-
-
-    // conexion:
-    // Hubo una conexión
-    if (conexion != -1) {
-      cout << "[MENSAJE RECIBIDO] #" << ++msjs;
-      struct sockaddr_in *s = (struct sockaddr_in *)&ipRemoto;
-      port = ntohs(s->sin_port);
-      inet_ntop(AF_INET, &s->sin_addr, strIpRemoto, sizeof strIpRemoto);
-      cout << " IP Remoto: " << strIpRemoto << endl;
-
-      string msj = "El servidor ha recibido " + to_string(msjs) + " mensajes.";
-      msj.copy(datos, msj.size() + 1);
-
-      while (conexion != -1 && (n = read(conexion, datos, sizeof(datos))) > 0) {
-        // conexion es socket cliente
-        std::cout << "Recibi: " << datos << std::endl;
-        if (datos[0] == '#') {
-          close(conexion);
-          std::cout << "Voy a apagar" << std::endl;
-        } else {
-          // validate data:
-          write(conexion, datos, strlen(datos));
-        }
-      }
-    }
-    sleep(1);
-  }
-
-  cout << endl << "[SERVIDOR DETENIDO]" << endl;
-  return 0;
-}
-*/
