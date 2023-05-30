@@ -10,7 +10,7 @@
 
 /*
  * @brief Default constructor
- */
+*/
 FS::FS() {
   this->fat = new int[FAT_SIZE];
   this->directory = new directory_entry_t[DIR_SIZE];
@@ -34,7 +34,7 @@ FS::FS() {
 
 /*
  * @brief Destructor
- */
+*/
 FS::~FS() {
   delete[] this->fat;
   delete[] this->unit;
@@ -49,7 +49,7 @@ FS::~FS() {
  * @param is_file Is true if we are creating a file, false if it is a folder
  * @return int The block in which the file was added. Returns -1 if no block was
  * found or if there was already a file with that name.
- */
+*/
 int FS::create(std::string name, bool is_file) {
   int block = -1;
   if (this->search_file(name) == -1) {
@@ -90,7 +90,7 @@ int FS::create(std::string name, bool is_file) {
  * @param user Indicates the user, in order to check permission
  * @param name Indicates the file whose permissions want to be changed
  * @return bool true if the user has permissions, false if they do not
- */
+*/
 bool FS::can_change_permissions(std::string user, std::string name) {
   (void)user;
   (void)name;
@@ -106,7 +106,7 @@ bool FS::can_change_permissions(std::string user, std::string name) {
  * @param new_group New group permissions
  * @param new_all New other permissions
  * @return bool true if the action could be performed, false it not
- */
+*/
 bool FS::modify_permissions(std::string user, std::string name, int new_user,
                             int new_group, int new_all) {
   bool result = false;
@@ -129,7 +129,7 @@ bool FS::modify_permissions(std::string user, std::string name, int new_user,
  * @param new_group variable to store group permissions
  * @param new_all variable to store other permissions
  * @return bool true if the action could be performed, false it not
- */
+*/
 bool FS::get_permissions(std::string user, std::string name, int &result_user,
                          int &result_group, int &result_all) {
   bool result = false;
@@ -147,7 +147,7 @@ bool FS::get_permissions(std::string user, std::string name, int &result_user,
  * @brief Searches the closest empty block
  *
  * @return int The block empty block. Returns -1 if no block was found.
- */
+*/
 int FS::search_block() {
   int block = -1;
   for (int i = 0; i < FAT_SIZE && block == -1; ++i) {
@@ -162,7 +162,7 @@ int FS::search_block() {
  * @brief Searches the closest empty directory
  *
  * @return int The directory found. Returns -1 if no directory was found.
- */
+*/
 int FS::search_directory() {
   int directory_pos = -1;
   for (int i = 0; i < DIR_SIZE && directory_pos == -1; ++i) {
@@ -179,7 +179,7 @@ int FS::search_directory() {
  * @param user Indicates the user, in order to check permission
  * @param name Indicates the file that will be opened or closed
  * @return int -1 if there was an error. 1 if there was no error
- */
+*/
 int FS::handle_open_close(std::string user, std::string name, bool open) {
   // Assume an error
   int error = -1;
@@ -210,7 +210,7 @@ int FS::handle_open_close(std::string user, std::string name, bool open) {
  * @param user Indicates the user, in order to check permission
  * @param name Indicates the file that will be opened
  * @return int -1 if there was an error. 1 if there was no error
- */
+*/
 int FS::open(std::string user, std::string name) {
   bool open = true;
   return handle_open_close(user, name, open);
@@ -222,7 +222,7 @@ int FS::open(std::string user, std::string name) {
  * @param user Indicates the user, in order to check permission
  * @param name Indicates the file that will be closed
  * @return int -1 if there was an error. 1 if there was no error
- */
+*/
 int FS::close(std::string user, std::string name) {
   bool open = false;
   return handle_open_close(user, name, open);
@@ -233,7 +233,7 @@ int FS::close(std::string user, std::string name) {
  *
  * @param name Indicates the file that will be checked
  * @return int -1 if there is an error. 0 if it is closed. 1 if it is open.
- */
+*/
 int FS::is_open(std::string name) {
   // Assume error
   int answer = -1;
@@ -257,7 +257,7 @@ int FS::is_open(std::string name) {
  * @param line Indicates the data that must be added to the file
  * @return int Indicates if it was succesfully performed. It returns -1 if there
  * was an error
- */
+*/
 int FS::write(std::string user, std::string name, std::string line) {
   int return_value = -1;
   int directory_position = this->search_file(name);
@@ -306,7 +306,7 @@ int FS::write(std::string user, std::string name, std::string line) {
  * @param data Indicates the data that must be added to the file
  * @return int The last block where the data was added. Returns -1 if no
  * directory was found.
- */
+*/
 int FS::append(std::string name, std::string data) {
   // Value to be returned
   int return_value = 0;
@@ -356,7 +356,7 @@ int FS::append(std::string name, std::string data) {
  * @brief Searches the file in the directory
  *
  * @return int The position of the directory. Returns -1 if the was not found.
- */
+*/
 int FS::search_file(std::string &name) {
   int pos_directory = -1;
   for (int i = 0; i < DIR_SIZE && pos_directory == -1; ++i) {
@@ -373,7 +373,7 @@ int FS::search_file(std::string &name) {
  * @param fat_pos Indicates the starting position to search in the FAT table
  * @param size Indicates the size of the file. It has to be bigger than 1
  * @return int The position of the end of file.
- */
+*/
 int FS::search_end_of_file_fat(int fat_pos, int size) {
   if (size > 0) {
     // The amount of FAT jumps required
@@ -402,7 +402,7 @@ int FS::search_end_of_file_fat(int fat_pos, int size) {
  * @param fat_block Indicates the starting position to search in the FAT table
  * @param size Indicates the size of the file. It has to be bigger than 1
  * @return int The position of the unit with the end of file.
- */
+*/
 int FS::search_end_of_file(int fat_block, int size) {
   int pos_eof = -1;
   if (size > 0) {
@@ -422,7 +422,7 @@ int FS::search_end_of_file(int fat_block, int size) {
  * @param name Indicates the file that will be erased
  * @return int Returns 1 is success or -1 if the file was not found in the
  * directory
- */
+*/
 int FS::erase(std::string name) {
   int return_value = 1;
   int directory_pos = search_file(name);
@@ -461,7 +461,7 @@ int FS::erase(std::string name) {
  * @param name Indicates the file that will be erased
  * @return int Returns 1 is success or -1 if the file was not found in the
  * directory
- */
+*/
 int FS::deep_erase(std::string name) {
   int directory_pos = search_file(name);
   int return_value = 1;
@@ -512,7 +512,7 @@ int FS::deep_erase(std::string name) {
  * @ param position Indicates the position to be read in the file
  * @return char Returns the char of the file in the indicated position. If empty
  * returns '\0'
- */
+*/
 char FS::read(std::string user, std::string name, int position) {
   char result = '\0';
   // Look for file and permission
@@ -553,7 +553,7 @@ char FS::read(std::string user, std::string name, int position) {
  * @param permission Indicates if the permission is to execute (4), write (2) or
  *   read (1)
  * @return bool True if the user has permission. False if not.
- */
+*/
 bool FS::check_permission(std::string user, std::string name, int permission) {
   // Number Execute Write Read
   // 4   =  1       0     0   = Execute
@@ -566,7 +566,7 @@ bool FS::check_permission(std::string user, std::string name, int permission) {
  * @brief Moves the local read pointer one position forward
  *
  * @param local_read_pointer Indicates the pointer that will be moved
- */
+*/
 void FS::add_one_local_read_pointer(int &local_read_pointer) {
   if (local_read_pointer + 1 % BLOCK_SIZE == 0) { // We need to switch block
     int aux_fat_position = (int)(local_read_pointer / BLOCK_SIZE); // actual fat
@@ -583,7 +583,7 @@ void FS::add_one_local_read_pointer(int &local_read_pointer) {
  * @brief Moves the local write pointer one position forward
  *
  * @param local_write_pointer Indicates the pointer that will be moved
- */
+*/
 void FS::add_one_local_write_pointer(int &local_write_pointer) {
   // We need to switch block
   if (local_write_pointer + 1 % BLOCK_SIZE == 0) {
@@ -608,7 +608,7 @@ void FS::add_one_local_write_pointer(int &local_write_pointer) {
  * @param user Indicates the user, in order to check permission
  * @param name Indicates the file name
  * @return string Contains the line read
- */
+*/
 std::string FS::read_line(std::string user, std::string name) {
   int dir_pos = this->search_file(name);
   std::string result = "\0";
@@ -642,7 +642,7 @@ std::string FS::read_line(std::string user, std::string name) {
  * @param name Indicates the file name
  * @param separator Indicates the separator when it has to stop reading
  * @return string Constains what was read from the file
- */
+*/
 std::string FS::read_until(std::string user, std::string name, char separator) {
   int dir_pos = this->search_file(name);
   std::string result = "\0";
@@ -673,7 +673,7 @@ std::string FS::read_until(std::string user, std::string name, char separator) {
  *
  * @param user Indicates the user, in order to check permission
  * @param name Indicates the file name
- */
+*/
 void FS::reset_file_pointer(std::string user, std::string name) {
   int directory_pos = this->search_file(name);
   // Check if the file exists and if it is a file instead of a folder
@@ -689,7 +689,7 @@ void FS::reset_file_pointer(std::string user, std::string name) {
  * @param Indicates the user, in order to check permission
  * @param name Indicates the file name
  * @return bool True if it is the end of file. Flase if not.
- */
+*/
 bool FS::is_eof(std::string user, std::string name) {
   bool result = false;
   int directory_pos = this->search_file(name);
@@ -702,7 +702,7 @@ bool FS::is_eof(std::string user, std::string name) {
 
 /*
  * @brief Prints the open file table
- */
+*/
 void FS::print_open_file_table() {
   std::cout << "\n\nOpen File Table:" << std::endl;
   bool empty = true;
@@ -724,7 +724,7 @@ void FS::print_open_file_table() {
 
 /*
  * @brief Prints the unit
- */
+*/
 void FS::print_unit() {
   std::cout << "\n\nDirectory:" << std::endl;
   for (int i = 0; i < DIR_SIZE; ++i) {
@@ -777,7 +777,7 @@ void FS::print_unit() {
  * @brief Returns the actual path
  *
  * @return string Indicates path
- */
+*/
 std::string FS::get_actual_path() { return this->actual_path; }
 
 /*
@@ -785,7 +785,7 @@ std::string FS::get_actual_path() { return this->actual_path; }
  *
  * @return bool True indicates the path was moved. False if the path was already
  * the Root.
- */
+*/
 bool FS::up_folder() {
   bool result = true;
   if (this->actual_path == "Root") {
@@ -809,7 +809,7 @@ bool FS::up_folder() {
  * @brief Shows the content of the actual_path
  *
  * @param user Indicates the username, to check permissions
- */
+*/
 void FS::list(std::string user) {
   for (int i = 0; i < DIR_SIZE; ++i) {
     if (this->directory[i].path == this->actual_path) {
@@ -821,7 +821,6 @@ void FS::list(std::string user) {
           std::cout << "Folder"
                     << "\t";
         }
-        // TODO(nosotros): que la fecha se imprima bonito
         // std::cout << this->directory[i].date << "\n";
       }
       std::cout << std::endl;
@@ -835,7 +834,7 @@ void FS::list(std::string user) {
  * @param user Indicates the username
  * @param folder Indicates the folder
  * @return bool True if the path was changed. False if not
- */
+*/
 bool FS::change_folder(std::string user, std::string folder) {
   std::string new_path = this->actual_path;
   new_path += "/";
@@ -854,7 +853,7 @@ bool FS::change_folder(std::string user, std::string folder) {
  * @param user Indicates the username
  * @param path Indicates the new path
  * @return bool True if the path was changed. False if not
- */
+*/
 bool FS::set_path(std::string user, std::string path) {
   bool result = false;
   if (this->can_show(user, path)) {
@@ -871,7 +870,7 @@ bool FS::set_path(std::string user, std::string path) {
  *
  * @param path Indicates the path to be validated
  * @return bool True if it is valid. False if not
- */
+*/
 bool FS::is_valid_path(std::string path) {
   bool result = false;
   for (int i = 0; i < DIR_SIZE && !result; ++i) {
@@ -918,7 +917,7 @@ bool FS::is_valid_path(std::string path) {
  * @param user Indicates the username
  * @param folder Indicates the folder that will be deleted
  * @return bool True if the folder was deleted. False if not
- */
+*/
 bool FS::delete_folder(std::string user, std::string folder) {
   bool result = false;
   std::string path = "";
@@ -955,7 +954,7 @@ bool FS::delete_folder(std::string user, std::string folder) {
  * @param user Indicates the username, to check permissions
  * @param name Indicates the name of the folder
  * @return bool True if the user has permission. False if not
- */
+*/
 bool FS::can_show(std::string user, std::string name) {
   // We need to know if the user can see that folder/file
   // This handin does not include permissions
@@ -969,7 +968,7 @@ bool FS::can_show(std::string user, std::string name) {
  * @param name Indicates the name of the file or folder to be moved
  * @param new_abs_path Indicates the new path. It has to start in Root
  * @return bool True if the file was moved. False if not
- */
+*/
 bool FS::move(std::string user, std::string name, std::string new_abs_path) {
   bool result = false;
   if (this->is_valid_path(new_abs_path) && this->can_show(user, new_abs_path)) {
@@ -1015,11 +1014,10 @@ bool FS::move(std::string user, std::string name, std::string new_abs_path) {
   return result;
 }
 
-/**
- * @brief Saves the current file file system into a file that can be loaded
- * for future use
- * 
- */
+/*
+ * @brief Stores an image of the file system containing the exact state
+ * of the FAT table, directory table and unit.
+*/
 void FS::write_unit() {
   std::ofstream file("fs_image.dat");
   for (int i = 0; i < FAT_SIZE; ++i) { 
@@ -1051,10 +1049,11 @@ void FS::write_unit() {
   }
 }
 
-/**
- * @brief Loads the file system image to the current file system
- * 
- */
+/*
+ * @brief Loads the previous contents of the FAT table,
+ * directory and unit stored in the image of the file
+ * system.
+*/
 void FS::load_unit() {
   std::ifstream file("fs_image.dat");
   std::string buffer;

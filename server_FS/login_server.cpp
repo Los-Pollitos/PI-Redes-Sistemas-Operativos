@@ -10,7 +10,7 @@
 
 /*
  * @brief Default constructor
- */
+*/
 login_server::login_server() {
   // Create the file system
   this->file_system = new FS();
@@ -30,7 +30,7 @@ login_server::login_server() {
 
 /*
  * @brief Destructor
- */
+*/
 login_server::~login_server() {
   // Unload the image of the file system
   this->file_system->write_unit();
@@ -38,7 +38,10 @@ login_server::~login_server() {
   delete this->file_system;
 }
 
-// TODO(nostros): documentar
+/*
+ * @brief Loads the file system from a .txt file containing the necessary
+ * login information, creating the image of the file system for future uses.
+*/
 void login_server::load_from_file() {
   std::ifstream file("Login.txt");
   if (file.is_open()) {
@@ -57,7 +60,9 @@ void login_server::load_from_file() {
   }
 }
 
-// TODO(nostros): documentar
+/*
+ * @brief The server waits for a request from a client to answer it.
+ */
 void login_server::wait_for_request() {
   int socketServidor = socket(AF_INET, SOCK_STREAM, 0);
   struct sockaddr_in ip;
@@ -90,7 +95,10 @@ void login_server::wait_for_request() {
   std::cout << std::endl << "[SERVIDOR DETENIDO]" << std::endl;
 }
 
-// TODO(nostros): documentar
+/*
+ * @brief The server answers a request from a client, validating
+ * the data of the user in the file system.
+*/
 void login_server::answer_request() {
   std::cout << "[MENSAJE RECIBIDO] #" << ++this->message_count;
 
@@ -121,6 +129,13 @@ void login_server::answer_request() {
   }
 }
 
+/*
+ * @brief Deletes a folder. After this method, it is recomended that the user
+ * sets the path in which they want to be.
+ *
+ * @param user Indicates the username
+ * @param folder Indicates the folder that will be deleted
+*/
 void login_server::find_data(std::string& username, std::string& hash) {
   int i;
   for (i = 0; i < DATA_SIZE && this->data[i] != ','; ++i) {
@@ -133,7 +148,10 @@ void login_server::find_data(std::string& username, std::string& hash) {
   }
 }
 
-// TODO(nostros): documentar
+/* 
+ * @brief Validates the username and hash of a user trying to log into the
+ * system by answering the result to the client through the socket.
+*/
 void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
   if (this->file_system->is_open("Login.txt")) {
