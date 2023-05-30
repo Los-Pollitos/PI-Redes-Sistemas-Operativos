@@ -40,7 +40,7 @@ enum request_types {
 
 class intermediary {
   private:
-    login_server* login_server;
+    login_server* login_s;
     int connection;
     char data[DATA_SIZE];
     int message_count;
@@ -51,6 +51,7 @@ class intermediary {
     ~intermediary();
     void wait_for_request();
     void answer_request();
+    void send_to_server();
 };
 
 #endif

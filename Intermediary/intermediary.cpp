@@ -8,12 +8,14 @@
 
 #include "intermediary.h"
 
+// TODO(us): documentar
 intermediary::intermediary() {
-
+  this->login_s = new login_server();
 }
 
+// TODO(us): documentar
 intermediary::~intermediary() {
-
+  delete this->login_s;
 }
 
 /*
@@ -73,6 +75,69 @@ void intermediary::answer_request() {
       close(this->connection);
     } else {
       // TODO(us): mandar connection
+
     }
+  }
+}
+
+void intermediary::send_to_server() {
+  switch(std::stoi(&data[0])) {
+    case LOGIN:
+      // TODO(us): hacer
+      break;
+    case TOKEN:
+      // TODO(us): hacer
+      break;
+    case CHANGE_PASSWORD:
+      // TODO(us): hacer
+      break;
+    case CREATE_USER:
+      // TODO(us): hacer
+      break;
+    case DELETE_USER:
+      // TODO(us): hacer
+      break;
+    case PAYMENT_PROOF:
+      // TODO(us): hacer
+      break;
+    case WORK_PROOF:
+      // TODO(us): hacer
+      break;
+    case SALARY_PROOF:
+      // TODO(us): hacer
+      break;
+    case SALARY_CONSULT:
+      // TODO(us): hacer
+      break;
+    case RECORD_CONSULT:
+      // TODO(us): hacer
+      break;
+    case CONSULT_REQUESTS:
+      // TODO(us): hacer
+      break;
+    case VACATION_REQUEST:
+      // TODO(us): hacer
+      break;
+    case CONSULT_VACATION:
+      // TODO(us): hacer
+      break;
+    case CONSULT_USER_DATA:
+      // TODO(us): hacer
+      break;
+    case CHANGE_USER_DATA:
+      // TODO(us): hacer
+      break;
+    case ANSWER_PAYMENT_PROOF:
+      // TODO(us): hacer
+      break;
+    case ANSWER_WORK_PROOF:
+      // TODO(us): hacer
+      break;
+    case ANSWER_SALARY_PROOF:
+      // TODO(us): hacer
+      break;
+    case ANSWER_VACATION_REQUEST:
+      // TODO(us): hacer
+      break;
   }
 }
