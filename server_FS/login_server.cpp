@@ -110,9 +110,6 @@ void login_server::answer_request() {
   inet_ntop(AF_INET, &s->sin_addr, strIpRemoto, sizeof strIpRemoto);
   std::cout << " IP Remoto: " << strIpRemoto << std::endl;
 
-  // std::string msj_temp = "El servidor ha recibido " + std::to_string(this->message_count) + " mensajes.";
-  // msj_temp.copy(this->data, msj_temp.size() + 1);
-
   while (this->connection != -1 &&
          (n = read(this->connection, this->data, sizeof(this->data))) > 0) {
     // connection es socket cliente
