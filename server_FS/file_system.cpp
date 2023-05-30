@@ -1086,8 +1086,8 @@ void FS::load_unit() {
   int pos_directory = 0;
   std::string temp;
   int new_number = 0;
+  std::getline(file, temp, ' ');  // we need to read at the end to check for eof propperly
   while (!file.eof()) {
-    std::getline(file, temp, ' ');
     this->directory[pos_directory].name = temp;
     std::getline(file,temp, ' ');
     this->directory[pos_directory].path = temp;
@@ -1121,5 +1121,6 @@ void FS::load_unit() {
           this->directory[pos_directory].block * BLOCK_SIZE;
     }
     ++pos_directory;
+    std::getline(file, temp, ' ');
   }
 }
