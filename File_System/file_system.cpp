@@ -945,7 +945,9 @@ bool FS::delete_folder(std::string user, std::string folder) {
     this->directory[dir_folder].block = EMPTY;
     this->directory[dir_folder].path = "";
   }
-  this->up_folder();
+  if (path == this->actual_path) {
+    this->up_folder();
+  }
   return result;
 }
 
