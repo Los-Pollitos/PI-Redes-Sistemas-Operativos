@@ -1061,10 +1061,8 @@ void FS::load_unit() {
   std::getline(file, buffer);
   int buffer_count = 0;
   for (int i = 0; i < FAT_SIZE; ++i) {
-    std::cout << "FAT: " << buffer[buffer_count] << std::endl;
     if (buffer[buffer_count] == '-') {
       ++buffer_count;
-      std::cout << "FAT-: " << buffer[buffer_count] << std::endl;
       this->fat[i] = -1*(std::atoi(&buffer[buffer_count]));
     } else {
       this->fat[i] = (std::atoi(&buffer[buffer_count]));
@@ -1077,12 +1075,10 @@ void FS::load_unit() {
       std::getline(file, buffer);
       buffer_count = 0;
     } else {
-      std::cout << "UNIT: " << buffer[buffer_count] << std::endl;
       this->unit[i] = buffer[buffer_count];
       ++buffer_count;
     }
   }
-  std::cout << "Termine la unit\n";
   int pos_directory = 0;
   std::string temp;
   int new_number = 0;
@@ -1097,25 +1093,15 @@ void FS::load_unit() {
     std::getline(file, temp, ' ');
     new_number = std::stoi(temp);
     this->directory[pos_directory].size = new_number;
-
-    std::cout << "no he muerto name:" << this->directory[pos_directory].name << "..."<< std::endl;
-    std::cout << "\tpath:" << this->directory[pos_directory].path << "..."<< std::endl;
-    std::cout << "\tblock:" << this->directory[pos_directory].block << "..."<< std::endl;
-    std::cout << "\tsize:" << this->directory[pos_directory].size << "..."<< std::endl;
-
     std::getline(file, temp, ' ');
-    this->directory[pos_directory].is_file = (bool)(std::atoi(&temp[0]));
+    this->directory[pos_directory].is_file = (bool)(std::stoi(&temp[0]));
     std::getline(file, temp, ' ');
-    std::cout << "\t\tPre pre last temp es:" << temp << std::endl;
     this->directory[pos_directory].permissions[0] = temp[0];
     std::getline(file, temp, ' ');
-    std::cout << "\t\tPre last temp es:" << temp << std::endl;
     this->directory[pos_directory].permissions[1] = temp[0];
     std::getline(file, temp, '\n');
-    std::cout << "\t\tLast temp es:" << temp << std::endl;
     this->directory[pos_directory].permissions[2] = temp[0];
 
-    std::cout << "\tsoyfile:" << this->directory[pos_directory].is_file << "..."<< std::endl;
     if (this->directory[pos_directory].is_file == true) {
       this->directory[pos_directory].file_pointer =
           this->directory[pos_directory].block * BLOCK_SIZE;
