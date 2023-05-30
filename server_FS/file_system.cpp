@@ -75,7 +75,10 @@ int FS::create(std::string name, bool is_file) {
       this->directory[directory_pos].name = name;
       this->directory[directory_pos].is_file = is_file;
       time(&this->directory[directory_pos].date);
-      this->directory[directory_pos].path = actual_path;
+      this->directory[directory_pos].path = this->actual_path;
+      this->directory[directory_pos].permissions[0] = '-';
+      this->directory[directory_pos].permissions[1] = '-';
+      this->directory[directory_pos].permissions[2] = '-';
     }
   }
   return block;
@@ -1033,11 +1036,11 @@ void FS::write_unit() {
            << space
            << this->directory[i].path
            << space
-           << this->directory[i].block
+           << std::to_string(this->directory[i].block)
            << space
-           << this->directory[i].size
+           << std::to_string(this->directory[i].size)
            << space 
-           << this->directory[i].is_file
+           << std::to_string(this->directory[i].is_file)
            << space
            << this->directory[i].permissions[0]
            << space 
@@ -1103,11 +1106,16 @@ void FS::load_unit() {
     std::getline(file, temp, ' ');
     this->directory[pos_directory].is_file = (bool)(std::atoi(&temp[0]));
     std::getline(file, temp, ' ');
+    std::cout << "\t\tPre pre last temp es:" << temp << std::endl;
     this->directory[pos_directory].permissions[0] = temp[0];
     std::getline(file, temp, ' ');
+    std::cout << "\t\tPre last temp es:" << temp << std::endl;
     this->directory[pos_directory].permissions[1] = temp[0];
-    std::getline(file, temp, ' ');
+    std::getline(file, temp, '\n');
+    std::cout << "\t\tLast temp es:" << temp << std::endl;
     this->directory[pos_directory].permissions[2] = temp[0];
+
+    std::cout << "\tsoyfile:" << this->directory[pos_directory].is_file << "..."<< std::endl;
     if (this->directory[pos_directory].is_file == true) {
       this->directory[pos_directory].file_pointer =
           this->directory[pos_directory].block * BLOCK_SIZE;
