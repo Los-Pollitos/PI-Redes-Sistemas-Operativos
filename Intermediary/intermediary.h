@@ -9,7 +9,13 @@
 #ifndef INTERMEDIARY_H
 #define INTERMEDIARY_H
 
-#include <string>
+#include <string.h>
+#include <arpa/inet.h>
+#include <iostream>
+#include <netinet/in.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #define DATA_SIZE 256
 #define HASH_SIZE 30
@@ -45,7 +51,7 @@ class intermediary {
     char data[DATA_SIZE];
     int message_count;
     struct sockaddr_storage ipRemoto;
-    std::string send_and_receive_login(std::string to_send);
+    std::string send_and_receive_login();
   
   public:
     intermediary();

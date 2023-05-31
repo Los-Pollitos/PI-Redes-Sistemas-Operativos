@@ -80,21 +80,21 @@ void intermediary::answer_request() {
   }
 }
 
-std::string intermediary::send_and_receive_login(std::string to_send) {
+std::string intermediary::send_and_receive_login() {
   std::string result = "\0";
   int s = 0, n = 0; // s:socket  n: contador
-  struct sockaddr_in ipServidor;
+  struct sockaddr_in ipServidorLogin;
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    cout << "Error de creación de socket" << endl;
+    std::cout << "Error de creación de socket" << std::endl;
   } else {
-    ipServidor.sin_family = AF_INET;
-    ipServidor.sin_port = htons(8080);
-    ipServidor.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ipServidorLogin.sin_family = AF_INET;
+    ipServidorLogin.sin_port = htons(8080);
+    ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Se intenta pegar al servidor
-    if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
-      cout << endl << "Error de conexión por IP o puerto" << endl;
+    if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
+      std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
     } else {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
       write(s, this->data, strlen(data));
@@ -106,11 +106,11 @@ std::string intermediary::send_and_receive_login(std::string to_send) {
       
       memset(this->data, '0', DATA_SIZE);
       data[0] = '#';
-      std::cout << "Voy a mandar: " << data << std::endl;
+      std::cout << "Voy a mandar: " << data  << " a autenticacion "<< std::endl;
       write(s, this->data, strlen(data));
       // No se logró leer
       if (n < 0) {
-        cout << endl << "Error de lectura" << endl;
+        std::cout << std::endl << "Error de lectura" << std::endl;
       }
     }
   }
@@ -120,17 +120,23 @@ std::string intermediary::send_and_receive_login(std::string to_send) {
 void intermediary::send_to_server() {
   std::string to_send_back = "\0";
   switch(std::stoi(&data[0])) {
-    case TOKEN:
     case LOGIN:
+    case TOKEN:
     case CHANGE_PASSWORD:
-    case CREATE_USER:
-    case DELETE_USER:
       to_send_back = this->send_and_receive_login();
       write(this->connection, to_send_back.data(), strlen(this->data));
       // TODO (nosotros): mandar a la bitácora
       break;
     case CREATE_USER:
     case DELETE_USER:
+      to_send_back = this->send_and_receive_login();
+      write(this->connection, to_send_back.data(), strlen(this->data));
+
+      // TODO (nosotros): bases de datos 
+
+      // TODO (nosotros): mandar a la bitácora
+
+    break;
     case PAYMENT_PROOF:
     case WORK_PROOF:
     case SALARY_PROOF:
@@ -147,6 +153,8 @@ void intermediary::send_to_server() {
     case ANSWER_VACATION_REQUEST:
       // TODO(us): hacer
       break;
+    default:
+      std::cerr << "Error: codigo inexistente" << std::endl;
   }
 }
 
