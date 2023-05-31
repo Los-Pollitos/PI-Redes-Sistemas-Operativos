@@ -71,7 +71,7 @@ void login_server::wait_for_request() {
   memset(this->data, '0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
-  ip.sin_port = htons(1337);
+  ip.sin_port = htons(8080);
 
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
@@ -135,7 +135,7 @@ void login_server::answer_request() {
 */
 void login_server::find_data(std::string& username, std::string& hash) {
   int i;
-  for (i = 0; i < DATA_SIZE && this->data[i] != ','; ++i) {
+  for (i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
     if (this->data[i] != ',') {
       username += this->data[i];
     }
