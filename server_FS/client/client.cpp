@@ -35,7 +35,7 @@ int main() {
     } else {
       // Se logró pegar, se sacan data
       memset(data, '0', MAX_SIZE);
-      string new_info = "cjimenez,78e8ee0b2f67531b8eda7678fa42fb";
+      string new_info = "0cjimenez,78e8ee0b2f67531b8eda7678fa42fb";
       adapt_data(data, new_info);
       std::cout << "Voy a mandar: " << data << std::endl;
       write(s, data, strlen(data));
