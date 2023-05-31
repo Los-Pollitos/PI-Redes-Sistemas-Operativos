@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     change_password.cpp \
+    client.cpp \
     consult_record.cpp \
     consult_requests.cpp \
     consult_salary.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
     change_password.h \
+    client.h \
     consult_record.h \
     consult_requests.h \
     consult_salary.h \

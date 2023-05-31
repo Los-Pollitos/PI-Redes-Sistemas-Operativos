@@ -41,6 +41,11 @@ void login::set_file_system(FS* file_system) {
     this->file_system = file_system;
 }
 
+void login::set_client(client* local_client){
+    this->local_client = local_client;
+    this->local_client->send_and_receive("0cjimenez,78e8ee0b2f67531b8eda7678fa42fb");
+}
+
 bool login::validate_data(QString username, QString password) {
     bool answer = false;
     this->file_system->open(username.toStdString(), "Login.txt");

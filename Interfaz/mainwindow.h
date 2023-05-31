@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "client.h"
 #include "login.h"
 
 #include <QMainWindow>
@@ -24,5 +25,7 @@ private:
     Ui::MainWindow* ui;
     login* loginPage;
     FS* file_system;
+    client* local_client;
+
 };
 #endif // MAINWINDOW_H

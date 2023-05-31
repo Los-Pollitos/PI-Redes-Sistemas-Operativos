@@ -1,6 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
+#include "client.h"
 #include "change_password.h"
 #include "file_system.h"
 #include "token.h"
@@ -22,6 +23,8 @@ public:
     explicit login(QWidget *parent = nullptr);
     ~login();
     void set_file_system(FS* file_system);
+    void set_client(client* client);
+
 
 private:
     bool validate_data(QString username, QString password);
@@ -40,6 +43,7 @@ private:
     login_info* user_data;
     FS* file_system;
     logout_button* request_button;
+    client* local_client;
 };
 
 #endif // LOGIN_H
