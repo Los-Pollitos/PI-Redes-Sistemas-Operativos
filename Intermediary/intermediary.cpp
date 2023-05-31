@@ -10,12 +10,12 @@
 
 // TODO(us): documentar
 intermediary::intermediary() {
-  this->login_s = new login_server();
+
 }
 
 // TODO(us): documentar
 intermediary::~intermediary() {
-  delete this->login_s;
+  
 }
 
 /*
@@ -75,69 +75,88 @@ void intermediary::answer_request() {
       close(this->connection);
     } else {
       // TODO(us): mandar connection
-
+      this->send_to_server();
     }
   }
 }
 
+std::string intermediary::send_and_receive_login(std::string to_send) {
+  std::string result = "\0";
+  int s = 0, n = 0; // s:socket  n: contador
+  struct sockaddr_in ipServidor;
+
+  if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    cout << "Error de creación de socket" << endl;
+  } else {
+    ipServidor.sin_family = AF_INET;
+    ipServidor.sin_port = htons(8080);
+    ipServidor.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    // Se intenta pegar al servidor
+    if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
+      cout << endl << "Error de conexión por IP o puerto" << endl;
+    } else {
+      std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
+      write(s, this->data, strlen(data));
+      if ((n = read(s, this->data, DATA_SIZE)) > 0) {
+        // connection es socket cliente
+        std::cout << "Recibi: " << this->data << std::endl;
+        result =  this->data;
+      }
+      
+      memset(this->data, '0', DATA_SIZE);
+      data[0] = '#';
+      std::cout << "Voy a mandar: " << data << std::endl;
+      write(s, this->data, strlen(data));
+      // No se logró leer
+      if (n < 0) {
+        cout << endl << "Error de lectura" << endl;
+      }
+    }
+  }
+  return result;
+}
+
 void intermediary::send_to_server() {
+  std::string to_send_back = "\0";
   switch(std::stoi(&data[0])) {
-    case LOGIN:
-      // TODO(us): hacer
-      break;
     case TOKEN:
-      // TODO(us): hacer
-      break;
+    case LOGIN:
     case CHANGE_PASSWORD:
-      // TODO(us): hacer
+    case CREATE_USER:
+    case DELETE_USER:
+      to_send_back = this->send_and_receive_login();
+      write(this->connection, to_send_back.data(), strlen(this->data));
+      // TODO (nosotros): mandar a la bitácora
       break;
     case CREATE_USER:
-      // TODO(us): hacer
-      break;
     case DELETE_USER:
-      // TODO(us): hacer
-      break;
     case PAYMENT_PROOF:
-      // TODO(us): hacer
-      break;
     case WORK_PROOF:
-      // TODO(us): hacer
-      break;
     case SALARY_PROOF:
-      // TODO(us): hacer
-      break;
     case SALARY_CONSULT:
-      // TODO(us): hacer
-      break;
     case RECORD_CONSULT:
-      // TODO(us): hacer
-      break;
     case CONSULT_REQUESTS:
-      // TODO(us): hacer
-      break;
     case VACATION_REQUEST:
-      // TODO(us): hacer
-      break;
     case CONSULT_VACATION:
-      // TODO(us): hacer
-      break;
     case CONSULT_USER_DATA:
-      // TODO(us): hacer
-      break;
     case CHANGE_USER_DATA:
-      // TODO(us): hacer
-      break;
     case ANSWER_PAYMENT_PROOF:
-      // TODO(us): hacer
-      break;
     case ANSWER_WORK_PROOF:
-      // TODO(us): hacer
-      break;
     case ANSWER_SALARY_PROOF:
-      // TODO(us): hacer
-      break;
     case ANSWER_VACATION_REQUEST:
       // TODO(us): hacer
       break;
   }
+}
+
+
+// TODO (Nosotros): pasar a otro lado
+int main () {
+  intermediary *  inter = new intermediary();
+
+  inter -> wait_for_request();
+
+  delete inter;
+  return 0;
 }

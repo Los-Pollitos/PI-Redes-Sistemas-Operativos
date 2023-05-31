@@ -11,7 +11,8 @@
 
 #include <string>
 
-#include "server_FS/login_server.h"
+#define DATA_SIZE 256
+#define HASH_SIZE 30
 
 // TODO(us): tener data base
 // #include "data_base/data_base.h"
@@ -40,11 +41,11 @@ enum request_types {
 
 class intermediary {
   private:
-    login_server* login_s;
     int connection;
     char data[DATA_SIZE];
     int message_count;
     struct sockaddr_storage ipRemoto;
+    std::string send_and_receive_login(std::string to_send);
   
   public:
     intermediary();
