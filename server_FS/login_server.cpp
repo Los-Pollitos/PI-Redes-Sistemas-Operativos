@@ -117,13 +117,35 @@ void login_server::answer_request() {
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
+      process_data();
+    }
+  }
+}
+
+// TODOD (us): Document
+void process_data() {
+  switch (std::stoi(&this->data[0])) {
+    case LOGIN:
       // Obtain information from buffer
       std::string username = "";
       std::string hash = "";
       this->find_data(username, hash);
       this->validate_data(username, hash);
-    }
+    break;
+    case TOKEN: 
+      // TODO(emilia): hacer
+    break;
+    case CHANGE_PASSWORD:
+      // TODO(emilia): hacer
+    break;
+    case CREATE_USER:
+      // TODO(luis): hacer
+    break;
+    case DELETE_USER:
+      // TODO(luis): hacer
+    break;
   }
+  // TODO: meter a bitácora
 }
 
 /*

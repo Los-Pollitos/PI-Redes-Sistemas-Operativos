@@ -21,6 +21,14 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+enum request_types {
+  LOGIN = 0,
+  TOKEN,
+  CHANGE_PASSWORD,
+  CREATE_USER,
+  DELETE_USER,
+};
+
 class login_server {
   private:
     // Atributes
@@ -33,6 +41,7 @@ class login_server {
     // Methods
     void load_from_file();
     void find_data(std::string& username,  std::string& hash);
+    void process_data();
 
   public:
     login_server();
