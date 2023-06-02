@@ -207,9 +207,4 @@ void login_server::validate_data(std::string& username, std::string& hash) {
   }
 }
 
-int main() {
-  login_server* server = new login_server();
-  server->wait_for_request();
-  delete server;
-}
 
