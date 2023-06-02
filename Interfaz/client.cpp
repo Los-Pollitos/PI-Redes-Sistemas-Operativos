@@ -6,7 +6,7 @@ client::client()
 }
 
 void client::adapt_data(char* data, std::string& new_info) {
-    for (int i = 0; i < new_info.length(); ++i){
+    for (int i = 0; i < CLIENT_DATA_SIZE; ++i){
         data[i] = new_info[i];
     }
 }
@@ -29,10 +29,10 @@ std::string client::send_and_receive(std::string to_send) {
             std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
         } else {
             // Se logró pegar, se sacan data
-            memset(data, '0', CLIENT_DATA_SIZE);
+            memset(data, '\0', CLIENT_DATA_SIZE);
             adapt_data(data, to_send);
             std::cout << "Voy a mandar: " << data << std::endl;
-            write(s, data, strlen(data));
+            write(s, data, CLIENT_DATA_SIZE);
 
             if ((n = read(s, data, CLIENT_DATA_SIZE)) > 0) {
                 // connection es socket cliente
@@ -40,10 +40,12 @@ std::string client::send_and_receive(std::string to_send) {
                 std::cout << "Recibi: " << data << std::endl;
             }
 
-            memset(data, '0', CLIENT_DATA_SIZE);
-            data[0] = '#';
+            memset(data, '\0', CLIENT_DATA_SIZE);
+            to_send = "#";
+            adapt_data(data, to_send);
+            // data[0] = '#';
             std::cout << "Voy a mandar: " << data << std::endl;
-            write(s, data, strlen(data));
+            write(s, data, CLIENT_DATA_SIZE);
             // No se logró leer
             if (n < 0) {
                 std::cout << std::endl << "Error de lectura" << std::endl;
