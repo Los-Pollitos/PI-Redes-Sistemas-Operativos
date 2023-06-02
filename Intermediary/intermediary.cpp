@@ -119,7 +119,7 @@ std::string intermediary::send_and_receive_login() {
 
 void intermediary::send_to_server() {
   std::string to_send_back = "\0";
-  switch(std::stoi(&data[0])) {
+  switch(data[0]) {
     case LOGIN:
     case TOKEN:
     case CHANGE_PASSWORD:

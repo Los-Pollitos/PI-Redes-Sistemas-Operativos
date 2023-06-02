@@ -128,7 +128,7 @@ void login_server::process_data() {
   std::string hash = "\0";
   // TODO (stoi)
   switch (data[0]) {
-    case '0':
+    case LOGIN:
       // Obtain information from buffer
       this->find_data(username, hash);
       this->validate_data(username, hash);

@@ -22,7 +22,7 @@
 #include <unistd.h>
 
 enum request_types {
-  LOGIN = 0,
+  LOGIN = 65,
   TOKEN,
   CHANGE_PASSWORD,
   CREATE_USER,

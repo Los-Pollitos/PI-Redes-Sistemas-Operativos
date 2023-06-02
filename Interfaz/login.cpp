@@ -43,7 +43,7 @@ void login::set_file_system(FS* file_system) {
 
 void login::set_client(client* local_client){
     this->local_client = local_client;
-    this->local_client->send_and_receive("0cjimenez,78e8ee0b2f67531b8eda7678fa42fb");
+    this->local_client->send_and_receive("Acjimenez,78e8ee0b2f67531b8eda7678fa42fb");
 }
 
 bool login::validate_data(QString username, QString password) {
