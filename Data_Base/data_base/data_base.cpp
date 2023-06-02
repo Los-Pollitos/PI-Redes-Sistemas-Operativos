@@ -15,14 +15,22 @@ data_base::~data_base() {
 }
 
 void data_base::add_office(int id, std::string name) {
+    QString office_str("CREATE TABLE IF NOT EXISTS offices (id INTEGER, name TEXT)");
+    QSqlQuery office_table;
+    if (!office_table.exec(office_str)) {
+        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << office_table.lastError();
+        return;
+    }
+
     QSqlQuery new_office;
-    new_office.prepare(QString("INSERT INTO offices (id,name) VALUES (:%1,:%2)").arg(QString::number(id)).arg(QString::fromStdString(name)));
-    new_office.bindValue(":id", QString::number(id));
+    new_office.prepare("INSERT INTO offices (id, name) VALUES (:id, :name)");
+    new_office.bindValue(":id", id);
     new_office.bindValue(":name", QString::fromStdString(name));
-    if(!new_office.exec()) {
+    if (!new_office.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando sucursal: " << new_office.lastError();
     }
 }
+
 
 void data_base::add_employee(std::string user, std::string name, std::string id
                             , std::string phone_number, std::string email
