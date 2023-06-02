@@ -1,17 +1,24 @@
+/*
+ * Team: Los Pollitos
+ * Cristopher Hernández (C13632)
+ * Luis Solano (C17634)
+ * Angie Solís (C17686)
+ * Emilia Víquez (C18625)
+ */
+
 #include <QCoreApplication>
 #include <iostream>
 
 #include "data_base.h"
+#include "data_server.h"
 
 int main(int argc, char *argv[]) {
     QCoreApplication a(argc, argv);
 
-    data_base base;
-    base.add_office(1,"San Jose");
-//    base.add_office(2,"Alajuela");
-//    base.add_office(3,"Cartago");
+    data_server * server = new data_server();
+    server->wait_for_request();
 
-    std::cout << base.consult_office_name(1);
+    delete server;
 
     return a.exec();
 }
