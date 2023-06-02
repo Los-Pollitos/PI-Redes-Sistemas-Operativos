@@ -97,7 +97,7 @@ std::string intermediary::send_and_receive_login() {
       std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
     } else {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
-      write(s, this->data, strlen(data));
+      write(s, this->data, DATA_SIZE);
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
         std::cout << "Recibi: " << this->data << std::endl;
@@ -107,7 +107,7 @@ std::string intermediary::send_and_receive_login() {
       memset(this->data, '0', DATA_SIZE);
       data[0] = '#';
       std::cout << "Voy a mandar: " << data  << " a autenticacion "<< std::endl;
-      write(s, this->data, strlen(data));
+      write(s, this->data, DATA_SIZE);
       // No se logró leer
       if (n < 0) {
         std::cout << std::endl << "Error de lectura" << std::endl;
@@ -124,13 +124,13 @@ void intermediary::send_to_server() {
     case TOKEN:
     case CHANGE_PASSWORD:
       to_send_back = this->send_and_receive_login();
-      write(this->connection, to_send_back.data(), strlen(this->data));
+      write(this->connection, to_send_back.data(), DATA_SIZE);
       // TODO (nosotros): mandar a la bitácora
       break;
     case CREATE_USER:
     case DELETE_USER:
       to_send_back = this->send_and_receive_login();
-      write(this->connection, to_send_back.data(), strlen(this->data));
+      write(this->connection, to_send_back.data(), DATA_SIZE);
 
       // TODO (nosotros): bases de datos 
 

@@ -45,7 +45,7 @@ int main() {
         std::cout << "Recibi: " << data << std::endl;
       }
       
-      memset(data, '0', MAX_SIZE);
+      memset(data, '1', MAX_SIZE);
       data[0] = '#';
       std::cout << "Voy a mandar: " << data << std::endl;
       write(s, data, strlen(data));
