@@ -6,7 +6,6 @@
 #include <QSqlRecord>
 #include <QtSql/QSqlDatabase>
 #include <QDebug>
-#include <QStandardItemModel>
 #include <string>
 
 class data_base {
@@ -16,7 +15,7 @@ class data_base {
   public:
     data_base();
     ~data_base();
-    void add_office(int id, std::string name, std::string admin);
+    void add_office(int id, std::string name);
     void add_employee(std::string user, std::string name, std::string id
                       , std::string phone_number, std::string email
                       , int office_id, char roles, int available_vacations
@@ -29,10 +28,11 @@ class data_base {
     void add_laboral_data(std::string user, int data_id
                           , int start_day, int start_month, int start_year
                           , int end_day, int end_month, int end_year
-                          , int gross_salary, int net_salary, int deductibles
-                          , std::string job_title);
+                          , int gross_salary, int deductibles, std::string job_title);
     void add_record (std::string user, std::string boss_user
                     , int day, int month, int year, std::string annotation);
+
+    std::string consult_office_name(int id);
 };
 
 #endif // DATA_BASE_H

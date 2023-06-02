@@ -2,7 +2,7 @@
 
 
 data_base::data_base() {
-    this->base = QSqlDatabase::addDatabase("SQLITE");
+    this->base = QSqlDatabase::addDatabase("QSQLITE");
     this->base.setDatabaseName("data.db");
     if (! this->base.open()) {
         qDebug() << "[BASE_DATOS] Fallo al conectar";
@@ -11,13 +11,14 @@ data_base::data_base() {
     }
 }
 
+data_base::~data_base() {
+}
 
-void data_base::add_office(int id, std::string name, std::string admin) {
+void data_base::add_office(int id, std::string name) {
     QSqlQuery new_office;
-    new_office.prepare("INSERT INTO offices (id,name,admin) VALUES (:id,:name,:admin)");
-    new_office.bindValue(":id", id);
+    new_office.prepare(QString("INSERT INTO offices (id,name) VALUES (:%1,:%2)").arg(QString::number(id)).arg(QString::fromStdString(name)));
+    new_office.bindValue(":id", QString::number(id));
     new_office.bindValue(":name", QString::fromStdString(name));
-    new_office.bindValue(":admin", QString::fromStdString(admin));
     if(!new_office.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando sucursal: " << new_office.lastError();
     }
@@ -76,10 +77,9 @@ void data_base::add_request(std::string user, int solved, int day_request
 void data_base::add_laboral_data(std::string user, int data_id
                                 , int start_day, int start_month, int start_year
                                 , int end_day, int end_month, int end_year
-                                , int gross_salary, int net_salary, int deductibles
-                                , std::string job_title) {
+                                , int gross_salary, int deductibles, std::string job_title) {
     QSqlQuery new_request;
-    new_request.prepare("INSERT INTO requests (user,data_id,start_day,start_month,start_year,end_day,end_month,end_year,gross_salary,net_salary_deductible,job_title) VALUES (:user,:data_id,:start_day,:start_month,:start_year,:end_day,:end_month,:end_year,:gross_salary,:net_salary_deductible,:job_title)");
+    new_request.prepare("INSERT INTO laboral_datas (user,data_id,start_day,start_month,start_year,end_day,end_month,end_year,gross_salary,deductible,job_title) VALUES (:user,:data_id,:start_day,:start_month,:start_year,:end_day,:end_month,:end_year,:gross_salary,:deductible,:job_title)");
     new_request.bindValue(":user", QString::fromStdString(user));
     new_request.bindValue(":data_id", data_id);
     new_request.bindValue(":start_day", start_day);
@@ -89,7 +89,6 @@ void data_base::add_laboral_data(std::string user, int data_id
     new_request.bindValue(":end_month", end_month);
     new_request.bindValue(":end_year", end_year);
     new_request.bindValue(":gross_salary", gross_salary);
-    new_request.bindValue(":net_salary", net_salary);
     new_request.bindValue(":deductibles", deductibles);
     new_request.bindValue(":job_title", QString::fromStdString(job_title));
     if(!new_request.exec()) {
@@ -109,4 +108,19 @@ void data_base::add_record (std::string user, std::string boss_user
     if(!new_record.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando anotación: " << new_record.lastError();
     }
+}
+
+std::string data_base::consult_office_name(int id) {
+    std::string office_name = "\0";
+    QSqlQuery consult_office;
+    consult_office.prepare("SELECT name FROM offices WHERE id = (:id)");
+    consult_office.bindValue(":id", id);
+
+    if (consult_office.exec() && consult_office.next()){
+        office_name = consult_office.value(0).toString().toStdString();
+
+        // TODO(nosotros): borrar
+        qDebug() << "[DB] Producto existe y tiene precio: " << office_name;
+    }
+    return office_name;
 }
