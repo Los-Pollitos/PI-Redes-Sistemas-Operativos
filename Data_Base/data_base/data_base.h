@@ -41,6 +41,7 @@ class data_base {
                     , int day, int month, int year, std::string annotation);
 
     std::string consult_office_name(int id);
+    std::string consult_employee_data(std::string user);
 };
 
 #endif // DATA_BASE_H

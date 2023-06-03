@@ -39,13 +39,22 @@ void data_base::add_office(int id, std::string name) {
     }
 }
 
-
+// TODO(nosotros): DOCUMENTAR
+// TODO(nosotros): Ver si cambiar char por string, porque lo saca mal
 void data_base::add_employee(std::string user, std::string name, std::string id
                             , std::string phone_number, std::string email
                             , int office_id, char roles, int available_vacations
                             , int last_laboral_data) {
+    // Create the employee table if not created
+    QString employee_str("CREATE TABLE IF NOT EXISTS employees (user TEXT, name TEXT, id TEXT, phone_number TEXT, email TEXT, office_id INTEGER, roles TEXT, available_vacations INTEGER, last_laboral_data INTEGER)");
+    QSqlQuery employee_table;
+    if (!employee_table.exec(employee_str)) {
+        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << employee_table.lastError();
+        return;
+    }
+    // Add the new employee
     QSqlQuery new_employee;
-    new_employee.prepare("INSERT INTO employees (user,name,id,phone_number,email,office_id,roles,available_vacations,last_laboral_data) VALUES (:user,:name,:id,:phone_number,:email,:office_id,:roles,:available_vacations,:last_laboral_data)");
+    new_employee.prepare("INSERT INTO employees (user, name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data) VALUES (:user, :name, :id, :phone_number, :email, :office_id, :roles, :available_vacations, :last_laboral_data)");
     new_employee.bindValue(":user", QString::fromStdString(user));
     new_employee.bindValue(":name", QString::fromStdString(name));
     new_employee.bindValue(":id", QString::fromStdString(id));
@@ -131,7 +140,7 @@ std::string data_base::consult_office_name(int id) {
     QSqlQuery consult_office;
     consult_office.prepare("SELECT name FROM offices WHERE id = (:id)");
     consult_office.bindValue(":id", id);
-
+    // If a match was found
     if (consult_office.exec() && consult_office.next()){
         office_name = consult_office.value(0).toString().toStdString();
 
@@ -139,4 +148,19 @@ std::string data_base::consult_office_name(int id) {
         qDebug() << "[DB] Producto existe y tiene precio: " << office_name;
     }
     return office_name;
+}
+
+std::string data_base::consult_employee_data(std::string user) {
+    std::string result = "";
+    QSqlQuery consult_employee;
+    consult_employee.prepare("SELECT * FROM employees WHERE user = (:user)");
+    consult_employee.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_employee.exec() && consult_employee.next()) {
+        // TODO(nosotros): DESCIFRAR
+        for (int i = 0; i < 9; ++i) {
+            result += consult_employee.value(i).toString().toStdString();
+        }
+    }
+    return result;
 }
