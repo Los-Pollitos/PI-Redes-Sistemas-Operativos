@@ -75,8 +75,16 @@ void data_base::add_request(std::string user, int solved, int day_request
                             ,int request_id_vac, int day_vac, int month_vac, int year_vac
                             , int shift_vac, int proof_type, std::string content_proof
                             , std::string user_signing_boss_proof) {
+    // Create the request table if not created
+    QString request_str("CREATE TABLE IF NOT EXISTS requests (user TEXT, solved INTEGER, day_request INTEGER, month_request INTEGER, year_request INTEGER, day_answer INTEGER, month_answer INTEGER, year_answer INTEGER, type INTEGER, request_id_vac INTEGER, day_vac INTEGER, month_vac INTEGER, year_vac INTEGER, shift_vac INTEGER, proof_type INTEGER, content_proof TEXT, user_signing_boss_proof TEXT");
+    QSqlQuery request_table;
+    if (!request_table.exec(request_str)) {
+        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << request_table.lastError();
+        return;
+    }
+    // Add the new request
     QSqlQuery new_request;
-    new_request.prepare("INSERT INTO requests (user,solved,day_request,month_request,year_request,day_answer,month_answer,year_answer,type,request_id_vac,day_vac,month_vac,year_vac,shift_vac,proof_type,content_proof,user_signing_boss_proof) VALUES (:user,:solved,:day_request,:month_request,:year_request,:day_answer,:month_answer,:year_answer,:type,:request_id_vac,:day_vac,:month_vac,:year_vac,:shift_vac,:proof_type,:content_proof,user_signing_boss_proof)");
+    new_request.prepare("INSERT INTO requests (user, solved, day_request, month_request, year_request, day_answer, month_answer, year_answer, type, request_id_vac, day_vac, month_vac, year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof) VALUES (:user, :solved, :day_request, :month_request, :year_request, :day_answer, :month_answer, :year_answer, :type, :request_id_vac, :day_vac, :month_vac, :year_vac, :shift_vac, :proof_type, :content_proof, user_signing_boss_proof)");
     new_request.bindValue(":user", QString::fromStdString(user));
     new_request.bindValue(":solved", solved);
     new_request.bindValue(":day_request", day_request);
@@ -103,27 +111,43 @@ void data_base::add_laboral_data(std::string user, int data_id
                                 , int start_day, int start_month, int start_year
                                 , int end_day, int end_month, int end_year
                                 , int gross_salary, int deductibles, std::string job_title) {
-    QSqlQuery new_request;
-    new_request.prepare("INSERT INTO laboral_datas (user,data_id,start_day,start_month,start_year,end_day,end_month,end_year,gross_salary,deductible,job_title) VALUES (:user,:data_id,:start_day,:start_month,:start_year,:end_day,:end_month,:end_year,:gross_salary,:deductible,:job_title)");
-    new_request.bindValue(":user", QString::fromStdString(user));
-    new_request.bindValue(":data_id", data_id);
-    new_request.bindValue(":start_day", start_day);
-    new_request.bindValue(":start_month", start_month);
-    new_request.bindValue(":start_year", start_year);
-    new_request.bindValue(":end_day", end_day);
-    new_request.bindValue(":end_month", end_month);
-    new_request.bindValue(":end_year", end_year);
-    new_request.bindValue(":gross_salary", gross_salary);
-    new_request.bindValue(":deductibles", deductibles);
-    new_request.bindValue(":job_title", QString::fromStdString(job_title));
-    if(!new_request.exec()) {
-        qDebug() << "[BASE_DATOS] Error agregando solicitud: " << new_request.lastError();
+    // Create the laboral data table if not created
+    QString laboral_data_str("CREATE TABLE IF NOT EXISTS laboral_datas (user TEXT, data_id INTEGER, start_day INTEGER, start_month INTEGER, start_year INTEGER, end_day INTEGER, end_month INTEGER, end_year INTEGER, gross_salary INTEGER, deductibles INTEGER, job_title TEXT");
+    QSqlQuery laboral_data_table;
+    if (!laboral_data_table.exec(laboral_data_str)) {
+        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << laboral_data_table.lastError();
+        return;
+    }
+    // Add the new laboral data
+    QSqlQuery new_laboral_data;
+    new_laboral_data.prepare("INSERT INTO laboral_datas (user, data_id, start_day, start_month, start_year, end_day, end_month, end_year, gross_salary, deductible, job_title) VALUES (:user, :data_id, :start_day, :start_month, :start_year, :end_day, :end_month, :end_year, :gross_salary, :deductible, :job_title)");
+    new_laboral_data.bindValue(":user", QString::fromStdString(user));
+    new_laboral_data.bindValue(":data_id", data_id);
+    new_laboral_data.bindValue(":start_day", start_day);
+    new_laboral_data.bindValue(":start_month", start_month);
+    new_laboral_data.bindValue(":start_year", start_year);
+    new_laboral_data.bindValue(":end_day", end_day);
+    new_laboral_data.bindValue(":end_month", end_month);
+    new_laboral_data.bindValue(":end_year", end_year);
+    new_laboral_data.bindValue(":gross_salary", gross_salary);
+    new_laboral_data.bindValue(":deductibles", deductibles);
+    new_laboral_data.bindValue(":job_title", QString::fromStdString(job_title));
+    if(!new_laboral_data.exec()) {
+        qDebug() << "[BASE_DATOS] Error agregando solicitud: " << new_laboral_data.lastError();
     }
 }
-void data_base::add_record (std::string user, std::string boss_user
+void data_base::add_record(std::string user, std::string boss_user
                            , int day, int month, int year, std::string annotation) {
+    // Create the record table if not created
+    QString laboral_data_str("CREATE TABLE IF NOT EXISTS records (user TEXT, boss_user TEXT, day INTEGER, month INTEGER, year INTEGER, annotation TEXT");
+    QSqlQuery laboral_data_table;
+    if (!laboral_data_table.exec(laboral_data_str)) {
+        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << laboral_data_table.lastError();
+        return;
+    }
+    // Add the new laboral data
     QSqlQuery new_record;
-    new_record.prepare("INSERT INTO requests (user,boss_user,day,month,year,annotation) VALUES (:user,:boss_user,:day,:month,:year,:annotation)");
+    new_record.prepare("INSERT INTO records (user,boss_user,day,month,year,annotation) VALUES (:user,:boss_user,:day,:month,:year,:annotation)");
     new_record.bindValue(":user", QString::fromStdString(user));
     new_record.bindValue(":boss_user", QString::fromStdString(boss_user));
     new_record.bindValue(":day", day);
