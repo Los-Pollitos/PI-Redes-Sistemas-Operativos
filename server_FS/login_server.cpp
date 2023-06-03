@@ -68,7 +68,7 @@ void login_server::wait_for_request() {
   struct sockaddr_in ip;
 
   memset(&ip, '0', sizeof(ip));
-  memset(this->data, '0', sizeof(this->data));
+  memset(this->data, '\0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
   ip.sin_port = htons(8080);
@@ -144,6 +144,8 @@ void login_server::process_data() {
       break;
     case DELETE_USER:
       // TODO(luis): hacer
+      username = "hola de login";
+      write (this->connection, username.data(), DATA_SIZE);
       break;
   }
   // TODO: meter a bitácora
@@ -192,7 +194,7 @@ void login_server::validate_data(std::string& username, std::string& hash) {
       buffer = " ";
       end_of_file = this->file_system->is_eof("Server", "Login.txt");
     }
-    memset(this->data, '0', sizeof(this->data));
+    memset(this->data, '\0', sizeof(this->data));
 
     // Compare
     if (found) {
