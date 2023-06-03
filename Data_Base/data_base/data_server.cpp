@@ -20,7 +20,7 @@ data_server::data_server() {
 
     // TODO (us): borrar
     base->add_office(1,"San Jose");
-    std::cout << base.consult_office_name(1);
+    std::cout << base -> consult_office_name(1);
 }
 
 /*
@@ -46,7 +46,7 @@ void data_server::wait_for_request() {
     struct sockaddr_in ip;
 
     memset(&ip, '0', sizeof(ip));
-    memset(this->data, '0', sizeof(this->data));
+    memset(this->data, '\0', sizeof(this->data));
     ip.sin_family = AF_INET;
     ip.sin_addr.s_addr = htonl(INADDR_ANY);
     ip.sin_port = htons(8081);
@@ -56,8 +56,6 @@ void data_server::wait_for_request() {
 
     sleep(1);
     socklen_t l = sizeof(this->ipRemoto);
-    char strIpRemoto[INET6_ADDRSTRLEN];
-    int port;
     std::cout << std::endl << "[SERVIDOR ESCUCHANDO]" << std::endl;
     while (this->message_count < 5000) {
         // Search for a connection
@@ -111,6 +109,13 @@ void data_server::process_data() {
             break;
         case DELETE_USER:
             // TODO(luis): hacer
+            std::cout << " Me llego el mensaje \n";
+            memset(this->data, '\0', DATA_SIZE);
+            this->data[0] = 'h';
+            this->data[1] = 'o';
+            this->data[2] = 'l';
+            this->data[3] = 'a';
+            write(this->connection, this->data, strlen(this->data));
             break;
         case PAYMENT_PROOF:
 
