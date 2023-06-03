@@ -12,26 +12,10 @@
  * @brief Default constructor
 */
 login_server::login_server() {
-  
-}
-
-/*
- * @brief Destructor
-*/
-login_server::~login_server() {
-}
-
-// TODO(nosotros): documentar
-void login_server::start() {
-
-  // TODO(us): borrar
-  std::cout << "estoy en el start\n";
-
   // Create the file system
   this->file_system = new FS();
   this->connection = -1;
   this->message_count = 0;
-  this->continue_waiting = true;
 
   // Load the file system from image
   std::ifstream current_file("fs_image.dat");
@@ -42,20 +26,16 @@ void login_server::start() {
     // Load the file system from file
     this->load_from_file();
   }
-
-  this->wait_for_request();
 }
 
-// TODO(nosotros): documentar
-void login_server::stop() {
-  // To stop waiting for request
-  this->continue_waiting = false;
+/*
+ * @brief Destructor
+*/
+login_server::~login_server() {
   // Unload the image of the file system
   this->file_system->write_unit();
   // Delete the file system
-  if (this->file_system) {
-    delete this->file_system;
-  }
+  delete this->file_system;
 }
 
 /*
@@ -230,5 +210,4 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     this->file_system->close("Server", "Login.txt");
   }
 }
-
 

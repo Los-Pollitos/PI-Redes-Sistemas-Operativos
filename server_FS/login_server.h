@@ -12,16 +12,6 @@
 #define DATA_SIZE 256
 #define HASH_SIZE 30
 
-/// Declare four of the rule-of-the-five methods
-#define DECLARE_RULE4(Class, action) \
-  Class(const Class& other) = action; \
-  Class(Class&& other) = action; \
-  Class& operator=(const Class& other) = action; \
-  Class& operator=(Class&& other) = action
-// Disable default methods for copying objects
-#define DISABLE_COPY(Class) \
-  DECLARE_RULE4(Class, delete)
-
 #include "file_system.h"
 
 #include <arpa/inet.h>
@@ -40,13 +30,11 @@ enum request_types {
 };
 
 class login_server {
-  DISABLE_COPY(login_server);
   private:
     // Atributes
     FS *file_system;
     int connection;
     char data[DATA_SIZE];
-    bool continue_waiting;
     int message_count;
     struct sockaddr_storage ipRemoto;
 
@@ -60,13 +48,7 @@ class login_server {
     ~login_server();
     void wait_for_request();
     void answer_request();
-    void start();
-    void stop();
     void validate_data(std::string& username, std::string& hash);
-    static login_server& get_instance() {
-      static login_server server;
-      return server;
-    }
 };
 
 #endif // LOGIN_SERVER

@@ -6,23 +6,10 @@
  * Emilia Víquez (C18625)
 */
 
-#include <csignal>
-
 #include "login_server.h"
 
-void stop_server(int signal_type);
-
 int main() {
-  std::signal(SIGTERM, stop_server);
-  std::signal(SIGINT, stop_server);
-  login_server::get_instance().start();
-}
-
-void stop_server(int signal_type) {
-  (void) signal_type;
-
-  // TODO(us): borrar
-  std::cout << "\nvoy a detener servidor____________________________\n";
-
-  login_server::get_instance().stop();
+  login_server* server = new login_server();
+  server->wait_for_request();
+  delete server;
 }
