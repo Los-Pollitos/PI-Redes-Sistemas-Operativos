@@ -39,9 +39,9 @@ class data_base {
                           , int gross_salary, int deductibles, std::string job_title);
     void add_record (std::string user, std::string boss_user
                     , int day, int month, int year, std::string annotation);
-
     std::string consult_office_name(int id);
     std::string consult_employee_data(std::string user);
+    void delete_user(std::string user);
 };
 
 #endif // DATA_BASE_H

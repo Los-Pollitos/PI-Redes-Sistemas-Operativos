@@ -32,6 +32,8 @@ int main(int argc, char *argv[]) {
     db->add_employee("lsolano", "Luis Solano", "118860202", "71935068", "luis@gmail.com", 1, 'c', 15, 1);
     qDebug() << "Agregue empleadin\n";
     qDebug() << db->consult_employee_data("lsolano");
+    db->delete_user("lsolano");
+    qDebug() << db->consult_employee_data("lsolano");
     delete db;
 
     return a.exec();

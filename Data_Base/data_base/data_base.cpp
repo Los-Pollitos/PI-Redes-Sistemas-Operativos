@@ -8,7 +8,7 @@
 
 #include "data_base.h"
 
-
+// TODO(nosotros): DOCUMENTAR
 data_base::data_base() {
     this->base = QSqlDatabase::addDatabase("QSQLITE");
     this->base.setDatabaseName("data.db");
@@ -19,9 +19,11 @@ data_base::data_base() {
     }
 }
 
+// TODO(nosotros): DOCUMENTAR
 data_base::~data_base() {
 }
 
+// TODO(nosotros): DOCUMENTAR
 void data_base::add_office(int id, std::string name) {
     QString office_str("CREATE TABLE IF NOT EXISTS offices (id INTEGER, name TEXT)");
     QSqlQuery office_table;
@@ -69,6 +71,7 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     }
 }
 
+// TODO(nosotros): DOCUMENTAR
 void data_base::add_request(std::string user, int solved, int day_request
                             , int month_request, int year_request
                             ,int day_answer, int month_answer, int year_answer, int type
@@ -107,6 +110,7 @@ void data_base::add_request(std::string user, int solved, int day_request
     }
 }
 
+// TODO(nosotros): DOCUMENTAR
 void data_base::add_laboral_data(std::string user, int data_id
                                 , int start_day, int start_month, int start_year
                                 , int end_day, int end_month, int end_year
@@ -136,16 +140,18 @@ void data_base::add_laboral_data(std::string user, int data_id
         qDebug() << "[BASE_DATOS] Error agregando solicitud: " << new_laboral_data.lastError();
     }
 }
+
+// TODO(nosotros): DOCUMENTAR
 void data_base::add_record(std::string user, std::string boss_user
                            , int day, int month, int year, std::string annotation) {
     // Create the record table if not created
-    QString laboral_data_str("CREATE TABLE IF NOT EXISTS records (user TEXT, boss_user TEXT, day INTEGER, month INTEGER, year INTEGER, annotation TEXT");
-    QSqlQuery laboral_data_table;
-    if (!laboral_data_table.exec(laboral_data_str)) {
-        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << laboral_data_table.lastError();
+    QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, boss_user TEXT, day INTEGER, month INTEGER, year INTEGER, annotation TEXT");
+    QSqlQuery record_table;
+    if (!record_table.exec(record_str)) {
+        qDebug() << "[BASE_DATOS] Error al crear la tabla: " << record_table.lastError();
         return;
     }
-    // Add the new laboral data
+    // Add the new record
     QSqlQuery new_record;
     new_record.prepare("INSERT INTO records (user,boss_user,day,month,year,annotation) VALUES (:user,:boss_user,:day,:month,:year,:annotation)");
     new_record.bindValue(":user", QString::fromStdString(user));
@@ -159,6 +165,7 @@ void data_base::add_record(std::string user, std::string boss_user
     }
 }
 
+// TODO(nosotros): DOCUMENTAR
 std::string data_base::consult_office_name(int id) {
     std::string office_name = "\0";
     QSqlQuery consult_office;
@@ -174,6 +181,7 @@ std::string data_base::consult_office_name(int id) {
     return office_name;
 }
 
+// TODO(nosotros): DOCUMENTAR
 std::string data_base::consult_employee_data(std::string user) {
     std::string result = "";
     QSqlQuery consult_employee;
@@ -185,6 +193,18 @@ std::string data_base::consult_employee_data(std::string user) {
         for (int i = 0; i < 9; ++i) {
             result += consult_employee.value(i).toString().toStdString();
         }
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << user;
     }
     return result;
+}
+
+// TODO(nosotros): DOCUMENTAR
+void data_base::delete_user(std::string user) {
+    QSqlQuery delete_employee_table;
+    delete_employee_table.prepare("DELETE FROM employees WHERE user = (:user)");
+    delete_employee_table.bindValue(":user", QString::fromStdString(user));
+    if (!delete_employee_table.exec()) {
+        qDebug() << "[BASE_DATOS] Error borrando al usuario: " << user;
+    }
 }
