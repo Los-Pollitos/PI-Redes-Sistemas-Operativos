@@ -24,11 +24,11 @@
 // #include "data_base/data_base.h"
 
 enum request_types {
-  LOGIN = 65,
-  TOKEN,
-  CHANGE_PASSWORD,
-  CREATE_USER,
-  DELETE_USER,
+  LOGIN = 65,  // A
+  TOKEN, // B 66
+  CHANGE_PASSWORD, // C 67
+  CREATE_USER, // D 68
+  DELETE_USER, // E 69
   PAYMENT_PROOF,
   WORK_PROOF,
   SALARY_PROOF,
@@ -52,6 +52,7 @@ class intermediary {
     int message_count;
     struct sockaddr_storage ipRemoto;
     std::string send_and_receive_login();
+    std::string send_and_receive_data_base();  
   
   public:
     intermediary();

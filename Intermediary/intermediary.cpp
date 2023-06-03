@@ -26,7 +26,7 @@ void intermediary::wait_for_request() {
   struct sockaddr_in ip;
 
   memset(&ip, '0', sizeof(ip));
-  memset(this->data, '0', sizeof(this->data));
+  memset(this->data, '\0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
   ip.sin_port = htons(1337);
@@ -117,6 +117,43 @@ std::string intermediary::send_and_receive_login() {
   return result;
 }
 
+std::string intermediary::send_and_receive_data_base() {
+  std::string result = "\0";
+  int s = 0, n = 0; // s:socket  n: contador
+  struct sockaddr_in ipServidorLogin;
+
+  if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    std::cout << "Error de creación de socket" << std::endl;
+  } else {
+    ipServidorLogin.sin_family = AF_INET;
+    ipServidorLogin.sin_port = htons(8081);
+    ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    // Se intenta pegar al servidor
+    if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
+      std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+    } else {
+      std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
+      write(s, this->data, DATA_SIZE);
+      if ((n = read(s, this->data, DATA_SIZE)) > 0) {
+        // connection es socket cliente
+        std::cout << "Recibi: " << this->data << std::endl;
+        result =  this->data;
+      }
+      
+      memset(this->data, '\0', DATA_SIZE);
+      data[0] = '#';
+      std::cout << "Voy a mandar: " << data  << " a autenticacion "<< std::endl;
+      write(s, this->data, DATA_SIZE);
+      // No se logró leer
+      if (n < 0) {
+        std::cout << std::endl << "Error de lectura" << std::endl;
+      }
+    }
+  }
+  return result;
+}
+
 void intermediary::send_to_server() {
   std::string to_send_back = "\0";
   switch(data[0]) {
@@ -130,10 +167,14 @@ void intermediary::send_to_server() {
     case CREATE_USER:
     case DELETE_USER:
       to_send_back = this->send_and_receive_login();
-      write(this->connection, to_send_back.data(), DATA_SIZE);
-
-      // TODO (nosotros): bases de datos 
-
+      std::cout << "volvi de fs y tengo: " << to_send_back << std::endl;
+      if (to_send_back[0] != '0') {
+        // TODO (nosotros): bases de datos 
+        std::cout << "voy con data_base\n";
+        to_send_back = this->send_and_receive_data_base();
+      }
+      // If it was not propperly deleted, send back the 0
+      write (this->connection, to_send_back.data(), DATA_SIZE);
       // TODO (nosotros): mandar a la bitácora
 
     break;
@@ -156,15 +197,4 @@ void intermediary::send_to_server() {
     default:
       std::cerr << "Error: codigo inexistente" << std::endl;
   }
-}
-
-
-// TODO (Nosotros): pasar a otro lado
-int main () {
-  intermediary *  inter = new intermediary();
-
-  inter -> wait_for_request();
-
-  delete inter;
-  return 0;
 }
