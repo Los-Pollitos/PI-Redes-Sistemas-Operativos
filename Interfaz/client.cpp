@@ -1,8 +1,6 @@
 #include "client.h"
 
-client::client()
-{
-
+client::client() {
 }
 
 void client::adapt_data(char* data, std::string& new_info) {
