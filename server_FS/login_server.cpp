@@ -194,7 +194,7 @@ void login_server::validate_data(std::string& username, std::string& hash) {
       buffer = " ";
       end_of_file = this->file_system->is_eof("Server", "Login.txt");
     }
-    memset(this->data, '\0', sizeof(this->data));
+    memset(this->data, '\0', DATA_SIZE);
 
     // Compare
     if (found) {
@@ -203,6 +203,8 @@ void login_server::validate_data(std::string& username, std::string& hash) {
       if (buffer == hash) {
         this->data[0] = '1';
       }
+    } else {
+      this->data[0] = '0';
     }
     write(this->connection, this->data, strlen(this->data));
     this->file_system->close("Server", "Login.txt");

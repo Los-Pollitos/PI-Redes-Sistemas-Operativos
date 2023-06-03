@@ -94,7 +94,7 @@ std::string intermediary::send_and_receive_login() {
 
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
-      std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+      std::cout << std::endl << "Error de conexión por IP o puerto con login" << std::endl;
     } else {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
       write(s, this->data, DATA_SIZE);
@@ -120,20 +120,20 @@ std::string intermediary::send_and_receive_login() {
 std::string intermediary::send_and_receive_data_base() {
   std::string result = "\0";
   int s = 0, n = 0; // s:socket  n: contador
-  struct sockaddr_in ipServidorLogin;
+  struct sockaddr_in ipServidorData;
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     std::cout << "Error de creación de socket" << std::endl;
   } else {
-    ipServidorLogin.sin_family = AF_INET;
-    ipServidorLogin.sin_port = htons(8081);
-    ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ipServidorData.sin_family = AF_INET;
+    ipServidorData.sin_port = htons(1024);
+    ipServidorData.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Se intenta pegar al servidor
-    if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
-      std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+    if (connect(s, (struct sockaddr *)&ipServidorData, sizeof(ipServidorData)) < 0) {
+      std::cout << std::endl << "Error de conexión por IP o puerto con data" << std::endl;
     } else {
-      std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
+      std::cout << "Voy a mandar: " << this->data  << " a data"<< std::endl;
       write(s, this->data, DATA_SIZE);
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
@@ -143,7 +143,7 @@ std::string intermediary::send_and_receive_data_base() {
       
       memset(this->data, '\0', DATA_SIZE);
       data[0] = '#';
-      std::cout << "Voy a mandar: " << data  << " a autenticacion "<< std::endl;
+      std::cout << "Voy a mandar: " << data  << " a data "<< std::endl;
       write(s, this->data, DATA_SIZE);
       // No se logró leer
       if (n < 0) {
@@ -156,6 +156,7 @@ std::string intermediary::send_and_receive_data_base() {
 
 void intermediary::send_to_server() {
   std::string to_send_back = "\0";
+  char temp_data[DATA_SIZE];
   switch(data[0]) {
     case LOGIN:
     case TOKEN:
@@ -166,9 +167,15 @@ void intermediary::send_to_server() {
       break;
     case CREATE_USER:
     case DELETE_USER:
+      for (int i = 0; i < DATA_SIZE; ++i) {
+          temp_data[i] = data[i];
+        }
       to_send_back = this->send_and_receive_login();
       std::cout << "volvi de fs y tengo: " << to_send_back << std::endl;
       if (to_send_back[0] != '0') {
+        for (int i = 0; i < DATA_SIZE; ++i) {
+          data[i] = temp_data[i];
+        }
         // TODO (nosotros): bases de datos 
         std::cout << "voy con data_base\n";
         to_send_back = this->send_and_receive_data_base();
