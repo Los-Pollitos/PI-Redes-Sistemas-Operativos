@@ -200,11 +200,21 @@ std::string data_base::consult_employee_data(std::string user) {
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::delete_user(std::string user) {
-    QSqlQuery delete_employee_table;
-    delete_employee_table.prepare("DELETE FROM employees WHERE user = (:user)");
-    delete_employee_table.bindValue(":user", QString::fromStdString(user));
-    if (!delete_employee_table.exec()) {
-        qDebug() << "[BASE_DATOS] Error borrando al usuario: " << user;
+void data_base::delete_user_from_table(std::string user, std::string table) {
+    QSqlQuery delete_from_table;
+    std::string command("DELETE FROM " + table + " WHERE user = (:user)");
+    delete_from_table.prepare(QString::fromStdString(command));
+    delete_from_table.bindValue(":user", QString::fromStdString(user));
+    if (!delete_from_table.exec()) {
+        qDebug() << "[BASE_DATOS] Error borrando al usuario: " << user << " de la tabla " << table;
     }
+}
+
+// TODO(nosotros): DOCUMENTAR
+void data_base::delete_user(std::string user) {
+    this->delete_user_from_table(user, "employees");
+    this->delete_user_from_table(user, "requests");
+    this->delete_user_from_table(user, "laboral_datas");
+    this->delete_user_from_table(user, "records");
+
 }
