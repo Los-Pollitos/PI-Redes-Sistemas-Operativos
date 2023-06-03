@@ -18,7 +18,10 @@
 
 class data_base {
   private:
+    // Attributes
     QSqlDatabase base;
+    // Methods
+    void delete_user_from_table(std::string table, std::string user);
 
   public:
     data_base();

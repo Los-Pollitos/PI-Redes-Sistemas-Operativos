@@ -28,9 +28,9 @@ int main(int argc, char *argv[]) {
 
     data_base * db = new data_base();
     db->add_office(1, "San Jose");
-    qDebug() << "Agregue oficina \n";
+    qDebug() << "Agregue oficina";
     db->add_employee("lsolano", "Luis Solano", "118860202", "71935068", "luis@gmail.com", 1, 'c', 15, 1);
-    qDebug() << "Agregue empleadin\n";
+    qDebug() << "Agregue empleado";
     qDebug() << db->consult_employee_data("lsolano");
     db->delete_user("lsolano");
     qDebug() << db->consult_employee_data("lsolano");
