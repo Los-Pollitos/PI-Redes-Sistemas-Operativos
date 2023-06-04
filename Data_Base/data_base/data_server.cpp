@@ -7,6 +7,7 @@
  */
 
 #include "data_server.h"
+#include <fstream>
 #include <iostream>
 
 /*
@@ -35,14 +36,116 @@ void data_server::adapt_data(char* data, std::string& new_info, int pos) {
     for (int i = 0; i < DATA_SIZE; ++i){
         data[i] = new_info[i+pos];
     }
+    pos -= 1;
 }
 
+// TODO(nosotros): documentar
+void data_server::find_next(std::string& line, int& pos) {
+    int stop = 0;
+    for (; pos < (int)line.length() && stop == 0; ++pos) {
+        if (line[pos] == ',') {
+            stop = 1;
+        }
+    }
+}
+
+// TODO(nosotros): documentar
+void data_server::copy_string(std::string& line, std::string& new_line, int from, int to) {
+    for (int i = from; i < to; ++i) {
+        new_line[i-from] = line[i];
+    }
+}
+
+// TODO(nosotros): actualizar documentación
 /*
  * @brief Loads the file system from a .txt file containing the necessary
  * login information, creating the image of the file system for future uses.
 */
 void data_server::load_from_file() {
-    // TODO(nosotros): cargar del archivo
+    this->load_offices();
+    this->load_employees();
+    this->load_laboral_data();
+    this->load_requests();
+    this->load_records();
+}
+
+// TODO(nosotros): documentar
+void data_server::load_offices() {
+    std::string line = "\0";
+    std::string partial_line = "\0";
+    int initial_pos = 0;
+    int end_pos = -1;
+
+    std::ifstream office_file("offices.txt");
+    int id = 0;
+    std::string name = "\0";
+    if (office_file.is_open()) {
+        std::getline(office_file, line);  // ignores the header
+        while(!office_file.eof()) {
+            // gets the line of the table
+            std::getline(office_file, line);
+
+            // find the id
+            initial_pos = 0;
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the id
+            id = stoi(partial_line);
+
+            // find the name
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            // save the name
+            this->copy_string(line,name,initial_pos,end_pos);
+
+            // add to offices table
+            this->base->add_office(id, name);
+        }
+        office_file.close();
+    }
+}
+
+// TODO(nosotros): documentar
+void load_employees() {
+    std::string line = "\0";
+    std::string partial_line = "\0";
+    int initial_pos = 0;
+    int end_pos = -1;
+
+    std::string user, std::string name, std::string id
+        , std::string phone_number, std::string email
+        , int office_id, char roles, int available_vacations
+        , int last_laboral_data
+}
+
+// TODO(nosotros): documentar
+void load_laboral_data() {
+    std::string line = "\0";
+    std::string partial_line = "\0";
+    int initial_pos = 0;
+    int end_pos = -1;
+
+
+}
+
+// TODO(nosotros): documentar
+void load_requests() {
+    std::string line = "\0";
+    std::string partial_line = "\0";
+    int initial_pos = 0;
+    int end_pos = -1;
+
+
+}
+
+// TODO(nosotros): documentar
+void load_records() {
+    std::string line = "\0";
+    std::string partial_line = "\0";
+    int initial_pos = 0;
+    int end_pos = -1;
+
 }
 
 /*
@@ -88,7 +191,6 @@ void data_server::answer_request() {
 
     char strIpRemoto[INET6_ADDRSTRLEN];
     struct sockaddr_in *s = (struct sockaddr_in*)& this->ipRemoto;
-    int port = ntohs(s->sin_port);
     int n = 0;
 
     inet_ntop(AF_INET, &s->sin_addr, strIpRemoto, sizeof strIpRemoto);

@@ -57,9 +57,16 @@ private:
     // Methods
     void adapt_data(char* data, std::string& new_info, int pos);
     void load_from_file();
+    void load_offices();
+    void load_employees();
+    void load_laboral_data();
+    void load_requests();
+    void load_records();
     void find_data(std::string& username,  std::string& hash);
     void process_data();
     void see_process_requests();
+    void find_next(std::string& line, int& pos);
+    void copy_string(std::string& line, std::string& new_line, int from, int to);
 
 public:
     data_server();

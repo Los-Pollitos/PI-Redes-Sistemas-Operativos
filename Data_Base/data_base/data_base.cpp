@@ -17,6 +17,23 @@ data_base::data_base() {
     } else {
         qDebug() << "[BASE_DATOS] Conexión existosa";
     }
+
+    QSqlQuery data_table;
+    if (!data_table.exec(QString("DROP TABLE IF EXISTS offices"))) {
+        qDebug() << "error al borrar offices" << data_table.lastError();
+    }
+    if (!data_table.exec(QString("DROP TABLE IF EXISTS employees"))) {
+        qDebug() << "error al borrar employees" << data_table.lastError();
+    }
+    if (!data_table.exec(QString("DROP TABLE IF EXISTS requests"))) {
+        qDebug() << "error al borrar requests" << data_table.lastError();
+    }
+    if (!data_table.exec(QString("DROP TABLE IF EXISTS laboral_datas"))) {
+        qDebug() << "error al borrar laboral datas" << data_table.lastError();
+    }
+    if (!data_table.exec(QString("DROP TABLE IF EXISTS records"))) {
+        qDebug() << "error al borrar records" << data_table.lastError();
+    }
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -72,14 +89,14 @@ void data_base::add_employee(std::string user, std::string name, std::string id
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::add_request(std::string user, int solved, int day_request
+void data_base::add_request(std::string user, int id, int solved, int day_request
                             , int month_request, int year_request
                             ,int day_answer, int month_answer, int year_answer, int type
                             ,int request_id_vac, int day_vac, int month_vac, int year_vac
                             , int shift_vac, int proof_type, std::string content_proof
                             , std::string user_signing_boss_proof) {
     // Create the request table if not created
-    QString request_str("CREATE TABLE IF NOT EXISTS requests (user TEXT, solved INTEGER, day_request INTEGER, month_request INTEGER, year_request INTEGER, day_answer INTEGER, month_answer INTEGER, year_answer INTEGER, type INTEGER, request_id_vac INTEGER, day_vac INTEGER, month_vac INTEGER, year_vac INTEGER, shift_vac INTEGER, proof_type INTEGER, content_proof TEXT, user_signing_boss_proof TEXT");
+    QString request_str("CREATE TABLE IF NOT EXISTS requests (user TEXT, id INTEGER, solved INTEGER, day_request INTEGER, month_request INTEGER, year_request INTEGER, day_answer INTEGER, month_answer INTEGER, year_answer INTEGER, type INTEGER, request_id_vac INTEGER, day_vac INTEGER, month_vac INTEGER, year_vac INTEGER, shift_vac INTEGER, proof_type INTEGER, content_proof TEXT, user_signing_boss_proof TEXT");
     QSqlQuery request_table;
     if (!request_table.exec(request_str)) {
         qDebug() << "[BASE_DATOS] Error al crear la tabla: " << request_table.lastError();
@@ -87,8 +104,9 @@ void data_base::add_request(std::string user, int solved, int day_request
     }
     // Add the new request
     QSqlQuery new_request;
-    new_request.prepare("INSERT INTO requests (user, solved, day_request, month_request, year_request, day_answer, month_answer, year_answer, type, request_id_vac, day_vac, month_vac, year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof) VALUES (:user, :solved, :day_request, :month_request, :year_request, :day_answer, :month_answer, :year_answer, :type, :request_id_vac, :day_vac, :month_vac, :year_vac, :shift_vac, :proof_type, :content_proof, user_signing_boss_proof)");
+    new_request.prepare("INSERT INTO requests (user, id, solved, day_request, month_request, year_request, day_answer, month_answer, year_answer, type, request_id_vac, day_vac, month_vac, year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof) VALUES (:user, :solved, :day_request, :month_request, :year_request, :day_answer, :month_answer, :year_answer, :type, :request_id_vac, :day_vac, :month_vac, :year_vac, :shift_vac, :proof_type, :content_proof, user_signing_boss_proof)");
     new_request.bindValue(":user", QString::fromStdString(user));
+    new_request.bindValue(":id", id);
     new_request.bindValue(":solved", solved);
     new_request.bindValue(":day_request", day_request);
     new_request.bindValue(":month_request", month_request);
@@ -142,10 +160,10 @@ void data_base::add_laboral_data(std::string user, int data_id
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::add_record(std::string user, std::string boss_user
+void data_base::add_record(std::string user, int id, std::string boss_user
                            , int day, int month, int year, std::string annotation) {
     // Create the record table if not created
-    QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, boss_user TEXT, day INTEGER, month INTEGER, year INTEGER, annotation TEXT");
+    QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, id INTEGER, boss_user TEXT, day INTEGER, month INTEGER, year INTEGER, annotation TEXT");
     QSqlQuery record_table;
     if (!record_table.exec(record_str)) {
         qDebug() << "[BASE_DATOS] Error al crear la tabla: " << record_table.lastError();
@@ -153,8 +171,9 @@ void data_base::add_record(std::string user, std::string boss_user
     }
     // Add the new record
     QSqlQuery new_record;
-    new_record.prepare("INSERT INTO records (user,boss_user,day,month,year,annotation) VALUES (:user,:boss_user,:day,:month,:year,:annotation)");
+    new_record.prepare("INSERT INTO records (user,id,boss_user,day,month,year,annotation) VALUES (:user,:boss_user,:day,:month,:year,:annotation)");
     new_record.bindValue(":user", QString::fromStdString(user));
+    new_record.bindValue(":id", id);
     new_record.bindValue(":boss_user", QString::fromStdString(boss_user));
     new_record.bindValue(":day", day);
     new_record.bindValue(":month", month);
@@ -176,7 +195,7 @@ std::string data_base::consult_office_name(int id) {
         office_name = consult_office.value(0).toString().toStdString();
 
         // TODO(nosotros): borrar
-        qDebug() << "[DB] Producto existe y tiene precio: " << office_name;
+        qDebug() << "[BASE_DATOS] La oficina se llama: " << office_name;
     }
     return office_name;
 }
