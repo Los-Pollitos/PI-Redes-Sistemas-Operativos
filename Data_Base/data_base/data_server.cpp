@@ -123,7 +123,7 @@ void data_server::process_data() {
     std::string username = "\0";
     std::string hash = "\0";
     std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
-    switch (data[0]) {
+    switch ((int) data[0]) {
         case CREATE_USER:
             // TODO(luis): hacer
             break;

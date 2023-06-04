@@ -98,11 +98,6 @@ std::string intermediary::send_and_receive_login() {
     } else {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
       write(s, this->data, DATA_SIZE);
-      read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
-
-      // TODO(us): borrar
-      std::cout << "SOY LOGIN: voy a descartar \"" << this->data << "\"\n";
-
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
         std::cout << "Recibi: " << this->data << " de autenticacion" << std::endl;
@@ -142,6 +137,7 @@ void intermediary::send_and_receive_data_base() {
           std::cout << "Voy a mandar: " << this->data  << " a data base"<< std::endl;
           write(s, this->data, DATA_SIZE);
           n = read(this->connection, this->data, sizeof(this->data));
+          std::cout << "Recibí: " << this->data << std::endl;
       }
       // send & to server
       write(s, this->data, DATA_SIZE);
@@ -176,6 +172,10 @@ void intermediary::send_to_server() {
     case TOKEN:
     case CHANGE_PASSWORD:
       to_send_back = this->send_and_receive_login();
+      read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
+      // TODO(us): borrar
+      std::cout << "SOY LOGIN: voy a descartar \"" << this->data << "\"\n";
+      
       write(this->connection, to_send_back.data(), DATA_SIZE);
       to_send_back[0] = '&';
       write(this->connection, to_send_back.data(), DATA_SIZE);
