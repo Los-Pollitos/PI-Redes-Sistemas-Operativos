@@ -12,6 +12,8 @@
 #define DATA_SIZE 256
 #define HASH_SIZE 30
 
+#define PORT 8080
+
 #include "file_system.h"
 
 #include <arpa/inet.h>

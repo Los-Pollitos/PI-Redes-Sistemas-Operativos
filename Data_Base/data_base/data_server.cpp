@@ -32,7 +32,7 @@ data_server::~data_server() {
 
 // TODO(nosotros): documentar
 void data_server::adapt_data(char* data, std::string& new_info, int pos) {
-    for (int i = 0; i < CLIENT_DATA_SIZE; ++i){
+    for (int i = 0; i < DATA_SIZE; ++i){
         data[i] = new_info[i+pos];
     }
 }
@@ -56,7 +56,7 @@ void data_server::wait_for_request() {
     memset(this->data, '\0', sizeof(this->data));
     ip.sin_family = AF_INET;
     ip.sin_addr.s_addr = htonl(INADDR_ANY);
-    ip.sin_port = htons(1024);
+    ip.sin_port = htons(PORT);
 
     bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
     listen(socketServidor, 20);
@@ -134,9 +134,9 @@ void data_server::process_data() {
             this->data[1] = 'o';
             this->data[2] = 'l';
             this->data[3] = 'a';
-            write(this->connection, this->data, CLIENT_DATA_SIZE);
+            write(this->connection, this->data, DATA_SIZE);
             this->data[0] = '&';
-            write(this->connection, this->data, CLIENT_DATA_SIZE);
+            write(this->connection, this->data, DATA_SIZE);
             break;
         case PAYMENT_PROOF:
             // TODO(Cris): hacer

@@ -29,7 +29,7 @@ void intermediary::wait_for_request() {
   memset(this->data, '\0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
-  ip.sin_port = htons(1337);
+  ip.sin_port = htons(PORT_C);
 
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
@@ -70,7 +70,7 @@ void intermediary::answer_request() {
   while (this->connection != -1 &&
          (n = read(this->connection, this->data, sizeof(this->data))) > 0) {
     // connection es socket cliente
-    std::cout << "Recibi: " << this->data << std::endl;
+    std::cout << "Recibi: " << this->data << " de cliente" << std::endl;
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
@@ -89,7 +89,7 @@ std::string intermediary::send_and_receive_login() {
     std::cout << "Error de creación de socket" << std::endl;
   } else {
     ipServidorLogin.sin_family = AF_INET;
-    ipServidorLogin.sin_port = htons(8080);
+    ipServidorLogin.sin_port = htons(PORT_FS);
     ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Se intenta pegar al servidor
@@ -101,7 +101,7 @@ std::string intermediary::send_and_receive_login() {
       read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
-        std::cout << "Recibi: " << this->data << std::endl;
+        std::cout << "Recibi: " << this->data << " de autenticacion" << std::endl;
         result =  this->data;
       }
       
@@ -126,7 +126,7 @@ void intermediary::send_and_receive_data_base() {
     std::cout << "Error de creación de socket" << std::endl;
   } else {
     ipServidorLogin.sin_family = AF_INET;
-    ipServidorLogin.sin_port = htons(8081);
+    ipServidorLogin.sin_port = htons(PORT_DB);
     ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Se intenta pegar al servidor
@@ -135,7 +135,7 @@ void intermediary::send_and_receive_data_base() {
     } else {
       // receive everything from client
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
-          std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
+          std::cout << "Voy a mandar: " << this->data  << " a data base"<< std::endl;
           write(s, this->data, DATA_SIZE);
           n = read(this->connection, this->data, sizeof(this->data));
       }
@@ -147,7 +147,7 @@ void intermediary::send_and_receive_data_base() {
       while (s != -1 && n > 0 && this->data[0] != '&') { 
         if ((n = read(s, this->data, DATA_SIZE)) > 0) {
           // connection es socket cliente
-          std::cout << "Recibi: " << this->data << std::endl;
+          std::cout << "Recibi: " << this->data << "de data base" << std::endl;
           write(this->connection, this->data, DATA_SIZE);
         }
       }

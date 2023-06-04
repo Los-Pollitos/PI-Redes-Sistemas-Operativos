@@ -71,7 +71,7 @@ void login_server::wait_for_request() {
   memset(this->data, '\0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
-  ip.sin_port = htons(8080);
+  ip.sin_port = htons(PORT);
 
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);

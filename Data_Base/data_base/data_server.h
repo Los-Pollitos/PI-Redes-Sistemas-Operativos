@@ -12,6 +12,8 @@
 #define DATA_SIZE 256
 #define HASH_SIZE 30
 
+#define PORT 1024
+
 #include "data_base.h"
 
 #include <arpa/inet.h>

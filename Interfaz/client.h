@@ -8,9 +8,9 @@
 #include <unistd.h>
 
 #define CLIENT_DATA_SIZE 256
+#define PORT 1337
 
-class client
-{
+class client {
 public:
     client();
     std::string send_and_receive(std::string to_send);
