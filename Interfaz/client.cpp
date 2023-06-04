@@ -3,9 +3,9 @@
 client::client() {
 }
 
-void client::adapt_data(char* data, std::string& new_info) {
+void client::adapt_data(char* data, std::string& new_info, int pos) {
     for (int i = 0; i < CLIENT_DATA_SIZE; ++i){
-        data[i] = new_info[i];
+        data[i] = new_info[i+pos];
     }
 }
 
@@ -28,20 +28,29 @@ std::string client::send_and_receive(std::string to_send) {
         } else {
             // Se logró pegar, se sacan data
             memset(data, '\0', CLIENT_DATA_SIZE);
-            adapt_data(data, to_send);
+            int totalM = to_send / CLIENT_DATA_SIZE + (to_send % CLIENT_DATA_SIZE ? 1 : 0);
+            for (int i = 0; i <= totalM; ++i) {
+                adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
+                std::cout << "Voy a mandar: " << data << std::endl;
+                write(s, data, CLIENT_DATA_SIZE);
+            }
+
+            memset(data, '\0', CLIENT_DATA_SIZE);
+            to_send = "&";
+            adapt_data(data, to_send, 0);
             std::cout << "Voy a mandar: " << data << std::endl;
             write(s, data, CLIENT_DATA_SIZE);
 
-            if ((n = read(s, data, CLIENT_DATA_SIZE)) > 0) {
+            data[0] = '0';
+            while (((n = read(s, data, CLIENT_DATA_SIZE)) > 0) && (data[0] != '&')) {
                 // connection es socket cliente
-                resultado = data;
+                resultado += data;
                 std::cout << "Recibi: " << data << std::endl;
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
             to_send = "#";
-            adapt_data(data, to_send);
-            // data[0] = '#';
+            adapt_data(data, to_send, 0);
             std::cout << "Voy a mandar: " << data << std::endl;
             write(s, data, CLIENT_DATA_SIZE);
             // No se logró leer
