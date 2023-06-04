@@ -122,6 +122,7 @@ void data_server::see_process_requests() {
 void data_server::process_data() {
     std::string username = "\0";
     std::string hash = "\0";
+    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
     switch (data[0]) {
         case CREATE_USER:
             // TODO(luis): hacer
@@ -134,8 +135,10 @@ void data_server::process_data() {
             this->data[1] = 'o';
             this->data[2] = 'l';
             this->data[3] = 'a';
+            std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
         case PAYMENT_PROOF:
