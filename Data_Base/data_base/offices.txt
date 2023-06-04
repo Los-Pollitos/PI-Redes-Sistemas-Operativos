@@ -1,0 +1,6 @@
+id,nombre
+1,Oficina Central
+2,SanJose
+3,Alajuela
+4,Heredia
+5,Cartago
