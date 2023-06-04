@@ -13,15 +13,14 @@
 #include "data_server.h"
 
 int main(int argc, char *argv[]) {
-    // TODO(nosotros): devolver
-        QCoreApplication a(argc, argv);
+    QCoreApplication a(argc, argv);
 
-        data_server * server = new data_server();
-        server->wait_for_request();
+    data_server * server = new data_server();
+    server->wait_for_request();
 
-        delete server;
+    delete server;
 
-        return a.exec();
+    return a.exec();
 
     // TODO(nosotros): BORRAR
 //    QCoreApplication a(argc, argv);

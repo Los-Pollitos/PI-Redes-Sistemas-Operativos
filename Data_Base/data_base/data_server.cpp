@@ -7,8 +7,8 @@
  */
 
 #include "data_server.h"
-#include <fstream>
 #include <iostream>
+#include <QFile>
 
 /*
  * @brief Default constructor
@@ -16,12 +16,20 @@
 data_server::data_server() {
     // Create the data_base
     this->base = new data_base();
+
+    // TODO(nosotros): borrar
+    std::cout << "voy a load from file\n";
+
+    this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
 
     // TODO (us): borrar
-    base->add_office(1,"San Jose");
-    std::cout << base -> consult_office_name(1);
+    base->consult_office_name(1);
+    base->consult_office_name(2);
+    base->consult_office_name(3);
+    base->consult_office_name(4);
+    base->consult_office_name(5);
 }
 
 /*
@@ -47,16 +55,18 @@ void data_server::find_next(std::string& line, int& pos) {
             stop = 1;
         }
     }
-    if (stop == 0) { // it was the last comma
-        --pos;  // after the for, it will be one position ahead
-    }
 }
 
 // TODO(nosotros): documentar
 void data_server::copy_string(std::string& line, std::string& new_line, int from, int to) {
+    new_line.resize(to-from);
+
     for (int i = from; i < to; ++i) {
         new_line[i-from] = line[i];
     }
+
+    // TODO(nosotros): borrar
+    std::cout << "despues de copiar string: " << new_line << std::endl;
 }
 
 // TODO(nosotros): actualizar documentación
@@ -66,45 +76,53 @@ void data_server::copy_string(std::string& line, std::string& new_line, int from
 */
 void data_server::load_from_file() {
     this->load_offices();
-    this->load_employees();
-    this->load_laboral_data();
-    this->load_requests();
-    this->load_records();
+//    this->load_employees();
+//    this->load_laboral_data();
+//    this->load_requests();
+//    this->load_records();
 }
 
 // TODO(nosotros): documentar
 void data_server::load_offices() {
-    std::string line = "\0";
-    std::string partial_line = "\0";
+    std::string line = " ";
+    std::string partial_line = "!";
     int initial_pos = 0;
-    int end_pos = -1;
+    int end_pos = 0;
 
-    std::ifstream office_file("offices.txt");
     int id = 0;
-    std::string name = "\0";
-    if (office_file.is_open()) {
-        std::getline(office_file, line);  // ignores the header
-        while(!office_file.eof()) {
+    std::string name = " ";
+
+    QFile office_file("../tables_files/offices.txt");
+    if (office_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        line = office_file.readLine().toStdString();  // ignores the header
+        while(!office_file.atEnd()) {
+            initial_pos = 0;
+            end_pos = 1;
+
             // gets the line of the table
-            std::getline(office_file, line);
+            line = office_file.readLine().toStdString();
+
+            // TODO(us): borrar
+            std::cout << "lei: " << line << "\n";
 
             // find the id
-            initial_pos = 0;
             this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos,end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos-1);
             // save the id
             id = stoi(partial_line);
 
             // find the name
-            end_pos += 2;  // skips the ','
             initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
             // save the name
-            this->copy_string(line,name,initial_pos,end_pos);
+            this->copy_string(line,name,initial_pos,end_pos-1);
 
             // add to offices table
             this->base->add_office(id, name);
         }
         office_file.close();
+    } else {
+        qDebug() << "[SERVIDOR_BASE_DATOS] No se pudo abrir el archivo de offices.txt";
     }
 }
 
@@ -125,16 +143,18 @@ void data_server::load_employees() {
     int available_vacations = 0;
     int last_laboral_data = 0;
 
-    std::ifstream employee_file("employees.txt");
+    QFile employee_file("../tables_files/employees.txt");
 
-    if (employee_file.is_open()) {
-        std::getline(employee_file, line);  // ignores the header
-        while(!employee_file.eof()) {
+    if (employee_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        employee_file.readLine();   // ignores the header
+        while(!employee_file.atEnd()) {
+            initial_pos = 0;
+            end_pos = 0;
+
             // gets the line of the table
-            std::getline(employee_file, line);
+            line = employee_file.readLine().toStdString();
 
             // find the user
-            initial_pos = 0;
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos,end_pos);
@@ -221,16 +241,18 @@ void data_server::load_laboral_data() {
     int deductibles = 0;
     std::string job_title = "\0";
 
-    std::ifstream laboral_data_file("laboral_datas.txt");
+    QFile laboral_data_file("../tables_files/laboral_datas.txt");
 
-    if (laboral_data_file.is_open()) {
-        std::getline(laboral_data_file, line);  // ignores the header
-        while(!laboral_data_file.eof()) {
+    if (laboral_data_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        laboral_data_file.readLine();   // ignores the header
+        while(!laboral_data_file.atEnd()) {
+            initial_pos = 0;
+            end_pos = 0;
+
             // gets the line of the table
-            std::getline(laboral_data_file, line);
+            line = laboral_data_file.readLine().toStdString();
 
             // find the user
-            initial_pos = 0;
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos,end_pos);
@@ -341,16 +363,18 @@ void data_server::load_requests() {
     std::string content_proof = "\0";
     std::string user_signing_boss_proof = "\0";
 
-    std::ifstream requests_file("requests.txt");
+    QFile request_file("../tables_files/requests.txt");
 
-    if (requests_file.is_open()) {
-        std::getline(requests_file, line);  // ignores the header
-        while(!requests_file.eof()) {
+    if (request_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        request_file.readLine();   // ignores the header
+        while(!request_file.atEnd()) {
+            initial_pos = 0;
+            end_pos = 0;
+
             // gets the line of the table
-            std::getline(requests_file, line);
+            line = request_file.readLine().toStdString();
 
             // find the user
-            initial_pos = 0;
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos,end_pos);
@@ -477,7 +501,7 @@ void data_server::load_requests() {
                                     , month_answer, year_answer, type, request_id_vac, day_vac, month_vac
                                     , year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof);
         }
-        requests_file.close();
+        request_file.close();
     }
 }
 
@@ -496,16 +520,18 @@ void data_server::load_records() {
     int year = 0;
     std::string annotation = "\0";
 
-    std::ifstream records_file("records.txt");
+    QFile records_file("../tables_files/records.txt");
 
-    if (records_file.is_open()) {
-        std::getline(records_file, line);  // ignores the header
-        while(!records_file.eof()) {
+    if (records_file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        records_file.readLine();   // ignores the header
+        while(!records_file.atEnd()) {
+            initial_pos = 0;
+            end_pos = 0;
+
             // gets the line of the table
-            std::getline(records_file, line);
+            line = records_file.readLine().toStdString();
 
             // find the user
-            initial_pos = 0;
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos,end_pos);
@@ -575,7 +601,7 @@ void data_server::wait_for_request() {
 
     sleep(1);
     socklen_t l = sizeof(this->ipRemoto);
-    std::cout << std::endl << "[SERVIDOR ESCUCHANDO]" << std::endl;
+    std::cout << std::endl << "[SERVIDOR_BASE_DATOS ESCUCHANDO]" << std::endl;
     // TODO (nostros): Hacer bool.
     while (this->message_count < 5000) {
         // Search for a connection
@@ -588,7 +614,7 @@ void data_server::wait_for_request() {
         sleep(1);
     }
 
-    std::cout << std::endl << "[SERVIDOR DETENIDO]" << std::endl;
+    std::cout << std::endl << "[SERVIDOR_BASE_DATOS DETENIDO]" << std::endl;
 }
 
 /*
@@ -617,7 +643,7 @@ void data_server::answer_request() {
     }
 }
 
-
+// TODO(nosotros): documentar
 void data_server::see_process_requests() {
     // TODO (nosotros): adaptar
     // Supongamos que llega: define (el que me trajo hasta acá, usuario)

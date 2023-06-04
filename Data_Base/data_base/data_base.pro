@@ -19,3 +19,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     data_base.h \
     data_server.h
+
+DISTFILES += \
+    employees.txt \
+    laboral_datas.txt \
+    offices.txt \
+    records.txt \
+    requests.txt
