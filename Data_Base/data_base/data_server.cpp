@@ -47,6 +47,9 @@ void data_server::find_next(std::string& line, int& pos) {
             stop = 1;
         }
     }
+    if (stop == 0) { // it was the last comma
+        --pos;  // after the for, it will be one position ahead
+    }
 }
 
 // TODO(nosotros): documentar
@@ -95,7 +98,6 @@ void data_server::load_offices() {
             // find the name
             end_pos += 2;  // skips the ','
             initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
             // save the name
             this->copy_string(line,name,initial_pos,end_pos);
 
@@ -107,20 +109,101 @@ void data_server::load_offices() {
 }
 
 // TODO(nosotros): documentar
-void load_employees() {
+void data_server::load_employees() {
     std::string line = "\0";
     std::string partial_line = "\0";
     int initial_pos = 0;
     int end_pos = -1;
 
-    std::string user, std::string name, std::string id
-        , std::string phone_number, std::string email
-        , int office_id, char roles, int available_vacations
-        , int last_laboral_data
+    std::string user = "\0";
+    std::string name = "\0";
+    std::string id = "\0";
+    std::string phone_number = "\0";
+    std::string email = "\0";
+    int office_id = 0;
+    char roles = 0;
+    int available_vacations = 0;
+    int last_laboral_data = 0;
+
+    std::ifstream employee_file("employees.txt");
+
+    if (employee_file.is_open()) {
+        std::getline(employee_file, line);  // ignores the header
+        while(!employee_file.eof()) {
+            // gets the line of the table
+            std::getline(employee_file, line);
+
+            // find the user
+            initial_pos = 0;
+            this->find_next(line, end_pos);
+            // save the user
+            this->copy_string(line,user,initial_pos,end_pos);
+
+            // find the name
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the name
+            this->copy_string(line,name,initial_pos,end_pos);
+
+            // find the id
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the id
+            this->copy_string(line,id,initial_pos,end_pos);
+
+            // find the phone number
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the phone number
+            this->copy_string(line,phone_number,initial_pos,end_pos);
+
+            // find the email
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the email
+            this->copy_string(line,email,initial_pos,end_pos);
+
+            // find the office_id
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the office_id
+            office_id = stoi(partial_line);
+
+            // find the roles
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            end_pos += 1;  // roles are a single char always
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the roles
+            roles = partial_line[0];
+
+            // find the available_vacations
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the available_vacations
+            available_vacations = stoi(partial_line);
+
+            // find the last_laboral_data
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the last_laboral_data
+            last_laboral_data = stoi(partial_line);
+
+            // add to offices table
+            this->base->add_employee(user, name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data);
+        }
+        employee_file.close();
+    }
 }
 
 // TODO(nosotros): documentar
-void load_laboral_data() {
+void data_server::load_laboral_data() {
     std::string line = "\0";
     std::string partial_line = "\0";
     int initial_pos = 0;
@@ -130,17 +213,174 @@ void load_laboral_data() {
 }
 
 // TODO(nosotros): documentar
-void load_requests() {
+void data_server::load_requests() {
     std::string line = "\0";
     std::string partial_line = "\0";
     int initial_pos = 0;
     int end_pos = -1;
 
+    std::string user = "\0";
+    int id = 0;
+    int solved = 0;
+    int day_request = 0;
+    int month_request = 0;
+    int year_request = 0;
+    int day_answer = 0;
+    int month_answer = 0;
+    int year_answer = 0;
+    int type = 0;
+    int request_id_vac = 0;
+    int day_vac = 0;
+    int month_vac = 0;
+    int year_vac = 0;
+    int shift_vac = 0;
+    int proof_type = 0;
+    std::string content_proof = "\0";
+    std::string user_signing_boss_proof = "\0";
+
+    std::ifstream requests_file("employees.txt");
+
+    if (requests_file.is_open()) {
+        std::getline(requests_file, line);  // ignores the header
+        while(!requests_file.eof()) {
+            // gets the line of the table
+            std::getline(requests_file, line);
+
+            // find the user
+            initial_pos = 0;
+            this->find_next(line, end_pos);
+            // save the user
+            this->copy_string(line,user,initial_pos,end_pos);
+
+            // find the id
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the id
+            id = stoi(partial_line);
+
+            // find if solved
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            end_pos += 1;  // roles are a single int always
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save if solved
+            solved = stoi(partial_line);
+
+            // find the day_request
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the day_request
+            day_request = stoi(partial_line);
+
+            // find the month_request
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the month_request
+            month_request = stoi(partial_line);
+
+            // find the year_request
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the year_request
+            year_request = stoi(partial_line);
+
+            // find the day_answer
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the day_answer
+            day_answer = stoi(partial_line);
+
+            // find the month_answer
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the month_answer
+            month_answer = stoi(partial_line);
+
+            // find the year_answer
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the year_answer
+            year_answer = stoi(partial_line);
+
+            // find the type
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the type
+            type = stoi(partial_line);
+
+            // find the request_id_vac
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the request_id_vac
+            request_id_vac = stoi(partial_line);
+
+            // find the day_vac
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the day_vac
+            day_vac = stoi(partial_line);
+
+            // find the month_vac
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the month_vac
+            month_vac = stoi(partial_line);
+
+            // find the year_vac
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the year_vac
+            year_vac = stoi(partial_line);
+
+            // find the shift_vac
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the shift_vac
+            shift_vac = stoi(partial_line);
+
+            // find the proof_type
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the proof_type
+            proof_type = stoi(partial_line);
+
+            // find the content_proof
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the content_proof
+            this->copy_string(line,content_proof,initial_pos,end_pos);
+
+            // find the user_signing_boss_proof
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the user_signing_boss_proof
+            this->copy_string(line,user_signing_boss_proof,initial_pos,end_pos);
+
+            this->base->add_request(user, id, solved, day_request, month_request, year_request, day_answer
+                                    , month_answer, year_answer, type, request_id_vac, day_vac, month_vac
+                                    , year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof);
+        }
+        requests_file.close();
+    }
 
 }
 
 // TODO(nosotros): documentar
-void load_records() {
+void data_server::load_records() {
     std::string line = "\0";
     std::string partial_line = "\0";
     int initial_pos = 0;
