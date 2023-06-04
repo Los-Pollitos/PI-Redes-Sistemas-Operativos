@@ -99,10 +99,14 @@ std::string intermediary::send_and_receive_login() {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
       write(s, this->data, DATA_SIZE);
       read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
+
+      // TODO(us): borrar
+      std::cout << "SOY LOGIN: voy a descartar \"" << this->data << "\"\n";
+
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
         std::cout << "Recibi: " << this->data << " de autenticacion" << std::endl;
-        result =  this->data;
+        result = this->data;
       }
       
       memset(this->data, '0', DATA_SIZE);
