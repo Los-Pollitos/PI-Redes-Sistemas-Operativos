@@ -51,6 +51,7 @@ void login_server::load_from_file() {
     this->file_system->open("Server", "Login.txt");
     while (std::getline(file, buffer)) {
       this->file_system->append("Login.txt", buffer);
+      this->file_system->append("Login.txt", "\n");
     }
     this->file_system->close("Server", "Login.txt");
     // Unload the image of the file system
