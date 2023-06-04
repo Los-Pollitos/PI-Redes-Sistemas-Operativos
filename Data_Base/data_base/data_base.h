@@ -9,6 +9,20 @@
 #ifndef DATA_BASE_H
 #define DATA_BASE_H
 
+#define PENDING 0
+#define ACCEPTED 1
+#define DENIED 2
+
+#define VACATION 0
+#define PROOF 1
+
+#define PAYMENT_PROOF 0
+#define WORK_PROOF 1
+#define SALARY_PROOF 2
+
+#define MORNING_SHIFT 0
+#define EVENING_SHIFT 1
+
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
