@@ -57,6 +57,7 @@ void data_server::wait_for_request() {
     sleep(1);
     socklen_t l = sizeof(this->ipRemoto);
     std::cout << std::endl << "[SERVIDOR ESCUCHANDO]" << std::endl;
+    // TODO (nostros): Hacer bool.
     while (this->message_count < 5000) {
         // Search for a connection
         this->connection = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
