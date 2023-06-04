@@ -209,7 +209,110 @@ void data_server::load_laboral_data() {
     int initial_pos = 0;
     int end_pos = -1;
 
+    std::string user = "\0";
+    int data_id = 0;
+    int start_day = 0;
+    int start_month = 0;
+    int start_year = 0;
+    int end_day = 0;
+    int end_month = 0;
+    int end_year = 0;
+    int gross_salary = 0;
+    int deductibles = 0;
+    std::string job_title = "\0";
 
+    std::ifstream laboral_data_file("laboral_datas.txt");
+
+    if (laboral_data_file.is_open()) {
+        std::getline(laboral_data_file, line);  // ignores the header
+        while(!laboral_data_file.eof()) {
+            // gets the line of the table
+            std::getline(laboral_data_file, line);
+
+            // find the user
+            initial_pos = 0;
+            this->find_next(line, end_pos);
+            // save the user
+            this->copy_string(line,user,initial_pos,end_pos);
+
+            // find the data_id
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the data_id
+            data_id = stoi(partial_line);
+
+            // find the start_day
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the start_day
+            start_day = stoi(partial_line);
+
+            // find the start_month
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the start_month
+            start_month = stoi(partial_line);
+
+            // find the start_year
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the start_year
+            start_year = stoi(partial_line);
+
+            // find the end_day
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the end_day
+            end_day = stoi(partial_line);
+
+            // find the end_month
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the end_month
+            end_month = stoi(partial_line);
+
+            // find the end_year
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the end_year
+            end_year = stoi(partial_line);
+
+            // find the gross_salary
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the gross_salary
+            gross_salary = stoi(partial_line);
+
+            // find the deductibles
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the deductibles
+            deductibles = stoi(partial_line);
+
+            // find the job_title
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the job_title
+            this->copy_string(line,job_title,initial_pos,end_pos);
+
+            // add to laboral data table
+            this->base->add_laboral_data(user, data_id , start_day, start_month, start_year, end_day
+                                         , end_month, end_year, gross_salary, deductibles, job_title);
+        }
+        laboral_data_file.close();
+    }
 }
 
 // TODO(nosotros): documentar
@@ -238,7 +341,7 @@ void data_server::load_requests() {
     std::string content_proof = "\0";
     std::string user_signing_boss_proof = "\0";
 
-    std::ifstream requests_file("employees.txt");
+    std::ifstream requests_file("requests.txt");
 
     if (requests_file.is_open()) {
         std::getline(requests_file, line);  // ignores the header
@@ -376,7 +479,6 @@ void data_server::load_requests() {
         }
         requests_file.close();
     }
-
 }
 
 // TODO(nosotros): documentar
@@ -386,6 +488,73 @@ void data_server::load_records() {
     int initial_pos = 0;
     int end_pos = -1;
 
+    std::string user = "\0";
+    int id = 0;
+    std::string boss_user = "\0";
+    int day = 0;
+    int month = 0;
+    int year = 0;
+    std::string annotation = "\0";
+
+    std::ifstream records_file("records.txt");
+
+    if (records_file.is_open()) {
+        std::getline(records_file, line);  // ignores the header
+        while(!records_file.eof()) {
+            // gets the line of the table
+            std::getline(records_file, line);
+
+            // find the user
+            initial_pos = 0;
+            this->find_next(line, end_pos);
+            // save the user
+            this->copy_string(line,user,initial_pos,end_pos);
+
+            // find the id
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the id
+            id = stoi(partial_line);
+
+            // find the boss_user
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the boss_user
+            this->copy_string(line,boss_user,initial_pos,end_pos);
+
+            // find the day
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the day
+            day = stoi(partial_line);
+
+            // find the month
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the month
+            month = stoi(partial_line);
+
+            // find the year
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            this->copy_string(line,partial_line,initial_pos,end_pos);
+            // save the year
+            year = stoi(partial_line);
+
+            // find the annotation
+            end_pos += 2;  // skips the ','
+            initial_pos = end_pos;  // starts after the ','
+            // save the annotation
+            this->copy_string(line,annotation,initial_pos,end_pos);
+
+            // add to records table
+            this->base->add_record (user, id, boss_user, day, month, year, annotation);
+        }
+        records_file.close();
+    }
 }
 
 /*
