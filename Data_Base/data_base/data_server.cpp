@@ -64,9 +64,6 @@ void data_server::copy_string(std::string& line, std::string& new_line, int from
     for (int i = from; i < to; ++i) {
         new_line[i-from] = line[i];
     }
-
-    // TODO(nosotros): borrar
-    std::cout << "despues de copiar string: " << new_line << std::endl;
 }
 
 // TODO(nosotros): actualizar documentación
@@ -102,9 +99,6 @@ void data_server::load_offices() {
             // gets the line of the table
             line = office_file.readLine().toStdString();
 
-            // TODO(us): borrar
-            std::cout << "lei: " << line << "\n";
-
             // find the id
             this->find_next(line, end_pos);
             this->copy_string(line,partial_line,initial_pos,end_pos-1);
@@ -139,7 +133,7 @@ void data_server::load_employees() {
     std::string phone_number = "\0";
     std::string email = "\0";
     int office_id = 0;
-    char roles = 0;
+    char roles = '0';
     int available_vacations = 0;
     int last_laboral_data = 0;
 
@@ -154,10 +148,19 @@ void data_server::load_employees() {
             // gets the line of the table
             line = employee_file.readLine().toStdString();
 
+
+            // TODO(us): borrar
+            std::cout << "\nlei: " << line << "\n";
+
             // find the user
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos ,end_pos-1);
+
+
+            // TODO(us): borrar
+            std::cout << "user " << user << "\n";
+
 
             // find the name
             initial_pos = end_pos;  // starts after the ','
@@ -165,11 +168,21 @@ void data_server::load_employees() {
             // save the name
             this->copy_string(line,name,initial_pos ,end_pos-1);
 
+
+            // TODO(us): borrar
+            std::cout << "name " << name << "\n";
+
+
             // find the id
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             // save the id
             this->copy_string(line,id,initial_pos ,end_pos-1);
+
+
+            // TODO(us): borrar
+            std::cout << "id " << id << "\n";
+
 
             // find the phone number
             initial_pos = end_pos;  // starts after the ','
@@ -177,11 +190,21 @@ void data_server::load_employees() {
             // save the phone number
             this->copy_string(line,phone_number,initial_pos ,end_pos-1);
 
+
+            // TODO(us): borrar
+            std::cout << "phone " << phone_number << "\n";
+
+
             // find the email
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             // save the email
             this->copy_string(line,email,initial_pos ,end_pos-1);
+
+
+            // TODO(us): borrar
+            std::cout << "email " << email << "\n";
+
 
             // find the office_id
             initial_pos = end_pos;  // starts after the ','
@@ -190,12 +213,22 @@ void data_server::load_employees() {
             // save the office_id
             office_id = stoi(partial_line);
 
+
+            // TODO(us): borrar
+            std::cout << "office " << partial_line << "\n";
+
+
             // find the roles
             initial_pos = end_pos;  // starts after the ','
-            end_pos += 1;  // roles are a single char always
+            this->find_next(line, end_pos);
             this->copy_string(line,partial_line,initial_pos ,end_pos-1);
             // save the roles
-            roles = partial_line[0];
+            roles = stoi(partial_line);
+
+
+            // TODO(us): borrar
+            std::cout << "roles " << partial_line << "\n";
+
 
             // find the available_vacations
             initial_pos = end_pos;  // starts after the ','
@@ -204,12 +237,24 @@ void data_server::load_employees() {
             // save the available_vacations
             available_vacations = stoi(partial_line);
 
+
+            // TODO(us): borrar
+            std::cout << "vac " << available_vacations << "\n";
+
+
             // find the last_laboral_data
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             this->copy_string(line,partial_line,initial_pos ,end_pos-1);
             // save the last_laboral_data
             last_laboral_data = stoi(partial_line);
+
+
+
+            // TODO(us): borrar
+            std::cout << "laboral " << last_laboral_data << "\n";
+
+
 
             // add to offices table
             this->base->add_employee(user, name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data);
