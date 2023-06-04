@@ -29,7 +29,10 @@ enum request_types {
     SALARY_PROOF,
     SALARY_CONSULT,
     RECORD_CONSULT,
+    SEE_CONSULT_REQUESTS,
     CONSULT_REQUESTS,
+    SEE_PROCESS_REQUESTS,
+    PROCESS_REQUESTS,
     VACATION_REQUEST,
     CONSULT_VACATION,
     CONSULT_USER_DATA,
@@ -53,6 +56,7 @@ private:
     void load_from_file();
     void find_data(std::string& username,  std::string& hash);
     void process_data();
+    void see_process_requests();
 
 public:
     data_server();

@@ -98,6 +98,18 @@ void data_server::answer_request() {
     }
 }
 
+
+void data_server::see_process_requests() {
+    // TODO (nosotros): adaptar
+    // Supongamos que llega: define (el que me trajo hasta acá, usuario)
+    // TODO(nosotros): sacar sucursal e ir sacando filas
+    bool rows_left = true; // this means there still is data to fill.
+    int borrar_despues = 0;  // para que pare ahorita que no sacamos nada de la base de datos
+    while (rows_left && borrar_despues < 4) {
+
+    }
+}
+
 // TODOD (us): Document
 void data_server::process_data() {
     std::string username = "\0";
@@ -132,7 +144,16 @@ void data_server::process_data() {
         case RECORD_CONSULT:
 
             break;
+        case SEE_CONSULT_REQUESTS:
+
+            break;
         case CONSULT_REQUESTS:
+
+            break;
+        case SEE_PROCESS_REQUESTS:
+            this->see_process_requests();
+            break;
+        case PROCESS_REQUESTS:
 
             break;
         case VACATION_REQUEST:
