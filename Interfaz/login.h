@@ -11,6 +11,12 @@
 #include <QLabel>
 #include <QDialog>
 
+enum request_types {
+    GET_LOGIN = 65,  // A
+    GET_TOKEN, // B 66
+    GET_CHANGE_PASSWORD, // C 67
+};
+
 namespace Ui {
 class login;
 }
@@ -27,9 +33,7 @@ public:
 
 
 private:
-    bool validate_data(QString username, QString password);
-    void load_file(std::string location, std::string file_name);
-    void refresh_file_system();
+    int validate_user(std::string username, std::string password);
 
 private slots:
     void on_login_button_clicked();
@@ -41,7 +45,6 @@ private:
     Token* token_page;
     change_password* change_pass;
     login_info* user_data;
-    FS* file_system;
     logout_button* request_button;
     client* local_client;
 };

@@ -37,64 +37,43 @@ login::~login() {
     }
 }
 
-void login::set_file_system(FS* file_system) {
-    this->file_system = file_system;
-}
-
 void login::set_client(client* local_client){
     this->local_client = local_client;
+    // TODO (nosotros): borrar
     this->local_client->send_and_receive("Acjimenez,78e8ee0b2f67531b8eda7678fa42fb");
     this->local_client->send_and_receive("Ecjimenez,78e8ee0b2f67531b8eda7678fa42fb");
 }
 
-bool login::validate_data(QString username, QString password) {
-    bool answer = false;
-    this->file_system->open(username.toStdString(), "Login.txt");
-    if (this->file_system->is_open("Login.txt")) {
-        this->file_system->reset_file_pointer(username.toStdString(), "Login.txt");
-        bool found = false;
-        std::string buffer = " ";
-
-        // Find the username in the file
-        bool end_of_file = this->file_system->is_eof(username.toStdString(), "Login.txt");
-        while (end_of_file == false && found == false) {
-            buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
-            if (buffer != username.toStdString()) {
-                // Read the rest of the data
-                buffer = this->file_system->read_line(username.toStdString(), "Login.txt");
-            } else {
-                found = true;
-            }
-            buffer = " ";
-            end_of_file = this->file_system->is_eof(username.toStdString(), "Login.txt");
-        }
-        // Compare
-        if (found) {
-            buffer = this->file_system->read_until(username.toStdString(), "Login.txt", '\t');
-            if (buffer == password.toStdString()) {
-                // The user was found and is inserted in the struct
-                answer = true;
-                this->user_data = new login_info();
-                this->user_data->user = username.toStdString();
-                this->user_data->password = password.toStdString();
-                // Obtain the token
-                for (int i = 0; i < TOKEN_SIZE; ++i) {
-                    this->user_data->token[i] =
-                        std::stoi(this->file_system->read_until(username.toStdString(), "Login.txt", ' '));
-                }
-            }
-        }
-        this->file_system->close(username.toStdString(), "Login.txt");
-    }
-    // Success
-    return answer;
+int login::validate_user(std::string username, std::string password) {
+    std::string to_comunicate = "";
+    std::cout << "GET_LOGIN es " << (char)GET_LOGIN << std::endl;
+    to_comunicate += ((char)GET_LOGIN);
+    to_comunicate += username;
+    to_comunicate += ",";
+    to_comunicate += password; // TODO (Emilia): Hash password
+    std::string result = "\0";
+    result = this->local_client->send_and_receive(to_comunicate);
+    int to_return = ((int)result[0]) - 48;
+    std::cout << "el usuario puede entrar? " << to_return << std::endl;
+    return to_return;
 }
 
 void login::on_login_button_clicked() {
-    this->refresh_file_system();
     QString username = ui->user_input->text();  // get username
     QString password = ui->password_input->text();
-    if (this->validate_data(username, password)) {
+    if (this->validate_user(username.toStdString(), password.toStdString())) {
+        this->user_data = new login_info;
+        this->user_data->user = username.toStdString();
+        this->user_data->password = password.toStdString();
+
+        //TODO(emilia) cambiar por el recibido
+        this->user_data->token[0] = 11;
+        this->user_data->token[1] = 12;
+        this->user_data->token[2] = 13;
+        this->user_data->token[3] = 21;
+        this->user_data->token[4] = 22;
+        this->user_data->token[5] = 23;
+
         this->hide();
         this->token_page->setUserData(this->user_data);
         this->token_page->setParent_Button(this->request_button);
@@ -112,35 +91,9 @@ void login::on_forgot_button_clicked() {
 }
 
 void login::generate_new(){
-    // this->file_system->reset_file_pointer(user_data->user, "Login.txt");
     delete this->user_data;
     this->ui->user_input->setText("");
     this->ui->password_input->setText("");
     this->show();
 }
 
-void login::load_file(std::string location, std::string file_name) {
-    std::ifstream file(location);
-    std::string read_line = "";
-    if (file.is_open()) {
-       this->file_system->create(file_name);
-       this->file_system->open("", file_name);
-       if (this->file_system->is_open(file_name)) {
-            while (getline(file, read_line)) {
-                read_line += '\n';
-                this->file_system->append(file_name, read_line);
-                read_line = "";
-            }
-            this->file_system->close("", file_name);
-       }
-       file.close();
-    }
-}
-
-void login::refresh_file_system() {
-    if (this->file_system->open("", "Login.txt") != -1) {  // the file exists
-       this->file_system->close("", "Login.txt");
-       this->file_system->erase("Login.txt");
-    }
-    this->load_file("../Etapa2/Archivos/Login.txt", "Login.txt");
-}

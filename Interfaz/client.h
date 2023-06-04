@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 #define CLIENT_DATA_SIZE 256
-#define PORT 1440
+#define PORT 9090
 
 class client {
 public:

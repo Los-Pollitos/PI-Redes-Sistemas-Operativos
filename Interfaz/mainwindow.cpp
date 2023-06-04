@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->file_system = new FS();
     this->local_client = new client();
     this->loginPage = new login();
-    this->loginPage->set_file_system(file_system);
     this->loginPage->set_client(local_client);
     this->loginPage->show();
 }
