@@ -30,12 +30,19 @@ data_server::~data_server() {
     delete this->base;
 }
 
+// TODO(nosotros): documentar
+void data_server::adapt_data(char* data, std::string& new_info, int pos) {
+    for (int i = 0; i < CLIENT_DATA_SIZE; ++i){
+        data[i] = new_info[i+pos];
+    }
+}
+
 /*
  * @brief Loads the file system from a .txt file containing the necessary
  * login information, creating the image of the file system for future uses.
 */
 void data_server::load_from_file() {
-
+    // TODO(nosotros): cargar del archivo
 }
 
 /*
@@ -111,11 +118,10 @@ void data_server::see_process_requests() {
     }
 }
 
-// TODOD (us): Document
+// TODO(us): Document
 void data_server::process_data() {
     std::string username = "\0";
     std::string hash = "\0";
-    // TODO (stoi)
     switch (data[0]) {
         case CREATE_USER:
             // TODO(luis): hacer
@@ -128,58 +134,61 @@ void data_server::process_data() {
             this->data[1] = 'o';
             this->data[2] = 'l';
             this->data[3] = 'a';
-            write(this->connection, this->data, strlen(this->data));
+            write(this->connection, this->data, CLIENT_DATA_SIZE);
+            this->data[0] = '&';
+            write(this->connection, this->data, CLIENT_DATA_SIZE);
             break;
         case PAYMENT_PROOF:
-
+            // TODO(Cris): hacer
             break;
         case WORK_PROOF:
-
+            // TODO(Cris): hacer
             break;
         case SALARY_PROOF:
-
+            // TODO(Cris): hacer
             break;
         case SALARY_CONSULT:
-
+            // TODO(Luis): hacer
             break;
         case RECORD_CONSULT:
-
+            // TODO(Angie): hacer
             break;
         case SEE_CONSULT_REQUESTS:
-
+            // TODO(Angie): hacer
             break;
         case CONSULT_REQUESTS:
-
+            // TODO(Angie): hacer
             break;
         case SEE_PROCESS_REQUESTS:
+            // TODO(todos): hacer
             this->see_process_requests();
             break;
         case PROCESS_REQUESTS:
-
+            // TODO(todos): hacer
             break;
         case VACATION_REQUEST:
-
+            // TODO(Luis): hacer
             break;
         case CONSULT_VACATION:
-
+            // TODO(Luis): hacer
             break;
         case CONSULT_USER_DATA:
-
+            // TODO(Angie): hacer
             break;
         case CHANGE_USER_DATA:
-
+            // TODO(Angie): hacer
             break;
         case ANSWER_PAYMENT_PROOF:
-
+            // TODO(Cris): hacer
             break;
         case ANSWER_WORK_PROOF:
-
+            // TODO(Cris): hacer
             break;
         case ANSWER_SALARY_PROOF:
-
+            // TODO(Cris): hacer
             break;
         case ANSWER_VACATION_REQUEST:
-
+            // TODO(Cris): hacer
             break;
     }
     // TODO: meter a bitácora

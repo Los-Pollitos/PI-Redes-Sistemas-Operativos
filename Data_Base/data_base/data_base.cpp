@@ -216,5 +216,4 @@ void data_base::delete_user(std::string user) {
     this->delete_user_from_table(user, "requests");
     this->delete_user_from_table(user, "laboral_datas");
     this->delete_user_from_table(user, "records");
-
 }

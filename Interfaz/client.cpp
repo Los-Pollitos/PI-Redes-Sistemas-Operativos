@@ -28,8 +28,9 @@ std::string client::send_and_receive(std::string to_send) {
         } else {
             // Se logró pegar, se sacan data
             memset(data, '\0', CLIENT_DATA_SIZE);
-            int totalM = to_send / CLIENT_DATA_SIZE + (to_send % CLIENT_DATA_SIZE ? 1 : 0);
-            for (int i = 0; i <= totalM; ++i) {
+            int total_m = to_send.length() / CLIENT_DATA_SIZE
+                    + (to_send.length() % CLIENT_DATA_SIZE ? 1 : 0);
+            for (int i = 0; i <= total_m; ++i) {
                 adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
                 std::cout << "Voy a mandar: " << data << std::endl;
                 write(s, data, CLIENT_DATA_SIZE);

@@ -98,6 +98,7 @@ std::string intermediary::send_and_receive_login() {
     } else {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
       write(s, this->data, DATA_SIZE);
+      read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
         std::cout << "Recibi: " << this->data << std::endl;
@@ -116,44 +117,6 @@ std::string intermediary::send_and_receive_login() {
   }
   return result;
 }
-
-std::string intermediary::send_and_receive_data_base_once() {
-  std::string result = "\0";
-  int s = 0, n = 0; // s:socket  n: contador
-  struct sockaddr_in ipServidorData;
-
-  if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-    std::cout << "Error de creación de socket" << std::endl;
-  } else {
-    ipServidorData.sin_family = AF_INET;
-    ipServidorData.sin_port = htons(1024);
-    ipServidorData.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-    // Se intenta pegar al servidor
-    if (connect(s, (struct sockaddr *)&ipServidorData, sizeof(ipServidorData)) < 0) {
-      std::cout << std::endl << "Error de conexión por IP o puerto con data" << std::endl;
-    } else {
-      std::cout << "Voy a mandar: " << this->data  << " a data"<< std::endl;
-      write(s, this->data, DATA_SIZE);
-      if ((n = read(s, this->data, DATA_SIZE)) > 0) {
-        // connection es socket cliente
-        std::cout << "Recibi: " << this->data << std::endl;
-        result =  this->data;
-      }
-      
-      memset(this->data, '\0', DATA_SIZE);
-      data[0] = '#';
-      std::cout << "Voy a mandar: " << data  << " a data "<< std::endl;
-      write(s, this->data, DATA_SIZE);
-      // No se logró leer
-      if (n < 0) {
-        std::cout << std::endl << "Error de lectura" << std::endl;
-      }
-    }
-  }
-  return result;
-}
-
 
 void intermediary::send_and_receive_data_base() {
   int s = 0, n = 1; // s:socket  n: contador
@@ -210,6 +173,8 @@ void intermediary::send_to_server() {
     case CHANGE_PASSWORD:
       to_send_back = this->send_and_receive_login();
       write(this->connection, to_send_back.data(), DATA_SIZE);
+      to_send_back[0] = '&';
+      write(this->connection, to_send_back.data(), DATA_SIZE);
       // TODO (nosotros): mandar a la bitácora
       break;
     case CREATE_USER:
@@ -225,13 +190,11 @@ void intermediary::send_to_server() {
         }
         // TODO (nosotros): bases de datos 
         std::cout << "voy con data_base\n";
-        to_send_back = this->send_and_receive_data_base_once();
+        this->send_and_receive_data_base();
       }
-      // If it was not propperly deleted, send back the 0
-      write (this->connection, to_send_back.data(), DATA_SIZE);
       // TODO (nosotros): mandar a la bitácora
 
-    break;
+      break;
     case PAYMENT_PROOF:
     case WORK_PROOF:
     case SALARY_PROOF:

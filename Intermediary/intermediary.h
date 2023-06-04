@@ -55,8 +55,7 @@ class intermediary {
     int message_count;
     struct sockaddr_storage ipRemoto;
     std::string send_and_receive_login();
-    void send_and_receive_data_base(); 
-    std::string send_and_receive_data_base_once(); 
+    void send_and_receive_data_base();
   
   public:
     intermediary();

@@ -53,6 +53,7 @@ private:
     struct sockaddr_storage ipRemoto;
 
     // Methods
+    void adapt_data(char* data, std::string& new_info, int pos);
     void load_from_file();
     void find_data(std::string& username,  std::string& hash);
     void process_data();
