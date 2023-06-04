@@ -58,10 +58,8 @@ int main(int argc, char *argv[]){
   //   }
   // }
   std::string encrypted = encrypt("luis solano angie solis emilia viquez cristopher hernandez");
-
-  std::cout << ":() ";
-
   std::string decrypted = decrypt(encrypted);
+  std::cout << "Encrypted: " << encrypted << "\n";
   std::cout << "Decrypted: " << decrypted << "\n";
 }
 
@@ -79,20 +77,29 @@ std::string encrypt(std::string to_encrypt) {
   AES_set_encrypt_key(ckey, 128, &key);
   int num = 16;
   int i = 0;
+  int j = 0;
   int indata_count;
   do {
     indata_count = 0;
-    for (int j = i; j < i  + AES_BLOCK_SIZE && j < to_encrypt.size(); ++j) {
+    for (j = i; j < i  + AES_BLOCK_SIZE && j < to_encrypt.size(); ++j) {
       indata[indata_count] = to_encrypt[j];  
       ++indata_count;
     }
-    // Encrypt the data
-    AES_cfb128_encrypt(indata, outdata, indata_count, &key, ivec, &num, AES_ENCRYPT);
-    
-    // Store the outdata
-    for (int k = 0; k < AES_BLOCK_SIZE; ++k) {
-      result += outdata[k];
+    i = j;
+    if (indata_count != 0) {
+      // Encrypt the data
+      AES_cfb128_encrypt(indata, outdata, indata_count, &key, ivec, &num, AES_ENCRYPT);
+      
+      // Store the outdata
+      for (int k = 0; k < indata_count; ++k) {
+        result += outdata[k];
+      }
     }
+
+    std::cout << "llegue al fin \n";
+    std::cout << "indatacount " << indata_count << "\n";
+
+    std::cout << (indata_count == AES_BLOCK_SIZE) << "\n";
 
   } while (indata_count == AES_BLOCK_SIZE);
 
@@ -113,20 +120,29 @@ std::string decrypt(std::string to_encrypt) {
   AES_set_encrypt_key(ckey, 128, &key);
   int num = 16;
   int i = 0;
+  int j = 0;
   int indata_count;
   do {
     indata_count = 0;
-    for (int j = i; j < i  + AES_BLOCK_SIZE && j < to_encrypt.size(); ++j) {
+    for (j = i; j < i  + AES_BLOCK_SIZE && j < to_encrypt.size(); ++j) {
       indata[indata_count] = to_encrypt[j];  
       ++indata_count;
     }
-    // Encrypt the data
-    AES_cfb128_encrypt(indata, outdata, indata_count, &key, ivec, &num, AES_DECRYPT);
-    
-    // Store the outdata
-    for (int k = 0; k < AES_BLOCK_SIZE; ++k) {
-      result += outdata[k];
+    i = j;
+    if (indata_count != 0) {
+      // Encrypt the data
+      AES_cfb128_encrypt(indata, outdata, indata_count, &key, ivec, &num, AES_DECRYPT);
+      
+      // Store the outdata
+      for (int k = 0; k < indata_count; ++k) {
+        result += outdata[k];
+      }
     }
+
+    std::cout << "llegue al fin \n";
+    std::cout << "indatacount " << indata_count << "\n";
+
+    std::cout << (indata_count == AES_BLOCK_SIZE) << "\n";
 
   } while (indata_count == AES_BLOCK_SIZE);
 
