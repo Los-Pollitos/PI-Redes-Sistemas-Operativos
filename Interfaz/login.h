@@ -34,6 +34,7 @@ public:
 
 private:
     int validate_user(std::string username, std::string password);
+    void ask_for_token();
 
 private slots:
     void on_login_button_clicked();

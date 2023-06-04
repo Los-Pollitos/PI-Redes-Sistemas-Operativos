@@ -58,6 +58,24 @@ int login::validate_user(std::string username, std::string password) {
     return to_return;
 }
 
+void login::ask_for_token() {
+    std::string to_send = "";
+    to_send += ((char)GET_TOKEN);
+    to_send += this->user_data->user;
+    to_send += ",";
+    std::string result = "\0";
+    result = this->local_client->send_and_receive(to_send);
+    if (result[0] != 'e') {
+        int token_count = 0;
+        for (int i = 0; i < TOKEN_SIZE*2; i+=2) {
+           this->user_data->token[token_count] = (((int)result[i]) - 48)*10 +(((int)result[i+1]) - 48) ;
+           ++token_count;
+        }
+    } else {
+        std::cerr << "user does not exist or there was an error with comunication\n";
+    }
+}
+
 void login::on_login_button_clicked() {
     QString username = ui->user_input->text();  // get username
     QString password = ui->password_input->text();
@@ -66,13 +84,7 @@ void login::on_login_button_clicked() {
         this->user_data->user = username.toStdString();
         this->user_data->password = password.toStdString();
 
-        //TODO(emilia) cambiar por el recibido
-        this->user_data->token[0] = 11;
-        this->user_data->token[1] = 12;
-        this->user_data->token[2] = 13;
-        this->user_data->token[3] = 21;
-        this->user_data->token[4] = 22;
-        this->user_data->token[5] = 23;
+        // this->ask_for_token();
 
         this->hide();
         this->token_page->setUserData(this->user_data);
