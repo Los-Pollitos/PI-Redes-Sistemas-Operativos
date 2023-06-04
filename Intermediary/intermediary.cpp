@@ -117,7 +117,7 @@ std::string intermediary::send_and_receive_login() {
   return result;
 }
 
-std::string intermediary::send_and_receive_data_base() {
+std::string intermediary::send_and_receive_data_base_once() {
   std::string result = "\0";
   int s = 0, n = 0; // s:socket  n: contador
   struct sockaddr_in ipServidorData;
@@ -154,6 +154,53 @@ std::string intermediary::send_and_receive_data_base() {
   return result;
 }
 
+
+void intermediary::send_and_receive_data_base() {
+  int s = 0, n = 1; // s:socket  n: contador
+  struct sockaddr_in ipServidorLogin;
+
+  if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    std::cout << "Error de creación de socket" << std::endl;
+  } else {
+    ipServidorLogin.sin_family = AF_INET;
+    ipServidorLogin.sin_port = htons(8081);
+    ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    // Se intenta pegar al servidor
+    if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
+      std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+    } else {
+      // receive everything from client
+      while (this->connection != -1 && n > 0 && this->data[0] != '&') {
+          std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
+          write(s, this->data, DATA_SIZE);
+          n = read(this->connection, this->data, sizeof(this->data));
+      }
+      // send & to server
+      write(s, this->data, DATA_SIZE);
+
+      // receive everything from server
+      this->data[0] = 'a';
+      while (s != -1 && n > 0 && this->data[0] != '&') { 
+        if ((n = read(s, this->data, DATA_SIZE)) > 0) {
+          // connection es socket cliente
+          std::cout << "Recibi: " << this->data << std::endl;
+          write(this->connection, this->data, DATA_SIZE);
+        }
+      }
+      
+      memset(this->data, '\0', DATA_SIZE);
+      data[0] = '#';
+      std::cout << "Voy a mandar: " << data  << " a autenticacion "<< std::endl;
+      write(s, this->data, DATA_SIZE);
+      // No se logró leer
+      if (n < 0) {
+        std::cout << std::endl << "Error de lectura" << std::endl;
+      }
+    }
+  }
+}
+
 void intermediary::send_to_server() {
   std::string to_send_back = "\0";
   char temp_data[DATA_SIZE];
@@ -178,7 +225,7 @@ void intermediary::send_to_server() {
         }
         // TODO (nosotros): bases de datos 
         std::cout << "voy con data_base\n";
-        to_send_back = this->send_and_receive_data_base();
+        to_send_back = this->send_and_receive_data_base_once();
       }
       // If it was not propperly deleted, send back the 0
       write (this->connection, to_send_back.data(), DATA_SIZE);
