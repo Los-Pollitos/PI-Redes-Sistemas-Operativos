@@ -85,6 +85,12 @@ void login::on_login_button_clicked() {
         this->user_data->password = password.toStdString();
 
         // this->ask_for_token();
+        this->user_data->token[0] = 11;
+        this->user_data->token[1] = 12;
+        this->user_data->token[2] = 13;
+        this->user_data->token[3] = 21;
+        this->user_data->token[4] = 22;
+        this->user_data->token[5] = 23;
 
         this->hide();
         this->token_page->setUserData(this->user_data);
