@@ -721,7 +721,7 @@ void data_server::process_data() {
                           + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
 
             // send the data
-            for (int i = 0; i < total_m; ++i) {
+            for (int i = 0; i < total_m && i < 10; ++i) {
                 adapt_data(data, to_send, DATA_SIZE * i);
                 std::cout << "Voy a mandar: " << data << std::endl;
                 write(this->connection, data, DATA_SIZE);
@@ -779,7 +779,7 @@ void data_server::process_data() {
                       + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
 
             // send the data
-            for (int i = 0; i < total_m; ++i) {
+            for (int i = 0; i < total_m && i < 10; ++i) {
                 adapt_data(data, to_send, DATA_SIZE * i);
                 std::cout << "Voy a mandar: " << data << std::endl;
                 write(this->connection, data, DATA_SIZE);
