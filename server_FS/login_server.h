@@ -47,14 +47,16 @@ class login_server {
     void adapt_data(std::string& new_info);
     void create_user(std::string& username,  std::string& hash);
     bool existing_user(std::string& username);
+    void validate_data(std::string& username, std::string& hash);
+    void give_token();
+    void change_password();
 
   public:
     login_server();
     ~login_server();
     void wait_for_request();
     void answer_request();
-    void validate_data(std::string& username, std::string& hash);
-    void give_token();
+   
 };
 
 #endif // LOGIN_SERVER

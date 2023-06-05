@@ -138,11 +138,10 @@ void login_server::process_data() {
       this->validate_data(username, hash);
       break;
     case TOKEN: 
-      // TODO(emilia): hacer
       this->give_token();
       break;
     case CHANGE_PASSWORD:
-      // TODO(emilia): hacer
+      this->change_password();
       break;
     case CREATE_USER:
       // TODO(luis): hacer
@@ -293,6 +292,49 @@ void login_server::give_token(){
       this->adapt_data(buffer); 
     } else {
       this->data[0] = 'e'; // e == error
+    }
+    write(this->connection, this->data, strlen(this->data));
+    this->file_system->close("Server", "Login.txt");
+  }
+}
+
+
+void login_server::change_password() {
+  // find username and new_hash in data
+  std::string username = "";
+  std::string new_hash = "";
+  this->find_data(username, new_hash);
+
+  // Open file in file system
+  this->file_system->open("Server", "Login.txt");
+  if (this->file_system->is_open("Login.txt")) {
+    this->file_system->reset_file_pointer("Server", "Login.txt");
+    bool found = false;
+    std::string buffer = " ";
+
+    // Find the username in the file system
+    bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
+    while (end_of_file == false && found == false) {
+      buffer = this->file_system->read_until("Server", "Login.txt", ',');
+      if (buffer != username) {
+        // Discard hash
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+        // Discard token
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+      } else {
+        found = true;
+      }
+      buffer = " ";
+      end_of_file = this->file_system->is_eof("Server", "Login.txt");
+    }
+    memset(this->data, '\0', DATA_SIZE);
+
+    // change hash
+    if (found) {
+      this->file_system->write("Server", "Login.txt", new_hash);
+      this->data[0] = '1';
+    } else {
+      this->data[0] = 'e';
     }
     write(this->connection, this->data, strlen(this->data));
     this->file_system->close("Server", "Login.txt");
