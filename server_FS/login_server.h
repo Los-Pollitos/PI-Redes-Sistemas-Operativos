@@ -45,6 +45,8 @@ class login_server {
     void find_data(std::string& username,  std::string& hash);
     void process_data();
     void adapt_data(std::string& new_info);
+    void create_user(std::string& username,  std::string& hash);
+    bool existing_user(std::string& username);
 
   public:
     login_server();

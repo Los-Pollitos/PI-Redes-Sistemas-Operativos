@@ -146,6 +146,7 @@ void login_server::process_data() {
       break;
     case CREATE_USER:
       // TODO(luis): hacer
+      this->create_user(username, hash);
       break;
     case DELETE_USER:
       // TODO(luis): hacer
@@ -156,6 +157,30 @@ void login_server::process_data() {
   // TODO: meter a bitácora
 }
 
+//TODO(Luis): documentar y terminar
+void login_server::create_user(std::string& username,  std::string& hash) {
+  // Find if the user already exists
+  if (!this->existing_user(username)) {
+    // If not, insert the user with the hash and generate a token
+  } else {
+    // Answer the request with a 0 indicating failure
+  }
+}
+
+/**
+ * @brief Find if a username exists inside the file system
+ * 
+ * @param username The username to be found
+ * @return true If the username exists 
+ * @return false If the username does not exist
+*/
+bool login_server::existing_user(std::string& username) {
+  //TODO(Luis): Hacer
+  bool answer = false;
+  return answer;
+}
+
+// TODO(nosotros): actualizar documentacion
 /*
  * @brief Deletes a folder. After this method, it is recomended that the user
  * sets the path in which they want to be.
