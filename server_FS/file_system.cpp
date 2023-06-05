@@ -1070,7 +1070,7 @@ void FS::load_unit() {
   }
   for (int i = 0; i < MAX_SIZE; ++i) {
     if (i >= buffer.length()) {
-      this->unit[i] = '\n';
+      //this->unit[i] = '\n';
       std::getline(file, buffer);
       buffer_count = 0;
     } else {

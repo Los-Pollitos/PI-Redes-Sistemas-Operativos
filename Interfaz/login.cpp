@@ -79,7 +79,7 @@ void login::ask_for_token() {
 void login::on_login_button_clicked() {
     QString username = ui->user_input->text();  // get username
     QString password = ui->password_input->text();
-    if (this->validate_user(username.toStdString(), password.toStdString())) {
+    if (this->validate_user(username.toStdString(), password.toStdString()) == 1) {
         this->user_data = new login_info;
         this->user_data->user = username.toStdString();
         this->user_data->password = password.toStdString();

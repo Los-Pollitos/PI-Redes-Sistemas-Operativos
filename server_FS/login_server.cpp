@@ -43,6 +43,9 @@ login_server::~login_server() {
  * login information, creating the image of the file system for future uses.
 */
 void login_server::load_from_file() {
+  //TODO borrar print
+  std::cout << "No existe imagen de FS, se va a cargar de archivo\n";
+  
   std::ifstream file("Login.txt");
   if (file.is_open()) {
     std::string buffer;
@@ -50,8 +53,8 @@ void login_server::load_from_file() {
     this->file_system->create("Login.txt", true);
     this->file_system->open("Server", "Login.txt");
     while (std::getline(file, buffer)) {
+      buffer += ',';
       this->file_system->append("Login.txt", buffer);
-      // this->file_system->append("Login.txt", "\n");  // TODO(Emilia)
     }
     this->file_system->close("Server", "Login.txt");
     // Unload the image of the file system
@@ -196,7 +199,12 @@ void login_server::validate_data(std::string& username, std::string& hash) {
 
       if (buffer != username) {
         // Read the rest of the data
-        buffer = this->file_system->read_line("Server", "Login.txt");
+        // descard passsword hash
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+        std::cout << "descarto: " << buffer << std::endl;
+        //discard token
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+        std::cout << "descarto: " << buffer <<  std::endl;
       } else {
         found = true;
       }
