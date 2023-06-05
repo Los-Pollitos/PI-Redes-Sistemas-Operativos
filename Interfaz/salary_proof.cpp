@@ -22,3 +22,7 @@ void salary_proof::on_pushButton_clicked()
     this->close();
 }
 
+
+void salary_proof::set_client(client* local_client){
+    this->local_client = local_client;
+}

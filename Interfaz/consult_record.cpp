@@ -16,3 +16,7 @@ consult_record::~consult_record()
         this->ui = 0;
      }
 }
+
+void consult_record::set_client(client* local_client){
+     this->local_client = local_client;
+}

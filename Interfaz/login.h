@@ -29,7 +29,7 @@ public:
     explicit login(QWidget *parent = nullptr);
     ~login();
     void set_file_system(FS* file_system);
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 
 private:

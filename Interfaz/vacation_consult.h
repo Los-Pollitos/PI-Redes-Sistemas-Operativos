@@ -15,10 +15,11 @@ class vacation_consult : public QDialog
 public:
     explicit vacation_consult(QWidget *parent = nullptr);
     ~vacation_consult();
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private:
     Ui::vacation_consult *ui;
+    client* local_client;
 };
 
 #endif // VACATION_CONSULT_H

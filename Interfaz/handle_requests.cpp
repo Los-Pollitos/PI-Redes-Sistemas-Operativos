@@ -77,6 +77,10 @@ void handle_requests::set_user_login(login_info * user_login) {
 }
 
 
+void handle_requests::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 handle_requests::~handle_requests() {
     if (this->ui) {
         delete this->ui;

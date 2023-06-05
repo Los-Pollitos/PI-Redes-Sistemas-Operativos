@@ -26,7 +26,9 @@ request_description::request_description(QWidget *parent) :
     this->uploaded_file = false;
 }
 
-
+void request_description::set_client(client* local_client){
+    this->local_client = local_client;
+}
 
 void request_description::set_atributes(int day, int month, int year,
         int& type, QString user, QString& description,

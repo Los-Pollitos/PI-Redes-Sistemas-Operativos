@@ -20,3 +20,8 @@ request_vacations::~request_vacations()
         this->ui = 0;
     }
 }
+
+
+void request_vacations::set_client(client* local_client){
+    this->local_client = local_client;
+}

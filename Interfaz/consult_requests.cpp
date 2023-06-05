@@ -63,6 +63,10 @@ consult_requests::consult_requests(QWidget *parent) :
 }
 
 
+void consult_requests::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 void consult_requests::set_user_login(login_info * user_login) {
     this->users_login = user_login;
 }

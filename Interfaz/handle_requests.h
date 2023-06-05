@@ -29,7 +29,7 @@ public:
     void update_scroll();
     ~handle_requests();
     void set_user_login(login_info * user_login);
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private:
     QVBoxLayout * layout;

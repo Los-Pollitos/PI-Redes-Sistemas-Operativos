@@ -29,6 +29,10 @@ change_password::~change_password()
     }
 }
 
+void change_password::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 bool change_password::change_data(QString username, QString password) {
     bool success = false;
     try {

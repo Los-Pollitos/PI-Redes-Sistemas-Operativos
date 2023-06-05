@@ -2,7 +2,7 @@
 #define CHANGE_PASSWORD_H
 
 #include "login_info.h"
-#include "client.h
+#include "client.h"
 
 #include <QDialog>
 

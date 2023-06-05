@@ -13,6 +13,10 @@ vacation_consult::vacation_consult(QWidget *parent) :
     ui->name->setReadOnly(true);
 }
 
+void vacation_consult::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 vacation_consult::~vacation_consult() {
     if (this->ui) {
         delete this->ui;

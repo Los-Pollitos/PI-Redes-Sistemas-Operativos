@@ -20,7 +20,7 @@ public:
     explicit manage_user(QWidget *parent = nullptr);
     void set_user_login(login_info * user_login);
     void set_file_system(FS* file_system);
-    void set_client(client* client);
+    void set_client(client* local_client);
     ~manage_user();
 
 private:

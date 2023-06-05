@@ -40,7 +40,7 @@ public:
     void update_scrollbar();
     void create_windows(int id, int type);
     void read_data();
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private slots:
     void on_pushButton_clicked();

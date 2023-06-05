@@ -15,13 +15,14 @@ class payment_proof : public QDialog
 public:
     explicit payment_proof(QWidget *parent = nullptr);
     ~payment_proof();
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private slots:
     void on_pushButton_clicked();
 
 private:
     Ui::payment_proof *ui;
+    client* local_client;
 };
 
 #endif // PAYMENT_PROOF_H

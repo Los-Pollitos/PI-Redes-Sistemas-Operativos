@@ -15,11 +15,12 @@ class request_vacations : public QDialog
 public:
     explicit request_vacations(QWidget *parent = nullptr);
     ~request_vacations();
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private:
     Ui::request_vacations *ui;
     client* local_client;
+
 };
 
 #endif // REQUEST_VACATIONS_H

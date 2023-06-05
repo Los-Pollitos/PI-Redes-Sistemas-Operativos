@@ -15,10 +15,11 @@ class consult_salary : public QDialog
 public:
     explicit consult_salary(QWidget *parent = nullptr);
     ~consult_salary();
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private:
     Ui::consult_salary *ui;
+    client* local_client;
 };
 
 #endif // CONSULT_SALARY_H

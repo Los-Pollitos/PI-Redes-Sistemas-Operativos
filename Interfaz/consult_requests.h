@@ -29,7 +29,7 @@ public:
     explicit consult_requests(QWidget *parent = nullptr);
     ~consult_requests();
     void set_user_login(login_info * user_login);
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private:
     QVBoxLayout * layout;
@@ -38,6 +38,7 @@ private:
     std::vector<description_button*> requests_buttons;
     request_description * description;
     login_info * users_login;
+    client* local_client;
 
 protected slots:
     void show_description(int id, int type);

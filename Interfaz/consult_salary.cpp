@@ -13,6 +13,10 @@ consult_salary::consult_salary(QWidget *parent) :
     ui->name->setReadOnly(true);
 }
 
+void consult_salary::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 consult_salary::~consult_salary()
 {
     if (this->ui) {

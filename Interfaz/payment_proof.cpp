@@ -17,6 +17,10 @@ payment_proof::~payment_proof()
     }
 }
 
+void payment_proof::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 void payment_proof::on_pushButton_clicked()
 {
     this->close();

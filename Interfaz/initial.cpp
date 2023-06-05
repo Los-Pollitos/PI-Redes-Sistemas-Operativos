@@ -99,6 +99,9 @@ initial::initial(QWidget *parent) :
 
 }
 
+void initial::set_client(client* local_client){
+    this->local_client = local_client;
+}
 
 void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;

@@ -15,13 +15,14 @@ class salary_proof : public QDialog
 public:
     explicit salary_proof(QWidget *parent = nullptr);
     ~salary_proof();
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 private slots:
     void on_pushButton_clicked();
 
 private:
     Ui::salary_proof *ui;
+    client* local_client;
 };
 
 #endif // SALARY_PROOF_H

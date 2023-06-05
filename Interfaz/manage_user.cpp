@@ -18,6 +18,10 @@ manage_user::manage_user(QWidget *parent) :
     this->ui->create_password->setEchoMode(QLineEdit::Password);
 }
 
+void manage_user::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 manage_user::~manage_user() {
     if (this->ui) {
         delete this->ui;

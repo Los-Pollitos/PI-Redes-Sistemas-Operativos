@@ -16,6 +16,10 @@ Token::Token(QWidget *parent) :
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 }
 
+void Token::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
 Token::~Token()
 {
     if (this->ui) {
