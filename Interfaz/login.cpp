@@ -108,6 +108,7 @@ void login::on_login_button_clicked() {
 
 void login::on_forgot_button_clicked() {
     this->change_pass->setModal(true);
+    this->change_pass->set_client(this->local_client);
     this->change_pass->show();
 }
 
