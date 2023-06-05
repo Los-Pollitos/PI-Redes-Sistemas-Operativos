@@ -142,7 +142,7 @@ void data_base::add_laboral_data(std::string user, int data_id
     }
     // Add the new laboral data
     QSqlQuery new_laboral_data;
-    new_laboral_data.prepare("INSERT INTO laboral_datas (user, data_id, start_day, start_month, start_year, end_day, end_month, end_year, gross_salary, deductible, job_title) VALUES (:user, :data_id, :start_day, :start_month, :start_year, :end_day, :end_month, :end_year, :gross_salary, :deductible, :job_title)");
+    new_laboral_data.prepare("INSERT INTO laboral_datas (user, data_id, start_day, start_month, start_year, end_day, end_month, end_year, gross_salary, deductibles, job_title) VALUES (:user, :data_id, :start_day, :start_month, :start_year, :end_day, :end_month, :end_year, :gross_salary, :deductibles, :job_title)");
     new_laboral_data.bindValue(":user", QString::fromStdString(user));
     new_laboral_data.bindValue(":data_id", data_id);
     new_laboral_data.bindValue(":start_day", start_day);
