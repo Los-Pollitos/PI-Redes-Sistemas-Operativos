@@ -170,7 +170,7 @@ void data_base::add_record(std::string user, int id, int day, int month, int yea
     }
     // Add the new record
     QSqlQuery new_record;
-    new_record.prepare("INSERT INTO records (user,id,day,month,year,annotation) VALUES (:user,:id,:day,:month,:year,:annotation)");
+    new_record.prepare("INSERT INTO records (user, id, day, month, year, annotation) VALUES (:user, :id, :day, :month, :year, :annotation)");
     new_record.bindValue(":user", QString::fromStdString(user));
     new_record.bindValue(":id", id);
     new_record.bindValue(":day", day);
@@ -191,9 +191,6 @@ std::string data_base::consult_office_name(int id) {
     // If a match was found
     if (consult_office.exec() && consult_office.next()){
         office_name = consult_office.value(0).toString().toStdString();
-
-        // TODO(nosotros): borrar
-        qDebug() << "[BASE_DATOS] La oficina se llama: " << office_name;
     }
     return office_name;
 }
