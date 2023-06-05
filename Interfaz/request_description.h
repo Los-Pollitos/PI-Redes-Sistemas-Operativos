@@ -5,6 +5,7 @@
 
 #include "description_button.h"
 #include "login_info.h"
+#include "client.h"
 
 #define REQUEST_VACATIONS 1
 #define PAYMENT_PROOF 2
@@ -25,6 +26,7 @@ public:
     explicit request_description(QWidget *parent = nullptr);
     void set_atributes(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button, login_info * user_login, bool admin);
     ~request_description();
+    void set_client (client * local_client);
 
 private slots:
     void on_buttonBox_accepted();
@@ -44,6 +46,7 @@ private:
     QString user;
     QString description;
     login_info * user_login;
+    client* local_client;
 };
 
 #endif // REQUEST_DESCRIPTION_H

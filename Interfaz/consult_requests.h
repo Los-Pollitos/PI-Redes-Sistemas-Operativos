@@ -10,6 +10,7 @@
 #include "description_button.h"
 #include "request_description.h"
 #include "login_info.h"
+#include "client.h"
 
 #define REQUEST_VACATIONS 1
 #define PAYMENT_PROOF 2
@@ -28,6 +29,7 @@ public:
     explicit consult_requests(QWidget *parent = nullptr);
     ~consult_requests();
     void set_user_login(login_info * user_login);
+    void set_client(client* client);
 
 private:
     QVBoxLayout * layout;

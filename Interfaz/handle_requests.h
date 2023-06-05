@@ -9,6 +9,7 @@
 #include "description_button.h"
 #include "request_description.h"
 #include "login_info.h"
+#include "client.h"
 
 #define REQUEST_VACATIONS 1
 #define PAYMENT_PROOF 2
@@ -28,6 +29,7 @@ public:
     void update_scroll();
     ~handle_requests();
     void set_user_login(login_info * user_login);
+    void set_client(client* client);
 
 private:
     QVBoxLayout * layout;
@@ -36,6 +38,7 @@ private:
     std::vector<description_button*> requests_buttons;
     request_description * description;
     login_info * user_login;
+    client* local_client;
 
 protected slots:
     void show_description(int id, int type);

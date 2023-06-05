@@ -6,6 +6,7 @@
 
 #include "initial.h"
 #include "login_info.h"
+#include "client.h"
 
 namespace Ui {
 class Token;
@@ -20,6 +21,7 @@ public:
     ~Token();
     void setUserData(login_info * user_data);
     void setParent_Button(logout_button * parent_button);
+    void set_client(client * local_client);
 
 private slots:
     void on_validate_label_clicked();
@@ -31,6 +33,7 @@ private:
     login_info * user_data;
     int pos;
     logout_button* parent_button;
+    client* local_client;
 };
 
 #endif // TOKEN_H

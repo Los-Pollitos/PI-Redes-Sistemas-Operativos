@@ -21,6 +21,7 @@
 #include "request_vacations.h"
 #include "vacation_consult.h"
 #include "logout_button.h"
+#include "client.h"
 
 
 namespace Ui {
@@ -39,6 +40,7 @@ public:
     void update_scrollbar();
     void create_windows(int id, int type);
     void read_data();
+    void set_client(client* client);
 
 private slots:
     void on_pushButton_clicked();
@@ -63,6 +65,7 @@ private:
     std::vector<description_button*> requests_buttons;
     description_button * update_buttons;
     logout_button * parent_button;
+    client* local_client;
 };
 
 #endif // INITIAL_H

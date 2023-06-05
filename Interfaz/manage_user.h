@@ -4,6 +4,7 @@
 #include "login_info.h"
 
 #include "file_system.h"
+#include "client.h"
 
 #include <QDialog>
 
@@ -19,6 +20,7 @@ public:
     explicit manage_user(QWidget *parent = nullptr);
     void set_user_login(login_info * user_login);
     void set_file_system(FS* file_system);
+    void set_client(client* client);
     ~manage_user();
 
 private:
@@ -43,6 +45,7 @@ private:
     Ui::manage_user* ui;
     login_info* user_login;
     FS* file_system;
+    client* local_client;
 };
 
 #endif // MANAGE_USER_H

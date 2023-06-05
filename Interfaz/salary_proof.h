@@ -2,6 +2,7 @@
 #define SALARY_PROOF_H
 
 #include <QDialog>
+#include "client.h"
 
 namespace Ui {
 class salary_proof;
@@ -14,6 +15,7 @@ class salary_proof : public QDialog
 public:
     explicit salary_proof(QWidget *parent = nullptr);
     ~salary_proof();
+    void set_client(client* client);
 
 private slots:
     void on_pushButton_clicked();
