@@ -180,10 +180,6 @@ void login_server::find_data(std::string& username, std::string& hash) {
 */
 void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
-
-  // TODO(nosotros): borrar
-  std::cout << "entrando a validate data" << std::endl;
-
   if (this->file_system->is_open("Login.txt")) {
     this->file_system->reset_file_pointer("Server", "Login.txt");
     bool found = false;
@@ -193,18 +189,12 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
     while (end_of_file == false && found == false) {
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
-
-      // TODO(nosotros): borrar
-      std::cout << "estoy en while, username: " << username << " buffer: " << buffer << std::endl;
-
       if (buffer != username) {
         // Read the rest of the data
         // descard passsword hash
         buffer = this->file_system->read_until("Server", "Login.txt", ',');
-        std::cout << "descarto: " << buffer << std::endl;
         //discard token
         buffer = this->file_system->read_until("Server", "Login.txt", ',');
-        std::cout << "descarto: " << buffer <<  std::endl;
       } else {
         found = true;
       }
@@ -225,16 +215,8 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     } else {
       this->data[0] = '0';
     }
-
-    // TODO(nosotros): borrar
-    std::cout << "voy a enviar el write" << data << std::endl;
-
     write(this->connection, this->data, DATA_SIZE);
     this->file_system->close("Server", "Login.txt");
   }
-
-  // TODO(nosotros): borrar
-  std::cout << "saliendo de validate data" << std::endl;
-
 }
 
