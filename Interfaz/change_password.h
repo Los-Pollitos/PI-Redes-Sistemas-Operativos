@@ -17,7 +17,7 @@ class change_password : public QDialog
 public:
     explicit change_password(QWidget *parent = nullptr);
     ~change_password();
-    bool change_data(QString username, QString password);
+    bool change_data(QString username, QString password, int token);
     void set_client(client* local_client);
 
 private slots:

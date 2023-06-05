@@ -33,64 +33,37 @@ void change_password::set_client(client* local_client){
     this->local_client = local_client;
 }
 
-bool change_password::change_data(QString username, QString password) {
-    bool success = false;
-    try {
-        std::ifstream file("../Etapa2/Archivos/Login.txt");
-        std::string read_data = "";
-        std::string buffer = "";
-        if (file.is_open()) {
-            while (file) {
-                file >> read_data;
-                if (read_data != username.toStdString()) {
-                    buffer += read_data;
-                    file >> read_data;
-                    buffer += "\t" + read_data;
-                    for (int i = 0; i < TOKEN_SIZE; ++i) {
-                        file >> read_data;
-                        if (i == 0) {
-                            buffer += "\t" + read_data;
-                        } else {
-                            buffer += " " + read_data;
-                        }
-                    }
-                    read_data = "";
-                } else {
-                    buffer += read_data;
-                    file >> read_data;
-                    buffer += "\t" + password.toStdString();
-                    for (int i = 0; i < TOKEN_SIZE; ++i) {
-                        file >> read_data;
-                        this->token[i] = std::stoi(read_data);
-                        if (i == 0) {
-                            buffer += "\t" + read_data;
-                        } else {
-                            buffer += " " + read_data;
-                        }
-                    }
-                    read_data = "";
-                    if (std::stoi(this->ui->lineEdit_3->text().toStdString()) == this->token[pos])
-                        success = true;
-                }
-                buffer += "\n";
-            }
-            file.close();
-
-            std::ofstream ofs("../Etapa2/Archivos/Login.txt");
-
-            if (!ofs.is_open())
-            {
-                std::cerr << "Error cambiando contraseña" << std::endl;
-            }
-            ofs << buffer;
-            ofs.close();
-        } else {
-            std::cerr << "Archivo de login no encontrado" << std::endl;
+bool change_password::change_data(QString username, QString password, int token) {
+    std::string to_send = "";
+    to_send += ((char)GET_TOKEN);
+    to_send += username.toStdString();
+    to_send += ",";
+    std::string result = "\0";
+    bool return_value = true;
+    result = this->local_client->send_and_receive(to_send);
+    if (result[0] != 'e') {
+        int user_token[6];
+        int token_count = 0;
+        for (int i = 0; i < TOKEN_SIZE*2; i+=2) {
+            user_token[token_count] = (((int)result[i]) - 48)*10 +(((int)result[i+1]) - 48) ;
+            ++token_count;
         }
-    } catch (const std::runtime_error& exception) {
-        std::cerr << exception.what() << std::endl;
+        if (token == user_token[pos]) {
+            to_send = "";
+            to_send += ((char)GET_CHANGE_PASSWORD);
+            to_send += username.toStdString();
+            to_send += ",";
+            to_send += password.toStdString();
+            result = this->local_client->send_and_receive(to_send);
+            return_value = ((int)result[0]) - 48;
+            std::cout << "el cambio fue correcto?  " << return_value << std::endl;
+        } else { // invalid token
+            return_value = false;
+        }
+    } else {
+        return_value = false;
     }
-    return success;
+    return return_value;
 }
 
 
@@ -105,7 +78,7 @@ void change_password::on_pushButton_reinicarContra_clicked()
         QMessageBox::warning(this, "Error", "Las contraseñas no son iguales");
 
     } else {
-        if (this->change_data(this->ui->lineEdit->text(), this->ui->lineEdit_2->text())) {
+        if (this->change_data(this->ui->lineEdit->text(), this->ui->lineEdit_2->text(), std::stoi(this->ui->lineEdit_3->text().toStdString()))) {
             this->hide();
         } else {
             QMessageBox::warning(this, "Error", "Datos incorrectos");

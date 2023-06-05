@@ -11,11 +11,8 @@
 #include <QLabel>
 #include <QDialog>
 
-enum request_types {
-    GET_LOGIN = 65,  // A
-    GET_TOKEN, // B 66
-    GET_CHANGE_PASSWORD, // C 67
-};
+// enum with all login messages is in client
+
 
 namespace Ui {
 class login;
