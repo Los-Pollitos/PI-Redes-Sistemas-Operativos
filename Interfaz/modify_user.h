@@ -23,19 +23,20 @@ public:
 
 private slots:
     void update_data();
+    void add_data_to_combobox();
+    //    void write_data();  // TODO(Angie): ver si dejar
+    Qt::CheckState unmask_role(int user_index, char role);
+    //    void read_data();  // TODO(Angie): ver si dejar
+
     void on_comboBox_activated(int index);
     void on_approve_changes_clicked();
 
 private:
+    Ui::modify_user* ui;
     int modified_index;
-    void add_data();
-    void write_data();
-    Qt::CheckState unmask_role(int user_index, int role);
-    void read_data();
-    Ui::modify_user *ui;
     login_info* user_login;
-    std::vector<user_data> users_data;
-    // QList<QString> record; // TODO(Angie): hacer (no es para la etapa 2)
+    user_data user_info;
+    std::vector<std::string> user_names;
 };
 
 #endif // MODIFY_USER_H
