@@ -50,6 +50,7 @@ void Token::on_validate_label_clicked() {
         if (std::stoi(tok.toStdString()) == this->user_data->token[this->pos]) {
             this->ui->token_input->clear();
             this->hide();
+            this->initial_page->set_client(this->local_client);
             this->initial_page->setUserDataLogin(this->user_data);
             this->initial_page->setParent_Button(this->parent_button);
             this->initial_page->setModal(true);

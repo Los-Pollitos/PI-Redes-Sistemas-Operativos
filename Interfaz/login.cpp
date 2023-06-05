@@ -95,6 +95,7 @@ void login::on_login_button_clicked() {
 //        this->user_data->token[5] = 23;
 
         this->hide();
+        this->token_page->set_client(this->local_client);
         this->token_page->setUserData(this->user_data);
         this->token_page->setParent_Button(this->request_button);
         this->token_page->show();

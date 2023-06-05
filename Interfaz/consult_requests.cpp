@@ -89,6 +89,7 @@ void consult_requests::show_description(int id, int type) {
     Q_UNUSED(id)
     QString newString = "Me gusta jugar";
     int new_type = type;
+    this->description->set_client(this->local_client);
     this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->users_login, false);
     this->description->setModal(true);
     this->description->show();

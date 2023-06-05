@@ -29,6 +29,18 @@ initial::initial(QWidget *parent) :
     this->see_vacations = new vacation_consult();
     this->users_data = new user_data();
 
+    this->work_page->set_client(this->local_client);
+    this->payment_page->set_client(this->local_client);
+    this->salary_page->set_client(this->local_client);
+    this->see_salary->set_client(this->local_client);
+    this->pending_requests->set_client(this->local_client);
+    this->see_record->set_client(this->local_client);
+    this->request_handler->set_client(this->local_client);
+    this->user_manager->set_client(this->local_client);
+    this->user_mod->set_client(this->local_client);
+    this->vacation_manager->set_client(this->local_client);
+    this->see_vacations->set_client(this->local_client);
+
     this->update_buttons =  new description_button("Manejador de botones", nullptr, -1, 0);
     this->connect(this->update_buttons, &description_button::update_all, this
        , &initial::update_scrollbar);
