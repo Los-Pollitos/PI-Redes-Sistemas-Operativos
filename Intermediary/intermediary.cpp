@@ -119,17 +119,17 @@ std::string intermediary::send_and_receive_login() {
 
 void intermediary::send_and_receive_data_base() {
   int s = 0, n = 1; // s:socket  n: contador
-  struct sockaddr_in ipServidorLogin;
+  struct sockaddr_in ip_data_server;
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     std::cout << "Error de creación de socket" << std::endl;
   } else {
-    ipServidorLogin.sin_family = AF_INET;
-    ipServidorLogin.sin_port = htons(PORT_DB);
-    ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ip_data_server.sin_family = AF_INET;
+    ip_data_server.sin_port = htons(PORT_DB);
+    ip_data_server.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Se intenta pegar al servidor
-    if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
+    if (connect(s, (struct sockaddr *)&ip_data_server, sizeof(ip_data_server)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
     } else {
       // receive everything from client
@@ -154,7 +154,7 @@ void intermediary::send_and_receive_data_base() {
       
       memset(this->data, '\0', DATA_SIZE);
       data[0] = '#';
-      std::cout << "Voy a mandar: " << data  << " a autenticacion "<< std::endl;
+      std::cout << "Voy a mandar: " << data  << " a data?server "<< std::endl;
       write(s, this->data, DATA_SIZE);
       // No se logró leer
       if (n < 0) {
@@ -214,6 +214,9 @@ void intermediary::send_to_server() {
     case ANSWER_SALARY_PROOF:
     case ANSWER_VACATION_REQUEST:
       // TODO(us): hacer
+      break;
+    case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER:
+      this->send_and_receive_data_base();
       break;
     default:
       std::cerr << "Error: codigo inexistente" << std::endl;
