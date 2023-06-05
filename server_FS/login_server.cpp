@@ -45,7 +45,7 @@ login_server::~login_server() {
 void login_server::load_from_file() {
   //TODO borrar print
   std::cout << "No existe imagen de FS, se va a cargar de archivo\n";
-  
+
   std::ifstream file("Login.txt");
   if (file.is_open()) {
     std::string buffer;
@@ -219,13 +219,15 @@ void login_server::validate_data(std::string& username, std::string& hash) {
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
       if (buffer == hash) {
         this->data[0] = '1';
+      } else {
+        this->data[0] = '0';
       }
     } else {
       this->data[0] = '0';
     }
 
     // TODO(nosotros): borrar
-    std::cout << "voy a enviar el write" << std::endl;
+    std::cout << "voy a enviar el write" << data << std::endl;
 
     write(this->connection, this->data, DATA_SIZE);
     this->file_system->close("Server", "Login.txt");
