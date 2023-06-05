@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <QDialog>
+#include "client.h"
 #include "login_info.h"
 #include "user_data.h"
 
@@ -19,6 +20,7 @@ public:
     explicit modify_user(QWidget *parent = nullptr);
     ~modify_user();
     void set_login_info(login_info* info);
+    void set_client(client* client);
 
 
 private slots:
@@ -33,6 +35,7 @@ private slots:
 
 private:
     Ui::modify_user* ui;
+    client* local_client;
     int modified_index;
     login_info* user_login;
     user_data user_info;

@@ -108,6 +108,8 @@ void modify_user::update_data() {
 
 void modify_user::set_login_info(login_info* info) {
     this->user_login = info;
-//    this->read_data();  // TODO(Angie): ver si dejar
-//    this->add_data();  // TODO(Angie): ver si dejar
+}
+
+void modify_user::set_client(client* client) {
+    this->client = client;
 }
