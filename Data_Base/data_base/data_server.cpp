@@ -231,11 +231,6 @@ void data_server::load_laboral_data() {
             // gets the line of the table
             line = laboral_data_file.readLine().toStdString();
 
-
-            // TODO(us): borrar
-//            std::cout << "\nlei: " << line << "\n";
-
-
             // find the user
             this->find_next(line, end_pos);
             // save the user
