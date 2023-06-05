@@ -625,9 +625,13 @@ void data_server::see_process_requests() {
 
 // TODO(us): Document
 void data_server::process_data() {
-    std::string username = "\0";
-    std::string hash = "\0";
-    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
+    std::string to_send = " ";
+    int total_m = 0;
+    int i = 0;
+
+    // TODO(nosotros): borrar
+//    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
+
     switch ((int) data[0]) {
         case CREATE_USER:
             // TODO(luis): hacer
@@ -698,14 +702,92 @@ void data_server::process_data() {
         case ANSWER_VACATION_REQUEST:
             // TODO(Cris): hacer
             break;
+
         case USER_OFFICE:
-            // TODO(Angie)
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+
+            // find the user
+            i = 1;  // data[0] is USER_OFFICE
+            while (data[i] != '\0') {
+                to_send += data[i];
+            }
+
+            // ask the data base for the result
+            to_send = this->base->consult_employee_office(to_send);
+
+            // find the size of the package to send
+            total_m = (int) (to_send.length() / DATA_SIZE)
+                          + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+
+            // send the data
+            for (int i = 0; i < total_m; ++i) {
+                adapt_data(data, to_send, DATA_SIZE * i);
+                std::cout << "Voy a mandar: " << data << std::endl;
+                write(this->connection, data, DATA_SIZE);
+            }
+
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
+
         case ALL_USERS_OFFICE:
-            // TODO(Angie)
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+
+            // find the user
+            i = 1;  // data[0] is USER_OFFICE
+            while (data[i] != '\0') {
+                to_send += data[i];
+            }
+
+            // ask the data base for the result
+            to_send = this->base->consult_employees_of_an_office(stoi(to_send));
+
+            // find the size of the package to send
+            total_m = (int) (to_send.length() / DATA_SIZE)
+                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+
+            // send the data
+            for (int i = 0; i < total_m; ++i) {
+                adapt_data(data, to_send, DATA_SIZE * i);
+                std::cout << "Voy a mandar: " << data << std::endl;
+                write(this->connection, data, DATA_SIZE);
+            }
+
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
+
         case DATA_USER:
-            // TODO(Angie)
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+
+            // find the user
+            i = 1;  // data[0] is USER_OFFICE
+            while (data[i] != '\0') {
+                to_send += data[i];
+            }
+
+            // ask the data base for the result
+            to_send = this->base->consult_employee_data(to_send);
+
+            // find the size of the package to send
+            total_m = (int) (to_send.length() / DATA_SIZE)
+                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+
+            // send the data
+            for (int i = 0; i < total_m; ++i) {
+                adapt_data(data, to_send, DATA_SIZE * i);
+                std::cout << "Voy a mandar: " << data << std::endl;
+                write(this->connection, data, DATA_SIZE);
+            }
+
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
     }
     // TODO: meter a bitácora
