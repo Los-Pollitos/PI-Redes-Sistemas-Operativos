@@ -87,10 +87,6 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     if(!new_employee.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando empleado: " << new_employee.lastError();
     }
-
-
-    // TODO(Angie): borrar
-    std::cout << "Acabo de agregar al empleado " << user << " con office_id: " << office_id << std::endl;
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -238,25 +234,16 @@ std::string data_base::consult_employee_data(std::string user) {
 std::string data_base::consult_employees_of_an_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;
-    int i = 0;
 
-    consult_employee.prepare("SELECT user FROM employees WHERE office_id = (:office_id)");
+    consult_employee.prepare("SELECT * FROM employees WHERE office_id = (:office_id)");
     consult_employee.bindValue(":office_id", office_id);
 
     // If a match was found
     if (consult_employee.exec() && consult_employee.next()) {
-
-
-        // TODO(Angie): borrar
-        std::cout << "numRowsAffected: " << consult_employee.numRowsAffected() << std::endl;
-
         // TODO(nosotros): DESCIFRAR
-        while (consult_employee.next()) {
-            result += consult_employee.value(i++).toString().toStdString() += ",";
-
-            // TODO(Angie): borrar
-            std::cout << result << std::endl;
-        }
+        do {
+            result += consult_employee.value(0).toString().toStdString() += ",";
+        } while (consult_employee.next());
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el la oficina: " << office_id;
     }
