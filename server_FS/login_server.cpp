@@ -51,7 +51,7 @@ void login_server::load_from_file() {
     this->file_system->open("Server", "Login.txt");
     while (std::getline(file, buffer)) {
       this->file_system->append("Login.txt", buffer);
-      this->file_system->append("Login.txt", "\n");
+      // this->file_system->append("Login.txt", "\n");  // TODO(Emilia)
     }
     this->file_system->close("Server", "Login.txt");
     // Unload the image of the file system
@@ -112,7 +112,7 @@ void login_server::answer_request() {
   std::cout << " IP Remoto: " << strIpRemoto << std::endl;
 
   while (this->connection != -1 &&
-         (n = read(this->connection, this->data, sizeof(this->data))) > 0) {
+         (n = read(this->connection, this->data, DATA_SIZE)) > 0) {
     // connection es socket cliente
     std::cout << "Recibi: " << this->data << std::endl;
     if (this->data[0] == '#') {
@@ -177,6 +177,10 @@ void login_server::find_data(std::string& username, std::string& hash) {
 */
 void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
+
+  // TODO(nosotros): borrar
+  std::cout << "entrando a validate data" << std::endl;
+
   if (this->file_system->is_open("Login.txt")) {
     this->file_system->reset_file_pointer("Server", "Login.txt");
     bool found = false;
@@ -186,6 +190,10 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
     while (end_of_file == false && found == false) {
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
+
+      // TODO(nosotros): borrar
+      std::cout << "estoy en while, username: " << username << " buffer: " << buffer << std::endl;
+
       if (buffer != username) {
         // Read the rest of the data
         buffer = this->file_system->read_line("Server", "Login.txt");
@@ -207,8 +215,16 @@ void login_server::validate_data(std::string& username, std::string& hash) {
     } else {
       this->data[0] = '0';
     }
-    write(this->connection, this->data, strlen(this->data));
+
+    // TODO(nosotros): borrar
+    std::cout << "voy a enviar el write" << std::endl;
+
+    write(this->connection, this->data, DATA_SIZE);
     this->file_system->close("Server", "Login.txt");
   }
+
+  // TODO(nosotros): borrar
+  std::cout << "saliendo de validate data" << std::endl;
+
 }
 
