@@ -21,16 +21,16 @@ modify_user::~modify_user() {
 
 void modify_user::on_comboBox_activated(int index) {
     this->modified_index = index;
-    ui->employee_id->setReadOnly(true);
-    ui->employee_id->setText(QString::number(this->users_data[index].identification));
-    ui->employee_salary->setText(QString::fromStdString(this->users_data[index].salary));
+    ui->id->setReadOnly(true);
+    ui->id->setText(QString::number(this->users_data[index].identification));
+    ui->salary->setText(QString::fromStdString(this->users_data[index].salary));
     ui->checkbox_admin_users->setCheckState(unmask_role(index, ADMIN_USER));
     ui->checkbox_admin_config->setCheckState(unmask_role(index, ADMIN_CONFIG));
     ui->checkbox_debug->setCheckState(unmask_role(index, DEBUG));
     ui->checkbox_employee->setCheckState(unmask_role(index, EMPLOYEE));
     ui->checkbox_human_resources->setCheckState(unmask_role(index, HUMAN_RESOURCES));
     ui->checkbox_supervisor->setCheckState(unmask_role(index, SUPERVISOR));
-    ui->employee_vacations->setText(QString::number(this->users_data[index].available_vacations));
+    ui->vacations->setText(QString::number(this->users_data[index].available_vacations));
 }
 
 
@@ -109,8 +109,8 @@ void modify_user::update_data() {
         }
     }
 
-    this->users_data[modified_index].salary = ui->employee_salary->text().toStdString();
-    this->users_data[modified_index].available_vacations = ui->employee_vacations->text().toInt();
+    this->users_data[modified_index].salary = ui->salary->text().toStdString();
+    this->users_data[modified_index].available_vacations = ui->vacations->text().toInt();
     // TODO(nosotros): record (no es requerido para esta entrega)
 
     this->write_data();
