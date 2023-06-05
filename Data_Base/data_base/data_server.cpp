@@ -22,8 +22,16 @@ data_server::data_server() {
 
     // TODO(Angie): borrar
     std::cout << "voy a llamar a consult_employees\n";
+    std::cout << "Oficina 1 ____________\n";
     this->base->consult_employees_of_an_office(1);
+    std::cout << "Oficina 2 ____________\n";
     this->base->consult_employees_of_an_office(2);
+    std::cout << "Oficina 3 ____________\n";
+    this->base->consult_employees_of_an_office(3);
+    std::cout << "Oficina 4 ____________\n";
+    this->base->consult_employees_of_an_office(4);
+    std::cout << "Oficina 5 ____________\n";
+    this->base->consult_employees_of_an_office(5);
 }
 
 /*
