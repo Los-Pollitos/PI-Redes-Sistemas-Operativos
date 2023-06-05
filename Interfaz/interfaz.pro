@@ -28,6 +28,7 @@ SOURCES += \
     request_description.cpp \
     request_vacations.cpp \
     salary_proof.cpp \
+    security.cpp \
     token.cpp \
     vacation_consult.cpp \
     work_proof.cpp
@@ -52,6 +53,7 @@ HEADERS += \
     request_description.h \
     request_vacations.h \
     salary_proof.h \
+    security.h \
     token.h \
     user_data.h \
     vacation_consult.h \
