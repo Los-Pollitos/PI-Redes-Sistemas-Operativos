@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
 
     // TODO(nosotros): BORRAR
 //    QCoreApplication a(argc, argv);
-
 //    data_base * db = new data_base();
 //    db->add_office(1, "San Jose");
 //    qDebug() << "Agregue oficina";

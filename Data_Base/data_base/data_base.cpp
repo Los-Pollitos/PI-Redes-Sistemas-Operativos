@@ -7,6 +7,7 @@
  */
 
 #include "data_base.h"
+#include <iostream>
 
 // TODO(nosotros): DOCUMENTAR
 data_base::data_base() {
@@ -196,6 +197,22 @@ std::string data_base::consult_office_name(int id) {
 }
 
 // TODO(nosotros): DOCUMENTAR
+int data_base::consult_employee_office(std::string user) {
+    int result = -1;
+    QSqlQuery consult_employee;
+    consult_employee.prepare("SELECT office_id FROM employees WHERE user = (:user)");
+    consult_employee.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_employee.exec() && consult_employee.next()) {
+        // TODO(nosotros): DESCIFRAR
+        result = consult_employee.value(0).toInt();
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << user;
+    }
+    return result;
+}
+
+// TODO(nosotros): DOCUMENTAR
 std::string data_base::consult_employee_data(std::string user) {
     std::string result = "";
     QSqlQuery consult_employee;
@@ -205,10 +222,37 @@ std::string data_base::consult_employee_data(std::string user) {
     if (consult_employee.exec() && consult_employee.next()) {
         // TODO(nosotros): DESCIFRAR
         for (int i = 0; i < 9; ++i) {
-            result += consult_employee.value(i).toString().toStdString();
+            result += consult_employee.value(i).toString().toStdString() += ",";
         }
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el usuario: " << user;
+    }
+    return result;
+}
+
+// TODO(nosotros): documentar
+std::string data_base::consult_employees_of_an_office(int office_id) {
+    std::string result = "";
+    QSqlQuery consult_employee;
+    consult_employee.prepare("SELECT user FROM employees WHERE office_id = (:office_id)");
+    consult_employee.bindValue(":office_id", office_id);
+    // If a match was found
+    if (consult_employee.exec() && consult_employee.next()) {
+        // TODO(nosotros): DESCIFRAR
+
+        // TODO(Angie): borrar
+        std::cout << "voy al for, size es: " << consult_employee.size() << std::endl;
+        std::cout << "value(0): " << consult_employee.value(0).toString().toStdString() << std::endl;
+        std::cout << "value(1): " << consult_employee.value(1).toString().toStdString() << std::endl;
+
+        for (int i = 0; i < consult_employee.size(); ++i) {
+            result += consult_employee.value(i).toString().toStdString() += ",";
+
+            // TODO(Angie): borrar
+            std::cout << result << std::endl;
+        }
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando el la oficina: " << office_id;
     }
     return result;
 }

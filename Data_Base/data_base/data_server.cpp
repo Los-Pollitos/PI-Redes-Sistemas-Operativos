@@ -19,6 +19,11 @@ data_server::data_server() {
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
+
+    // TODO(Angie): borrar
+    std::cout << "voy a llamar a consult_employees\n";
+    this->base->consult_employees_of_an_office(1);
+    this->base->consult_employees_of_an_office(2);
 }
 
 /*
@@ -697,6 +702,15 @@ void data_server::process_data() {
             break;
         case ANSWER_VACATION_REQUEST:
             // TODO(Cris): hacer
+            break;
+        case USER_OFFICE:
+            // TODO(Angie)
+            break;
+        case ALL_USERS_OFFICE:
+            // TODO(Angie)
+            break;
+        case DATA_USER:
+            // TODO(Angie)
             break;
     }
     // TODO: meter a bitácora

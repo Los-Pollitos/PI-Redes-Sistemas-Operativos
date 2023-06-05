@@ -51,9 +51,9 @@ enum request_types {
   ANSWER_VACATION_REQUEST,  // 86
 
   // las de modificar usuario
-  USER_OFFICE,
-  ALL_USERS_OFFICE,
-  DATA_USER
+  USER_OFFICE,  // 87
+  ALL_USERS_OFFICE,  // 88
+  DATA_USER  // 89
 };
 
 class intermediary {
