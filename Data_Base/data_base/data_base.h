@@ -54,8 +54,7 @@ class data_base {
                           , int start_day, int start_month, int start_year
                           , int end_day, int end_month, int end_year
                           , int gross_salary, int deductibles, std::string job_title);
-    void add_record (std::string user, int id, std::string boss_user
-                    , int day, int month, int year, std::string annotation);
+    void add_record (std::string user, int id, int day, int month, int year, std::string annotation);
     std::string consult_office_name(int id);
     std::string consult_employee_data(std::string user);
     void delete_user(std::string user);

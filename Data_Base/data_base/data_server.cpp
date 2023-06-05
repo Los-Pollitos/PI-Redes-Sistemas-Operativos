@@ -16,10 +16,6 @@
 data_server::data_server() {
     // Create the data_base
     this->base = new data_base();
-
-    // TODO(nosotros): borrar
-    std::cout << "voy a load from file\n";
-
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
@@ -74,9 +70,9 @@ void data_server::copy_string(std::string& line, std::string& new_line, int from
 void data_server::load_from_file() {
     this->load_offices();
     this->load_employees();
-//    this->load_laboral_data();
-//    this->load_requests();
-//    this->load_records();
+    this->load_requests();  // TODO(nosotros): arreglar: no crea la tabla
+    this->load_laboral_data();  // TODO(nosotros): arreglar: no crea la tabla
+    this->load_records();
 }
 
 // TODO(nosotros): documentar
@@ -148,19 +144,10 @@ void data_server::load_employees() {
             // gets the line of the table
             line = employee_file.readLine().toStdString();
 
-
-            // TODO(us): borrar
-            std::cout << "\nlei: " << line << "\n";
-
             // find the user
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos ,end_pos-1);
-
-
-            // TODO(us): borrar
-            std::cout << "user " << user << "\n";
-
 
             // find the name
             initial_pos = end_pos;  // starts after the ','
@@ -168,21 +155,11 @@ void data_server::load_employees() {
             // save the name
             this->copy_string(line,name,initial_pos ,end_pos-1);
 
-
-            // TODO(us): borrar
-            std::cout << "name " << name << "\n";
-
-
             // find the id
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             // save the id
             this->copy_string(line,id,initial_pos ,end_pos-1);
-
-
-            // TODO(us): borrar
-            std::cout << "id " << id << "\n";
-
 
             // find the phone number
             initial_pos = end_pos;  // starts after the ','
@@ -190,21 +167,11 @@ void data_server::load_employees() {
             // save the phone number
             this->copy_string(line,phone_number,initial_pos ,end_pos-1);
 
-
-            // TODO(us): borrar
-            std::cout << "phone " << phone_number << "\n";
-
-
             // find the email
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             // save the email
             this->copy_string(line,email,initial_pos ,end_pos-1);
-
-
-            // TODO(us): borrar
-            std::cout << "email " << email << "\n";
-
 
             // find the office_id
             initial_pos = end_pos;  // starts after the ','
@@ -213,22 +180,12 @@ void data_server::load_employees() {
             // save the office_id
             office_id = stoi(partial_line);
 
-
-            // TODO(us): borrar
-            std::cout << "office " << partial_line << "\n";
-
-
             // find the roles
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             this->copy_string(line,partial_line,initial_pos ,end_pos-1);
             // save the roles
             roles = stoi(partial_line);
-
-
-            // TODO(us): borrar
-            std::cout << "roles " << partial_line << "\n";
-
 
             // find the available_vacations
             initial_pos = end_pos;  // starts after the ','
@@ -237,24 +194,12 @@ void data_server::load_employees() {
             // save the available_vacations
             available_vacations = stoi(partial_line);
 
-
-            // TODO(us): borrar
-            std::cout << "vac " << available_vacations << "\n";
-
-
             // find the last_laboral_data
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
             this->copy_string(line,partial_line,initial_pos ,end_pos-1);
             // save the last_laboral_data
             last_laboral_data = stoi(partial_line);
-
-
-
-            // TODO(us): borrar
-            std::cout << "laboral " << last_laboral_data << "\n";
-
-
 
             // add to offices table
             this->base->add_employee(user, name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data);
@@ -292,6 +237,11 @@ void data_server::load_laboral_data() {
 
             // gets the line of the table
             line = laboral_data_file.readLine().toStdString();
+
+
+            // TODO(us): borrar
+//            std::cout << "\nlei: " << line << "\n";
+
 
             // find the user
             this->find_next(line, end_pos);
@@ -368,7 +318,7 @@ void data_server::load_laboral_data() {
             this->copy_string(line,job_title,initial_pos ,end_pos-1);
 
             // add to laboral data table
-            this->base->add_laboral_data(user, data_id , start_day, start_month, start_year, end_day
+            this->base->add_laboral_data(user, data_id, start_day, start_month, start_year, end_day
                                          , end_month, end_year, gross_salary, deductibles, job_title);
         }
         laboral_data_file.close();
@@ -426,7 +376,7 @@ void data_server::load_requests() {
 
             // find if solved
             initial_pos = end_pos;  // starts after the ','
-            end_pos += 1;  // roles are a single int always
+            this->find_next(line, end_pos);
             this->copy_string(line,partial_line,initial_pos ,end_pos-1);
             // save if solved
             solved = stoi(partial_line);
@@ -551,7 +501,6 @@ void data_server::load_records() {
 
     std::string user = "\0";
     int id = 0;
-    std::string boss_user = "\0";
     int day = 0;
     int month = 0;
     int year = 0;
@@ -579,12 +528,6 @@ void data_server::load_records() {
             this->copy_string(line,partial_line,initial_pos ,end_pos-1);
             // save the id
             id = stoi(partial_line);
-
-            // find the boss_user
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            // save the boss_user
-            this->copy_string(line,boss_user,initial_pos ,end_pos-1);
 
             // find the day
             initial_pos = end_pos;  // starts after the ','
@@ -614,7 +557,7 @@ void data_server::load_records() {
             this->copy_string(line,annotation,initial_pos ,end_pos-1);
 
             // add to records table
-            this->base->add_record (user, id, boss_user, day, month, year, annotation);
+            this->base->add_record (user, id, day, month, year, annotation);
         }
         records_file.close();
     }
