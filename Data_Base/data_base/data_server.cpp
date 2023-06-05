@@ -19,13 +19,6 @@ data_server::data_server() {
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
-
-    // TODO (us): borrar
-    base->consult_office_name(1);
-    base->consult_office_name(2);
-    base->consult_office_name(3);
-    base->consult_office_name(4);
-    base->consult_office_name(5);
 }
 
 /*
