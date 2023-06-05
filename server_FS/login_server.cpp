@@ -139,6 +139,7 @@ void login_server::process_data() {
       break;
     case TOKEN: 
       // TODO(emilia): hacer
+      this->give_token();
       break;
     case CHANGE_PASSWORD:
       // TODO(emilia): hacer
@@ -220,3 +221,55 @@ void login_server::validate_data(std::string& username, std::string& hash) {
   }
 }
 
+void login_server::adapt_data(std::string& new_info) {
+    for (int i = 0; i < DATA_SIZE; ++i){
+        this->data[i] = new_info[i];
+    }
+}
+
+void login_server::give_token(){
+  std::string username = "";
+  for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+    if (this->data[i] != ',') {
+      username += this->data[i];
+    }
+  }
+
+  // Open file in file system
+  this->file_system->open("Server", "Login.txt");
+  if (this->file_system->is_open("Login.txt")) {
+    this->file_system->reset_file_pointer("Server", "Login.txt");
+    bool found = false;
+    std::string buffer = " ";
+
+    // Find the username in the file
+    bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
+    while (end_of_file == false && found == false) {
+      buffer = this->file_system->read_until("Server", "Login.txt", ',');
+      if (buffer != username) {
+        // Discard hash
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+        // Discard token
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+      } else {
+        found = true;
+      }
+      buffer = " ";
+      end_of_file = this->file_system->is_eof("Server", "Login.txt");
+    }
+    memset(this->data, '\0', DATA_SIZE);
+
+    // Extract token
+    if (found) {
+      // buffer has username, now we want to ignore hash
+      this->file_system->read_until("Server", "Login.txt", ',');
+      buffer  =  this->file_system->read_until("Server", "Login.txt", ',');
+      memset(this->data, '\0', DATA_SIZE);
+      this->adapt_data(buffer); 
+    } else {
+      this->data[0] = 'e'; // e == error
+    }
+    write(this->connection, this->data, strlen(this->data));
+    this->file_system->close("Server", "Login.txt");
+  }
+}

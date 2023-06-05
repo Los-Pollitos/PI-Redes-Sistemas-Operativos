@@ -44,6 +44,7 @@ class login_server {
     void load_from_file();
     void find_data(std::string& username,  std::string& hash);
     void process_data();
+    void adapt_data(std::string& new_info);
 
   public:
     login_server();
@@ -51,6 +52,7 @@ class login_server {
     void wait_for_request();
     void answer_request();
     void validate_data(std::string& username, std::string& hash);
+    void give_token();
 };
 
 #endif // LOGIN_SERVER
