@@ -20,7 +20,7 @@ public:
     explicit modify_user(QWidget *parent = nullptr);
     ~modify_user();
     void set_login_info(login_info* info);
-    void set_client(client* client);
+    void set_client(client* local_client);
 
 
 private slots:

@@ -110,6 +110,6 @@ void modify_user::set_login_info(login_info* info) {
     this->user_login = info;
 }
 
-void modify_user::set_client(client* client) {
-    this->client = client;
+void modify_user::set_client(client* local_client) {
+    this->local_client = local_client;
 }
