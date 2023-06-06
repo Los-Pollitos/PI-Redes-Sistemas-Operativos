@@ -373,6 +373,7 @@ void initial::read_data() {
     std::ifstream data ("../Etapa2/Archivos/Data.txt");
    int assigned_vacations;
    int available_vacations;
+   std::string salary;
     try {
         std::string temp = " ";
         if (data.is_open()) {
@@ -386,7 +387,7 @@ void initial::read_data() {
                 data >> temp;
             }
             users_data->identification = temp;
-            data >> users_data->net_salary;
+            data >> salary;
             data >> users_data->role;
             data >> assigned_vacations;
             data >> available_vacations;

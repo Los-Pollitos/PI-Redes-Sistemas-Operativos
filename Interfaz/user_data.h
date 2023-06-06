@@ -20,7 +20,7 @@ struct user_data {
     std::string email;
     std::string job_title;
     char office_id;
-    char role;  // TODO cambiar a int
+    char role;
     int salary_base;
     int deductibles;
     int salary_net;
