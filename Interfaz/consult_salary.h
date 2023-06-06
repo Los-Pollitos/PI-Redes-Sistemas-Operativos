@@ -14,9 +14,10 @@ class consult_salary : public QDialog
     Q_OBJECT
 
 public:
-    explicit consult_salary(QWidget *parent = nullptr, user_data* users_data);
+    explicit consult_salary(QWidget *parent = nullptr);
     ~consult_salary();
     void set_client(client* local_client);
+    void setUserData(login_info * user_login);
 
 private:
     Ui::consult_salary *ui;
