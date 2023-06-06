@@ -91,3 +91,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     icon.qrc
+
+DISTFILES += \
+    pollitos_icon.png
