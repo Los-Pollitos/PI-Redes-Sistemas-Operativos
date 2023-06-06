@@ -10,11 +10,22 @@
 #include "log.h"
 #include <ctime>
 
+/**
+ * @brief Construct a new log::log object
+ * 
+ * @param file_name Name to give the log file
+ * @param server_name Name of the server to place it in first line
+ */
 log::log(std::string file_name, std::string server_name) {
   this->log_file_name = file_name;
   this->server_name = server_name;
 }
 
+/**
+ * @brief Indicates the actual date and time
+ * 
+ * @return std::string actual date and time
+ */
 std::string log::get_system_time() {
   time_t local_time = time(0);
   std::string to_return = ctime(&local_time);
@@ -22,6 +33,12 @@ std::string log::get_system_time() {
   return to_return;
 }
 
+/**
+ * @brief Indicates in a string the type of request
+ * 
+ * @param type The type to be translated into strings
+ * @return std::string the type as a string
+ */
 std::string log::get_request_type(char type) {
   std::string result = "";
   switch (type) {
@@ -35,8 +52,8 @@ std::string log::get_request_type(char type) {
       result = "CHANGE_PASSWORD";
       break;
     case CHANGE_TOKEN:
-    	result = "CHANGE_TOKEN";
-    	break;
+      result = "CHANGE_TOKEN";
+      break;
     case CREATE_USER:
       result = "CREATE_USER";
       break;
@@ -104,8 +121,8 @@ std::string log::get_request_type(char type) {
       result = "DATA_USER";
       break;
     case GET_ROLES:
-       result = "GET_ROLES";
-       break;
+      result = "GET_ROLES";
+      break;
     default:
       result = "NONE";
   }
@@ -113,6 +130,13 @@ std::string log::get_request_type(char type) {
   return result;
 }
 
+/**
+ * @brief Add information to log indicating the type of request
+ * 
+ * @param ip Ip that will be indicated in log
+ * @param send_or_receive Indicator to tell if message is being sent or receive
+ * @param to_log Information that will be added to log
+ */
 void log::add_to_log(std::string ip, std::string send_or_receive, std::string to_log) {
   // try to open the log file to see if it exists
   std::ifstream check_file(this->log_file_name);
@@ -136,6 +160,13 @@ void log::add_to_log(std::string ip, std::string send_or_receive, std::string to
   log_file.close();
 }
 
+/**
+ * @brief Add information to log without indicating the type of request
+ * 
+ * @param ip Ip that will be indicated in log
+ * @param send_or_receive Indicator to tell if message is being sent or receive
+ * @param to_log Information that will be added to log
+ */
 void log::add_answer_log(std::string ip, std::string send_or_receive, std::string to_log) {
   // try to open the log file to see if it exists
   std::ifstream check_file(this->log_file_name);
