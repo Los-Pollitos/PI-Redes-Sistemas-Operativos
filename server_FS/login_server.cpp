@@ -353,12 +353,12 @@ void login_server::change_password() {
   for (i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
     // discard first user (it is just for log)
   }
-  for (i = i; i < DATA_SIZE && this->data[i] != ','; ++i) {
+  for (i = i+1; i < DATA_SIZE && this->data[i] != ','; ++i) {
     if (this->data[i] != ',') {
       username += this->data[i];
     }
   }
-  for (i = i; i < DATA_SIZE && this->data[i] != ','; ++i) {
+  for (i = i+1; i < DATA_SIZE && this->data[i] != ','; ++i) {
     if (this->data[i] != ',') {
       new_token += this->data[i];
     }
