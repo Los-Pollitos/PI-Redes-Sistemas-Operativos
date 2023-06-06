@@ -4,6 +4,11 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
 
+/**
+ * @brief Construct a new Token:: Token object
+ * 
+ * @param parent 
+ */
 Token::Token(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Token)
@@ -21,10 +26,19 @@ Token::Token(QWidget *parent) :
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 }
 
+/**
+ * @brief Receives and stores a client
+ * 
+ * @param local_client Client to be stored
+ */
 void Token::set_client(client* local_client){
     this->local_client = local_client;
 }
 
+/**
+ * @brief Destroy the Token:: Token object
+ * 
+ */
 Token::~Token()
 {
     if (this->ui) {
@@ -37,6 +51,11 @@ Token::~Token()
     }
 }
 
+/**
+ * @brief Receives and stores the information of a user
+ * 
+ * @param user_data The login information of the user
+ */
 void Token::setUserData(login_info * user_data) {
     this->user_data = user_data;
     this->pos = (int)(rand()%6);
@@ -45,10 +64,19 @@ void Token::setUserData(login_info * user_data) {
     this->ui->indicacion_label->setText("Fila: " + QString::number(fila) + " Columna: " + QString::number(columna));
 }
 
+/**
+ * @brief Receives and stores the cancel logic button
+ * 
+ * @param parent_button Cancel logic button
+ */
 void Token::setParent_Button(logout_button * parent_button){
     this->parent_button = parent_button;
 }
 
+/**
+ * @brief Checks if data is correct
+ * 
+ */
 void Token::on_validate_label_clicked() {
     QString tok = ui->token_input->text();
     try {
@@ -69,9 +97,10 @@ void Token::on_validate_label_clicked() {
 
 }
 
-
-
-
+/**
+ * @brief Sends a signal to hide token window and show login window
+ * 
+ */
 void Token::on_cancel_button_clicked() {
     emit this->parent_button->pressed();
     this->hide();
