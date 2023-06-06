@@ -334,7 +334,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="duductions">
+  <widget class="QLineEdit" name="deductions">
    <property name="geometry">
     <rect>
      <x>180</x>

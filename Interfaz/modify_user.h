@@ -27,8 +27,8 @@ public:
 
 private slots:
     void update_data();
+    Qt::CheckState unmask_role(int role_id, char role);
     //    void write_data();  // TODO(Angie): ver si dejar
-    Qt::CheckState unmask_role(int user_index, char role);
     //    void read_data();  // TODO(Angie): ver si dejar
 
     void on_comboBox_activated(int index);

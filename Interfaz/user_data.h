@@ -20,12 +20,10 @@ struct user_data {
     std::string email;
     std::string job_title;
     char office_id;
-    // char role;  // TODO cambiar a int
+    char role;  // TODO cambiar a int
     int salary_base;
     int deductibles;
     int salary_net;
-    std::string salary;
-    int role;  // TODO poner el otro
     int assigned_vacations;
     int available_vacations;
 };

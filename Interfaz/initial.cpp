@@ -353,7 +353,7 @@ void initial::read_data() {
                 data >> temp;
             }
             users_data->identification = temp;
-            data >> users_data->salary; /// TODO: revisar que si sea net
+//            data >> users_data->salary; /// TODO: revisar que si sea net
             data >> users_data->role;
             data >> assigned_vacations;
             data >> available_vacations;

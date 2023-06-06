@@ -12,7 +12,7 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->approve_changes->setStyleSheet("color: #001f21;");
     this->ui->base_salary->setStyleSheet("color: #001f21;");
-    this->ui->duductions->setStyleSheet("color: #001f21;");
+    this->ui->deductions->setStyleSheet("color: #001f21;");
     this->ui->email->setStyleSheet("color: #001f21;");
     this->ui->employee->setStyleSheet("color: #001f21;");
     this->ui->id->setStyleSheet("color: #001f21;");
@@ -65,6 +65,36 @@ void modify_user::on_comboBox_activated(int index) {
     // save the index
     this->modified_index = index;
 
+    // if the user was fired, noting can't be changed
+    if(unmask_role(index, UNEMPLOYEED) == Qt::Checked) {
+        // TODO(Angie)
+
+        ui->checkbox_active->setCheckState(unmask_role(index, UNEMPLOYEED));
+
+        // read only the other roles
+        ui->checkbox_admin_config->setAttribute(Qt::WA_TransparentForMouseEvents);
+        ui->checkbox_admin_config->setFocusPolicy(Qt::NoFocus);
+        ui->checkbox_admin_users->setAttribute(Qt::WA_TransparentForMouseEvents);
+        ui->checkbox_admin_users->setFocusPolicy(Qt::NoFocus);
+        ui->checkbox_employee->setAttribute(Qt::WA_TransparentForMouseEvents);
+        ui->checkbox_employee->setFocusPolicy(Qt::NoFocus);
+        ui->checkbox_debug->setAttribute(Qt::WA_TransparentForMouseEvents);
+        ui->checkbox_debug->setFocusPolicy(Qt::NoFocus);
+        ui->checkbox_human_resources->setAttribute(Qt::WA_TransparentForMouseEvents);
+        ui->checkbox_human_resources->setFocusPolicy(Qt::NoFocus);
+        ui->checkbox_supervisor->setAttribute(Qt::WA_TransparentForMouseEvents);
+        ui->checkbox_supervisor->setFocusPolicy(Qt::NoFocus);
+
+        // read only the text edits
+        ui->phone->setReadOnly(true);
+        ui->email->setReadOnly(true);
+        ui->office->setReadOnly(true);
+        ui->job_title->setReadOnly(true);
+        ui->base_salary->setReadOnly(true);
+        ui->deductions->setReadOnly(true);
+        ui->net_salary->setReadOnly(true);
+    }
+
     // set the data in the ui
     int office_id = (int) user_info.office_id;
     ui->name->setReadOnly(true);
@@ -80,14 +110,10 @@ void modify_user::on_comboBox_activated(int index) {
     ui->checkbox_employee->setCheckState(unmask_role(index, EMPLOYEE));
     ui->checkbox_human_resources->setCheckState(unmask_role(index, HUMAN_RESOURCES));
     ui->checkbox_supervisor->setCheckState(unmask_role(index, SUPERVISOR));
-
-    if(unmask_role(index, UNEMPLOYEED) == Qt::Checked) {
-        // TODO(Angie)
-    }
-
-
-    //    ui->salary->setText(QString::fromStdString(this->users_data[index].salary));
-    //    ui->vacations->setText(QString::number(this->users_data[index].available_vacations));
+    ui->job_title->setText(QString::fromStdString(user_info.job_title));
+    ui->base_salary->setText(QString::number(user_info.salary_base));
+    ui->deductions->setText(QString::number(user_info.deductibles));
+    ui->net_salary->setText(QString::number(user_info.salary_net));
 }
 
 void modify_user::load_user_data(user_data& user_info, std::string& data) {
@@ -98,7 +124,7 @@ void modify_user::load_user_data(user_data& user_info, std::string& data) {
     user_info.email  = "\0";
     user_info.job_title  = "\0";
 
-    int pos = 0;
+    size_t pos = 0;
     int commas_found = 0;
     std::string temp_salary = "\0";
     std::string temp_deductibles = "\0";
@@ -144,7 +170,6 @@ void modify_user::load_user_data(user_data& user_info, std::string& data) {
     user_info.salary_net = user_info.salary_base - user_info.deductibles;
 }
 
-// TODO(Angie): ver si dejar igual
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
     // find the user's office id
@@ -178,13 +203,13 @@ void modify_user::add_data_to_combobox() {
 }
 
 // role indicates the role that wants to be analized if the user has
-Qt::CheckState modify_user::unmask_role(int user_index, char role) {
+Qt::CheckState modify_user::unmask_role(int role_id, char role) {
     Qt::CheckState state = Qt::Unchecked;
+    int role_int = (int) role;
 
-    // TODO(Angie): actualizar
-    //    if ((role & this->users_data[user_index].role) == role) {
-    //        state = Qt::Checked;
-    //    }
+    if ((role_int & role_id) == role_id) {
+        state = Qt::Checked;
+    }
 
     return state;
 }
