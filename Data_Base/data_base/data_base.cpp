@@ -210,7 +210,7 @@ int data_base::consult_employee_office(std::string user) {
         // TODO(nosotros): DESCIFRAR
         result = consult_employee.value(0).toInt();
     } else {
-        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << user;
+        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
     }
     return result;
 }
@@ -228,7 +228,7 @@ std::string data_base::consult_employee_data(std::string user) {
             result += consult_employee.value(i).toString().toStdString() += ",";
         }
     } else {
-        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << user;
+        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
     }
     return result;
 }
@@ -260,7 +260,7 @@ void data_base::delete_user_from_table(std::string user, std::string table) {
     delete_from_table.prepare(QString::fromStdString(command));
     delete_from_table.bindValue(":user", QString::fromStdString(user));
     if (!delete_from_table.exec()) {
-        qDebug() << "[BASE_DATOS] Error borrando al usuario: " << user << " de la tabla " << table;
+        qDebug() << "[BASE_DATOS] Error borrando al usuario: " << QString::fromStdString(user) << " de la tabla " << QString::fromStdString(table);
     }
 }
 
