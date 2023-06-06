@@ -57,10 +57,10 @@ int main(int argc, char *argv[]){
 
   //   }
   // }
-  std::string encrypted = encrypt("luis solano angie solis emilia viquez cristopher hernandez");
+  std::string encrypted = encrypt("luis solano angie emilia cris iajsdoadso");
   std::string decrypted = decrypt(encrypted);
-  std::cout << "Encrypted: " << encrypted << "\n";
-  std::cout << "Decrypted: " << decrypted << "\n";
+  std::cout << "Encrypted: " << encrypted << " mide: " << encrypted.size() << "\n";
+  std::cout << "Decrypted: " << decrypted << " mide: " << decrypted.size()  << "\n";
 }
 
 std::string encrypt(std::string to_encrypt) {
