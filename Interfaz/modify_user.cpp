@@ -127,6 +127,7 @@ void modify_user::load_user_data(std::string& data) {
     int commas_found = 0;
     std::string temp_salary = "\0";
     std::string temp_deductibles = "\0";
+    std::string temp_vacations = "\0";
 
     while (pos < data.length()) {
         if (data[pos] != ',') {
@@ -149,13 +150,16 @@ void modify_user::load_user_data(std::string& data) {
             case 5:  // role
                 this->user_info.role = data[pos];  // only one char always
                 break;
-            case 6:  // job_title
+            case 6:  // vacations
+                temp_vacations += data[pos];
+                break;
+            case 7:  // job_title
                 this->user_info.job_title += data[pos];
                 break;
-            case 7:  // base salary
+            case 8:  // base salary
                 temp_salary += data[pos];
                 break;
-            case 8:  // deductibles
+            case 9:  // deductibles
                 temp_deductibles += data[pos];
                 break;
             }
@@ -164,6 +168,7 @@ void modify_user::load_user_data(std::string& data) {
         }
         ++pos;
     }
+    this->user_info.available_vacations = stoi(temp_vacations);
     this->user_info.salary_base = stoi(temp_salary);
     this->user_info.deductibles = stoi(temp_deductibles);
     this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
@@ -205,11 +210,9 @@ void modify_user::add_data_to_combobox() {
 Qt::CheckState modify_user::unmask_role(int role_id, char role) {
     Qt::CheckState state = Qt::Unchecked;
     int role_int = (int) role;
-
     if ((role_int & role_id) == role_id) {
         state = Qt::Checked;
     }
-
     return state;
 }
 
@@ -225,19 +228,39 @@ void modify_user::on_approve_changes_clicked() {
 
 void modify_user::update_data() {
     std::string to_send = "\0";
+    bool is_number = true;
 
     // update roles
     this->update_roles();
 
     // update phone if the size es valid (8)
     if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
-        to_send = " " + this->ui->phone->text().toStdString();
+        this->user_info.phone = this->ui->phone->text().toStdString();
+        to_send = " " + this->user_info.phone;
         to_send[0] = CHANGE_PHONE;
         this->local_client->send_and_receive(to_send);
     }
-    if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
-        to_send = " " + this->ui->phone->text().toStdString();
-        to_send[0] = CHANGE_PHONE;
+    if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() <= 23) {
+        this->user_info.email = this->ui->email->text().toStdString();
+        to_send = " " + this->user_info.email;
+        to_send[0] = CHANGE_EMAIL;
+        this->local_client->send_and_receive(to_send);
+    }
+    if (this->ui->office->text().toInt(&is_number, 10) != this->user_info.office_id && is_number) {  // only saved if office is a valid number
+
+        // TODO(Angie): verificar si la oficina es válida
+
+        this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
+        to_send = "  ";
+        to_send[0] = CHANGE_OFFICE_ID;
+        to_send[1] = this->user_info.office_id;
+        this->local_client->send_and_receive(to_send);
+    }
+    if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations && is_number) {
+        this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
+        to_send = "  ";
+        to_send[0] = CHANGE_VACATIONS;
+        to_send[1] = this->user_info.available_vacations;
         this->local_client->send_and_receive(to_send);
     }
 
