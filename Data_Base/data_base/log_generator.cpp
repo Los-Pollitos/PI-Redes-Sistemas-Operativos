@@ -116,11 +116,11 @@ std::string log_generator::get_request_type(char type) {
 
 void log_generator::add_to_log(std::string ip, std::string send_or_receive, std::string to_log) {
     // try to open the log file to see if it exists
-    QFile check_file(QString::fromStdString(this->log_file_name));
+    QFile check_file(QString::fromStdString("../log_file/Data_LOG.txt"));
     if (!check_file.open(QIODevice::ReadOnly)) {
         std::cout << "Se crea archivo" << std::endl;
         // if it does not exist, create it
-        QFile create_file(QString::fromStdString(this->log_file_name));
+        QFile create_file(QString::fromStdString("../log_file/Data_LOG.txt"));
         create_file.open(QIODevice::WriteOnly);
         QTextStream output_stream(&create_file);
         output_stream << "Log file of " << QString::fromStdString(server_name) << "\n";
@@ -131,7 +131,7 @@ void log_generator::add_to_log(std::string ip, std::string send_or_receive, std:
         check_file.close();
     }
     // Open the file to be able to append to it
-    QFile log_file(QString::fromStdString(this->log_file_name));
+    QFile log_file(QString::fromStdString("../log_file/Data_LOG.txt"));
     log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream append_stream(&log_file);
 
@@ -147,11 +147,11 @@ void log_generator::add_answer_log(std::string ip, std::string send_or_receive, 
     std::cout << "voy a llogear" << std::endl;
 
     // try to open the log file to see if it exists
-    QFile check_file(QString::fromStdString(this->log_file_name));
+    QFile check_file(QString::fromStdString("../log_file/Data_LOG.txt"));
     if (!check_file.open(QIODevice::ReadOnly)) {
         std::cout << "Se crea archivo" << std::endl;
         // if it does not exist, create it
-        QFile create_file(QString::fromStdString(this->log_file_name));
+        QFile create_file(QString::fromStdString("../log_file/Data_LOG.txt"));
         create_file.open(QIODevice::WriteOnly);
         QTextStream output_stream(&create_file);
         output_stream << "Log file of " << QString::fromStdString(server_name) << "\n";
@@ -161,8 +161,9 @@ void log_generator::add_answer_log(std::string ip, std::string send_or_receive, 
         // leaving it open
         check_file.close();
     }
+
     // Open the file to be able to append to it
-    QFile log_file(QString::fromStdString(this->log_file_name));
+    QFile log_file(QString::fromStdString("../log_file/Data_LOG.txt"));
     log_file.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream append_stream(&log_file);
 

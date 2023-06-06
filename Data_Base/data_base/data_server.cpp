@@ -608,7 +608,9 @@ void data_server::answer_request() {
         if (this->data[0] == '#') {
             close(this->connection);
         } else {
-            this->logger->add_to_log(strIpRemoto, "received", this->data);
+            if (this->data[0] != '&') {
+                this->logger->add_to_log(strIpRemoto, "received", this->data);
+            }
             this->process_data(strIpRemoto);
         }
     }
@@ -748,6 +750,7 @@ void data_server::process_data(std::string remote_ip) {
                 adapt_data(data, to_send, DATA_SIZE * i);
                 std::cout << "Voy a mandar: " << data << std::endl;
                 write(this->connection, data, DATA_SIZE);
+                this->logger->add_answer_log(remote_ip, "sent", this->data);
             }
 
             this->data[0] = '&';
@@ -777,6 +780,7 @@ void data_server::process_data(std::string remote_ip) {
                 adapt_data(data, to_send, DATA_SIZE * i);
                 std::cout << "Voy a mandar: " << data << std::endl;
                 write(this->connection, data, DATA_SIZE);
+                this->logger->add_answer_log(remote_ip, "sent", this->data);
             }
 
             this->data[0] = '&';
@@ -806,6 +810,7 @@ void data_server::process_data(std::string remote_ip) {
                 adapt_data(data, to_send, DATA_SIZE * i);
                 std::cout << "Voy a mandar: " << data << std::endl;
                 write(this->connection, data, DATA_SIZE);
+                this->logger->add_answer_log(remote_ip, "sent", this->data);
             }
 
             this->data[0] = '&';
