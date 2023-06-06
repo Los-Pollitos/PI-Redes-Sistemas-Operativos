@@ -16,7 +16,7 @@
 
 
 #include "data_base.h"
-#include "log.h"
+#include "log_generator.h"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -32,7 +32,7 @@ private:
     int connection;
     char data[DATA_SIZE];
     int message_count;
-    log * logger;
+    log_generator * logger;
     struct sockaddr_storage ipRemoto;
 
     // Methods

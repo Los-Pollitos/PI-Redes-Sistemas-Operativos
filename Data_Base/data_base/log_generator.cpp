@@ -1,23 +1,31 @@
-#include "log.h"
+/*
+ * Team: Los Pollitos
+ * Cristopher Hernández (C13632)
+ * Luis Solano (C17634)
+ * Angie Solís (C17686)
+ * Emilia Víquez (C18625)
+ */
 
-log::log()
-{
+
+#include "log_generator.h"
+#include <ctime>
+
+log_generator::log_generator() {
 
 }
-
-log::log(std::string file_name, std::string server_name) {
+void log_generator::set_params(std::string file_name, std::string server_name) {
     this->log_file_name = file_name;
     this->server_name = server_name;
 }
 
-std::string log::get_system_time() {
+std::string log_generator::get_system_time() {
     time_t local_time = time(0);
     std::string to_return = ctime(&local_time);
     to_return = to_return.substr(0,to_return.size()-1);
     return to_return;
 }
 
-std::string log::get_request_type(char type) {
+std::string log_generator::get_request_type(char type) {
     std::string result = "";
     switch (type) {
     case LOGIN:
@@ -102,7 +110,7 @@ std::string log::get_request_type(char type) {
     return result;
 }
 
-void log::add_to_log(std::string ip, std::string send_or_receive, std::string to_log) {
+void log_generator::add_to_log(std::string ip, std::string send_or_receive, std::string to_log) {
     // try to open the log file to see if it exists
     std::ifstream check_file(this->log_file_name);
     if (!check_file.is_open()) {
@@ -125,7 +133,7 @@ void log::add_to_log(std::string ip, std::string send_or_receive, std::string to
     log_file.close();
 }
 
-void log::add_answer_log(std::string ip, std::string send_or_receive, std::string to_log) {
+void log_generator::add_answer_log(std::string ip, std::string send_or_receive, std::string to_log) {
     // try to open the log file to see if it exists
     std::ifstream check_file(this->log_file_name);
     if (!check_file.is_open()) {

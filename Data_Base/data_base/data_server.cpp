@@ -16,7 +16,8 @@
 data_server::data_server() {
     // Create the data_base
     this->base = new data_base();
-    this->logger = new log ("Data_LOG.txt", "Data Server");
+    this->logger = new log_generator ();
+    // this->logger->set_params("Data_LOG.txt", "Data Server");
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
