@@ -233,10 +233,15 @@ void initial::update_scrollbar() {
     }
 }
 
+/**
+ * @brief asks client for user's role
+ * @return role
+ */
 char initial::ask_for_role() {
     //TODO (Emilia): revisar e implementar en intermediario y base server
     char result = '0';
     std::string to_send = "";
+    to_send += (char(GET_ROLES));
     to_send += this->users_login->user;
     to_send += ",";
     result = this->local_client->send_and_receive(to_send)[0];
