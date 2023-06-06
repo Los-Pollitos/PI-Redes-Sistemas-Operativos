@@ -44,8 +44,7 @@ enum request_types {
     CHANGE_OFFICE_ID,  // 94
     CHANGE_JOB_TITLE,  // 95
     CHANGE_ROLES,  // 96
-    CHANGE_SALARY,  // 97
-    CHANGE_DEDUCTIONS  // 98
+    CHANGE_LABORAL_DATA  // 97
 };
 
 class client {

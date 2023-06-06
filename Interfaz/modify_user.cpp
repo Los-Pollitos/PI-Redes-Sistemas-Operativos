@@ -84,6 +84,7 @@ void modify_user::on_comboBox_activated(int index) {
     ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     ui->base_salary->setText(QString::number(this->user_info.salary_base));
     ui->deductions->setText(QString::number(this->user_info.deductibles));
+    ui->net_salary->setReadOnly(true);
     ui->net_salary->setText(QString::number(this->user_info.salary_net));
 }
 
@@ -234,6 +235,15 @@ void modify_user::update_data() {
         to_send[0] = CHANGE_PHONE;
         this->local_client->send_and_receive(to_send);
     }
+    if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
+        to_send = " " + this->ui->phone->text().toStdString();
+        to_send[0] = CHANGE_PHONE;
+        this->local_client->send_and_receive(to_send);
+    }
+
+
+    // TODO(Angie): hacer anotación
+    // TODO(Angie): si se cambia salary o deductions, hay que cambiar neto
 }
 
 void modify_user::update_roles() {

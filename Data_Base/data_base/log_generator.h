@@ -46,8 +46,7 @@ enum request_types {
   CHANGE_OFFICE_ID,
   CHANGE_JOB_TITLE,
   CHANGE_ROLES,
-  CHANGE_SALARY,
-  CHANGE_DEDUCTIONS
+  CHANGE_LABORAL_DATA
 };
 
 class log_generator
