@@ -1,6 +1,8 @@
 #include "generate_new_token.h"
 #include "ui_generate_new_token.h"
 
+#include <QMessageBox>
+
 generate_new_token::generate_new_token(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::generate_new_token)
@@ -86,6 +88,36 @@ void generate_new_token::on_generate_button_clicked() {
 
 
 void generate_new_token::on_generate_button_2_clicked() {
-
+    if (this->ui->password_line->text().toStdString() == this->user_data->password) {
+        std::string to_send = "";
+        to_send += ((char)GET_CHANGE_TOKEN);
+        to_send += this->ui->user_line->text().toStdString();
+        to_send += ",";
+        to_send += this->possible_token;
+        to_send += ",";
+        std::string result = "\0";
+        result = this->local_client->send_and_receive(to_send);
+        if (result[0] == '1') {
+            int token_count = 0;
+            for (int i = 0; i < TOKEN_SIZE*2; i+=2) {
+                this->user_data->token[token_count] = (((int)this->possible_token[i]) - 48)*10 +(((int)this->possible_token[i+1]) - 48) ;
+                ++token_count;
+            }
+            QMessageBox::information(this, "Aceptado", "El token ha sido actualizado");
+        } else {
+            QMessageBox::warning(this, "Error", "Usuario no existe");
+        }
+        this->possible_token = "";
+        this->ui->user_line->setText(" ");
+        this->ui->token_1->setText(" ");
+        this->ui->token_2->setText(" ");
+        this->ui->token_3->setText(" ");
+        this->ui->token_4->setText(" ");
+        this->ui->token_5->setText(" ");
+        this->ui->token_6->setText(" ");
+    } else {
+        QMessageBox::warning(this, "Error", "Datos de confirmacion incorrectos");
+        this->ui->password_line->setText("");
+    }
 }
 

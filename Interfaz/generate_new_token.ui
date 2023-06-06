@@ -186,7 +186,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Generar token</string>
+    <string>Aceptar cambios</string>
    </property>
   </widget>
  </widget>
