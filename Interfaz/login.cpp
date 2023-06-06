@@ -2,6 +2,11 @@
 #include "ui_login.h"
 #include <QMessageBox>
 
+/**
+ * @brief Construct a new login::login object
+ * 
+ * @param parent Parent window 
+ */
 login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login) {
@@ -26,6 +31,10 @@ login::login(QWidget *parent) :
                   , &login::generate_new);
 }
 
+/**
+ * @brief Destroy the login::login object
+ * 
+ */
 login::~login() {
     if (this->ui) {
       delete this->ui;
@@ -45,6 +54,11 @@ login::~login() {
     }
 }
 
+/**
+ * @brief Receives and stores a client
+ * 
+ * @param local_client Client that will be stored
+ */
 void login::set_client(client* local_client){
     this->local_client = local_client;
     // TODO (nosotros): borrar
@@ -52,6 +66,13 @@ void login::set_client(client* local_client){
     this->local_client->send_and_receive("Fcjimenez,78e8ee0b2f67531b8eda7678fa42fb");
 }
 
+/**
+ * @brief Asks client to indicate if user is valid
+ * 
+ * @param username Username to check if it is valid
+ * @param password Password to check if it is valid for the user
+ * @return int 1 if it is correct, 0 if it is not
+ */
 int login::validate_user(std::string username, std::string password) {
     std::string to_comunicate = "";
     std::cout << "GET_LOGIN es " << (char)GET_LOGIN << std::endl;
@@ -66,6 +87,11 @@ int login::validate_user(std::string username, std::string password) {
     return to_return;
 }
 
+/**
+ * @brief Asks client to send token information in order to verify if the user
+ * has their token
+ * 
+ */
 void login::ask_for_token() {
     std::string to_send = "";
     to_send += ((char)GET_TOKEN);
@@ -84,6 +110,10 @@ void login::ask_for_token() {
     }
 }
 
+/**
+ * @brief Indicates that user must be validated
+ * 
+ */
 void login::on_login_button_clicked() {
     QString username = ui->user_input->text();  // get username
     QString password = ui->password_input->text();
@@ -93,15 +123,6 @@ void login::on_login_button_clicked() {
         this->user_data->password = password.toStdString();
 
         this->ask_for_token();
-
-        // TODO(emilia): Borrar comentarios de quemar token:
-//        this->user_data->token[0] = 11;
-//        this->user_data->token[1] = 12;
-//        this->user_data->token[2] = 13;
-//        this->user_data->token[3] = 21;
-//        this->user_data->token[4] = 22;
-//        this->user_data->token[5] = 23;
-
         this->hide();
         this->token_page->set_client(this->local_client);
         this->token_page->setUserData(this->user_data);
@@ -114,12 +135,20 @@ void login::on_login_button_clicked() {
     }
 }
 
+/**
+ * @brief Goes to forgot password window
+ * 
+ */
 void login::on_forgot_button_clicked() {
     this->change_pass->setModal(true);
     this->change_pass->set_client(this->local_client);
     this->change_pass->show();
 }
 
+/**
+ * @brief Resets login window
+ * 
+ */
 void login::generate_new(){
     delete this->user_data;
     this->ui->user_input->setText("");
