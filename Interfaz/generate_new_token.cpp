@@ -100,11 +100,6 @@ void generate_new_token::on_generate_button_2_clicked() {
         std::string result = "\0";
         result = this->local_client->send_and_receive(to_send);
         if (result[0] == '1') {
-            int token_count = 0;
-            for (int i = 0; i < TOKEN_SIZE*2; i+=2) {
-                this->user_data->token[token_count] = (((int)this->possible_token[i]) - 48)*10 +(((int)this->possible_token[i+1]) - 48) ;
-                ++token_count;
-            }
             QMessageBox::information(this, "Correcto", "El token ha sido actualizado");
         } else {
             QMessageBox::warning(this, "Error", "Usuario no existe");
