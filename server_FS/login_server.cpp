@@ -155,7 +155,7 @@ void login_server::process_data(std::string ip_remote) {
       write (this->connection, username.data(), DATA_SIZE);
       break;
   }
-  this->logger->add_to_log(ip_remote,"sent",this->data);
+  this->logger->add_answer_log(ip_remote,"sent",this->data);
 }
 
 //TODO(Luis): documentar y terminar

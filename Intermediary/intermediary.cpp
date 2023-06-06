@@ -10,12 +10,12 @@
 
 // TODO(us): documentar
 intermediary::intermediary() {
-
+  this->logger = new log ("intermediary_LOG.txt", "Intermediary Server");
 }
 
 // TODO(us): documentar
 intermediary::~intermediary() {
-  
+  delete this->logger;
 }
 
 /*
@@ -75,12 +75,13 @@ void intermediary::answer_request() {
       close(this->connection);
     } else {
       // TODO(us): mandar connection
-      this->send_to_server();
+      this->logger->add_to_log(strIpRemoto, "received from client", this->data);
+      this->send_to_server(strIpRemoto);
     }
   }
 }
 
-std::string intermediary::send_and_receive_login() {
+std::string intermediary::send_and_receive_login(std::string ip_remote) {
   std::string result = "\0";
   int s = 0, n = 0; // s:socket  n: contador
   struct sockaddr_in ipServidorLogin;
@@ -98,10 +99,13 @@ std::string intermediary::send_and_receive_login() {
     } else {
       std::cout << "Voy a mandar: " << this->data  << " a autenticacion"<< std::endl;
       write(s, this->data, DATA_SIZE);
+      this->logger->add_to_log(ip_remote, "sent to login", this->data);
+
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
         std::cout << "Recibi: " << this->data << " de autenticacion" << std::endl;
         result = this->data;
+        this->logger->add_answer_log(ip_remote, "received from login", this->data);
       }
       
       memset(this->data, '0', DATA_SIZE);
@@ -117,7 +121,7 @@ std::string intermediary::send_and_receive_login() {
   return result;
 }
 
-void intermediary::send_and_receive_data_base() {
+void intermediary::send_and_receive_data_base(std::string ip_remote) {
   int s = 0, n = 1; // s:socket  n: contador
   struct sockaddr_in ip_data_server;
 
@@ -136,8 +140,12 @@ void intermediary::send_and_receive_data_base() {
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
           std::cout << "Voy a mandar: " << this->data  << " a data base"<< std::endl;
           write(s, this->data, DATA_SIZE);
+          this->logger->add_to_log(ip_remote, "sent to data base", this->data);
           n = read(this->connection, this->data, sizeof(this->data));
           std::cout << "Recibí: " << this->data << std::endl;
+          if (this->data[0] != '&') {
+           this->logger->add_answer_log(ip_remote, "received from client", this->data);
+          }
       }
       // send & to server
       write(s, this->data, DATA_SIZE);
@@ -149,6 +157,10 @@ void intermediary::send_and_receive_data_base() {
           // connection es socket cliente
           std::cout << "Recibi: " << this->data << "de data base" << std::endl;
           write(this->connection, this->data, DATA_SIZE);
+          if (this->data[0] != '&') {
+            this->logger->add_answer_log(ip_remote, "received from data base", this->data);
+            this->logger->add_answer_log(ip_remote, "sent to client", this->data);
+          }
         }
       }
       
@@ -164,29 +176,32 @@ void intermediary::send_and_receive_data_base() {
   }
 }
 
-void intermediary::send_to_server() {
+void intermediary::send_to_server(std::string ip_remote) {
   std::string to_send_back = "\0";
   char temp_data[DATA_SIZE];
   switch(data[0]) {
     case LOGIN:
     case TOKEN:
     case CHANGE_PASSWORD:
-      to_send_back = this->send_and_receive_login();
+      to_send_back = this->send_and_receive_login(ip_remote);
       read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
       // TODO(us): borrar
       std::cout << "SOY LOGIN: voy a descartar \"" << this->data << "\"\n";
       
       write(this->connection, to_send_back.data(), DATA_SIZE);
+
+      this->logger->add_answer_log(ip_remote, "sent to client", to_send_back.data());
+
       to_send_back[0] = '&';
       write(this->connection, to_send_back.data(), DATA_SIZE);
-      // TODO (nosotros): mandar a la bitácora
+
       break;
     case CREATE_USER:
     case DELETE_USER:
       for (int i = 0; i < DATA_SIZE; ++i) {
           temp_data[i] = data[i];
         }
-      to_send_back = this->send_and_receive_login();
+      to_send_back = this->send_and_receive_login(ip_remote);
       std::cout << "volvi de fs y tengo: " << to_send_back << std::endl;
       if (to_send_back[0] != '0') {
         for (int i = 0; i < DATA_SIZE; ++i) {
@@ -194,10 +209,10 @@ void intermediary::send_to_server() {
         }
         // TODO (nosotros): bases de datos 
         std::cout << "voy con data_base\n";
-        this->send_and_receive_data_base();
+        this->send_and_receive_data_base(ip_remote);
       }
       // TODO (nosotros): mandar a la bitácora
-
+    
       break;
     case PAYMENT_PROOF:
     case WORK_PROOF:
@@ -216,7 +231,7 @@ void intermediary::send_to_server() {
       // TODO(us): hacer
       break;
     case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER:
-      this->send_and_receive_data_base();
+      this->send_and_receive_data_base(ip_remote);
       break;
     default:
       std::cerr << "Error: codigo inexistente" << std::endl;

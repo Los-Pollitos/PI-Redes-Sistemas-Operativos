@@ -1,0 +1,11 @@
+Log file of Intermediary Server
+Mon Jun  5 18:40:31 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 18:40:31 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 18:40:31 2023:127.0.0.1:received from login:1
+Mon Jun  5 18:40:31 2023:127.0.0.1:sent to client:1
+Mon Jun  5 18:40:32 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 18:40:32 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 18:40:32 2023:127.0.0.1:received from login:hola de login
+Mon Jun  5 18:40:32 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 18:40:32 2023:127.0.0.1:received from data base:hola
+Mon Jun  5 18:40:32 2023:127.0.0.1:sent to client:hola
