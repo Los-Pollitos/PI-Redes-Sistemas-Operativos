@@ -139,6 +139,7 @@ void initial::setParent_Button(logout_button * parent_button){
 
 
 void initial::update_scrollbar() {
+    std::cout << "rollllllllllllllllllllllll " << this->users_data->role << std::endl;
     if ((this->users_data->role & EMPLOYEE) == EMPLOYEE) {
         this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
         this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
@@ -324,6 +325,7 @@ void initial::create_windows(int id, int type) {
      break;
    case USER_MOD:
      this->user_mod->set_login_info(this->users_login);
+     this->user_mod->add_data_to_combobox();
      this->user_mod->setModal(true);
      this->user_mod->show();
      break;
@@ -337,6 +339,8 @@ void initial::create_windows(int id, int type) {
 
 void initial::read_data() {
     std::ifstream data ("../Etapa2/Archivos/Data.txt");
+   int assigned_vacations;
+   int available_vacations;
     try {
         std::string temp = " ";
         if (data.is_open()) {
@@ -349,11 +353,12 @@ void initial::read_data() {
                 this->users_data->name.append(" ");
                 data >> temp;
             }
-            users_data->identification = std::stoi(temp);
-            data >> users_data->salary;
+            users_data->identification = temp;
+            data >> users_data->salary; /// TODO: revisar que si sea net
             data >> users_data->role;
-            data >> users_data->assigned_vacations;
-            data >> users_data->available_vacations;
+            std::cout << "rollll leeeeeeeeeeeeeeeeeeeer: " << this->users_data->role;
+            data >> assigned_vacations;
+            data >> available_vacations;
             temp = " ";
             data.close();
         }
@@ -369,11 +374,11 @@ void initial::on_pushButton_clicked() {
     // Clean user data
     this->users_data->user = "\0";
     this->users_data->name = "\0";
-    this->users_data->identification = 0;
-    this->users_data->salary = "\0";
+    //this->users_data->identification = 0;
+    // this->users_data->salary = "\0";
     this->users_data->role = 0;
-    this->users_data->assigned_vacations = 0;
-    this->users_data->available_vacations = 0;
+   //  this->users_data->assigned_vacations = 0;
+    // this->users_data->available_vacations = 0;
     // Hide initial window
     this->hide();
     this->parent_button->valid = false;

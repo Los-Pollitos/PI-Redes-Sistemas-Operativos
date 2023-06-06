@@ -3,6 +3,7 @@
 
 #include <string>
 
+#define UNEMPLOYEED 64
 #define EMPLOYEE 32
 #define HUMAN_RESOURCES 16
 #define SUPERVISOR 8
@@ -14,9 +15,17 @@
 struct user_data {
     std::string user;
     std::string name;
-    int identification;
+    std::string identification;
+    std::string phone;
+    std::string email;
+    std::string job_title;
+    char office_id;
+    // char role;  // TODO cambiar a int
+    int salary_base;
+    int deductibles;
+    int salary_net;
     std::string salary;
-    int role;
+    int role;  // TODO poner el otro
     int assigned_vacations;
     int available_vacations;
 };
