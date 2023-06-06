@@ -41,6 +41,18 @@ data_base::data_base() {
 data_base::~data_base() {
 }
 
+char data_base::get_rol(std::string user) {
+    QSqlQuery consult_role;
+    char result = '\0';
+    consult_role.prepare("SELECT roles FROM employees WHERE user = (:user)");
+    consult_role.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_role.exec() && consult_role.next()){
+        result = consult_role.value(0).toString().toStdString()[0];
+    }
+    return result;
+}
+
 // TODO(nosotros): DOCUMENTAR
 void data_base::add_office(int id, std::string name) {
     QString office_str("CREATE TABLE IF NOT EXISTS offices (id INTEGER, name TEXT)");

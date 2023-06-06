@@ -110,6 +110,8 @@ std::string log_generator::get_request_type(char type) {
     case DATA_USER:
         result = "DATA_USER";
         break;
+    case GET_ROLES:
+        result = "GET_ROLES";
     default:
         result = "NONE";
     }

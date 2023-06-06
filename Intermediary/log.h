@@ -39,7 +39,8 @@ enum request_types {
   ANSWER_VACATION_REQUEST,  
   USER_OFFICE,  
   ALL_USERS_OFFICE,  
-  DATA_USER  
+  DATA_USER,
+  GET_ROLES 
 };
 
 class log {

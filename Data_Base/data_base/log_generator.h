@@ -38,8 +38,9 @@ enum request_types {
   ANSWER_SALARY_PROOF,  
   ANSWER_VACATION_REQUEST,  
   USER_OFFICE,  
-  ALL_USERS_OFFICE,  
-  DATA_USER  
+  ALL_USERS_OFFICE,
+  DATA_USER,
+  GET_ROLES
 };
 
 class log_generator

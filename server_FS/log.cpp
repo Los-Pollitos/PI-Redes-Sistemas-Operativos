@@ -103,6 +103,9 @@ std::string log::get_request_type(char type) {
     case DATA_USER:
       result = "DATA_USER";
       break;
+    case GET_ROLES:
+      result = "GET_ROLES";
+      break;
     default:
       result = "NONE";
   }
