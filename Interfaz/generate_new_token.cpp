@@ -3,6 +3,11 @@
 
 #include <QMessageBox>
 
+/**
+ * @brief Construct a new generate new token::generate new token object
+ * 
+ * @param parent Parent window
+ */
 generate_new_token::generate_new_token(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::generate_new_token)
@@ -46,17 +51,36 @@ generate_new_token::generate_new_token(QWidget *parent) :
     this->ui->token_6->setText(" ");
 }
 
+/**
+ * @brief Destroy the generate new token::generate new token object
+ * 
+ */
 generate_new_token::~generate_new_token() {
     delete ui;
 }
 
+/**
+ * @brief Receives user's login information and stores it
+ * 
+ * @param user_data User's login information
+ */
 void generate_new_token::set_login_info(login_info * user_data) {
     this->user_data = user_data;
 }
+
+/**
+ * @brief Receives client from previous window and stores it
+ * 
+ * @param local_client Client receives from previous window
+ */
 void generate_new_token::set_client(client * local_client){
     this->local_client = local_client;
 }
 
+/**
+ * @brief Indicates that new token must be generated and shown
+ * 
+ */
 void generate_new_token::on_generate_button_clicked() {
     this->possible_token = "";
 
@@ -104,6 +128,10 @@ void generate_new_token::on_generate_button_clicked() {
 }
 
 
+/**
+ * @brief Indicates that boss wants to proceed with change of token
+ * 
+ */
 void generate_new_token::on_generate_button_2_clicked() {
     if (this->ui->password_line->text().toStdString() == this->user_data->password) {
         std::string to_send = "";
