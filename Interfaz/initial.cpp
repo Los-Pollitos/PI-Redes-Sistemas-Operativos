@@ -233,6 +233,16 @@ void initial::update_scrollbar() {
     }
 }
 
+char initial::ask_for_role() {
+    //TODO (Emilia): revisar e implementar en intermediario y base server
+    char result = '0';
+    std::string to_send = "";
+    to_send += this->users_login->user;
+    to_send += ",";
+    result = this->local_client->send_and_receive(to_send)[0];
+    return result;
+}
+
 
 /**
  * @brief Destroy the initial::initial object

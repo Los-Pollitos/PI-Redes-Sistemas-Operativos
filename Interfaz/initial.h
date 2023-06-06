@@ -47,6 +47,8 @@ private slots:
     void on_pushButton_clicked();
 
 private:
+    char ask_for_role();
+    char role;
     Ui::initial *ui;
     work_proof *work_page;
     payment_proof *payment_page;
