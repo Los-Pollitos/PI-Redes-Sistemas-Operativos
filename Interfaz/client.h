@@ -37,7 +37,15 @@ enum request_types {
     ANSWER_VACATION_REQUEST,
     USER_OFFICE,
     ALL_USERS_OFFICE,
-    DATA_USER
+    DATA_USER,  // 90
+    GET_ROLES,  // 91
+    CHANGE_PHONE,  // 92
+    CHANGE_EMAIL,  // 93
+    CHANGE_OFFICE_ID,  // 94
+    CHANGE_JOB_TITLE,  // 95
+    CHANGE_ROLES,  // 96
+    CHANGE_SALARY,  // 97
+    CHANGE_DEDUCTIONS  // 98
 };
 
 class client {
