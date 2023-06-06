@@ -28,6 +28,8 @@ public:
 private slots:
     void update_data();
     Qt::CheckState unmask_role(int role_id, char role);
+    void set_read_only();
+    void update_roles();
     void on_comboBox_activated(int index);
     void on_approve_changes_clicked();
 

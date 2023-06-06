@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>651</width>
-    <height>785</height>
+    <height>823</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,7 +72,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>730</y>
+     <y>770</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -296,7 +296,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>470</y>
+     <y>510</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -312,7 +312,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>470</y>
+     <y>510</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -322,7 +322,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>510</y>
+     <y>550</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -338,7 +338,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>510</y>
+     <y>550</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -348,7 +348,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>550</y>
+     <y>590</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -364,7 +364,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>550</y>
+     <y>590</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -374,7 +374,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>680</y>
+     <y>720</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -390,7 +390,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>680</y>
+     <y>720</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -400,7 +400,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>590</y>
+     <y>630</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -416,7 +416,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>590</y>
+     <y>630</y>
      <width>341</width>
      <height>61</height>
     </rect>
@@ -443,6 +443,32 @@
     <rect>
      <x>180</x>
      <y>130</y>
+     <width>341</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_15">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>470</y>
+     <width>161</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Vacaciones disponibles:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="vacations">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>470</y>
      <width>341</width>
      <height>25</height>
     </rect>
