@@ -7,7 +7,6 @@
 #include <QMessageBox>
 
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
-    this->modified_index = -1;
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->approve_changes->setStyleSheet("color: #001f21;");
@@ -54,21 +53,15 @@ modify_user::~modify_user() {
 // TODO(Angie): modificar
 void modify_user::on_comboBox_activated(int index) {
     // obtain the user's data
-    user_data user_info;
-    user_info.user = this->user_names[index];
+    this->user_info.user = this->user_names[index];
     std::string to_send = "0" + this->user_names[index];
     to_send[0] = DATA_USER;
     std::string data_received = this->local_client->send_and_receive(to_send);
     // data_received tiene el formato definido en el datagrama
-    this->load_user_data(user_info, data_received);
-
-    // save the index
-    this->modified_index = index;
+    this->load_user_data(data_received);
 
     // if the user was fired, noting can't be changed
     if(unmask_role(index, UNEMPLOYEED) == Qt::Checked) {
-        // TODO(Angie)
-
         ui->checkbox_active->setCheckState(unmask_role(index, UNEMPLOYEED));
 
         // read only the other roles
@@ -96,13 +89,13 @@ void modify_user::on_comboBox_activated(int index) {
     }
 
     // set the data in the ui
-    int office_id = (int) user_info.office_id;
+    int office_id = (int) this->user_info.office_id;
     ui->name->setReadOnly(true);
-    ui->name->setText(QString::fromStdString(user_info.name));
+    ui->name->setText(QString::fromStdString(this->user_info.name));
     ui->id->setReadOnly(true);
-    ui->id->setText(QString::fromStdString(user_info.identification));
-    ui->phone->setText(QString::fromStdString(user_info.phone));
-    ui->email->setText(QString::fromStdString(user_info.email));
+    ui->id->setText(QString::fromStdString(this->user_info.identification));
+    ui->phone->setText(QString::fromStdString(this->user_info.phone));
+    ui->email->setText(QString::fromStdString(this->user_info.email));
     ui->office->setText(QString::number(office_id));
     ui->checkbox_admin_users->setCheckState(unmask_role(index, ADMIN_USER));
     ui->checkbox_admin_config->setCheckState(unmask_role(index, ADMIN_CONFIG));
@@ -110,19 +103,19 @@ void modify_user::on_comboBox_activated(int index) {
     ui->checkbox_employee->setCheckState(unmask_role(index, EMPLOYEE));
     ui->checkbox_human_resources->setCheckState(unmask_role(index, HUMAN_RESOURCES));
     ui->checkbox_supervisor->setCheckState(unmask_role(index, SUPERVISOR));
-    ui->job_title->setText(QString::fromStdString(user_info.job_title));
-    ui->base_salary->setText(QString::number(user_info.salary_base));
-    ui->deductions->setText(QString::number(user_info.deductibles));
-    ui->net_salary->setText(QString::number(user_info.salary_net));
+    ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
+    ui->base_salary->setText(QString::number(this->user_info.salary_base));
+    ui->deductions->setText(QString::number(this->user_info.deductibles));
+    ui->net_salary->setText(QString::number(this->user_info.salary_net));
 }
 
-void modify_user::load_user_data(user_data& user_info, std::string& data) {
+void modify_user::load_user_data(std::string& data) {
     // clean the user_data strings
-    user_info.name = "\0";
-    user_info.identification  = "\0";
-    user_info.phone  = "\0";
-    user_info.email  = "\0";
-    user_info.job_title  = "\0";
+    this->user_info.name = "\0";
+    this->user_info.identification  = "\0";
+    this->user_info.phone  = "\0";
+    this->user_info.email  = "\0";
+    this->user_info.job_title  = "\0";
 
     size_t pos = 0;
     int commas_found = 0;
@@ -133,25 +126,25 @@ void modify_user::load_user_data(user_data& user_info, std::string& data) {
         if (data[pos] != ',') {
             switch(commas_found) {
             case 0:  // the name is
-                user_info.name += data[pos];
+                this->user_info.name += data[pos];
                 break;
             case 1:  // identification
-                user_info.identification += data[pos];
+                this->user_info.identification += data[pos];
                 break;
             case 2:  // phone
-                user_info.phone += data[pos];
+                this->user_info.phone += data[pos];
                 break;
             case 3:  // email
-                user_info.email += data[pos];
+                this->user_info.email += data[pos];
                 break;
             case 4:  // office
-                user_info.office_id = data[pos];  // only one char always
+                this->user_info.office_id = data[pos];  // only one char always
                 break;
             case 5:  // role
-                user_info.role = data[pos];  // only one char always
+                this->user_info.role = data[pos];  // only one char always
                 break;
             case 6:  // job_title
-                user_info.job_title += data[pos];
+                this->user_info.job_title += data[pos];
                 break;
             case 7:  // base salary
                 temp_salary += data[pos];
@@ -165,9 +158,9 @@ void modify_user::load_user_data(user_data& user_info, std::string& data) {
         }
         ++pos;
     }
-    user_info.salary_base = stoi(temp_salary);
-    user_info.deductibles = stoi(temp_deductibles);
-    user_info.salary_net = user_info.salary_base - user_info.deductibles;
+    this->user_info.salary_base = stoi(temp_salary);
+    this->user_info.deductibles = stoi(temp_deductibles);
+    this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
 }
 
 // Método que va a agregar los usuarios al comboBox
@@ -225,42 +218,54 @@ void modify_user::on_approve_changes_clicked() {
 }
 
 void modify_user::update_data() {
-    // TODO(Angie): modificar
-    //    users_data[modified_index].role = 0;
-    //    // if the user is Debug, it can not have more roles
-    //    if (ui->checkbox_debug->checkState() == 2) {  // the 2 indicates the user has that role
-    //        users_data[modified_index].role = DEBUG;
-    //        ui->checkbox_admin_users->setCheckState(unmask_role(modified_index, ADMIN_USER));
-    //        ui->checkbox_admin_config->setCheckState(unmask_role(modified_index, ADMIN_CONFIG));
-    //        ui->checkbox_employee->setCheckState(unmask_role(modified_index, EMPLOYEE));
-    //        ui->checkbox_human_resources->setCheckState(unmask_role(modified_index, HUMAN_RESOURCES));
-    //        ui->checkbox_supervisor->setCheckState(unmask_role(modified_index, SUPERVISOR));
-    //    } else {
-    //        if (ui->checkbox_admin_config->checkState() == 2) {
-    //            users_data[modified_index].role |= ADMIN_CONFIG;
-    //        }
-    //        if (ui->checkbox_admin_users->checkState() == 2) {
-    //            users_data[modified_index].role |= ADMIN_USER;
-    //        }
-    //        if (ui->checkbox_employee->checkState() == 2) {
-    //            users_data[modified_index].role |= EMPLOYEE;
-    //        }
-    //        if (ui->checkbox_human_resources->checkState() == 2) {
-    //            users_data[modified_index].role |= HUMAN_RESOURCES;
-    //        }
-    //        if (ui->checkbox_supervisor->checkState() == 2) {
-    //            users_data[modified_index].role |= SUPERVISOR;
-    //        }
-    //        if (ui->checkbox_debug->checkState() == 2) {
-    //            users_data[modified_index].role |= DEBUG;
-    //        }
-    //    }
+    // TODO(Angie): send to client
+    std::string to_send = "\0";
+
+    // something was modified, so data has to be updated
+    // check if the employee was fired
+    if (ui->checkbox_active->checkState() == Qt::Checked
+            && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
+        // the new role is only fired
+        this->user_info.role = UNEMPLOYEED;
+        to_send = "  ";
+//        to_send[0] = tipo  // TODO(Angie)
+        to_send[1] = this->user_info.role;
+
+        // TODO(Angie): update data base
+        // this->local_client->send_and_receive(to_send);
+    }
+
+    // if the user is Debug, it can not have more roles
+//    if (ui->checkbox_debug->checkState() == Qt::Checked) {
+//        users_data[modified_index].role = DEBUG;
+//        ui->checkbox_admin_users->setCheckState(unmask_role(modified_index, ADMIN_USER));
+//        ui->checkbox_admin_config->setCheckState(unmask_role(modified_index, ADMIN_CONFIG));
+//        ui->checkbox_employee->setCheckState(unmask_role(modified_index, EMPLOYEE));
+//        ui->checkbox_human_resources->setCheckState(unmask_role(modified_index, HUMAN_RESOURCES));
+//        ui->checkbox_supervisor->setCheckState(unmask_role(modified_index, SUPERVISOR));
+//    } else {
+//        if (ui->checkbox_admin_config->checkState() == 2) {
+//            users_data[modified_index].role |= ADMIN_CONFIG;
+//        }
+//        if (ui->checkbox_admin_users->checkState() == 2) {
+//            users_data[modified_index].role |= ADMIN_USER;
+//        }
+//        if (ui->checkbox_employee->checkState() == 2) {
+//            users_data[modified_index].role |= EMPLOYEE;
+//        }
+//        if (ui->checkbox_human_resources->checkState() == 2) {
+//            users_data[modified_index].role |= HUMAN_RESOURCES;
+//        }
+//        if (ui->checkbox_supervisor->checkState() == 2) {
+//            users_data[modified_index].role |= SUPERVISOR;
+//        }
+//        if (ui->checkbox_debug->checkState() == 2) {
+//            users_data[modified_index].role |= DEBUG;
+//        }
+//    }
 
     //    this->users_data[modified_index].salary = ui->salary->text().toStdString();
     //    this->users_data[modified_index].available_vacations = ui->vacations->text().toInt();
-    //    // TODO(nosotros): record (no es requerido para esta entrega)
-
-    //    this->write_data();
 }
 
 void modify_user::set_login_info(login_info* info) {
