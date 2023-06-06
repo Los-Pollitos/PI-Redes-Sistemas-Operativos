@@ -474,3 +474,13 @@ Mon Jun  5 23:00:08 2023:127.0.0.1:received from client:TOKEN:gherrera,
 Mon Jun  5 23:00:08 2023:127.0.0.1:sent to login:TOKEN:gherrera,
 Mon Jun  5 23:00:08 2023:127.0.0.1:received from login:574839076859³U
 Mon Jun  5 23:00:08 2023:127.0.0.1:sent to client:574839076859³U
+Mon Jun  5 23:03:22 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:22 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:22 2023:127.0.0.1:received from login:1
+Mon Jun  5 23:03:22 2023:127.0.0.1:sent to client:1
+Mon Jun  5 23:03:23 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:23 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:23 2023:127.0.0.1:received from login:hola de login
+Mon Jun  5 23:03:23 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:23 2023:127.0.0.1:received from data base:hola
+Mon Jun  5 23:03:23 2023:127.0.0.1:sent to client:hola

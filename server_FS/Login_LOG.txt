@@ -225,3 +225,7 @@ Mon Jun  5 23:00:07 2023:127.0.0.1:received:LOGIN:gherrera,4e3f6bf544ccf40302f69
 Mon Jun  5 23:00:07 2023:127.0.0.1:sent:1
 Mon Jun  5 23:00:08 2023:127.0.0.1:received:TOKEN:gherrera,
 Mon Jun  5 23:00:08 2023:127.0.0.1:sent:574839076859
+Mon Jun  5 23:03:22 2023:127.0.0.1:received:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:22 2023:127.0.0.1:sent:1
+Mon Jun  5 23:03:23 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 23:03:23 2023:127.0.0.1:sent:Fcjimenez,78e8ee0b2f67531b8eda7678fa42fb

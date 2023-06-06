@@ -118,7 +118,7 @@ void initial::set_client(client* local_client){
     this->user_mod->set_client(this->local_client);
     this->new_token->set_client(this->local_client);
     this->vacation_manager->set_client(this->local_client);
-    this->see_vacations->set_client(this->local_client);*/
+    this->see_vacations->set_client(this->local_client);
 }
 
 void initial::setUserDataLogin(login_info * user_login) {

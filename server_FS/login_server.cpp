@@ -351,6 +351,9 @@ void login_server::change_password() {
   std::string new_token = "";
   int i = 1;
   for (i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+    // discard first user (it is just for log)
+  }
+  for (i = i; i < DATA_SIZE && this->data[i] != ','; ++i) {
     if (this->data[i] != ',') {
       username += this->data[i];
     }
@@ -388,7 +391,7 @@ void login_server::change_password() {
     // Extract token
     if (found) {
       // buffer has username, now we want to ignore hash
-      this->file_system->read_until("Server", "Login.txt", ',');
+      buffer = this->file_system->read_until("Server", "Login.txt", ',');
       // modify token
       this->file_system->write("Server","Login.txt", new_token);
       memset(this->data, '\0', DATA_SIZE);
