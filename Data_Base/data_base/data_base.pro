@@ -9,6 +9,7 @@ CONFIG += c++17 cmdline
 SOURCES += \
         data_base.cpp \
         data_server.cpp \
+        log.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -18,7 +19,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     data_base.h \
-    data_server.h
+    data_server.h \
+    log.h
 
 DISTFILES += \
     employees.txt \
