@@ -6,6 +6,11 @@
 #include <fstream>
 
 
+/**
+ * @brief Construct a new initial::initial object
+ * 
+ * @param parent Parent window
+ */
 initial::initial(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::initial) {
@@ -110,6 +115,11 @@ initial::initial(QWidget *parent) :
 
 }
 
+/**
+ * @brief Receives client from parent window, stores it and gives it to other windows
+ * 
+ * @param local_client Client that will be stored and passed down
+ */
 void initial::set_client(client* local_client){
     this->local_client = local_client;
     this->work_page->set_client(this->local_client);
@@ -126,18 +136,31 @@ void initial::set_client(client* local_client){
     this->see_vacations->set_client(this->local_client);
 }
 
+/**
+ * @brief Receives login information and stores it
+ * 
+ * @param user_login login information
+ */
 void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;
     this->read_data();
     emit this->update_buttons->update_all();
 }
 
+/**
+ * @brief Receives logout logic button and stores it
+ * 
+ * @param parent_button Logout logic button
+ */
 void initial::setParent_Button(logout_button * parent_button){
     this->parent_button = parent_button;
     emit this->update_buttons->update_all();
 }
 
-
+/**
+ * @brief Removes and adds necesary buttons acording to user's role
+ * 
+ */
 void initial::update_scrollbar() {
     if ((this->users_data->role & EMPLOYEE) == EMPLOYEE) {
         this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
@@ -211,6 +234,10 @@ void initial::update_scrollbar() {
 }
 
 
+/**
+ * @brief Destroy the initial::initial object
+ * 
+ */
 initial::~initial() {
     if (this->ui) {
        delete this->ui;
@@ -274,7 +301,12 @@ initial::~initial() {
      }
 }
 
-
+/**
+ * @brief Opens windows when their button is clicked
+ * 
+ * @param id button id to know which window to open
+ * @param type unused parameter
+ */
 void initial::create_windows(int id, int type) {
    (void) type;
    switch (id) {
@@ -336,6 +368,7 @@ void initial::create_windows(int id, int type) {
    }
 }
 
+// TODO(nosotros): desaparecer método y sacar rol de base de datos
 void initial::read_data() {
     std::ifstream data ("../Etapa2/Archivos/Data.txt");
    int assigned_vacations;
@@ -353,7 +386,7 @@ void initial::read_data() {
                 data >> temp;
             }
             users_data->identification = temp;
-//            data >> users_data->salary; /// TODO: revisar que si sea net
+            data >> users_data->net_salary;
             data >> users_data->role;
             data >> assigned_vacations;
             data >> available_vacations;
@@ -366,10 +399,13 @@ void initial::read_data() {
 }
 
 
-// Logout
+/**
+ * @brief Sends logout signal and closes initial window
+ * 
+ */
 void initial::on_pushButton_clicked() {
     emit this->parent_button->pressed();
-    // Clean user data
+    // Clean user data //TODO(us): hacer que solo limpie el rol pq solo ocupamos rol
     this->users_data->user = "\0";
     this->users_data->name = "\0";
     //this->users_data->identification = 0;
