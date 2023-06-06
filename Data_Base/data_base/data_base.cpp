@@ -90,7 +90,7 @@ void data_base::add_employee(std::string user, std::string name, std::string id
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::add_request(std::string user, int id, int solved, int day_request
+void data_base::add_request(std::string user,int solved, int day_request
                             , int month_request, int year_request
                             ,int day_answer, int month_answer, int year_answer, int type
                             ,int request_id_vac, int day_vac, int month_vac, int year_vac
@@ -107,7 +107,7 @@ void data_base::add_request(std::string user, int id, int solved, int day_reques
     QSqlQuery new_request;
     new_request.prepare("INSERT INTO requests (user, id, solved, day_request, month_request, year_request, day_answer, month_answer, year_answer, type, request_id_vac, day_vac, month_vac, year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof) VALUES (:user, :id, :solved, :day_request, :month_request, :year_request, :day_answer, :month_answer, :year_answer, :type, :request_id_vac, :day_vac, :month_vac, :year_vac, :shift_vac, :proof_type, :content_proof, :user_signing_boss_proof)");
     new_request.bindValue(":user", QString::fromStdString(user));
-    new_request.bindValue(":id", id);
+    new_request.bindValue(":id", this->request_count);
     new_request.bindValue(":solved", solved);
     new_request.bindValue(":day_request", day_request);
     new_request.bindValue(":month_request", month_request);
@@ -127,10 +127,11 @@ void data_base::add_request(std::string user, int id, int solved, int day_reques
     if(!new_request.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando solicitud: " << new_request.lastError();
     }
+    ++this->request_count;
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::add_laboral_data(std::string user, int data_id
+void data_base::add_laboral_data(std::string user
                                 , int start_day, int start_month, int start_year
                                 , int end_day, int end_month, int end_year
                                 , int gross_salary, int deductibles, std::string job_title) {
@@ -145,7 +146,7 @@ void data_base::add_laboral_data(std::string user, int data_id
     QSqlQuery new_laboral_data;
     new_laboral_data.prepare("INSERT INTO laboral_datas (user, data_id, start_day, start_month, start_year, end_day, end_month, end_year, gross_salary, deductibles, job_title) VALUES (:user, :data_id, :start_day, :start_month, :start_year, :end_day, :end_month, :end_year, :gross_salary, :deductibles, :job_title)");
     new_laboral_data.bindValue(":user", QString::fromStdString(user));
-    new_laboral_data.bindValue(":data_id", data_id);
+    new_laboral_data.bindValue(":data_id", this->laboral_count);
     new_laboral_data.bindValue(":start_day", start_day);
     new_laboral_data.bindValue(":start_month", start_month);
     new_laboral_data.bindValue(":start_year", start_year);
@@ -158,10 +159,11 @@ void data_base::add_laboral_data(std::string user, int data_id
     if(!new_laboral_data.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando datos laborales: " << new_laboral_data.lastError();
     }
+    ++this->laboral_count;
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::add_record(std::string user, int id, int day, int month, int year, std::string annotation) {
+void data_base::add_record(std::string user, int day, int month, int year, std::string annotation) {
     // Create the record table if not created
     QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, id INTEGER, day INTEGER, month INTEGER, year INTEGER, annotation TEXT)");
     QSqlQuery record_table;
@@ -173,7 +175,7 @@ void data_base::add_record(std::string user, int id, int day, int month, int yea
     QSqlQuery new_record;
     new_record.prepare("INSERT INTO records (user, id, day, month, year, annotation) VALUES (:user, :id, :day, :month, :year, :annotation)");
     new_record.bindValue(":user", QString::fromStdString(user));
-    new_record.bindValue(":id", id);
+    new_record.bindValue(":id", this->record_count);
     new_record.bindValue(":day", day);
     new_record.bindValue(":month", month);
     new_record.bindValue(":year", year);
@@ -181,6 +183,7 @@ void data_base::add_record(std::string user, int id, int day, int month, int yea
     if(!new_record.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando anotación: " << new_record.lastError();
     }
+    ++ this->record_count;
 }
 
 // TODO(nosotros): DOCUMENTAR

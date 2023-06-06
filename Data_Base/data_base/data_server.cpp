@@ -308,7 +308,7 @@ void data_server::load_laboral_data() {
             this->copy_string(line,job_title,initial_pos ,end_pos-1);
 
             // add to laboral data table
-            this->base->add_laboral_data(user, data_id, start_day, start_month, start_year, end_day
+            this->base->add_laboral_data(user, start_day, start_month, start_year, end_day
                                          , end_month, end_year, gross_salary, deductibles, job_title);
         }
         laboral_data_file.close();
@@ -474,7 +474,7 @@ void data_server::load_requests() {
             // save the user_signing_boss_proof
             this->copy_string(line,user_signing_boss_proof,initial_pos ,end_pos-1);
 
-            this->base->add_request(user, id, solved, day_request, month_request, year_request, day_answer
+            this->base->add_request(user, solved, day_request, month_request, year_request, day_answer
                                     , month_answer, year_answer, type, request_id_vac, day_vac, month_vac
                                     , year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof);
         }
@@ -547,7 +547,7 @@ void data_server::load_records() {
             this->copy_string(line,annotation,initial_pos ,end_pos-1);
 
             // add to records table
-            this->base->add_record (user, id, day, month, year, annotation);
+            this->base->add_record (user, day, month, year, annotation);
         }
         records_file.close();
     }
