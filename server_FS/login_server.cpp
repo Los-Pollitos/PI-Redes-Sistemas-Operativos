@@ -16,7 +16,7 @@ login_server::login_server() {
   this->file_system = new FS();
   this->connection = -1;
   this->message_count = 0;
-
+  this->logger =  new log ("Login_LOG.txt", "Login Server");
   // Load the file system from image
   std::ifstream current_file("fs_image.dat");
   if (current_file.is_open()) {
@@ -36,6 +36,7 @@ login_server::~login_server() {
   this->file_system->write_unit();
   // Delete the file system
   delete this->file_system;
+  delete this->logger;
 }
 
 /*
@@ -113,7 +114,6 @@ void login_server::answer_request() {
 
   inet_ntop(AF_INET, &s->sin_addr, strIpRemoto, sizeof strIpRemoto);
   std::cout << " IP Remoto: " << strIpRemoto << std::endl;
-
   while (this->connection != -1 &&
          (n = read(this->connection, this->data, DATA_SIZE)) > 0) {
     // connection es socket cliente
@@ -121,13 +121,15 @@ void login_server::answer_request() {
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
-      this->process_data();
+      // send request to log
+      this->logger->add_to_log(strIpRemoto, "received" ,this->data );
+      this->process_data(strIpRemoto);
     }
   }
 }
 
 // TODOD (us): Document
-void login_server::process_data() {
+void login_server::process_data(std::string ip_remote) {
   std::string username = "\0";
   std::string hash = "\0";
   // TODO (stoi)
@@ -144,16 +146,16 @@ void login_server::process_data() {
       this->change_password();
       break;
     case CREATE_USER:
-      // TODO(luis): hacer
+      // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
       this->create_user(username, hash);
       break;
     case DELETE_USER:
-      // TODO(luis): hacer
+      // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
       username = "hola de login";
       write (this->connection, username.data(), DATA_SIZE);
       break;
   }
-  // TODO: meter a bitácora
+  this->logger->add_to_log(ip_remote,"sent",this->data);
 }
 
 //TODO(Luis): documentar y terminar

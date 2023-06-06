@@ -15,6 +15,7 @@
 #define PORT 8080
 
 #include "file_system.h"
+#include "log.h"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -22,14 +23,6 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
-
-enum request_types {
-  LOGIN = 65,
-  TOKEN,
-  CHANGE_PASSWORD,
-  CREATE_USER,
-  DELETE_USER,
-};
 
 class login_server {
   private:
@@ -39,11 +32,12 @@ class login_server {
     char data[DATA_SIZE];
     int message_count;
     struct sockaddr_storage ipRemoto;
+    log * logger;
 
     // Methods
     void load_from_file();
     void find_data(std::string& username,  std::string& hash);
-    void process_data();
+    void process_data(std::string ip_remote);
     void adapt_data(std::string& new_info);
     void create_user(std::string& username,  std::string& hash);
     bool existing_user(std::string& username);

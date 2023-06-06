@@ -48,10 +48,11 @@ class log {
     std::string log_file_name;
     std::string server_name;
     std::string get_system_time();
+    std::string get_request_type(char type);
     
   public:
     log(std::string file_name, std::string server_name);
-    void add_to_log(std::string ip, std::string to_log);
+    void add_to_log(std::string ip, std::string send_or_receive ,std::string to_log);
 };
 
 #endif // LOG
