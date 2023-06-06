@@ -37,12 +37,34 @@ void modify_user::on_comboBox_activated(int index) {
 // TODO(Angie): ver si dejar igual
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
-//    for (size_t i = 0; i < users_data.size(); ++i) {
-//        // an user can not modify itself
-//        if (this->users_data[i].user != this->user_login->user) {
-//            ui->comboBox->addItem(QString::fromStdString(this->users_data[i].name));
-//        }
-//    }
+    // find the user's office id
+    std::string to_send = "0" + this->user_info.user;
+    to_send[0] = USER_OFFICE;
+    std::string data_received = this->local_client->send_and_receive(to_send);
+
+    // find all the users of an office
+    to_send = "01";
+    to_send[0] = ALL_USERS_OFFICE;
+    to_send[1] = data_received[0];  // data_received[0] is a char that represents the office_id
+    data_received = this->local_client->send_and_receive(to_send);
+
+    // store the usernames individually
+    std::string new_user = "\0";
+    for(size_t i = 0; i < data_received.length(); ++i) {
+        if (data_received[i] != ',') {
+            new_user += data_received[i];
+        } else {  // is the end of the username
+            if (new_user != this->user_info.user) {  // an user cannot modify itself
+                this->user_names.push_back(new_user);
+            }
+            new_user = "\0";  // it is cleaned for next username
+        }
+    }
+
+    // add the users to the comboBox
+    for (size_t i = 0; i < user_names.size(); ++i) {
+        ui->comboBox->addItem(QString::fromStdString(this->user_names[i]));
+    }
 }
 
 // role indicates the role that wants to be analized if the user has
