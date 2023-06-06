@@ -10,6 +10,7 @@ login::login(QWidget *parent) :
     this->ui->pic_label->setPixmap(pix.scaled(ui->pic_label->width(),
                                                ui->pic_label->height(),Qt::KeepAspectRatio));
     this->ui->password_input->setEchoMode(QLineEdit::Password); // no muestra password
+    this->setStyleSheet("background-color: #61688A;");
     this->token_page = new Token(nullptr);
     this->change_pass = new change_password(this);
     this->setWindowTitle("Login");
