@@ -263,10 +263,18 @@ void modify_user::update_data() {
         to_send[1] = this->user_info.available_vacations;
         this->local_client->send_and_receive(to_send);
     }
+    if (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() <= 50) {
+        this->user_info.job_title = this->ui->job_title->text().toStdString();
+        to_send = " " + this->user_info.job_title;
+        to_send[0] = CHANGE_JOB_TITLE;
+        this->local_client->send_and_receive(to_send);
+    }
 
 
     // TODO(Angie): hacer anotación
     // TODO(Angie): si se cambia salary o deductions, hay que cambiar neto
+    // TODO(Angie): al hacer cambio en puesto, salario o deducciones se hace new laboral data y se actualiza employee
+    // TODO(Angie): si lo despiden, actualizar laboral_data
 }
 
 void modify_user::update_roles() {
@@ -278,8 +286,8 @@ void modify_user::update_roles() {
     // check if the employee was fired
     if (ui->checkbox_active->checkState() == Qt::Checked
         && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
-        // the new role is only fired
-        this->user_info.role = UNEMPLOYEED;
+        // the new role is fired
+        this->user_info.role = UNEMPLOYEED | this->user_info.role;
         to_send[1] = this->user_info.role;
         this->local_client->send_and_receive(to_send);
 
