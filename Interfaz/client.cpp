@@ -1,14 +1,31 @@
 #include "client.h"
 
+/**
+ * @brief Construct a new client::client object
+ * 
+ */
 client::client() {
 }
 
+/**
+ * @brief Inserts a new string into data starting at received position
+ * 
+ * @param data Array of data into which the new info shall be placed
+ * @param new_info Information that will be placed into data
+ * @param pos Position to start the transfer
+ */
 void client::adapt_data(char* data, std::string& new_info, int pos) {
     for (int i = 0; i < CLIENT_DATA_SIZE; ++i){
         data[i] = new_info[i+pos];
     }
 }
 
+/**
+ * @brief Sends and receives information to intermediary
+ * 
+ * @param to_send Information that needs to be sent
+ * @return std::string Information received
+ */
 std::string client::send_and_receive(std::string to_send) {
     std::string resultado = "";
     int s = 0, n = 0; // s:socket  n: contador
