@@ -107,6 +107,18 @@ initial::initial(QWidget *parent) :
 
 void initial::set_client(client* local_client){
     this->local_client = local_client;
+    this->work_page->set_client(this->local_client);
+    this->payment_page->set_client(this->local_client);
+    this->salary_page->set_client(this->local_client);
+    this->see_salary->set_client(this->local_client);
+    this->pending_requests->set_client(this->local_client);
+    this->see_record->set_client(this->local_client);
+    this->request_handler->set_client(this->local_client);
+    this->user_manager->set_client(this->local_client);
+    this->user_mod->set_client(this->local_client);
+    this->new_token->set_client(this->local_client);
+    this->vacation_manager->set_client(this->local_client);
+    this->see_vacations->set_client(this->local_client);*/
 }
 
 void initial::setUserDataLogin(login_info * user_login) {
@@ -259,18 +271,6 @@ initial::~initial() {
 
 
 void initial::create_windows(int id, int type) {
-//     this->work_page->set_client(this->local_client);
-//     this->payment_page->set_client(this->local_client);
-//     this->salary_page->set_client(this->local_client);
-//     this->see_salary->set_client(this->local_client);
-//     this->pending_requests->set_client(this->local_client);
-//     this->see_record->set_client(this->local_client);
-//     this->request_handler->set_client(this->local_client);
-//     this->user_manager->set_client(this->local_client);
-//     this->user_mod->set_client(this->local_client);
-     this->new_token->set_client(this->local_client);
-//     this->vacation_manager->set_client(this->local_client);
-//     this->see_vacations->set_client(this->local_client);
    (void) type;
    switch (id) {
     case WORK_PAGE:

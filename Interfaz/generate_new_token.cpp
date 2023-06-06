@@ -103,7 +103,7 @@ void generate_new_token::on_generate_button_2_clicked() {
                 this->user_data->token[token_count] = (((int)this->possible_token[i]) - 48)*10 +(((int)this->possible_token[i+1]) - 48) ;
                 ++token_count;
             }
-            QMessageBox::information(this, "Aceptado", "El token ha sido actualizado");
+            QMessageBox::information(this, "Correcto", "El token ha sido actualizado");
         } else {
             QMessageBox::warning(this, "Error", "Usuario no existe");
         }
