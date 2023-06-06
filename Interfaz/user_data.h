@@ -14,11 +14,15 @@
 struct user_data {
     std::string user;
     std::string name;
-    int identification;
-    std::string salary;
-    int role;
-    int assigned_vacations;
-    int available_vacations;
+    std::string identification;
+    std::string phone;
+    std::string email;
+    std::string job_title;
+    char office_id;
+    char role;
+    int salary_base;
+    int deductibles;
+    int salary_net;
 };
 
 #endif // USER_DATA_H
