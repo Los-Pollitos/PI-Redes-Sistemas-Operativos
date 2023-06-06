@@ -8,12 +8,18 @@
 
 #include "intermediary.h"
 
-// TODO(us): documentar
+/**
+ * @brief Construct a new intermediary::intermediary object
+ * 
+ */
 intermediary::intermediary() {
   this->logger = new log ("intermediary_LOG.txt", "Intermediary Server");
 }
 
-// TODO(us): documentar
+/**
+ * @brief Destroy the intermediary::intermediary object
+ * 
+ */
 intermediary::~intermediary() {
   delete this->logger;
 }
@@ -81,6 +87,12 @@ void intermediary::answer_request() {
   }
 }
 
+/**
+ * @brief Sends and receives one message to/from login server
+ * 
+ * @param ip_remote Ip to save in log
+ * @return std::string String received from login server
+ */
 std::string intermediary::send_and_receive_login(std::string ip_remote) {
   std::string result = "\0";
   int s = 0, n = 0; // s:socket  n: contador
@@ -121,6 +133,12 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
   return result;
 }
 
+/**
+ * @brief Sends and receives one or several message(s) to/from data server.. Those
+ * messages ara inmediately sent back client.
+ * 
+ * @param ip_remote Ip to save in log
+ */
 void intermediary::send_and_receive_data_base(std::string ip_remote) {
   int s = 0, n = 1; // s:socket  n: contador
   struct sockaddr_in ip_data_server;
@@ -176,6 +194,12 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
   }
 }
 
+/**
+ * @brief This methood extracts the first char of the received data
+ * and checks which server must receive the information
+ * 
+ * @param ip_remote Ip to save into log
+ */
 void intermediary::send_to_server(std::string ip_remote) {
   std::string to_send_back = "\0";
   char temp_data[DATA_SIZE];
