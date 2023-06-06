@@ -319,6 +319,7 @@ void initial::create_windows(int id, int type) {
      break;
    case USER_MOD:
      this->user_mod->set_login_info(this->users_login);
+     this->user_mod->add_data_to_combobox();
      this->user_mod->setModal(true);
      this->user_mod->show();
      break;
