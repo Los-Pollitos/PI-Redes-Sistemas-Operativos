@@ -139,7 +139,6 @@ void initial::setParent_Button(logout_button * parent_button){
 
 
 void initial::update_scrollbar() {
-    std::cout << "rollllllllllllllllllllllll " << this->users_data->role << std::endl;
     if ((this->users_data->role & EMPLOYEE) == EMPLOYEE) {
         this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
         this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
@@ -356,7 +355,6 @@ void initial::read_data() {
             users_data->identification = temp;
             data >> users_data->salary; /// TODO: revisar que si sea net
             data >> users_data->role;
-            std::cout << "rollll leeeeeeeeeeeeeeeeeeeer: " << this->users_data->role;
             data >> assigned_vacations;
             data >> available_vacations;
             temp = " ";
