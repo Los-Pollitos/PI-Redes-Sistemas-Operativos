@@ -153,7 +153,6 @@ void log_generator::add_to_log(std::string ip, std::string send_or_receive, std:
     // try to open the log file to see if it exists
     QFile check_file(QString::fromStdString("../log_file/Data_LOG.txt"));
     if (!check_file.open(QIODevice::ReadOnly)) {
-        std::cout << "Se crea archivo" << std::endl;
         // if it does not exist, create it
         QFile create_file(QString::fromStdString("../log_file/Data_LOG.txt"));
         create_file.open(QIODevice::WriteOnly);
@@ -184,14 +183,9 @@ void log_generator::add_to_log(std::string ip, std::string send_or_receive, std:
  * @param to_log Information that will be added to log
  */
 void log_generator::add_answer_log(std::string ip, std::string send_or_receive, std::string to_log) {
-
-    //TODO: borrar
-    std::cout << "voy a llogear" << std::endl;
-
     // try to open the log file to see if it exists
     QFile check_file(QString::fromStdString("../log_file/Data_LOG.txt"));
     if (!check_file.open(QIODevice::ReadOnly)) {
-        std::cout << "Se crea archivo" << std::endl;
         // if it does not exist, create it
         QFile create_file(QString::fromStdString("../log_file/Data_LOG.txt"));
         create_file.open(QIODevice::WriteOnly);

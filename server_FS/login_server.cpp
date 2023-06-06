@@ -44,9 +44,6 @@ login_server::~login_server() {
  * login information, creating the image of the file system for future uses.
 */
 void login_server::load_from_file() {
-  //TODO borrar print
-  std::cout << "No existe imagen de FS, se va a cargar de archivo\n";
-
   std::ifstream file("Login.txt");
   if (file.is_open()) {
     std::string buffer;
@@ -128,11 +125,14 @@ void login_server::answer_request() {
   }
 }
 
-// TODOD (us): Document
+/**
+ * @brief Gets data received from intermediary and answers the request
+ * 
+ * @param ip_remote The ip needed to generate the log entry
+ */
 void login_server::process_data(std::string ip_remote) {
   std::string username = "\0";
   std::string hash = "\0";
-  // TODO (stoi)
   switch (data[0]) {
     case LOGIN:
       // Obtain information from buffer
@@ -184,14 +184,12 @@ bool login_server::existing_user(std::string& username) {
   return answer;
 }
 
-// TODO(nosotros): actualizar documentacion
-/*
- * @brief Deletes a folder. After this method, it is recomended that the user
- * sets the path in which they want to be.
- *
- * @param user Indicates the username
- * @param folder Indicates the folder that will be deleted
-*/
+/**
+ * @brief Finds the username and hash inside received data
+ * 
+ * @param username String where username will be placed
+ * @param hash String where hash will be placed
+ */
 void login_server::find_data(std::string& username, std::string& hash) {
   int i;
   for (i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
@@ -204,10 +202,13 @@ void login_server::find_data(std::string& username, std::string& hash) {
   }
 }
 
-/* 
+/**
  * @brief Validates the username and hash of a user trying to log into the
  * system by answering the result to the client through the socket.
-*/
+ * 
+ * @param username String with the username to validate
+ * @param hash String with the received hash of the user
+ */
 void login_server::validate_data(std::string& username, std::string& hash) {
   this->file_system->open("Server", "Login.txt");
   if (this->file_system->is_open("Login.txt")) {
@@ -250,12 +251,21 @@ void login_server::validate_data(std::string& username, std::string& hash) {
   }
 }
 
+/**
+ * @brief Takes data and inserts received string into data
+ * 
+ * @param new_info Information to be inserted into data
+ */
 void login_server::adapt_data(std::string& new_info) {
     for (int i = 0; i < DATA_SIZE; ++i){
         this->data[i] = new_info[i];
     }
 }
 
+/**
+ * @brief Sends a user's token to the server who asked for it
+ * 
+ */
 void login_server::give_token(){
   std::string username = "";
   for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
@@ -302,7 +312,10 @@ void login_server::give_token(){
   }
 }
 
-
+/**
+ * @brief Changes the password form received user (inside data) for a new password that
+ * is also received in data.
+ */
 void login_server::change_password() {
   // find username and new_hash in data
   std::string username = "";
@@ -345,7 +358,12 @@ void login_server::change_password() {
   }
 }
 
- void login_server::change_token() {
+/**
+ * @brief Extracts usernamen and new token in order to change it
+ * in the file system
+ * 
+ */
+void login_server::change_token() {
   std::string username = "";
   std::string new_token = "";
   int i = 1;
