@@ -6,6 +6,11 @@
 #include <stdlib.h>
 #include <QMessageBox>
 
+/**
+ * @brief Construct a new change password::change password object
+ * 
+ * @param parent Parent window
+ */
 change_password::change_password(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::change_password)
@@ -29,6 +34,10 @@ change_password::change_password(QWidget *parent) :
     this->ui->indicacion_label->setText("Fila: " + QString::number(fila) + " Columna: " + QString::number(columna));
 }
 
+/**
+ * @brief Destroy the change password::change password object
+ * 
+ */
 change_password::~change_password()
 {
     if (this->ui) {
@@ -37,10 +46,24 @@ change_password::~change_password()
     }
 }
 
+/**
+ * @brief Receives local client from previous window and uses it
+ * 
+ * @param local_client 
+ */
 void change_password::set_client(client* local_client){
     this->local_client = local_client;
 }
 
+/**
+ * @brief Comunicates with client to change password
+ * 
+ * @param username Username that wants to change password
+ * @param password New password
+ * @param token Token asked for validation
+ * @return true if it was succesful
+ * @return false if data was incorrect
+ */
 bool change_password::change_data(QString username, QString password, int token) {
     std::string to_send = "";
     to_send += ((char)GET_TOKEN);
@@ -75,7 +98,10 @@ bool change_password::change_data(QString username, QString password, int token)
 }
 
 
-
+/**
+ * @brief Indicates that password must be changed
+ * 
+ */
 void change_password::on_pushButton_reinicarContra_clicked()
 {
     if (this->ui->lineEdit->text() == "" || this->ui->lineEdit_2->text() == "" ||
