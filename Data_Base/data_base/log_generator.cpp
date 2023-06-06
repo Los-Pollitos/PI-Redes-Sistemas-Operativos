@@ -6,9 +6,13 @@
  * Emilia Víquez (C18625)
  */
 
+//TODO: delete
+#include <iostream>
 
 #include "log_generator.h"
 #include <ctime>
+#include <QFile>
+#include <QTextStream>
 
 log_generator::log_generator() {
 
@@ -112,11 +116,14 @@ std::string log_generator::get_request_type(char type) {
 
 void log_generator::add_to_log(std::string ip, std::string send_or_receive, std::string to_log) {
     // try to open the log file to see if it exists
-    std::ifstream check_file(this->log_file_name);
-    if (!check_file.is_open()) {
+    QFile check_file(QString::fromStdString(this->log_file_name));
+    if (!check_file.open(QIODevice::ReadOnly)) {
+        std::cout << "Se crea archivo" << std::endl;
         // if it does not exist, create it
-        std::ofstream create_file(this->log_file_name);
-        create_file << "Log file of " << server_name << "\n";
+        QFile create_file(QString::fromStdString(this->log_file_name));
+        create_file.open(QIODevice::WriteOnly);
+        QTextStream output_stream(&create_file);
+        output_stream << "Log file of " << QString::fromStdString(server_name) << "\n";
         create_file.close();
     } else {
         // File did exist, so close the file to avoid
@@ -124,22 +131,30 @@ void log_generator::add_to_log(std::string ip, std::string send_or_receive, std:
         check_file.close();
     }
     // Open the file to be able to append to it
-    std::fstream log_file;
-    log_file.open(this->log_file_name, std::fstream::app| std::fstream::out);
+    QFile log_file(QString::fromStdString(this->log_file_name));
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream append_stream(&log_file);
 
-    log_file << get_system_time() << ":" << ip << ":" << send_or_receive  << ":"
-             << this->get_request_type(to_log[0]) << ":"<< to_log.substr(1) << "\n";
+    append_stream << QString::fromStdString(get_system_time()) << ":" << QString::fromStdString(ip) << ":" << QString::fromStdString(send_or_receive)  << ":"
+             << QString::fromStdString(this->get_request_type(to_log[0])) << ":"<< QString::fromStdString(to_log.substr(1)) << "\n";
 
     log_file.close();
 }
 
 void log_generator::add_answer_log(std::string ip, std::string send_or_receive, std::string to_log) {
+
+    //TODO: borrar
+    std::cout << "voy a llogear" << std::endl;
+
     // try to open the log file to see if it exists
-    std::ifstream check_file(this->log_file_name);
-    if (!check_file.is_open()) {
+    QFile check_file(QString::fromStdString(this->log_file_name));
+    if (!check_file.open(QIODevice::ReadOnly)) {
+        std::cout << "Se crea archivo" << std::endl;
         // if it does not exist, create it
-        std::ofstream create_file(this->log_file_name);
-        create_file << "Log file of " << server_name << "\n";
+        QFile create_file(QString::fromStdString(this->log_file_name));
+        create_file.open(QIODevice::WriteOnly);
+        QTextStream output_stream(&create_file);
+        output_stream << "Log file of " << QString::fromStdString(server_name) << "\n";
         create_file.close();
     } else {
         // File did exist, so close the file to avoid
@@ -147,11 +162,12 @@ void log_generator::add_answer_log(std::string ip, std::string send_or_receive, 
         check_file.close();
     }
     // Open the file to be able to append to it
-    std::fstream log_file;
-    log_file.open(this->log_file_name, std::fstream::app| std::fstream::out);
+    QFile log_file(QString::fromStdString(this->log_file_name));
+    log_file.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream append_stream(&log_file);
 
-    log_file << get_system_time() << ":" << ip << ":" << send_or_receive  << ":"
-             << to_log << "\n";
+    append_stream << QString::fromStdString(get_system_time()) << ":" << QString::fromStdString(ip) << ":" << QString::fromStdString(send_or_receive)  << ":"
+                  << QString::fromStdString(to_log) << "\n";
 
     log_file.close();
 }

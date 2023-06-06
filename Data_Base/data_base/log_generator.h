@@ -12,7 +12,6 @@
 #define LOG_GENERATOR_H
 
 #include<string>
-#include<fstream>
 
 enum request_types {
     LOGIN = 65,  // A
