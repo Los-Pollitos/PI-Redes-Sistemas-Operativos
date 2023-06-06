@@ -34,6 +34,9 @@ std::string log::get_request_type(char type) {
     case CHANGE_PASSWORD:
       result = "CHANGE_PASSWORD";
       break;
+    case CHANGE_TOKEN:
+    	result = "CHANGE_TOKEN";
+    	break;
     case CREATE_USER:
       result = "CREATE_USER";
       break;

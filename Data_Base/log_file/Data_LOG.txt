@@ -1,3 +1,4 @@
 Log file of Data Server
 Mon Jun  5 20:28:43 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
 Mon Jun  5 20:28:43 2023:127.0.0.1:sent:hola
+Mon Jun  5 21:19:45 2023:127.0.0.1:received:CREATE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb

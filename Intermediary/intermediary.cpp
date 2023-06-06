@@ -183,6 +183,7 @@ void intermediary::send_to_server(std::string ip_remote) {
     case LOGIN:
     case TOKEN:
     case CHANGE_PASSWORD:
+    case CHANGE_TOKEN:
       to_send_back = this->send_and_receive_login(ip_remote);
       read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
       // TODO(us): borrar

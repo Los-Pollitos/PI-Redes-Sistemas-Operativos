@@ -99,3 +99,7 @@ Mon Jun  5 20:28:42 2023:127.0.0.1:received:LOGIN:cjimenez,78e8ee0b2f67531b8eda7
 Mon Jun  5 20:28:42 2023:127.0.0.1:sent:1
 Mon Jun  5 20:28:43 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
 Mon Jun  5 20:28:43 2023:127.0.0.1:sent:Ecjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:21 2023:127.0.0.1:received:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:21 2023:127.0.0.1:sent:1
+Mon Jun  5 21:19:22 2023:127.0.0.1:received:CREATE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:22 2023:127.0.0.1:sent:Ecjimenez,78e8ee0b2f67531b8eda7678fa42fb

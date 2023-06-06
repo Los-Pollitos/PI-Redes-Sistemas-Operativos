@@ -189,3 +189,10 @@ Mon Jun  5 20:28:43 2023:127.0.0.1:received from login:hola de login
 Mon Jun  5 20:28:43 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
 Mon Jun  5 20:28:43 2023:127.0.0.1:received from data base:hola
 Mon Jun  5 20:28:43 2023:127.0.0.1:sent to client:hola
+Mon Jun  5 21:19:21 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:21 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:21 2023:127.0.0.1:received from login:1
+Mon Jun  5 21:19:21 2023:127.0.0.1:sent to client:1
+Mon Jun  5 21:19:22 2023:127.0.0.1:received from client:CREATE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:22 2023:127.0.0.1:sent to login:CREATE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Mon Jun  5 21:19:45 2023:127.0.0.1:sent to data base:CREATE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb

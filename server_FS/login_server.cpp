@@ -145,6 +145,8 @@ void login_server::process_data(std::string ip_remote) {
     case CHANGE_PASSWORD:
       this->change_password();
       break;
+    case CHANGE_TOKEN:
+      break;
     case CREATE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
       this->create_user(username, hash);
