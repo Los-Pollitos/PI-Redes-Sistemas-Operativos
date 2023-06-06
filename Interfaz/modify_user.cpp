@@ -10,6 +10,38 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->modified_index = -1;
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->approve_changes->setStyleSheet("color: #001f21;");
+    this->ui->base_salary->setStyleSheet("color: #001f21;");
+    this->ui->duductions->setStyleSheet("color: #001f21;");
+    this->ui->email->setStyleSheet("color: #001f21;");
+    this->ui->employee->setStyleSheet("color: #001f21;");
+    this->ui->id->setStyleSheet("color: #001f21;");
+    this->ui->job_title->setStyleSheet("color: #001f21;");
+    this->ui->label_10->setStyleSheet("color: #001f21;");
+    this->ui->label_11->setStyleSheet("color: #001f21;");
+    this->ui->label_12->setStyleSheet("color: #001f21;");
+    this->ui->label_13->setStyleSheet("color: #001f21;");
+    this->ui->label_14->setStyleSheet("color: #001f21;");
+    this->ui->label_3->setStyleSheet("color: #001f21;");
+    this->ui->label_4->setStyleSheet("color: #001f21;");
+    this->ui->label_5->setStyleSheet("color: #001f21;");
+    this->ui->label_6->setStyleSheet("color: #001f21;");
+    this->ui->label_7->setStyleSheet("color: #001f21;");
+    this->ui->label_9->setStyleSheet("color: #001f21;");
+    this->ui->net_salary->setStyleSheet("color: #001f21;");
+    this->ui->office->setStyleSheet("color: #001f21;");
+    this->ui->password->setStyleSheet("color: #001f21;");
+    this->ui->phone->setStyleSheet("color: #001f21;");
+    this->ui->password->setStyleSheet("color: #001f21;");
+    this->ui->record->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_active->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_admin_config->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_admin_users->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_debug->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_employee->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_human_resources->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_supervisor->setStyleSheet("color: #001f21;");
+    this->ui->comboBox->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Modificar usuarios");
 }
 

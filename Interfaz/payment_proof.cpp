@@ -7,6 +7,8 @@ payment_proof::payment_proof(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->pushButton->setStyleSheet("color: #001f21;");
+    this->ui->textBrowser->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Comprobante de pago");
 }
 

@@ -10,6 +10,10 @@ Token::Token(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->cancel_button->setStyleSheet("color: #001f21;");
+    this->ui->indicacion_label->setStyleSheet("color: #001f21;");
+    this->ui->token_input->setStyleSheet("color: #001f21;");
+    this->ui->validate_label->setStyleSheet("color: #001f21;");
     this->ui->token_input->setEchoMode(QLineEdit::Password);
     srand (time(NULL));
     this->setWindowTitle("Ingreso de token");

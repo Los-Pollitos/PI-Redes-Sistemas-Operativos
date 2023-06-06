@@ -7,6 +7,14 @@ vacation_consult::vacation_consult(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->available_vacations->setStyleSheet("color: #001f21;");
+    this->ui->available_vacations_label->setStyleSheet("color: #001f21;");
+    this->ui->id->setStyleSheet("color: #001f21;");
+    this->ui->id_label->setStyleSheet("color: #001f21;");
+    this->ui->name->setStyleSheet("color: #001f21;");
+    this->ui->name_label->setStyleSheet("color: #001f21;");
+    this->ui->vacations->setStyleSheet("color: #001f21;");
+    this->ui->vacations_label->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Vacaciones disponibles");
     ui->available_vacations->setReadOnly(true);
     ui->vacations->setReadOnly(true);

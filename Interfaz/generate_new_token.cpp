@@ -21,7 +21,7 @@ generate_new_token::generate_new_token(QWidget *parent) :
     this->ui->user_line->setStyleSheet("color: #001f21;");
     this->ui->password_line->setStyleSheet("color: #001f21;");
     this->ui->generate_button->setStyleSheet("color: #001f21;");
-    this->ui->generate_button->setStyleSheet("color: #001f21;");
+    this->ui->generate_button_2->setStyleSheet("color: #001f21;");
     this->ui->label_2->setStyleSheet("color: #001f21;");
     this->ui->label_3->setStyleSheet("color: #001f21;");
     this->ui->label_4->setStyleSheet("color: #001f21;");

@@ -24,6 +24,19 @@ request_description::request_description(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Descripción");
     this->uploaded_file = false;
+    this->ui->accept_button->setStyleSheet("color: #001f21;");
+    this->ui->accept_label->setStyleSheet("color: #001f21;");
+    this->ui->buttonBox->setStyleSheet("color: #001f21;");
+    this->ui->file_button->setStyleSheet("color: #001f21;");
+    this->ui->label->setStyleSheet("color: #001f21;");
+    this->ui->label_2->setStyleSheet("color: #001f21;");
+    this->ui->label_3->setStyleSheet("color: #001f21;");
+    this->ui->label_4->setStyleSheet("color: #001f21;");
+    this->ui->label_descripcion->setStyleSheet("color: #001f21;");
+    this->ui->label_fecha->setStyleSheet("color: #001f21;");
+    this->ui->label_tipo->setStyleSheet("color: #001f21;");
+    this->ui->lineEdit->setStyleSheet("color: #001f21;");
+    this->ui->password_label->setStyleSheet("color: #001f21;");
 }
 
 void request_description::set_client(client* local_client){

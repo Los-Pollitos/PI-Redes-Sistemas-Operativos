@@ -8,3 +8,11 @@ Mon Jun  5 22:04:02 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531
 Mon Jun  5 22:04:02 2023:127.0.0.1:sent:hola
 Tue Jun  6 07:41:48 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
 Tue Jun  6 07:41:48 2023:127.0.0.1:sent:hola
+Tue Jun  6 09:57:02 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 09:57:02 2023:127.0.0.1:sent:hola
+Tue Jun  6 10:03:25 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 10:03:25 2023:127.0.0.1:sent:hola
+Tue Jun  6 10:08:03 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 10:08:03 2023:127.0.0.1:sent:hola
+Tue Jun  6 10:09:20 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 10:09:20 2023:127.0.0.1:sent:hola
