@@ -5,6 +5,7 @@ description_button::description_button(QString name, QWidget * parent, int id, i
     valid(true),
     identifier(id),
     type(type) {
+    this->setStyleSheet("color: #001f21;");
 }
 
 

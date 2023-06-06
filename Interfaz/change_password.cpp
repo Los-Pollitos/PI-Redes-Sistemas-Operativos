@@ -11,6 +11,14 @@ change_password::change_password(QWidget *parent) :
     ui(new Ui::change_password)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->label_2->setStyleSheet("color: #001f21;");
+    this->ui->label->setStyleSheet("color: #001f21;");
+    this->ui->label_4->setStyleSheet("color: #001f21;");
+    this->ui->lineEdit->setStyleSheet("color: #001f21;");
+    this->ui->lineEdit_2->setStyleSheet("color: #001f21;");
+    this->ui->lineEdit_3->setStyleSheet("color: #001f21;");
+    this->ui->lineEdit_4->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Cambiar contraseña");
     this->ui->lineEdit_2->setEchoMode(QLineEdit::Password); // no muestra password
     this->ui->lineEdit_3->setEchoMode(QLineEdit::Password); // no muestra token

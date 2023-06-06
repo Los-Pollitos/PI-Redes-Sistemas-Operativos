@@ -9,6 +9,8 @@ consult_requests::consult_requests(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::consult_requests) {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->label->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Consultar Solicitudes");
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();

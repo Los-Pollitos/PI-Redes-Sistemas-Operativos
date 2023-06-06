@@ -6,6 +6,7 @@ salary_proof::salary_proof(QWidget *parent) :
     ui(new Ui::salary_proof)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->setWindowTitle("Constancia salarial");
 }
 

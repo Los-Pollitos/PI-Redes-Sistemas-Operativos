@@ -10,11 +10,14 @@ initial::initial(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::initial) {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->setWindowTitle("Inicio");
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);
     this->container = new QWidget();
     ui->scrollArea->setWidget(container);
     this->layout = new QVBoxLayout(container);
+    this->ui->label->setStyleSheet("color: #001f21;");
+    this->ui->pushButton->setStyleSheet("color: #001f21;");
 
     this->work_page = new work_proof();
     this->payment_page = new payment_proof();
@@ -99,6 +102,7 @@ initial::initial(QWidget *parent) :
 
     for (size_t i = 0; i < this->requests_buttons.size(); ++i) {
         layout->addWidget(this->requests_buttons[i]);
+        this->requests_buttons[i]->setStyleSheet("color: #001f21;");
     }
 
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
@@ -319,7 +323,6 @@ void initial::create_windows(int id, int type) {
      break;
    case USER_MOD:
      this->user_mod->set_login_info(this->users_login);
-     this->user_mod->add_data_to_combobox();
      this->user_mod->setModal(true);
      this->user_mod->show();
      break;

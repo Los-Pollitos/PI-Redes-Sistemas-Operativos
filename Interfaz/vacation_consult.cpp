@@ -6,6 +6,7 @@ vacation_consult::vacation_consult(QWidget *parent) :
     ui(new Ui::vacation_consult)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->setWindowTitle("Vacaciones disponibles");
     ui->available_vacations->setReadOnly(true);
     ui->vacations->setReadOnly(true);

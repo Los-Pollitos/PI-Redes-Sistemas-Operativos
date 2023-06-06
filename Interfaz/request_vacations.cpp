@@ -8,6 +8,7 @@ request_vacations::request_vacations(QWidget *parent) :
     ui(new Ui::request_vacations)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->setWindowTitle("Solicitud de vacaciones");
     ui->reset->setStyleSheet("background-color: red");
     ui->confirm->setStyleSheet("background-color: green");

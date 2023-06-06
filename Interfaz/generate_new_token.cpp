@@ -8,7 +8,24 @@ generate_new_token::generate_new_token(QWidget *parent) :
     ui(new Ui::generate_new_token)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->password_line->setEchoMode(QLineEdit::Password);
     this->setWindowTitle("Generar token nuevo");
+    this->ui->token_1->setStyleSheet("color: #001f21;");
+    this->ui->token_2->setStyleSheet("color: #001f21;");
+    this->ui->token_3->setStyleSheet("color: #001f21;");
+    this->ui->token_4->setStyleSheet("color: #001f21;");
+    this->ui->token_5->setStyleSheet("color: #001f21;");
+    this->ui->token_6->setStyleSheet("color: #001f21;");
+    this->ui->label->setStyleSheet("color: #001f21;");
+    this->ui->user_line->setStyleSheet("color: #001f21;");
+    this->ui->password_line->setStyleSheet("color: #001f21;");
+    this->ui->generate_button->setStyleSheet("color: #001f21;");
+    this->ui->generate_button->setStyleSheet("color: #001f21;");
+    this->ui->label_2->setStyleSheet("color: #001f21;");
+    this->ui->label_3->setStyleSheet("color: #001f21;");
+    this->ui->label_4->setStyleSheet("color: #001f21;");
+
     this->ui->token_1->setEnabled(false);
     this->ui->token_1->setStyleSheet(QString("QPushButton {border: 0px;}"));
     this->ui->token_2->setEnabled(false);

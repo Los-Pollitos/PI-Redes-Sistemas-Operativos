@@ -6,7 +6,16 @@ consult_salary::consult_salary(QWidget *parent) :
     ui(new Ui::consult_salary)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Consultar Salario Base");
+    this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->name_label->setStyleSheet("color: #001f21;");
+    this->ui->name->setStyleSheet("color: #001f21;");
+    this->ui->id_label->setStyleSheet("color: #001f21;");
+    this->ui->id->setStyleSheet("color: #001f21;");
+    this->ui->base_salary_label->setStyleSheet("color: #001f21;");
+    this->ui->base_salary->setStyleSheet("color: #001f21;");
+    this->ui->salary_label->setStyleSheet("color: #001f21;");
+    this->ui->salary->setStyleSheet("color: #001f21;");
+    this->setWindowTitle("Consultar Salario Bruto");
     ui->base_salary->setReadOnly(true);
     ui->salary->setReadOnly(true);
     ui->id->setReadOnly(true);

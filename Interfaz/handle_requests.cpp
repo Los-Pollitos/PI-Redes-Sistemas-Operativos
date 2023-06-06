@@ -9,6 +9,8 @@ handle_requests::handle_requests(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::handle_requests) {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
+    this->ui->label->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Procesar Solicitudes");
     this->description = new request_description(nullptr);
     ui->scrollArea->setVerticalScrollBar(ui->verticalScrollBar);

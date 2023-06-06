@@ -9,6 +9,7 @@ Token::Token(QWidget *parent) :
     ui(new Ui::Token)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->token_input->setEchoMode(QLineEdit::Password);
     srand (time(NULL));
     this->setWindowTitle("Ingreso de token");

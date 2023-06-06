@@ -6,7 +6,9 @@ consult_record::consult_record(QWidget *parent) :
     ui(new Ui::consult_record)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->setWindowTitle("Consultar expediente");
+    this->ui->title->setStyleSheet("color: #001f21;");
 }
 
 consult_record::~consult_record()

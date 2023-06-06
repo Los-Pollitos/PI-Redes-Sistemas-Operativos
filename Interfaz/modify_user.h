@@ -21,12 +21,11 @@ public:
     ~modify_user();
     void set_login_info(login_info* info);
     void set_client(client* local_client);
-    void add_data_to_combobox();
-    void load_user_data(user_data& user_info, std::string& data);
 
 
 private slots:
     void update_data();
+    void add_data_to_combobox();
     //    void write_data();  // TODO(Angie): ver si dejar
     Qt::CheckState unmask_role(int user_index, char role);
     //    void read_data();  // TODO(Angie): ver si dejar
@@ -39,6 +38,7 @@ private:
     client* local_client;
     int modified_index;
     login_info* user_login;
+    user_data user_info;
     std::vector<std::string> user_names;
 };
 
