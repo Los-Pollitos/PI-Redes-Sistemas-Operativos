@@ -14,6 +14,7 @@
 
 #define PORT 1024
 
+
 #include "data_base.h"
 #include "log.h"
 
@@ -31,6 +32,7 @@ private:
     int connection;
     char data[DATA_SIZE];
     int message_count;
+    log * logger;
     struct sockaddr_storage ipRemoto;
 
     // Methods
@@ -42,7 +44,7 @@ private:
     void load_requests();
     void load_records();
     void find_data(std::string& username,  std::string& hash);
-    void process_data();
+    void process_data(std::string remote_ip);
     void see_process_requests();
     void find_next(std::string& line, int& pos);
     void copy_string(std::string& line, std::string& new_line, int from, int to);

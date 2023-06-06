@@ -16,6 +16,7 @@
 data_server::data_server() {
     // Create the data_base
     this->base = new data_base();
+    this->logger = new log ("Data_LOG.txt", "Data Server");
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
@@ -606,7 +607,7 @@ void data_server::answer_request() {
         if (this->data[0] == '#') {
             close(this->connection);
         } else {
-            this->process_data();
+            this->process_data(strIpRemoto);
         }
     }
 }
@@ -624,7 +625,7 @@ void data_server::see_process_requests() {
 }
 
 // TODO(us): Document
-void data_server::process_data() {
+void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
     int total_m = 0;
     int i = 0;

@@ -1,14 +1,9 @@
-/*
- * Team: Los Pollitos
- * Cristopher Hernández (C13632)
- * Luis Solano (C17634)
- * Angie Solís (C17686)
- * Emilia Víquez (C18625)
- */
-
-
 #include "log.h"
-#include <ctime>
+
+log::log()
+{
+
+}
 
 log::log(std::string file_name, std::string server_name) {
     this->log_file_name = file_name;

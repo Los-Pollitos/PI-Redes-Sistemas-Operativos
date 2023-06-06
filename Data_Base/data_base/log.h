@@ -6,12 +6,13 @@
  * Emilia Víquez (C18625)
  */
 
-#ifndef LOG
-#define LOG
-
+#ifndef LOG_H
+#define LOG_H
 
 #include<string>
 #include<fstream>
+#include <ctime>
+
 
 enum request_types {
     LOGIN = 65,  // A
@@ -44,16 +45,17 @@ enum request_types {
 };
 
 class log {
-private:
+  private:
     std::string log_file_name;
     std::string server_name;
     std::string get_system_time();
     std::string get_request_type(char type);
 
-public:
+  public:
+    log();
     log(std::string file_name, std::string server_name);
     void add_to_log(std::string ip, std::string send_or_receive ,std::string to_log);
     void add_answer_log(std::string ip, std::string send_or_receive ,std::string to_log);
 };
 
-#endif // LOG
+#endif // LOG_H
