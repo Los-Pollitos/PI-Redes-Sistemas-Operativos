@@ -293,7 +293,6 @@ void login_server::give_token(){
       // buffer has username, now we want to ignore hash
       this->file_system->read_until("Server", "Login.txt", ',');
       buffer  =  this->file_system->read_until("Server", "Login.txt", ',');
-      memset(this->data, '\0', DATA_SIZE);
       this->adapt_data(buffer); 
     } else {
       this->data[0] = 'e'; // e == error

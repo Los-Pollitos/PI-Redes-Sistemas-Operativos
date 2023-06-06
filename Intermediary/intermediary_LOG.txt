@@ -484,3 +484,37 @@ Mon Jun  5 23:03:23 2023:127.0.0.1:received from login:hola de login
 Mon Jun  5 23:03:23 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
 Mon Jun  5 23:03:23 2023:127.0.0.1:received from data base:hola
 Mon Jun  5 23:03:23 2023:127.0.0.1:sent to client:hola
+Tue Jun  6 07:41:47 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 07:41:47 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 07:41:47 2023:127.0.0.1:received from login:1
+Tue Jun  6 07:41:47 2023:127.0.0.1:sent to client:1
+Tue Jun  6 07:41:48 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 07:41:48 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 07:41:48 2023:127.0.0.1:received from login:hola de login
+Tue Jun  6 07:41:48 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Tue Jun  6 07:41:48 2023:127.0.0.1:received from data base:hola
+Tue Jun  6 07:41:48 2023:127.0.0.1:sent to client:hola
+Tue Jun  6 07:43:23 2023:127.0.0.1:received from client:LOGIN:gherrera,bbe059e31df4f94a0992291b8d3735
+Tue Jun  6 07:43:23 2023:127.0.0.1:sent to login:LOGIN:gherrera,bbe059e31df4f94a0992291b8d3735
+Tue Jun  6 07:43:23 2023:127.0.0.1:received from login:0
+Tue Jun  6 07:43:23 2023:127.0.0.1:sent to client:0
+Tue Jun  6 07:43:48 2023:127.0.0.1:received from client:LOGIN:gherrera,4e3f6bf544ccf40302f69ce4319617
+Tue Jun  6 07:43:48 2023:127.0.0.1:sent to login:LOGIN:gherrera,4e3f6bf544ccf40302f69ce4319617
+Tue Jun  6 07:43:48 2023:127.0.0.1:received from login:1
+Tue Jun  6 07:43:48 2023:127.0.0.1:sent to client:1
+Tue Jun  6 07:43:49 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Tue Jun  6 07:43:49 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Tue Jun  6 07:43:49 2023:127.0.0.1:received from login:574839076859V
+Tue Jun  6 07:43:49 2023:127.0.0.1:sent to client:574839076859V
+Tue Jun  6 07:44:49 2023:127.0.0.1:received from client:CHANGE_TOKEN:gherrera,respinoza,756730734393,
+Tue Jun  6 07:44:49 2023:127.0.0.1:sent to login:CHANGE_TOKEN:gherrera,respinoza,756730734393,
+Tue Jun  6 07:44:49 2023:127.0.0.1:received from login:1gherrera,respinoza,756730734393,
+Tue Jun  6 07:44:49 2023:127.0.0.1:sent to client:1gherrera,respinoza,756730734393,
+Tue Jun  6 07:45:24 2023:127.0.0.1:received from client:LOGIN:respinoza,bbe059e31df4f94a0992291b8d3735
+Tue Jun  6 07:45:24 2023:127.0.0.1:sent to login:LOGIN:respinoza,bbe059e31df4f94a0992291b8d3735
+Tue Jun  6 07:45:24 2023:127.0.0.1:received from login:1
+Tue Jun  6 07:45:24 2023:127.0.0.1:sent to client:1
+Tue Jun  6 07:45:25 2023:127.0.0.1:received from client:TOKEN:respinoza,
+Tue Jun  6 07:45:25 2023:127.0.0.1:sent to login:TOKEN:respinoza,
+Tue Jun  6 07:45:25 2023:127.0.0.1:received from login:756730734393V
+Tue Jun  6 07:45:25 2023:127.0.0.1:sent to client:756730734393V
