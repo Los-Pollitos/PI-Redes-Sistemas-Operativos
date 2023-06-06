@@ -146,6 +146,7 @@ void login_server::process_data(std::string ip_remote) {
       this->change_password();
       break;
     case CHANGE_TOKEN:
+      this->change_token();
       break;
     case CREATE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
@@ -344,3 +345,58 @@ void login_server::change_password() {
     this->file_system->close("Server", "Login.txt");
   }
 }
+
+ void login_server::change_token() {
+  std::string username = "";
+  std::string new_token = "";
+  int i = 1;
+  for (i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+    if (this->data[i] != ',') {
+      username += this->data[i];
+    }
+  }
+  for (i = i; i < DATA_SIZE && this->data[i] != ','; ++i) {
+    if (this->data[i] != ',') {
+      new_token += this->data[i];
+    }
+  }
+
+  // Open file in file system
+  this->file_system->open("Server", "Login.txt");
+  if (this->file_system->is_open("Login.txt")) {
+    this->file_system->reset_file_pointer("Server", "Login.txt");
+    bool found = false;
+    std::string buffer = " ";
+
+    // Find the username in the file
+    bool end_of_file = this->file_system->is_eof("Server", "Login.txt");
+    while (end_of_file == false && found == false) {
+      buffer = this->file_system->read_until("Server", "Login.txt", ',');
+      if (buffer != username) {
+        // Discard hash
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+        // Discard token
+        buffer = this->file_system->read_until("Server", "Login.txt", ',');
+      } else {
+        found = true;
+      }
+      buffer = " ";
+      end_of_file = this->file_system->is_eof("Server", "Login.txt");
+    }
+    memset(this->data, '\0', DATA_SIZE);
+
+    // Extract token
+    if (found) {
+      // buffer has username, now we want to ignore hash
+      this->file_system->read_until("Server", "Login.txt", ',');
+      // modify token
+      this->file_system->write("Server","Login.txt", new_token);
+      memset(this->data, '\0', DATA_SIZE);
+      this->data[0] = '1';
+    } else {
+      this->data[0] = '0';
+    }
+    write(this->connection, this->data, strlen(this->data));
+    this->file_system->close("Server", "Login.txt");
+  }
+ }

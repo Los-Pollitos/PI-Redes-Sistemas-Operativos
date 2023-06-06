@@ -44,6 +44,7 @@ class login_server {
     void validate_data(std::string& username, std::string& hash);
     void give_token();
     void change_password();
+    void change_token();
 
   public:
     login_server();

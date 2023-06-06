@@ -25,21 +25,11 @@ initial::initial(QWidget *parent) :
     this->request_handler =  new handle_requests();
     this->user_manager =  new manage_user();
     this->user_mod = new modify_user();
+    this->new_token = new generate_new_token();
     this->vacation_manager = new request_vacations();
     this->see_vacations = new vacation_consult();
     this->users_data = new user_data();
 
-    this->work_page->set_client(this->local_client);
-    this->payment_page->set_client(this->local_client);
-    this->salary_page->set_client(this->local_client);
-    this->see_salary->set_client(this->local_client);
-    this->pending_requests->set_client(this->local_client);
-    this->see_record->set_client(this->local_client);
-    this->request_handler->set_client(this->local_client);
-    this->user_manager->set_client(this->local_client);
-    this->user_mod->set_client(this->local_client);
-    this->vacation_manager->set_client(this->local_client);
-    this->see_vacations->set_client(this->local_client);
 
     this->update_buttons =  new description_button("Manejador de botones", nullptr, -1, 0);
     this->connect(this->update_buttons, &description_button::update_all, this
@@ -102,6 +92,10 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[USER_MOD], &description_button::pressed, this
         , &initial::create_windows);
 
+    this->requests_buttons.push_back(new description_button( "Generar token usuario", container, CHANGE_TOKEN, 0));
+    this->connect(this->requests_buttons[CHANGE_TOKEN], &description_button::pressed, this
+                  , &initial::create_windows);
+
 
     for (size_t i = 0; i < this->requests_buttons.size(); ++i) {
         layout->addWidget(this->requests_buttons[i]);
@@ -113,6 +107,18 @@ initial::initial(QWidget *parent) :
 
 void initial::set_client(client* local_client){
     this->local_client = local_client;
+    this->work_page->set_client(this->local_client);
+    this->payment_page->set_client(this->local_client);
+    this->salary_page->set_client(this->local_client);
+    this->see_salary->set_client(this->local_client);
+    this->pending_requests->set_client(this->local_client);
+    this->see_record->set_client(this->local_client);
+    this->request_handler->set_client(this->local_client);
+    this->user_manager->set_client(this->local_client);
+    this->user_mod->set_client(this->local_client);
+    this->new_token->set_client(this->local_client);
+    this->vacation_manager->set_client(this->local_client);
+    this->see_vacations->set_client(this->local_client);
 }
 
 void initial::setUserDataLogin(login_info * user_login) {
@@ -182,9 +188,11 @@ void initial::update_scrollbar() {
         this->layout->addWidget(this->requests_buttons[USER_SEP]);
         this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
         this->layout->addWidget(this->requests_buttons[USER_MOD]);
+        this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
         this->requests_buttons[USER_SEP]->show();
         this->requests_buttons[USER_MANAGER]->show();
         this->requests_buttons[USER_MOD]->show();
+        this->requests_buttons[CHANGE_TOKEN]->show();
     } else {
         this->layout->removeWidget(this->requests_buttons[USER_SEP]);
         this->requests_buttons[USER_SEP]->hide();
@@ -192,6 +200,8 @@ void initial::update_scrollbar() {
         this->requests_buttons[USER_MANAGER]->hide();
         this->layout->removeWidget(this->requests_buttons[USER_MOD]);
         this->requests_buttons[USER_MOD]->hide();
+        this->layout->removeWidget(this->requests_buttons[CHANGE_TOKEN]);
+        this->requests_buttons[CHANGE_TOKEN]->hide();
     }
 }
 
@@ -245,6 +255,10 @@ initial::~initial() {
         delete this->user_mod;
         this->user_mod = 0;
      }
+    if (this->new_token) {
+        delete this->new_token;
+        this->new_token = 0;
+    }
      if (this->users_data) {
         delete this->users_data;
         this->users_data = 0;
@@ -272,6 +286,7 @@ void initial::create_windows(int id, int type) {
      this->salary_page->show();
      break;
    case SEE_SALARY:
+     this->see_salary-> setUserData(this->users_login, this->users_data);
      this->see_salary->setModal(true);
      this->see_salary->show();
      break;
@@ -306,6 +321,11 @@ void initial::create_windows(int id, int type) {
      this->user_mod->set_login_info(this->users_login);
      this->user_mod->setModal(true);
      this->user_mod->show();
+     break;
+    case CHANGE_TOKEN:
+     this->new_token->set_login_info(this->users_login);
+     this->new_token->setModal(true);
+     this->new_token->show();
      break;
    }
 }

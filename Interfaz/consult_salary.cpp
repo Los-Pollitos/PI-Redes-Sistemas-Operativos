@@ -16,9 +16,15 @@ consult_salary::consult_salary(QWidget *parent) :
 
 void consult_salary::set_client(client* local_client){
     this->local_client = local_client;
-    std::string envio = ((char)PAYMENT_PROOF);
+    std::string envio = "";
+    envio += ((char)PAYMENT_PROOF);
     envio += this->users_data->user;
     std::string result = local_client->send_and_receive(envio);
+}
+
+void consult_salary::setUserData(login_info * user_login, user_data* users_data) {
+    this->users_data = users_data;
+    this->user_login = user_login;
 }
 
 consult_salary::~consult_salary()

@@ -49,7 +49,7 @@ void request_description::set_atributes(int day, int month, int year,
        this->ui->accept_label->hide();
        this->ui->accept_button->show();
     } else {
-        this->ui->file_button->hide();
+        this->ui->file_button->setText("Adjuntar archivo");
         this->ui->buttonBox->show();
         this->ui->password_label->show();
         this->ui->lineEdit->show();

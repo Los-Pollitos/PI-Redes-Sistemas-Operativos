@@ -18,6 +18,7 @@
 #include "handle_requests.h"
 #include "manage_user.h"
 #include "modify_user.h"
+#include "generate_new_token.h"
 #include "request_vacations.h"
 #include "vacation_consult.h"
 #include "logout_button.h"
@@ -58,6 +59,7 @@ private:
     handle_requests * request_handler;
     manage_user * user_manager;
     modify_user * user_mod;
+    generate_new_token * new_token;
     request_vacations * vacation_manager;
     vacation_consult * see_vacations;
     QVBoxLayout * layout;

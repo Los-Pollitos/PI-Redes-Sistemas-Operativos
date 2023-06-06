@@ -18,6 +18,7 @@ SOURCES += \
     consult_salary.cpp \
     description_button.cpp \
     file_system.cpp \
+    generate_new_token.cpp \
     handle_requests.cpp \
     initial.cpp \
     login.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     consult_salary.h \
     description_button.h \
     file_system.h \
+    generate_new_token.h \
     handle_requests.h \
     initial.h \
     login.h \
@@ -66,6 +68,7 @@ FORMS += \
     consult_record.ui \
     consult_requests.ui \
     consult_salary.ui \
+    generate_new_token.ui \
     handle_requests.ui \
     initial.ui \
     login.ui \
