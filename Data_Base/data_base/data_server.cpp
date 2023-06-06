@@ -17,7 +17,7 @@ data_server::data_server() {
     // Create the data_base
     this->base = new data_base();
     this->logger = new log_generator ();
-    // this->logger->set_params("Data_LOG.txt", "Data Server");
+    this->logger->set_params("Data_LOG.txt", "Data Server");
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
@@ -608,6 +608,7 @@ void data_server::answer_request() {
         if (this->data[0] == '#') {
             close(this->connection);
         } else {
+            this->logger->add_to_log(strIpRemoto, "received", this->data);
             this->process_data(strIpRemoto);
         }
     }
@@ -634,6 +635,25 @@ void data_server::process_data(std::string remote_ip) {
     // TODO(nosotros): borrar
 //    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
 
+    /*
+      * Nota: cada vez que haga un write (sin contar & y #) hay que meterlo en el log.
+      * Hay dos tipos de agregados a log:
+      *
+      * this->logger->add_answer_log(params)
+      * this->loger->add_to_log(params)
+      *
+      * Los dos métodos reciben las mismas 3 cositas/parametros:
+      *
+      * 1. ip (que es el remote_ip que recibe este método como parámetro)
+      * 2. send_or_receive (que indica un mini mensaje del inicio para ver si la info es mandada o recibida, lit es ponerle "sent" o "received" y así sale en el log)
+      * 3. to_send (que es lo que se acaba de mandar, aka. this->data)
+      *
+      * La diferencia entre ambos métodos es que add_to_log recibe en data[0] el id del pedido
+      * y muestra si es CREATE_USER, DELETE_USER, etc. El add_answer_log no hace ese procesamiento
+      * de data[0], simplemente pega el to_sent así como viene (cosa que sirve cuando es una respuesta
+      * o no es el primer paquete que se está enviando o recibiendo)
+    */
+
     switch ((int) data[0]) {
         case CREATE_USER:
             // TODO(luis): hacer
@@ -648,6 +668,7 @@ void data_server::process_data(std::string remote_ip) {
             this->data[3] = 'a';
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
             this->data[0] = '&';
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
