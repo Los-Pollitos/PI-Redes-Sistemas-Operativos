@@ -37,6 +37,7 @@ initial::initial(QWidget *parent) :
     this->vacation_manager = new request_vacations();
     this->see_vacations = new vacation_consult();
     this->users_data = new user_data();
+    this->local_client = new client();
 
 
     this->update_buttons =  new description_button("Manejador de botones", nullptr, -1, 0);
@@ -338,7 +339,7 @@ void initial::create_windows(int id, int type) {
      this->salary_page->show();
      break;
    case SEE_SALARY:
-     // this->see_salary-> setUserData(this->users_login, this->users_data);
+     this->see_salary-> setUserData(this->users_login);
      this->see_salary->setModal(true);
      this->see_salary->show();
      break;

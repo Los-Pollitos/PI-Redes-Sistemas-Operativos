@@ -3,8 +3,8 @@
 
 #include <QDialog>
 #include "client.h"
-#include "user_data.h"
 #include "login_info.h"
+#include "user_data.h"
 
 namespace Ui {
 class consult_salary;
@@ -18,12 +18,11 @@ public:
     explicit consult_salary(QWidget *parent = nullptr);
     ~consult_salary();
     void set_client(client* local_client);
-    void setUserData(login_info * user_login, user_data* users_data);
+    void setUserData(login_info * user_login);
 
 private:
     Ui::consult_salary *ui;
     client* local_client;
-    user_data* users_data;
     login_info * user_login;
 
 };

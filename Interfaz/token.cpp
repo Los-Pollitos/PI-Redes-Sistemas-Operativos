@@ -103,6 +103,7 @@ void Token::on_validate_label_clicked() {
  */
 void Token::on_cancel_button_clicked() {
     emit this->parent_button->pressed();
+    this->ui->token_input->clear();
     this->hide();
     this->parent_button->valid = false;
 }

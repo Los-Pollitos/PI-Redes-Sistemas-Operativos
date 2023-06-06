@@ -20,21 +20,23 @@ consult_salary::consult_salary(QWidget *parent) :
     ui->salary->setReadOnly(true);
     ui->id->setReadOnly(true);
     ui->name->setReadOnly(true);
-    this->users_data = users_data;
+    this->user_login = new login_info();
+    this->local_client = new client();
 }
 
 void consult_salary::set_client(client* local_client){
     this->local_client = local_client;
-    // Nota: se lo comenté porque con esto crasheaba
-//    std::string envio = "";
-//    envio += ((char)PAYMENT_PROOF);
-//    envio += this->users_data->user;
-//    std::string result = local_client->send_and_receive(envio);
 }
 
-void consult_salary::setUserData(login_info * user_login, user_data* users_data) {
-    this->users_data = users_data;
+void consult_salary::setUserData(login_info * user_login) {
     this->user_login = user_login;
+    std::cout << "Entrando... 1" << std::endl;
+    std::string envio = "";
+    envio += ((char)SALARY_CONSULT);
+    envio += this->user_login->user;
+    std::cout << "Entrando... 2" << std::endl;
+    std::string result = local_client->send_and_receive(envio);
+    std::cout << "Entrando... 3" << std::endl;
 }
 
 consult_salary::~consult_salary()

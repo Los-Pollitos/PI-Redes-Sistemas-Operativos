@@ -10,6 +10,7 @@ salary_proof::salary_proof(QWidget *parent) :
     this->ui->pushButton->setStyleSheet("color: #001f21;");
     this->ui->textBrowser->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Constancia salarial");
+    this->local_client = new client();
 }
 
 salary_proof::~salary_proof()
