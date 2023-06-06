@@ -42,14 +42,19 @@ void modify_user::on_comboBox_activated(int index) {
     ui->phone->setText(QString::fromStdString(user_info.phone));
     ui->email->setText(QString::fromStdString(user_info.email));
     ui->office->setText(QString::number(office_id));
+    ui->checkbox_admin_users->setCheckState(unmask_role(index, ADMIN_USER));
+    ui->checkbox_admin_config->setCheckState(unmask_role(index, ADMIN_CONFIG));
+    ui->checkbox_debug->setCheckState(unmask_role(index, DEBUG));
+    ui->checkbox_employee->setCheckState(unmask_role(index, EMPLOYEE));
+    ui->checkbox_human_resources->setCheckState(unmask_role(index, HUMAN_RESOURCES));
+    ui->checkbox_supervisor->setCheckState(unmask_role(index, SUPERVISOR));
+
+    if(unmask_role(index, UNEMPLOYEED) == Qt::Checked) {
+        // TODO(Angie)
+    }
+
 
 //    ui->salary->setText(QString::fromStdString(this->users_data[index].salary));
-//    ui->checkbox_admin_users->setCheckState(unmask_role(index, ADMIN_USER));
-//    ui->checkbox_admin_config->setCheckState(unmask_role(index, ADMIN_CONFIG));
-//    ui->checkbox_debug->setCheckState(unmask_role(index, DEBUG));
-//    ui->checkbox_employee->setCheckState(unmask_role(index, EMPLOYEE));
-//    ui->checkbox_human_resources->setCheckState(unmask_role(index, HUMAN_RESOURCES));
-//    ui->checkbox_supervisor->setCheckState(unmask_role(index, SUPERVISOR));
 //    ui->vacations->setText(QString::number(this->users_data[index].available_vacations));
 }
 
