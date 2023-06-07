@@ -3,7 +3,6 @@
 
 #include "client.h"
 #include "change_password.h"
-#include "file_system.h"
 #include "token.h"
 #include "login_info.h"
 
@@ -25,9 +24,7 @@ class login : public QDialog
 public:
     explicit login(QWidget *parent = nullptr);
     ~login();
-    void set_file_system(FS* file_system);
     void set_client(client* local_client);
-
 
 private:
     int validate_user(std::string username, std::string password);
