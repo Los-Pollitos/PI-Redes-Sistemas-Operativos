@@ -641,7 +641,6 @@ void data_server::give_role(std::string remote_ip) {
     memset(this->data, '\0', DATA_SIZE);
     this->data[0] = '0';
     this->data[1] = to_send;
-    std::cout << " Voy a mandar rol " << this->data << std::endl;
     write(this->connection, this->data, DATA_SIZE);
 }
 

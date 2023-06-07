@@ -49,7 +49,6 @@ char data_base::get_rol(std::string user) {
     consult_role.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_role.exec() && consult_role.next()){
-        std::cout << "rol en database es " << consult_role.value(0).toString().toStdString() << std::endl;
         result = std::stoi(consult_role.value(0).toString().toStdString());
     }
     return result;
