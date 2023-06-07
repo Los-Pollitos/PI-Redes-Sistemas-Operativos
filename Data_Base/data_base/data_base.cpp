@@ -13,7 +13,7 @@
 data_base::data_base() {
     this->base = QSqlDatabase::addDatabase("QSQLITE");
     this->base.setDatabaseName("data.db");
-    if (! this->base.open()) {
+    if (!this->base.open()) {
         qDebug() << "[BASE_DATOS] Fallo al conectar";
     } else {
         qDebug() << "[BASE_DATOS] Conexión existosa";
@@ -285,6 +285,20 @@ std::string data_base::consult_employees_of_an_office(int office_id) {
         } while (consult_employee.next());
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el la oficina: " << office_id;
+    }
+    return result;
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::user_exists(std::string user) {
+    bool result = false;
+    QSqlQuery find_employee;
+    find_employee.prepare("SELECT roles FROM employees WHERE user = (:user)");
+    find_employee.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (find_employee.exec() && find_employee.next()) {
+        // Result is true
+        result = true;
     }
     return result;
 }

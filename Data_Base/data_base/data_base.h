@@ -65,6 +65,7 @@ class data_base {
     char get_rol(std::string user);
     int get_salary(std::string user);
     void delete_user(std::string user);
+    bool user_exists(std::string user);
 };
 
 #endif // DATA_BASE_H
