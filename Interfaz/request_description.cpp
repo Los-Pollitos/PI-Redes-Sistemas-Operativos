@@ -24,6 +24,7 @@ request_description::request_description(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Descripción");
     this->uploaded_file = false;
+    this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->accept_button->setStyleSheet("color: #001f21;");
     this->ui->accept_label->setStyleSheet("color: #001f21;");
     this->ui->buttonBox->setStyleSheet("color: #001f21;");
