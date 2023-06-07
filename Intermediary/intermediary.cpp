@@ -243,6 +243,8 @@ void intermediary::send_to_server(std::string ip_remote) {
     case WORK_PROOF:
     case SALARY_PROOF:
     case SALARY_CONSULT:
+      std::cout << "voy con data_base\n";
+      this->send_and_receive_data_base(ip_remote);
     case RECORD_CONSULT:
     case CONSULT_REQUESTS:
     case VACATION_REQUEST:

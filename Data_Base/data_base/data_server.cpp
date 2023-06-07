@@ -633,6 +633,7 @@ void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
     int total_m = 0;
     int i = 0;
+    std::string user = "";
 
     // TODO(nosotros): borrar
 //    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
@@ -685,7 +686,11 @@ void data_server::process_data(std::string remote_ip) {
             // TODO(Cris): hacer
             break;
         case SALARY_CONSULT:
-            // TODO(Luis): hacer
+            for (int i = 1; i < DATA_SIZE || data[i] == '\0'; i++){
+                user += data[i];
+            }
+            std::cout << this->base->get_salary(user) << std::endl;
+            memset(this->data, '\0', DATA_SIZE);
             break;
         case RECORD_CONSULT:
             // TODO(Angie): hacer

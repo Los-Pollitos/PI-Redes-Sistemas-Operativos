@@ -53,6 +53,30 @@ char data_base::get_rol(std::string user) {
     return result;
 }
 
+int data_base::get_salary(std::string user) {
+    QSqlQuery consult_actual_data;
+    QSqlQuery consult_salary;
+    int actual_data = 0;
+    int result = 0;
+    consult_actual_data.prepare("SELECT last_laboral_data FROM employees WHERE user = (:user)");
+    consult_actual_data.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_actual_data.exec() && consult_actual_data.next()) {
+        actual_data = consult_actual_data.value(0).toString().toStdString()[0];
+    }
+
+    consult_salary.prepare("SELECT gross_salary FROM employees WHERE user = (:user) AND data_id = (:actual_data)");
+    consult_salary.bindValue(":user", QString::fromStdString(user));
+    consult_salary.bindValue(":actual_data", QString::number(actual_data));
+    // If a match was found
+    if (consult_salary.exec() && consult_salary.next()) {
+        result = consult_salary.value(0).toString().toStdString()[0];
+    }
+
+    return result;
+}
+
+
 // TODO(nosotros): DOCUMENTAR
 void data_base::add_office(int id, std::string name) {
     QString office_str("CREATE TABLE IF NOT EXISTS offices (id INTEGER, name TEXT)");
