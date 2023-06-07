@@ -66,3 +66,11 @@ Wed Jun  7 09:24:39 2023:127.0.0.1:received:GET_ROLES:gherrera,
 Wed Jun  7 09:24:39 2023:127.0.0.1:sent:&
 Wed Jun  7 09:25:03 2023:127.0.0.1:received:GET_ROLES:rgang,
 Wed Jun  7 09:25:03 2023:127.0.0.1:sent:8
+Wed Jun  7 09:30:02 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:30:02 2023:127.0.0.1:sent:hola
+Wed Jun  7 09:30:56 2023:127.0.0.1:received:GET_ROLES:gherrera,
+Wed Jun  7 09:30:56 2023:127.0.0.1:sent:&
+Wed Jun  7 09:32:26 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:32:26 2023:127.0.0.1:sent:hola
+Wed Jun  7 09:32:35 2023:127.0.0.1:received:GET_ROLES:gherrera,
+Wed Jun  7 09:32:35 2023:127.0.0.1:sent:&

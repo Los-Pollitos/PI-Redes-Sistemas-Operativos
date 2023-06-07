@@ -16,12 +16,6 @@ generate_new_token::generate_new_token(QWidget *parent) :
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->password_line->setEchoMode(QLineEdit::Password);
     this->setWindowTitle("Generar token nuevo");
-    this->ui->token_1->setStyleSheet("color: #001f21;");
-    this->ui->token_2->setStyleSheet("color: #001f21;");
-    this->ui->token_3->setStyleSheet("color: #001f21;");
-    this->ui->token_4->setStyleSheet("color: #001f21;");
-    this->ui->token_5->setStyleSheet("color: #001f21;");
-    this->ui->token_6->setStyleSheet("color: #001f21;");
     this->ui->label->setStyleSheet("color: #001f21;");
     this->ui->user_line->setStyleSheet("color: #001f21;");
     this->ui->password_line->setStyleSheet("color: #001f21;");
@@ -32,17 +26,17 @@ generate_new_token::generate_new_token(QWidget *parent) :
     this->ui->label_4->setStyleSheet("color: #001f21;");
 
     this->ui->token_1->setEnabled(false);
-    this->ui->token_1->setStyleSheet(QString("QPushButton {border: 0px;}"));
+    this->ui->token_1->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->ui->token_2->setEnabled(false);
-    this->ui->token_2->setStyleSheet(QString("QPushButton {border: 0px;}"));
+    this->ui->token_2->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->ui->token_3->setEnabled(false);
-    this->ui->token_3->setStyleSheet(QString("QPushButton {border: 0px;}"));
+    this->ui->token_3->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->ui->token_4->setEnabled(false);
-    this->ui->token_4->setStyleSheet(QString("QPushButton {border: 0px;}"));
+    this->ui->token_4->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->ui->token_5->setEnabled(false);
-    this->ui->token_5->setStyleSheet(QString("QPushButton {border: 0px;}"));
+    this->ui->token_5->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->ui->token_6->setEnabled(false);
-    this->ui->token_6->setStyleSheet(QString("QPushButton {border: 0px;}"));
+    this->ui->token_6->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->ui->token_1->setText(" ");
     this->ui->token_2->setText(" ");
     this->ui->token_3->setText(" ");
