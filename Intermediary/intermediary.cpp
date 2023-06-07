@@ -257,7 +257,7 @@ void intermediary::send_to_server(std::string ip_remote) {
     case ANSWER_VACATION_REQUEST:
       // TODO(us): hacer
       break;
-    case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER:
+    case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER: case GET_ROLES:
       this->send_and_receive_data_base(ip_remote);
       break;
     default:
