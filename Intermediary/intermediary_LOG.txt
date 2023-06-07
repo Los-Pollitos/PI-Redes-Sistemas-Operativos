@@ -1012,3 +1012,167 @@ Wed Jun  7 09:32:35 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
 Wed Jun  7 09:32:35 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
 Wed Jun  7 09:32:35 2023:127.0.0.1:received from data base:0&
 Wed Jun  7 09:32:35 2023:127.0.0.1:sent to client:0&
+Wed Jun  7 09:39:17 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:17 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:17 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:39:17 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:39:18 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:18 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:18 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 09:39:18 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:18 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 09:39:18 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 09:39:21 2023:127.0.0.1:received from client:LOGIN:hola,asas
+Wed Jun  7 09:39:21 2023:127.0.0.1:sent to login:LOGIN:hola,asas
+Wed Jun  7 09:39:21 2023:127.0.0.1:received from login:0
+Wed Jun  7 09:39:21 2023:127.0.0.1:sent to client:0
+Wed Jun  7 09:39:54 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:54 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:54 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:39:54 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:39:55 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:55 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:55 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 09:39:55 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:39:55 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 09:39:55 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 09:39:58 2023:127.0.0.1:received from client:LOGIN:hola,asasa
+Wed Jun  7 09:39:58 2023:127.0.0.1:sent to login:LOGIN:hola,asasa
+Wed Jun  7 09:39:58 2023:127.0.0.1:received from login:0
+Wed Jun  7 09:39:58 2023:127.0.0.1:sent to client:0
+Wed Jun  7 09:48:02 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:48:02 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:48:02 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:48:02 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:48:03 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:48:03 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:48:03 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 09:48:03 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:48:03 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 09:48:03 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 09:48:24 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:48:24 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:48:24 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:48:24 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:48:25 2023:127.0.0.1:received from client:TOKEN:rgang,
+Wed Jun  7 09:48:25 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Wed Jun  7 09:48:25 2023:127.0.0.1:received from login:127582940592V
+Wed Jun  7 09:48:25 2023:127.0.0.1:sent to client:127582940592V
+Wed Jun  7 09:48:30 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Wed Jun  7 09:48:30 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Wed Jun  7 09:48:30 2023:127.0.0.1:received from data base:08
+Wed Jun  7 09:48:30 2023:127.0.0.1:sent to client:08
+Wed Jun  7 09:48:42 2023:127.0.0.1:received from client:USER_OFFICE:rgang
+Wed Jun  7 09:48:42 2023:127.0.0.1:sent to data base:USER_OFFICE:rgang
+Wed Jun  7 09:48:42 2023:127.0.0.1:received from data base:ÿ
+Wed Jun  7 09:48:42 2023:127.0.0.1:sent to client:ÿ
+Wed Jun  7 09:48:43 2023:127.0.0.1:received from client:ALL_USERS_OFFICE:ÿ
+Wed Jun  7 09:48:43 2023:127.0.0.1:sent to data base:ALL_USERS_OFFICE:ÿ
+Wed Jun  7 09:57:10 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:57:10 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:57:10 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:57:10 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:57:11 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:57:11 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:57:11 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 09:57:11 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 09:57:11 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 09:57:11 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 09:57:27 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:57:27 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:57:27 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:57:27 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:57:28 2023:127.0.0.1:received from client:TOKEN:rgang,
+Wed Jun  7 09:57:28 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Wed Jun  7 09:57:28 2023:127.0.0.1:received from login:127582940592èU
+Wed Jun  7 09:57:28 2023:127.0.0.1:sent to client:127582940592èU
+Wed Jun  7 09:57:42 2023:127.0.0.1:received from client:TOKEN:123,
+Wed Jun  7 09:57:42 2023:127.0.0.1:sent to login:TOKEN:123,
+Wed Jun  7 09:57:42 2023:127.0.0.1:received from login:e123,
+Wed Jun  7 09:57:42 2023:127.0.0.1:sent to client:e123,
+Wed Jun  7 09:57:51 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:57:51 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:57:51 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:57:51 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:57:52 2023:127.0.0.1:received from client:TOKEN:rgang,
+Wed Jun  7 09:57:52 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Wed Jun  7 09:57:52 2023:127.0.0.1:received from login:127582940592èU
+Wed Jun  7 09:57:52 2023:127.0.0.1:sent to client:127582940592èU
+Wed Jun  7 09:58:03 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:58:03 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735
+Wed Jun  7 09:58:03 2023:127.0.0.1:received from login:1
+Wed Jun  7 09:58:03 2023:127.0.0.1:sent to client:1
+Wed Jun  7 09:58:04 2023:127.0.0.1:received from client:TOKEN:rgang,
+Wed Jun  7 09:58:04 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Wed Jun  7 09:58:04 2023:127.0.0.1:received from login:127582940592èU
+Wed Jun  7 09:58:04 2023:127.0.0.1:sent to client:127582940592èU
+Wed Jun  7 09:58:09 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Wed Jun  7 09:58:09 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Wed Jun  7 09:58:09 2023:127.0.0.1:received from data base:08
+Wed Jun  7 09:58:09 2023:127.0.0.1:sent to client:08
+Wed Jun  7 10:01:17 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:01:17 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:01:17 2023:127.0.0.1:received from login:1
+Wed Jun  7 10:01:17 2023:127.0.0.1:sent to client:1
+Wed Jun  7 10:01:18 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:01:18 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:01:18 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 10:01:18 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:01:18 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 10:01:18 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 10:01:37 2023:127.0.0.1:received from client:LOGIN:dcabezas,d7b5221b92b1be0572afc5980df5e0
+Wed Jun  7 10:01:37 2023:127.0.0.1:sent to login:LOGIN:dcabezas,d7b5221b92b1be0572afc5980df5e0
+Wed Jun  7 10:01:37 2023:127.0.0.1:received from login:1
+Wed Jun  7 10:01:37 2023:127.0.0.1:sent to client:1
+Wed Jun  7 10:01:38 2023:127.0.0.1:received from client:TOKEN:dcabezas,
+Wed Jun  7 10:01:38 2023:127.0.0.1:sent to login:TOKEN:dcabezas,
+Wed Jun  7 10:01:38 2023:127.0.0.1:received from login:475839204758JV
+Wed Jun  7 10:01:38 2023:127.0.0.1:sent to client:475839204758JV
+Wed Jun  7 10:01:45 2023:127.0.0.1:received from client:GET_ROLES:dcabezas,
+Wed Jun  7 10:01:45 2023:127.0.0.1:sent to data base:GET_ROLES:dcabezas,
+Wed Jun  7 10:01:45 2023:127.0.0.1:received from data base:08
+Wed Jun  7 10:01:45 2023:127.0.0.1:sent to client:08
+Wed Jun  7 10:02:32 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:02:32 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:02:32 2023:127.0.0.1:received from login:1
+Wed Jun  7 10:02:32 2023:127.0.0.1:sent to client:1
+Wed Jun  7 10:02:33 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:02:33 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:02:33 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 10:02:33 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:02:33 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 10:02:33 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 10:02:38 2023:127.0.0.1:received from client:LOGIN:dcabezas,d7b5221b92b1be0572afc5980df5e0
+Wed Jun  7 10:02:38 2023:127.0.0.1:sent to login:LOGIN:dcabezas,d7b5221b92b1be0572afc5980df5e0
+Wed Jun  7 10:02:38 2023:127.0.0.1:received from login:1
+Wed Jun  7 10:02:38 2023:127.0.0.1:sent to client:1
+Wed Jun  7 10:02:39 2023:127.0.0.1:received from client:TOKEN:dcabezas,
+Wed Jun  7 10:02:39 2023:127.0.0.1:sent to login:TOKEN:dcabezas,
+Wed Jun  7 10:02:39 2023:127.0.0.1:received from login:475839204758ãU
+Wed Jun  7 10:02:39 2023:127.0.0.1:sent to client:475839204758ãU
+Wed Jun  7 10:02:45 2023:127.0.0.1:received from client:GET_ROLES:dcabezas,
+Wed Jun  7 10:02:45 2023:127.0.0.1:sent to data base:GET_ROLES:dcabezas,
+Wed Jun  7 10:02:45 2023:127.0.0.1:received from data base:08
+Wed Jun  7 10:02:45 2023:127.0.0.1:sent to client:08
+Wed Jun  7 10:04:00 2023:127.0.0.1:received from client:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:04:00 2023:127.0.0.1:sent to login:LOGIN:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:04:00 2023:127.0.0.1:received from login:1
+Wed Jun  7 10:04:00 2023:127.0.0.1:sent to client:1
+Wed Jun  7 10:04:01 2023:127.0.0.1:received from client:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:04:01 2023:127.0.0.1:sent to login:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:04:01 2023:127.0.0.1:received from login:hola de login
+Wed Jun  7 10:04:01 2023:127.0.0.1:sent to data base:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
+Wed Jun  7 10:04:01 2023:127.0.0.1:received from data base:hola
+Wed Jun  7 10:04:01 2023:127.0.0.1:sent to client:hola
+Wed Jun  7 10:04:06 2023:127.0.0.1:received from client:LOGIN:dcabezas,d7b5221b92b1be0572afc5980df5e0
+Wed Jun  7 10:04:06 2023:127.0.0.1:sent to login:LOGIN:dcabezas,d7b5221b92b1be0572afc5980df5e0
+Wed Jun  7 10:04:06 2023:127.0.0.1:received from login:1
+Wed Jun  7 10:04:06 2023:127.0.0.1:sent to client:1
+Wed Jun  7 10:04:07 2023:127.0.0.1:received from client:TOKEN:dcabezas,
+Wed Jun  7 10:04:07 2023:127.0.0.1:sent to login:TOKEN:dcabezas,
+Wed Jun  7 10:04:07 2023:127.0.0.1:received from login:475839204758SV
+Wed Jun  7 10:04:07 2023:127.0.0.1:sent to client:475839204758SV
+Wed Jun  7 10:04:13 2023:127.0.0.1:received from client:GET_ROLES:dcabezas,
+Wed Jun  7 10:04:13 2023:127.0.0.1:sent to data base:GET_ROLES:dcabezas,
+Wed Jun  7 10:04:13 2023:127.0.0.1:received from data base:08
+Wed Jun  7 10:04:13 2023:127.0.0.1:sent to client:08

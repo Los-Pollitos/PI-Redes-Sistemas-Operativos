@@ -89,7 +89,12 @@ void Token::on_validate_label_clicked() {
             this->initial_page->setModal(true);
             this->initial_page->show();
         } else {
-            QMessageBox::warning(this, "Error", "Token incorrecto");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Error");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Token incorrecto");
+            show_message.exec();
         }
     } catch (const std::runtime_error& exception) {
        std::cerr << exception.what() << std::endl;

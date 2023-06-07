@@ -24,6 +24,9 @@ change_password::change_password(QWidget *parent) :
     this->ui->lineEdit_2->setStyleSheet("color: #001f21;");
     this->ui->lineEdit_3->setStyleSheet("color: #001f21;");
     this->ui->lineEdit_4->setStyleSheet("color: #001f21;");
+    this->ui->groupBox->setStyleSheet("color: #001f21;");
+    this->ui->pushButton_reinicarContra->setStyleSheet("color: #001f21;");
+    this->ui->indicacion_label->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Cambiar contraseña");
     this->ui->lineEdit_2->setEchoMode(QLineEdit::Password); // no muestra password
     this->ui->lineEdit_3->setEchoMode(QLineEdit::Password); // no muestra token
@@ -106,16 +109,30 @@ void change_password::on_pushButton_reinicarContra_clicked()
 {
     if (this->ui->lineEdit->text() == "" || this->ui->lineEdit_2->text() == "" ||
             this->ui->lineEdit_3->text() == "" || this->ui->lineEdit_4->text() == ""){
-        QMessageBox::warning(this, "Error", "Datos incompletos");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Datos incompletos");
+        show_message.exec();
 
     } else if(this->ui->lineEdit_2->text() != this->ui->lineEdit_4->text()) {
-        QMessageBox::warning(this, "Error", "Las contraseñas no son iguales");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Las contraseñas no son iguales");
+        show_message.exec();
 
     } else {
         if (this->change_data(this->ui->lineEdit->text(), this->ui->lineEdit_2->text(), std::stoi(this->ui->lineEdit_3->text().toStdString()))) {
             this->hide();
         } else {
-            QMessageBox::warning(this, "Error", "Datos incorrectos");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Error");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Datos incompletos");
             this->ui->lineEdit->setText("");
             this->ui->lineEdit_2->setText("");
             this->ui->lineEdit_3->setText("");

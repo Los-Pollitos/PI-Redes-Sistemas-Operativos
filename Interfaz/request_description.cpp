@@ -104,15 +104,30 @@ void request_description::on_buttonBox_accepted() {
     this->ui->lineEdit->clear();
     if (password.toStdString() == this->user_login->password) {
         if (this->type == REQUEST_VACATIONS || this->uploaded_file == true) {
-            QMessageBox::information(this, "Correcto", "Solicitud aceptada");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Correcto");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Solicitud aceptada");
+            show_message.exec();
             this->parent_button->valid = false;
             this->close();
             emit this->parent_button->disapear(this->parent_button->identifier);
         } else {
-            QMessageBox::warning(this, "Error", "Debe incluir un archivo de constancia");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Error");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Debe incluir un archivo de constancia");
+            show_message.exec();
         }
     } else {
-        QMessageBox::warning(this, "Error", "Contraseña incorrecta");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Contraseña incorrecta");
+        show_message.exec();
     }
 }
 
@@ -121,12 +136,22 @@ void request_description::on_buttonBox_rejected() {
     QString password = this->ui->lineEdit->text();
     this->ui->lineEdit->clear();
     if (password.toStdString() == this->user_login->password) {
-        QMessageBox::information(this, "Correcto", "Solicitud denegada");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Correcto");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Solicitud denegada");
+        show_message.exec();
         this->close();
         this->parent_button->valid = false;
         emit this->parent_button->disapear(this->parent_button->identifier);
     } else {
-        QMessageBox::warning(this, "Error", "Contraseña incorrecto");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Contraseña incorrecta");
+        show_message.exec();
     }
 }
 

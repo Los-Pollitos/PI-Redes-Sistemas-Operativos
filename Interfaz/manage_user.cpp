@@ -146,12 +146,25 @@ void manage_user::on_generate_button_clicked() {
             this->insert_user_data(desired_username, inserted_name, inserted_id);
             QMessageBox success;
             success.setText("Usuario creado de manera exitosa");
+            success.setWindowTitle("Information");
+            success.setModal(true);
+            success.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
             success.exec();
         } else {
-            QMessageBox::warning(this, "Error", "Este usuario ya existe");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Error");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Este usuario ya existe");
+            show_message.exec();
         }
     } else {
-        QMessageBox::warning(this, "Error", "Contraseña incorrecta");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Contraseña incorrecta");
+        show_message.exec();
     }
     // Clear the text boxes
     this->ui->first_rh_password->clear();
@@ -275,12 +288,25 @@ void manage_user::on_delete_button_clicked() {
             this->delete_user_data(desired_user);
             QMessageBox success;
             success.setText("Usuario eliminado de manera exitosa");
+            success.setWindowTitle("Información");
+            success.setModal(true);
+            success.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
             success.exec();
         } else {
-            QMessageBox::warning(this, "Error", "No se puede eliminar su propio usuario");
+            QMessageBox error_message;
+            error_message.setText("No se puede eliminar su propio usuario");
+            error_message.setWindowTitle("Error");
+            error_message.setModal(true);
+            error_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            error_message.exec();
         }
     } else {
-        QMessageBox::warning(this, "Error", "Contraseña incorrecta");
+        QMessageBox error_contrasena;
+        error_contrasena.setText("Contraseña incorrecta");
+        error_contrasena.setWindowTitle("Error");
+        error_contrasena.setModal(true);
+        error_contrasena.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        error_contrasena.exec();
     }
     // Clear the text boxes
     this->ui->second_rh_password->clear();

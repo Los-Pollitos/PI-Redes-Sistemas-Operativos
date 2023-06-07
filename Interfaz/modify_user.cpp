@@ -219,10 +219,20 @@ Qt::CheckState modify_user::unmask_role(int role_id, char role) {
 void modify_user::on_approve_changes_clicked() {
     QString password = ui->password->text();
     if (password.toStdString() == this->user_login->password) {
-        QMessageBox::information(this, "Correcto", "Cambios aplicados");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Correcto");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Cambios aplicados");
+        show_message.exec();
         this->update_data();
     } else {
-        QMessageBox::warning(this, "Error", "Contraseña incorrecta");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Contraseña incorrecta");
+        show_message.exec();
     }
 }
 

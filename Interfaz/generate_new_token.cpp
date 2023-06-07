@@ -139,9 +139,19 @@ void generate_new_token::on_generate_button_2_clicked() {
         std::string result = "\0";
         result = this->local_client->send_and_receive(to_send);
         if (result[0] == '1') {
-            QMessageBox::information(this, "Correcto", "El token ha sido actualizado");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Information");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("El token ha sido actualizado");
+            show_message.exec();
         } else {
-            QMessageBox::warning(this, "Error", "Usuario no existe");
+            QMessageBox show_message =  QMessageBox();
+            show_message.setWindowTitle("Error");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Datos de usuario incorrectos");
+            show_message.exec();
         }
         this->possible_token = "";
         this->ui->user_line->setText(" ");
@@ -152,7 +162,12 @@ void generate_new_token::on_generate_button_2_clicked() {
         this->ui->token_5->setText(" ");
         this->ui->token_6->setText(" ");
     } else {
-        QMessageBox::warning(this, "Error", "Datos de confirmacion incorrectos");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Datos de confirmación incorrectos");
+        show_message.exec();
         this->ui->password_line->setText("");
     }
 }

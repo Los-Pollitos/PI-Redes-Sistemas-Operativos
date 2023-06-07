@@ -129,7 +129,12 @@ void login::on_login_button_clicked() {
         this->token_page->setParent_Button(this->request_button);
         this->token_page->show();
     } else {
-       QMessageBox::warning(this, "Error", "Datos incorrectos");
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Datos incorrectos");
+        show_message.exec();
        this->ui->user_input->setText("");
        this->ui->password_input->setText("");
     }
