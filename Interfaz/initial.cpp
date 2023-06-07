@@ -144,6 +144,7 @@ void initial::set_client(client* local_client){
  */
 void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;
+    this->role = this->ask_for_role();
     this->read_data();
     emit this->update_buttons->update_all();
 }
@@ -163,7 +164,7 @@ void initial::setParent_Button(logout_button * parent_button){
  * 
  */
 void initial::update_scrollbar() {
-    if ((this->users_data->role & EMPLOYEE) == EMPLOYEE) {
+    if ((this->role & EMPLOYEE) == EMPLOYEE) {
         this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
         this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
         this->layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
@@ -202,7 +203,7 @@ void initial::update_scrollbar() {
         this->layout->removeWidget(this->requests_buttons[SEE_RECORD]);
         this->requests_buttons[SEE_RECORD]->hide();
     }
-    if (((this->users_data->role & SUPERVISOR) == SUPERVISOR) || ((this->users_data->role & HUMAN_RESOURCES) == HUMAN_RESOURCES)) {
+    if (((this->role & SUPERVISOR) == SUPERVISOR) || ((this->role & HUMAN_RESOURCES) == HUMAN_RESOURCES)) {
         this->layout->addWidget(this->requests_buttons[SUPERVISOR_SEP]);
         this->requests_buttons[SUPERVISOR_SEP]->show();
         this->layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
@@ -213,7 +214,7 @@ void initial::update_scrollbar() {
         this->layout->removeWidget(this->requests_buttons[REQUEST_HANDLER]);
         this->requests_buttons[REQUEST_HANDLER]->hide();
     }
-    if (((this->users_data->role & HUMAN_RESOURCES) == HUMAN_RESOURCES) || ((this->users_data->role & ADMIN_USER) == ADMIN_USER)) {
+    if (((this->role & HUMAN_RESOURCES) == HUMAN_RESOURCES) || ((this->role & ADMIN_USER) == ADMIN_USER)) {
         this->layout->addWidget(this->requests_buttons[USER_SEP]);
         this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
         this->layout->addWidget(this->requests_buttons[USER_MOD]);
@@ -245,7 +246,7 @@ char initial::ask_for_role() {
     to_send += (char(GET_ROLES));
     to_send += this->users_login->user;
     to_send += ",";
-    result = this->local_client->send_and_receive(to_send)[0];
+    result = this->local_client->send_and_receive(to_send)[1];
     return result;
 }
 
@@ -427,7 +428,7 @@ void initial::on_pushButton_clicked() {
     this->users_data->name = "\0";
     //this->users_data->identification = 0;
     // this->users_data->salary = "\0";
-    this->users_data->role = 0;
+    this->role = 0;
    //  this->users_data->assigned_vacations = 0;
     // this->users_data->available_vacations = 0;
     // Hide initial window

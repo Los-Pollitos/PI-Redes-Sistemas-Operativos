@@ -44,11 +44,13 @@ data_base::~data_base() {
 char data_base::get_rol(std::string user) {
     QSqlQuery consult_role;
     char result = '\0';
+    std::cout << "me pidieron el rol de " << user << std::endl;
     consult_role.prepare("SELECT roles FROM employees WHERE user = (:user)");
     consult_role.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_role.exec() && consult_role.next()){
-        result = consult_role.value(0).toString().toStdString()[0];
+        std::cout << "rol en database es " << consult_role.value(0).toString().toStdString() << std::endl;
+        result = std::stoi(consult_role.value(0).toString().toStdString());
     }
     return result;
 }

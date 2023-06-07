@@ -628,6 +628,23 @@ void data_server::see_process_requests() {
     }
 }
 
+void data_server::give_role(std::string remote_ip) {
+    std::string user = "";
+    for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+        user += this->data[i];
+    }
+    read(this->connection, this->data, sizeof(this->data)); // discard &
+    char to_send = this->base->get_rol(user);
+    std::string to_log = "";
+    to_log += to_send;
+    this->logger->add_answer_log(remote_ip, "sent", to_log);
+    memset(this->data, '\0', DATA_SIZE);
+    this->data[0] = '0';
+    this->data[1] = to_send;
+    std::cout << " Voy a mandar rol " << this->data << std::endl;
+    write(this->connection, this->data, DATA_SIZE);
+}
+
 // TODO(us): Document
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
@@ -818,6 +835,12 @@ void data_server::process_data(std::string remote_ip) {
                 this->logger->add_answer_log(remote_ip, "sent", this->data);
             }
 
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
+            break;
+        case GET_ROLES:
+            this->give_role(remote_ip);
             this->data[0] = '&';
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);

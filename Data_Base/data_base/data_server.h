@@ -48,6 +48,7 @@ private:
     void see_process_requests();
     void find_next(std::string& line, int& pos);
     void copy_string(std::string& line, std::string& new_line, int from, int to);
+    void give_role(std::string remote_ip);
 
 public:
     data_server();
