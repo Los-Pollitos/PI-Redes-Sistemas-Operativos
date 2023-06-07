@@ -24,7 +24,6 @@ private slots:
 private:
     Ui::MainWindow* ui;
     login* loginPage;
-    FS* file_system;
     client* local_client;
 
 };

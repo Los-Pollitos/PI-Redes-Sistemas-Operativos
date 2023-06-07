@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->file_system = new FS();
     this->local_client = new client();
     this->loginPage = new login();
     this->loginPage->set_client(local_client);
@@ -17,10 +16,6 @@ MainWindow::~MainWindow() {
     if (this->ui) {
      delete this->ui;
      this->ui = 0;
-    }
-    if (this->file_system) {
-        delete this->file_system;
-        this->file_system = 0;
     }
     if (this->loginPage) {
         delete this->loginPage;
