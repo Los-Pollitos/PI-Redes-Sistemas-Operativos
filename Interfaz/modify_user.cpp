@@ -50,7 +50,6 @@ modify_user::~modify_user() {
     }
 }
 
-// TODO(Angie): modificar
 void modify_user::on_comboBox_activated(int index) {
     // obtain the user's data
     this->user_info.user = this->user_names[index];
@@ -239,6 +238,7 @@ void modify_user::on_approve_changes_clicked() {
 void modify_user::update_data() {
     std::string to_send = "\0";
     bool is_number = true;
+    bool salary_changed = false;
 
     // update roles
     this->update_roles();
@@ -250,7 +250,8 @@ void modify_user::update_data() {
         to_send[0] = CHANGE_PHONE;
         this->local_client->send_and_receive(to_send);
     }
-    if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() <= 23) {
+    if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() > 0
+                && this->ui->email->text().length() <= 23) {
         this->user_info.email = this->ui->email->text().toStdString();
         to_send = " " + this->user_info.email;
         to_send[0] = CHANGE_EMAIL;
@@ -266,6 +267,13 @@ void modify_user::update_data() {
         to_send[1] = this->user_info.office_id;
         this->local_client->send_and_receive(to_send);
     }
+    if (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() > 0
+                && this->ui->job_title->text().length() <= 50) {
+        this->user_info.job_title = this->ui->job_title->text().toStdString();
+        to_send = " " + this->user_info.job_title;
+        to_send[0] = CHANGE_JOB_TITLE;
+        this->local_client->send_and_receive(to_send);
+    }
     if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations && is_number) {
         this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
         to_send = "  ";
@@ -273,11 +281,20 @@ void modify_user::update_data() {
         to_send[1] = this->user_info.available_vacations;
         this->local_client->send_and_receive(to_send);
     }
-    if (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() <= 50) {
-        this->user_info.job_title = this->ui->job_title->text().toStdString();
-        to_send = " " + this->user_info.job_title;
-        to_send[0] = CHANGE_JOB_TITLE;
-        this->local_client->send_and_receive(to_send);
+    if (this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number) {
+        this->user_info.salary_base = this->ui->base_salary->text().toInt(&is_number, 10);
+        salary_changed = true;
+
+        // TODO(Angie): enviar a base de datos
+    }
+    if (this->ui->deductions->text().toInt(&is_number, 10) != this->user_info.deductibles && is_number) {
+        this->user_info.deductibles = this->ui->deductions->text().toInt(&is_number, 10);
+        salary_changed = true;
+
+        // TODO(Angie): enviar a base de datos
+    }
+    if (salary_changed) {
+        this->ui->net_salary->setText(QString::number(this->user_info.salary_base-this->user_info.deductibles));
     }
 
 
