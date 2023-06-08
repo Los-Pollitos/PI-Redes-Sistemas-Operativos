@@ -26,6 +26,7 @@ public:
     ~login();
     void set_client(client* local_client);
 
+
 private:
     int validate_user(std::string username, std::string password);
     void ask_for_token();

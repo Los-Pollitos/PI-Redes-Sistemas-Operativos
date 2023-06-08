@@ -1,5 +1,6 @@
 #include "login.h"
 #include "ui_login.h"
+#include "security.h"
 #include <QMessageBox>
 
 /**
@@ -61,9 +62,6 @@ login::~login() {
  */
 void login::set_client(client* local_client){
     this->local_client = local_client;
-    // TODO (nosotros): borrar
-    this->local_client->send_and_receive("Acjimenez,78e8ee0b2f67531b8eda7678fa42fb");
-    this->local_client->send_and_receive("Fcjimenez,78e8ee0b2f67531b8eda7678fa42fb");
 }
 
 /**
@@ -75,11 +73,12 @@ void login::set_client(client* local_client){
  */
 int login::validate_user(std::string username, std::string password) {
     std::string to_comunicate = "";
+    security security_manager;
     std::cout << "GET_LOGIN es " << (char)GET_LOGIN << std::endl;
     to_comunicate += ((char)GET_LOGIN);
     to_comunicate += username;
     to_comunicate += ",";
-    to_comunicate += password; // TODO (Emilia): Hash password
+    to_comunicate += security_manager.hash_string(password); // TODO (Emilia): Hash password
     std::string result = "\0";
     result = this->local_client->send_and_receive(to_comunicate);
     int to_return = ((int)result[0]) - 48;
@@ -99,6 +98,8 @@ void login::ask_for_token() {
     to_send += ",";
     std::string result = "\0";
     result = this->local_client->send_and_receive(to_send);
+    security security_manager;
+    result = security_manager.decrypt(result);
     if (result[0] != 'e') {
         int token_count = 0;
         for (int i = 0; i < TOKEN_SIZE*2; i+=2) {

@@ -1,5 +1,6 @@
 #include "change_password.h"
 #include "ui_change_password.h"
+#include "security.h"
 
 #include <fstream>
 #include <iostream>
@@ -73,6 +74,7 @@ bool change_password::change_data(QString username, QString password, int token)
     to_send += username.toStdString();
     to_send += ",";
     std::string result = "\0";
+    security security_manager;
     bool return_value = true;
     result = this->local_client->send_and_receive(to_send);
     if (result[0] != 'e') {
@@ -87,7 +89,7 @@ bool change_password::change_data(QString username, QString password, int token)
             to_send += ((char)GET_CHANGE_PASSWORD);
             to_send += username.toStdString();
             to_send += ",";
-            to_send += password.toStdString();
+            to_send += security_manager.hash_string(password.toStdString());
             result = this->local_client->send_and_receive(to_send);
             return_value = ((int)result[0]) - 48;
             std::cout << "el cambio fue correcto?  " << return_value << std::endl;
