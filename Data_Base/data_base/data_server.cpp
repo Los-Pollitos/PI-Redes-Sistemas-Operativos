@@ -658,6 +658,26 @@ void data_server::create_user_case(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
+void data_server::delete_user_case(std::string remote_ip) {
+    std::string username = "";
+    // Obtain the username from data
+    for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+        username += this->data[i];
+    }
+    // Remove the unnecesary & as only one package is needed
+    read(this->connection, this->data, sizeof(this->data));
+    // Clear data
+    memset(this->data, '\0', DATA_SIZE);
+    std::string result = "0";
+    // Check if the user exists
+    if (this->base->user_exists(username)) {
+        this->base->delete_user(username);
+    }
+    this->logger->add_answer_log(remote_ip, "sent", result);
+    data[0] = result[0];
+    write(this->connection, this->data, DATA_SIZE);
+}
+
 // TODO(us): Document
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
@@ -705,15 +725,7 @@ void data_server::process_data(std::string remote_ip) {
             break;
         case DELETE_USER:
             // TODO(luis): hacer
-            std::cout << " Me llego el mensaje \n";
-            memset(this->data, '\0', DATA_SIZE);
-            this->data[0] = 'h';
-            this->data[1] = 'o';
-            this->data[2] = 'l';
-            this->data[3] = 'a';
-            std::cout << " Voy a mandar " << this->data << "\n";
-            write(this->connection, this->data, DATA_SIZE);
-            this->logger->add_answer_log(remote_ip, "sent", this->data);
+            this->delete_user_case(remote_ip);
             this->data[0] = '&';
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
