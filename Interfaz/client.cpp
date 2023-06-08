@@ -78,8 +78,9 @@ std::string client::send_and_receive(std::string to_send) {
                 std::cout << std::endl << "Error de lectura" << std::endl;
             }
         }
-        delete [] data;
     }
+    delete [] data;
+
     return resultado;
 }
 

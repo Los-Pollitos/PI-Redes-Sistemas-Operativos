@@ -74,7 +74,7 @@ void intermediary::answer_request() {
   std::cout << " IP Remoto: " << strIpRemoto << std::endl;
 
   while (this->connection != -1 &&
-         (n = read(this->connection, this->data, sizeof(this->data))) > 0) {
+         (n = read(this->connection, this->data, DATA_SIZE)) > 0) {
     // connection es socket cliente
     std::cout << "Recibi: " << this->data << " de cliente" << std::endl;
     if (this->data[0] == '#') {
@@ -156,7 +156,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
     } else {
       // receive everything from client
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
-          std::cout << "Voy a mandar: " << this->data  << " a data base"<< std::endl;
+          std::cout << "Voy a mandar: " << this->data << " a data base"<< std::endl;
           write(s, this->data, DATA_SIZE);
           this->logger->add_to_log(ip_remote, "sent to data base", this->data);
           n = read(this->connection, this->data, sizeof(this->data));

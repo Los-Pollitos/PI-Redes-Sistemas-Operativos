@@ -758,18 +758,25 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case USER_OFFICE:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             to_send = "\0";
 
             // find the user
             i = 1;  // data[0] is USER_OFFICE
+
+            // TODO(Angie): borrar
+            std::cout << "data[" << i << "] = " << data[i] << std::endl;
+
             while (data[i] != '\0') {
+
+                // TODO(Angie): borrar
+                std::cout << "data[" << i << "] = " << data[i] << std::endl;
+
                 to_send += data[i++];
             }
 
             // ask the data base for the result
-            to_send = this->base->consult_employee_office(to_send);
+            to_send_int = this->base->consult_employee_office(to_send);
+            to_send = std::to_string(to_send_int);
 
             // find the size of the package to send
             total_m = (int) (to_send.length() / DATA_SIZE)
@@ -789,8 +796,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case ALL_USERS_OFFICE:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             to_send = "\0";
 
             // find the user
@@ -820,8 +825,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case DATA_USER:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             to_send = "\0";
 
             // find the user
@@ -851,8 +854,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case CHANGE_PHONE:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
@@ -882,8 +883,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case CHANGE_EMAIL:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
@@ -913,8 +912,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case CHANGE_OFFICE_ID:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
@@ -942,8 +939,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case CHANGE_ROLES:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
@@ -970,8 +965,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
             case CHANGE_VACATIONS:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
@@ -1002,8 +995,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case CHANGE_LABORAL_DATA:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
@@ -1086,8 +1077,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case ADD_RECORD:
-            // Data is set to \0
-            memset(this->data, '\0', DATA_SIZE);
             user = "\0";
             to_send = "\0";
 
