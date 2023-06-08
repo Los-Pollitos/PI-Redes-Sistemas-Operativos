@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <QDate>
 #include <QDialog>
 #include "client.h"
 #include "login_info.h"
