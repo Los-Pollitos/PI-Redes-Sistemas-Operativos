@@ -25,6 +25,8 @@ private slots:
     void on_delete_button_clicked();
     void show_error(std::string error);
     void show_success(std::string success);
+    void prepare_create_string(std::string username, std::string password);
+    void prepare_delete_string(std::string username);
 
 private:
     Ui::manage_user* ui;

@@ -75,6 +75,26 @@ void manage_user::on_generate_button_clicked() {
     this->ui->create_name->clear();
 }
 
+void manage_user::prepare_create_string(std::string username, std::string password) {
+    std::string to_send = "\0";
+    to_send[0] = ((char)CREATE_USER);
+    to_send += username;
+    to_send += ",";
+    to_send += password;
+    to_send += ",";
+    this->local_client->send_and_receive(to_send);
+    //TODO(Luis): revisar return para ver si hay error o no
+}
+
+void manage_user::prepare_delete_string(std::string username) {
+    std::string to_send = "\0";
+    to_send[0] = ((char)DELETE_USER);
+    to_send += username;
+    to_send += ",";
+    this->local_client->send_and_receive(to_send);
+    //TODO(Luis): revisar return para ver si hay error o no
+}
+
 void manage_user::on_delete_button_clicked() {
     // Get password from textbox
     std::string inserted_password = this->ui->second_rh_password->text().toStdString();
