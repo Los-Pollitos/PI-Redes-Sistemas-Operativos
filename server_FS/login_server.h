@@ -10,7 +10,7 @@
 #define LOGIN_SERVER
 
 #define DATA_SIZE 256
-#define HASH_SIZE 30
+#define HASH_SIZE 32
 
 #define PORT 8080
 

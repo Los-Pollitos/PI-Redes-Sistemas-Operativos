@@ -654,8 +654,7 @@ std::string FS::read_until(std::string user, std::string name, char separator) {
       while (/**this->directory[dir_pos].file_pointer < local_read_pointer &&
               **/
              this->unit[local_read_pointer] != separator &&
-             this->unit[local_read_pointer] != END_TEXT &&
-             this->unit[local_read_pointer] != '\n') {
+             this->unit[local_read_pointer] != END_TEXT) {
         result += this->unit[local_read_pointer];
         this->add_one_local_read_pointer(local_read_pointer);
       }

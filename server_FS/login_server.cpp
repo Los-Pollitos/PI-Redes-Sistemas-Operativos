@@ -7,6 +7,7 @@
 */
 
 #include "login_server.h"
+#include "security.h"
 
 /*
  * @brief Default constructor
@@ -300,10 +301,28 @@ void login_server::give_token(){
 
     // Extract token
     if (found) {
+      security security_manager;
       // buffer has username, now we want to ignore hash
       this->file_system->read_until("Server", "Login.txt", ',');
+      // get token
       buffer  =  this->file_system->read_until("Server", "Login.txt", ',');
-      this->adapt_data(buffer); 
+      std::cout << "voy a encriptar: " << buffer << std::endl;
+      buffer = security_manager.encrypt(buffer);
+      std::cout << "buffer encriptado: " << buffer << "L" << std::endl;
+      std::cout << "encriptado .size: " << buffer.size() << std::endl;
+      std::cout << "buffer desencriptado: " << security_manager.decrypt(buffer) << std::endl;
+      std::cout << "assci ";
+      std::string token_ascii = "";
+      int i = 0;
+      for (i = 0; i < 12; ++i) {
+        std::cout << (int)buffer[i] << " ";
+        token_ascii += std::to_string((int)buffer[i]);
+        token_ascii += ',';
+      }
+      token_ascii += '\0';
+      std::cout << std::endl;
+      this->adapt_data(token_ascii);
+      this->data[12] = ',';
     } else {
       this->data[0] = 'e'; // e == error
     }
@@ -410,6 +429,8 @@ void login_server::change_token() {
       // buffer has username, now we want to ignore hash
       buffer = this->file_system->read_until("Server", "Login.txt", ',');
       // modify token
+      security security_manager;
+      new_token = security_manager.decrypt(new_token);
       this->file_system->write("Server","Login.txt", new_token);
       memset(this->data, '\0', DATA_SIZE);
       this->data[0] = '1';

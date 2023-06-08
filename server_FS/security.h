@@ -15,7 +15,6 @@ class security {
 public:
     security();
     ~security();
-    std::string hash_string(std::string to_hash);
     std::string encrypt(std::string to_encrypt);
     std::string decrypt(std::string to_decrypt);
 };
