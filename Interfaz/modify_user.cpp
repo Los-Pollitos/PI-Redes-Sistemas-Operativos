@@ -129,38 +129,38 @@ void modify_user::load_user_data(std::string& data) {
     std::string temp_vacations = "\0";
 
     while (pos < data.length()) {
-        if (data[pos] != ',') {
+        if (data[pos] != ','  && data[pos] != '\0') {
             switch(commas_found) {
-            case 0:  // the name is
-                this->user_info.name += data[pos];
-                break;
-            case 1:  // identification
-                this->user_info.identification += data[pos];
-                break;
-            case 2:  // phone
-                this->user_info.phone += data[pos];
-                break;
-            case 3:  // email
-                this->user_info.email += data[pos];
-                break;
-            case 4:  // office
-                this->user_info.office_id = data[pos];  // only one char always
-                break;
-            case 5:  // role
-                this->user_info.role = data[pos];  // only one char always
-                break;
-            case 6:  // vacations
-                temp_vacations += data[pos];
-                break;
-            case 7:  // job_title
-                this->user_info.job_title += data[pos];
-                break;
-            case 8:  // base salary
-                temp_salary += data[pos];
-                break;
-            case 9:  // deductibles
-                temp_deductibles += data[pos];
-                break;
+                case 0:  // the name is
+                    this->user_info.name += data[pos];
+                    break;
+                case 1:  // identification
+                    this->user_info.identification += data[pos];
+                    break;
+                case 2:  // phone
+                    this->user_info.phone += data[pos];
+                    break;
+                case 3:  // email
+                    this->user_info.email += data[pos];
+                    break;
+                case 4:  // office
+                    this->user_info.office_id = data[pos];  // only one char always
+                    break;
+                case 5:  // role
+                    this->user_info.role = data[pos];  // only one char always
+                    break;
+                case 6:  // vacations
+                    temp_vacations += data[pos];
+                    break;
+                case 7:  // job_title
+                    this->user_info.job_title += data[pos];
+                    break;
+                case 8:  // base salary
+                    temp_salary += data[pos];
+                    break;
+                case 9:  // deductibles
+                    temp_deductibles += data[pos];
+                    break;
             }
         } else {
             ++commas_found;  // indicate a comma was found
@@ -175,6 +175,7 @@ void modify_user::load_user_data(std::string& data) {
 
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
+    int i = 0;
     // find the user's office id
     std::string to_send = "0" + this->user_login->user;
     to_send[0] = USER_OFFICE;
@@ -183,7 +184,11 @@ void modify_user::add_data_to_combobox() {
     // find all the users of an office
     to_send = "01";
     to_send[0] = ALL_USERS_OFFICE;
-    to_send[1] = data_received[0];  // data_received[0] is a char that represents the office_id
+
+    // find the office id
+    while (data_received[i] != '\0') {
+        to_send += data_received[i++];
+    }
     data_received = this->local_client->send_and_receive(to_send);
 
     // store the usernames individually

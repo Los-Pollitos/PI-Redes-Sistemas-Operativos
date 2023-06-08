@@ -62,6 +62,7 @@ class data_base {
     std::string consult_office_name(int id);
     int consult_employee_office(std::string user);
     std::string consult_employee_data(std::string user);
+    std::string consult_laboral_data(std::string user, int data_id);
     std::string consult_employees_of_an_office(int office_id);
     char get_rol(std::string user);
     int get_salary(std::string user);

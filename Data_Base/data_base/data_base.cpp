@@ -255,17 +255,50 @@ int data_base::consult_employee_office(std::string user) {
 // TODO(nosotros): DOCUMENTAR
 std::string data_base::consult_employee_data(std::string user) {
     std::string result = "";
+    bool is_number = true;
     QSqlQuery consult_employee;
-    consult_employee.prepare("SELECT * FROM employees WHERE user = (:user)");
+    consult_employee.prepare("SELECT name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data FROM employees WHERE user = (:user)");
     consult_employee.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_employee.exec() && consult_employee.next()) {
-        // TODO(nosotros): DESCIFRAR
-        for (int i = 0; i < 9; ++i) {
-            result += consult_employee.value(i).toString().toStdString() += ",";
+        for (int i = 0; i < 8; ++i) {
+            switch(i) {
+                case 0:  // name
+                case 1:  // identification
+                case 2:  // phone_number
+                case 3:  // email
+                case 4:  // office ID TODO(Angie): considerar name
+                case 5:  // roles
+                case 6:  // available vacations
+                    result += consult_employee.value(i).toString().toStdString() += ",";
+                    break;
+                case 7:  // laboral_data
+                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));
+                    break;
+            }
         }
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
+    }
+    return result;
+}
+
+// TODO(nosotros): documentar
+std::string data_base::consult_laboral_data(std::string user, int data_id) {
+    std::string result = "\0";
+    QSqlQuery consult_laboral_data;
+    consult_laboral_data.prepare("SELECT gross_salary, deuctibles, job_title FROM laboral_datas WHERE user = (:user) AND data_id = (:data_id)");
+    consult_laboral_data.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_laboral_data.exec() && consult_laboral_data.next()) {
+        for (int i = 0; i < 3; ++i) {
+            result += consult_laboral_data.value(i).toString().toStdString();
+            if (i != 2) {  // need a ','
+                result+= ",";
+            }
+        }
+    } else {
+        qDebug() << "[BASE_DATOS] Error los datos laborales #" << data_id << " del usuario: " << QString::fromStdString(user);
     }
     return result;
 }
@@ -280,10 +313,10 @@ std::string data_base::consult_employees_of_an_office(int office_id) {
 
     // If a match was found
     if (consult_employee.exec() && consult_employee.next()) {
-        // TODO(nosotros): DESCIFRAR
         do {
             result += consult_employee.value(0).toString().toStdString() += ",";
         } while (consult_employee.next());
+        result[result.length()-1] = '\0';  // there was an extra ','
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el la oficina: " << office_id;
     }
