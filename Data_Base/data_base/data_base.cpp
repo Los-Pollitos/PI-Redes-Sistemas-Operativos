@@ -41,7 +41,7 @@ data_base::data_base() {
 data_base::~data_base() {
 }
 
-char data_base::get_rol(std::string user) {
+char data_base::get_rol(std::string user, int & error) {
     QSqlQuery consult_role;
     char result = '\0';
     std::cout << "me pidieron el rol de " << user << std::endl;
@@ -50,6 +50,8 @@ char data_base::get_rol(std::string user) {
     // If a match was found
     if (consult_role.exec() && consult_role.next()){
         result = std::stoi(consult_role.value(0).toString().toStdString());
+    } else {
+        error = -1;
     }
     return result;
 }

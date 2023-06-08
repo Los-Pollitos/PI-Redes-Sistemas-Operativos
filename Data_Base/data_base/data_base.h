@@ -64,7 +64,7 @@ class data_base {
     std::string consult_employee_data(std::string user);
     std::string consult_laboral_data(std::string user, int data_id);
     std::string consult_employees_of_an_office(int office_id);
-    char get_rol(std::string user);
+    char get_rol(std::string user, int & error);
     int get_salary(std::string user);
     void delete_user(std::string user);
     bool user_exists(std::string user);
