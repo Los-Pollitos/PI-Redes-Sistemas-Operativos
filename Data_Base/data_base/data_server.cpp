@@ -628,11 +628,10 @@ void data_server::give_role(std::string remote_ip) {
     int error = 0;
     read(this->connection, this->data, sizeof(this->data)); // discard &
     char to_send = this->base->get_rol(user, error);
-
-        std::string to_log = "";
-        to_log += to_send;
-        this->logger->add_answer_log(remote_ip, "sent", to_log);
-        memset(this->data, '\0', DATA_SIZE);
+    std::string to_log = "";
+    to_log += to_send;
+    this->logger->add_answer_log(remote_ip, "sent", to_log);
+    memset(this->data, '\0', DATA_SIZE);
     if (error != -1) {
         this->data[0] = '1';
         this->data[1] = to_send;

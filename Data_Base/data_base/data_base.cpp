@@ -49,6 +49,7 @@ char data_base::get_rol(std::string user, int & error) {
     consult_role.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_role.exec() && consult_role.next()){
+        error = 1;
         result = std::stoi(consult_role.value(0).toString().toStdString());
     } else {
         error = -1;

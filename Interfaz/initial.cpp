@@ -2,6 +2,7 @@
 #include "ui_initial.h"
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QMessageBox>
 #include <iostream>
 #include <fstream>
 
@@ -144,9 +145,20 @@ void initial::set_client(client* local_client){
  */
 void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;
-    this->role = this->ask_for_role();
+    int correct = -1;
+    this->role = this->ask_for_role(correct);
     this->read_data();
     emit this->update_buttons->update_all();
+    if (correct != 1) {
+        // Logout signal
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Error procesando su usuario, por favor intente de nuevo o consulte a su supervisor");
+        show_message.exec();
+        emit this->parent_button->pressed();
+    }
 }
 
 /**
@@ -239,14 +251,16 @@ void initial::update_scrollbar() {
  * @brief asks client for user's role
  * @return role
  */
-char initial::ask_for_role() {
-    //TODO (Emilia): revisar e implementar en intermediario y base server
+char initial::ask_for_role(int & correct) {
     char result = '0';
     std::string to_send = "";
     to_send += (char(GET_ROLES));
     to_send += this->users_login->user;
     to_send += ",";
-    result = this->local_client->send_and_receive(to_send)[1];
+    std::string from_server = "";
+    from_server += this->local_client->send_and_receive(to_send);
+    correct = (int)(from_server[0]-48);
+    result = from_server[1];
     return result;
 }
 
