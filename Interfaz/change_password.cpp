@@ -59,6 +59,49 @@ void change_password::set_client(client* local_client){
     this->local_client = local_client;
 }
 
+
+/**
+ * @brief Asks client to send token information in order to verify if the user
+ * has their token
+ *
+ */
+std::string change_password::ask_for_token(std::string username) {
+    // TODO(emilia): borrar cosas
+    std::string to_send = "";
+    to_send += ((char)GET_TOKEN);
+    to_send += username;
+    to_send += ",";
+    std::string result = "\0";
+    result = this->local_client->send_and_receive_cypher(to_send);
+    security security_manager;
+    std::string adapted_result= "";
+    int i = 0;
+    for (int j = 0; j < 12; ++j) {
+        std::cout << " en for " << j << ":" << result[i] << std::endl;
+        if (result[i+1] == ',') {
+            adapted_result += (char)(result[i]-48);
+            std::cout << "\tun char: " << (int)result[i] << std::endl;
+        } else if (result[i+2] == ','){
+            adapted_result += (char)(((int)result[i]) - 48)*10 +(((int)result[i+1]) - 48);
+            std::cout << "\tdoschar " << (int)((((int)result[i]) - 48)*10 +(((int)result[i+1]) - 48)) << std::endl;
+            ++i; // ignore i+1
+        } else {
+            adapted_result += (char)(((int)result[i] - 48)*100 + ((int)result[i+1] -48)*10 - +(((int)result[i+2] -48)));
+            std::cout << "\ttreschar " << (int)(((int)result[i] - 48)*100 + ((int)result[i+1] -48)*10 - +(((int)result[i+2] -48)))<< std::endl;
+            i+=2; // ignore i+2
+        }
+        // next one would be a ,
+        i+=2;
+    }
+    for (i = 0; i < 12; ++i) {
+        std::cout << (int)adapted_result[i] << " ";
+    }
+    result = security_manager.decrypt(adapted_result);
+    std::cout <<  "Desencriptado: " << result << std::endl; // TODO borrar print
+    return result;
+}
+
+
 /**
  * @brief Comunicates with client to change password
  * 
@@ -73,10 +116,9 @@ bool change_password::change_data(QString username, QString password, int token)
     to_send += ((char)GET_TOKEN);
     to_send += username.toStdString();
     to_send += ",";
-    std::string result = "\0";
+    std::string result = this->ask_for_token(username.toStdString());
     security security_manager;
     bool return_value = true;
-    result = this->local_client->send_and_receive(to_send);
     if (result[0] != 'e') {
         int user_token[6];
         int token_count = 0;

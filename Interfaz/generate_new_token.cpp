@@ -134,10 +134,15 @@ void generate_new_token::on_generate_button_2_clicked() {
         to_send += ((char)GET_CHANGE_TOKEN);
         to_send += this->user_data->user;
         to_send += ",";
-        to_send += security_manager.encrypt(this->ui->user_line->text().toStdString());
+        to_send += this->ui->user_line->text().toStdString();
         to_send += ",";
-        to_send += this->possible_token;
-        to_send += ",";
+        std::string encrypted = security_manager.encrypt(this->possible_token);
+        int i = 0;
+        for (i = 0; i < 12; ++i) {
+            to_send += std::to_string((int)encrypted[i]);
+            to_send += ',';
+        }
+        to_send += '\0';
         std::string result = "\0";
         result = this->local_client->send_and_receive(to_send);
         if (result[0] == '1') {

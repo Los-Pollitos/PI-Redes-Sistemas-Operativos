@@ -28,6 +28,7 @@ private:
     int pos;
     int token[TOKEN_SIZE];
     client* local_client;
+    std::string ask_for_token(std::string username);
 };
 
 #endif // CHANGE_PASSWORD_H

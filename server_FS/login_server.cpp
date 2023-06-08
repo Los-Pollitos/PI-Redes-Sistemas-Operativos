@@ -394,10 +394,23 @@ void login_server::change_token() {
       username += this->data[i];
     }
   }
-  for (i = i+1; i < DATA_SIZE && this->data[i] != ','; ++i) {
-    if (this->data[i] != ',') {
-      new_token += this->data[i];
-    }
+  ++i; // sikip comma
+  for (int j = 0; j < 12; ++j) {
+      std::cout << " en for " << j << ":" << this->data[i] << std::endl;
+      if (this->data[i+1] == ',') {
+          new_token += (char)(this->data[i]-48);
+          std::cout << "\tun char: " << (int)this->data[i] << std::endl;
+      } else if (this->data[i+2] == ','){
+        new_token += (char)(((int)this->data[i]) - 48)*10 +(((int)this->data[i+1]) - 48);
+        std::cout << "\tdoschar " << (int)((((int)this->data[i]) - 48)*10 +(((int)this->data[i+1]) - 48)) << std::endl;
+      ++i; // ignore i+1
+      } else {
+        new_token += (char)(((int)this->data[i] - 48)*100 + ((int)this->data[i+1] -48)*10 - +(((int)this->data[i+2] -48)));
+        std::cout << "\ttreschar " << (int)(((int)this->data[i] - 48)*100 + ((int)this->data[i+1] -48)*10 - +(((int)this->data[i+2] -48)))<< std::endl;
+        i+=2; // ignore i+2
+      }
+      // next one would be a ,
+      i+=2;
   }
 
   // Open file in file system
@@ -431,6 +444,7 @@ void login_server::change_token() {
       // modify token
       security security_manager;
       new_token = security_manager.decrypt(new_token);
+      std::cout << " el token nuevo de " << username << " es " << new_token << std::endl;
       this->file_system->write("Server","Login.txt", new_token);
       memset(this->data, '\0', DATA_SIZE);
       this->data[0] = '1';
