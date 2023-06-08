@@ -1,18 +1,18 @@
 usuario,id,dia,mes,año,anotación
-gmora,1,1,2,2015,Lleva un mes en el trabajo. Ha mostrado una gran disciplina y dedicación.
-gmora,2,3,3,2016,Llegada tardía (1 hora).
-eguzman,3,9,8,2017,No ha revisado solicitudes en 1 mes.
-gmora,4,26,7,2017,No se presentó para el turno de la mañana.
-gmora,5,27,7,2017,Presentó justificación médica para la ausensia del 26/07/2017.
-gmora,6,1,4,2018,Trabajó muy bien. Logró resolver un problema que llevaba meses sin ser resuelto.
-alopez,7,9,4,2018,Hubo una denuncia en su contra de comportamiento no apto para la oficina.
-alopez,8,10,4,2018,Explicó su comportamiento del día anterior y pidió las disculpas correspondientes.
-eguzman,9,17,4,2019,Ha trabajado muy bien desde que regresó de su incapacidad.
-gmora,10,24,12,2019,No se presentó a trabajar. No avisó previamente.
-gmora,11,15,9,2020,Desde la virtualidad no se conecta a muchas reuniones.
-gmora,12,30,6,2021,Tuvo COVID, pero tardó casi 3 meses, en los cuales se le vio fuera del hogar, en volver a tomar reuniones consistentemente.
-gmora,13,25,1,2023,No se presentó a trabajar. No avisó previamente.
-gmora,14,1,2,2023,Presentó comprobante médico falso para justificar la ausencia del 25/01/2023.
-rgang,15,2,3,2023,No ha revisado las solicitudes que le correspondían en los últimos meses.
-dcabezas,16,2,3,2023,No ha revisado las solicitudes que le correspondían en el último mes.
-jnunez,17,11,5,2023,Presenta dificultades para comprender sus labores.
+gmora,1,2,2015,Lleva un mes en el trabajo. Ha mostrado una gran disciplina y dedicación.
+gmora,3,3,2016,Llegada tardía (1 hora).
+eguzman,9,8,2017,No ha revisado solicitudes en 1 mes.
+gmora,26,7,2017,No se presentó para el turno de la mañana.
+gmora,27,7,2017,Presentó justificación médica para la ausensia del 26/07/2017.
+gmora,1,4,2018,Trabajó muy bien. Logró resolver un problema que llevaba meses sin ser resuelto.
+alopez,9,4,2018,Hubo una denuncia en su contra de comportamiento no apto para la oficina.
+alopez,10,4,2018,Explicó su comportamiento del día anterior y pidió las disculpas correspondientes.
+eguzman,17,4,2019,Ha trabajado muy bien desde que regresó de su incapacidad.
+gmora,24,12,2019,No se presentó a trabajar. No avisó previamente.
+gmora,15,9,2020,Desde la virtualidad no se conecta a muchas reuniones.
+gmora,30,6,2021,Tuvo COVID, pero tardó casi 3 meses, en los cuales se le vio fuera del hogar, en volver a tomar reuniones consistentemente.
+gmora,25,1,2023,No se presentó a trabajar. No avisó previamente.
+gmora,1,2,2023,Presentó comprobante médico falso para justificar la ausencia del 25/01/2023.
+rgang,2,3,2023,No ha revisado las solicitudes que le correspondían en los últimos meses.
+dcabezas,2,3,2023,No ha revisado las solicitudes que le correspondían en el último mes.
+jnunez,11,5,2023,Presenta dificultades para comprender sus labores.

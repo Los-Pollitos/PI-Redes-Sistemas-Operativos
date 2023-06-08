@@ -16,6 +16,7 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->employee->setStyleSheet("color: #001f21;");
     this->ui->id->setStyleSheet("color: #001f21;");
     this->ui->job_title->setStyleSheet("color: #001f21;");
+    this->ui->label_8->setStyleSheet("color: #001f21;");
     this->ui->label_10->setStyleSheet("color: #001f21;");
     this->ui->label_11->setStyleSheet("color: #001f21;");
     this->ui->label_12->setStyleSheet("color: #001f21;");
@@ -27,9 +28,11 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->label_6->setStyleSheet("color: #001f21;");
     this->ui->label_7->setStyleSheet("color: #001f21;");
     this->ui->label_9->setStyleSheet("color: #001f21;");
+    this->ui->label_15->setStyleSheet("color: #001f21;");
     this->ui->net_salary->setStyleSheet("color: #001f21;");
     this->ui->office->setStyleSheet("color: #001f21;");
     this->ui->password->setStyleSheet("color: #001f21;");
+    this->ui->name->setStyleSheet("color: #001f21;");
     this->ui->phone->setStyleSheet("color: #001f21;");
     this->ui->password->setStyleSheet("color: #001f21;");
     this->ui->record->setStyleSheet("color: #001f21;");
@@ -60,7 +63,7 @@ void modify_user::on_comboBox_activated(int index) {
     this->load_user_data(data_received);
 
     // if the user was fired, noting can't be changed
-    if(unmask_role(index, UNEMPLOYEED) == Qt::Checked) {
+    if(unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Unchecked) {
         ui->checkbox_active->setCheckState(unmask_role(index, UNEMPLOYEED));
         this->set_read_only();
     }
@@ -74,12 +77,13 @@ void modify_user::on_comboBox_activated(int index) {
     ui->phone->setText(QString::fromStdString(this->user_info.phone));
     ui->email->setText(QString::fromStdString(this->user_info.email));
     ui->office->setText(QString::number(office_id));
-    ui->checkbox_admin_users->setCheckState(unmask_role(index, ADMIN_USER));
-    ui->checkbox_admin_config->setCheckState(unmask_role(index, ADMIN_CONFIG));
-    ui->checkbox_debug->setCheckState(unmask_role(index, DEBUG));
-    ui->checkbox_employee->setCheckState(unmask_role(index, EMPLOYEE));
-    ui->checkbox_human_resources->setCheckState(unmask_role(index, HUMAN_RESOURCES));
-    ui->checkbox_supervisor->setCheckState(unmask_role(index, SUPERVISOR));
+    ui->checkbox_admin_users->setCheckState((unmask_role(ADMIN_USER, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
+    ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
+    ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
+    ui->checkbox_debug->setCheckState(unmask_role(DEBUG, this->user_info.role));
+    ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
+    ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
+    ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
     ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     ui->base_salary->setText(QString::number(this->user_info.salary_base));
     ui->deductions->setText(QString::number(this->user_info.deductibles));
@@ -152,29 +156,36 @@ void modify_user::load_user_data(std::string& data) {
                 case 6:  // vacations
                     temp_vacations += data[pos];
                     break;
-                case 7:  // job_title
-                    this->user_info.job_title += data[pos];
-                    break;
-                case 8:  // base salary
-                    temp_salary += data[pos];
-                    break;
-                case 9:  // deductibles
-                    temp_deductibles += data[pos];
-                    break;
+//                case 7:  // job_title
+//                    this->user_info.job_title += data[pos];
+//                    break;
+//                case 8:  // base salary
+//                    temp_salary += data[pos];
+//                    break;
+//                case 9:  // deductibles
+//                    temp_deductibles += data[pos];
+//                    break;
             }
         } else {
             ++commas_found;  // indicate a comma was found
         }
         ++pos;
     }
-    this->user_info.available_vacations = stoi(temp_vacations);
-    this->user_info.salary_base = stoi(temp_salary);
-    this->user_info.deductibles = stoi(temp_deductibles);
-    this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
+
+    // TODO(Angie): borrar
+    std::cout << "temp_vacations: " << temp_vacations << std::endl;
+
+//    this->user_info.available_vacations = stoi(temp_vacations);
+//    this->user_info.salary_base = stoi(temp_salary);
+//    this->user_info.deductibles = stoi(temp_deductibles);
+//    this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
 }
 
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
+    // clear the comboBox
+    this->ui->comboBox->clear();
+
     int i = 0;
     // find the user's office id
     std::string to_send = "0" + this->user_login->user;
@@ -182,7 +193,7 @@ void modify_user::add_data_to_combobox() {
     std::string data_received = this->local_client->send_and_receive(to_send);
 
     // find all the users of an office
-    to_send = "01";
+    to_send = "0";
     to_send[0] = ALL_USERS_OFFICE;
 
     // find the office id
@@ -317,7 +328,7 @@ void modify_user::update_roles() {
 
     // if something was modified, so data has to be updated
     // check if the employee was fired
-    if (ui->checkbox_active->checkState() == Qt::Checked
+    if (ui->checkbox_active->checkState() == Qt::Unchecked
             && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
         // the new role is fired
         this->user_info.role = UNEMPLOYEED | this->user_info.role;
