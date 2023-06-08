@@ -74,15 +74,13 @@ void login::set_client(client* local_client){
 int login::validate_user(std::string username, std::string password) {
     std::string to_comunicate = "";
     security security_manager;
-    std::cout << "GET_LOGIN es " << (char)GET_LOGIN << std::endl;
     to_comunicate += ((char)GET_LOGIN);
     to_comunicate += username;
     to_comunicate += ",";
-    to_comunicate += security_manager.hash_string(password); // TODO (Emilia): Hash password
+    to_comunicate += security_manager.hash_string(password);
     std::string result = "\0";
     result = this->local_client->send_and_receive(to_comunicate);
     int to_return = ((int)result[0]) - 48;
-    std::cout << "el usuario puede entrar? " << to_return << std::endl;
     return to_return;
 }
 
@@ -92,7 +90,6 @@ int login::validate_user(std::string username, std::string password) {
  * 
  */
 void login::ask_for_token() {
-    // TODO(emilia): borrar cosas
     std::string to_send = "";
     to_send += ((char)GET_TOKEN);
     to_send += this->user_data->user;
@@ -103,27 +100,19 @@ void login::ask_for_token() {
     std::string adapted_result= "";
     int i = 0;
     for (int j = 0; j < 12; ++j) {
-       std::cout << " en for " << j << ":" << result[i] << std::endl;
        if (result[i+1] == ',') {
            adapted_result += (char)(result[i]-48);
-           std::cout << "\tun char: " << (int)result[i] << std::endl;
        } else if (result[i+2] == ','){
         adapted_result += (char)(((int)result[i]) - 48)*10 +(((int)result[i+1]) - 48);
-           std::cout << "\tdoschar " << (int)((((int)result[i]) - 48)*10 +(((int)result[i+1]) - 48)) << std::endl;
         ++i; // ignore i+1
        } else {
         adapted_result += (char)(((int)result[i] - 48)*100 + ((int)result[i+1] -48)*10 - +(((int)result[i+2] -48)));
-        std::cout << "\ttreschar " << (int)(((int)result[i] - 48)*100 + ((int)result[i+1] -48)*10 - +(((int)result[i+2] -48)))<< std::endl;
         i+=2; // ignore i+2
        }
        // next one would be a ,
        i+=2;
     }
-    for (i = 0; i < 12; ++i) {
-       std::cout << (int)adapted_result[i] << " ";
-    }
     result = security_manager.decrypt(adapted_result);
-    std::cout <<  "Desencriptado: " << result << std::endl; // TODO borrar print
     if (result[0] != 'e') {
         int token_count = 0;
         for (int i = 0; i < TOKEN_SIZE*2; i+=2) {
