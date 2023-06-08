@@ -50,7 +50,29 @@ manage_user::~manage_user() {
 }
 
 void manage_user::on_generate_button_clicked() {
+    // Get password from textbox
+    std::string inserted_password = this->ui->second_rh_password->text().toStdString();
+    if (inserted_password == this->user_login->password) {
+        // The password is correct, get the desired user to be created
+        std::string desired_user = this->ui->create_username->text().toStdString();
+        std::string desired_password = this->ui->create_password->text().toStdString();
+        if (desired_user != this->user_login->user) {
+            // Send the information to the intermediary to handle it
 
+        } else {
+            // Show the user the error
+            this->show_error("No se puede crear su propio usuario");
+        }
+    } else {
+        // Show the user the error
+        this->show_error("Por favor inserte su contraseña de manera correcta");
+    }
+    // Clear the text boxes
+    this->ui->first_rh_password->clear();
+    this->ui->create_username->clear();
+    this->ui->create_password->clear();
+    this->ui->create_id->clear();
+    this->ui->create_name->clear();
 }
 
 void manage_user::on_delete_button_clicked() {
@@ -66,7 +88,13 @@ void manage_user::on_delete_button_clicked() {
             // Show the user the error
             this->show_error("No se puede eliminar su propio usuario");
         }
+    } else {
+        // Show the user the error
+        this->show_error("Por favor inserte su contraseña de manera correcta");
     }
+    // Clear the text boxes
+    this->ui->second_rh_password->clear();
+    this->ui->delete_username->clear();
 }
 
 void manage_user::show_error(std::string error) {
