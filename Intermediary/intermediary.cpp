@@ -220,7 +220,7 @@ void intermediary::manage_user_case(std::string ip_remote) {
 }
 
 /**
- * @brief This methood extracts the first char of the received data
+ * @brief This method extracts the first char of the received data
  * and checks which server must receive the information
  * 
  * @param ip_remote Ip to save into log
