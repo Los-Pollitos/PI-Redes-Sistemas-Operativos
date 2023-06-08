@@ -56,9 +56,12 @@ void manage_user::on_generate_button_clicked() {
         // The password is correct, get the desired user to be created
         std::string desired_user = this->ui->create_username->text().toStdString();
         std::string desired_password = this->ui->create_password->text().toStdString();
+        std::string id = this->ui->create_id->text().toStdString();
+        std::string name = this->ui->create_name->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-            this->send_create(desired_user, desired_password, "", "");
+
+            this->send_create(desired_user, desired_password, id, name);
         } else {
             // Show the user the error
             this->show_error("No se puede crear su propio usuario");
