@@ -54,5 +54,35 @@ void manage_user::on_generate_button_clicked() {
 }
 
 void manage_user::on_delete_button_clicked() {
+    // Get password from textbox
+    std::string inserted_password = this->ui->second_rh_password->text().toStdString();
+    if (inserted_password == this->user_login->password) {
+        // The password is correct, get the desired user to delete
+        std::string desired_user = this->ui->delete_username->text().toStdString();
+        if (desired_user != this->user_login->user) {
+            // Send the information to the intermediary to handle it
 
+        } else {
+            // Show the user the error
+            this->show_error("No se puede eliminar su propio usuario");
+        }
+    }
+}
+
+void manage_user::show_error(std::string error) {
+    QMessageBox error_message;
+    error_message.setText(QString::fromStdString(error));
+    error_message.setWindowTitle("Error");
+    error_message.setModal(true);
+    error_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+    error_message.exec();
+}
+
+void manage_user::show_success(std::string success) {
+    QMessageBox success_box;
+    success_box.setText(QString::fromStdString(success));
+    success_box.setWindowTitle("Información");
+    success_box.setModal(true);
+    success_box.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+    success_box.exec();
 }

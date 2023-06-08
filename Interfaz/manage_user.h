@@ -23,6 +23,8 @@ public:
 private slots:
     void on_generate_button_clicked();
     void on_delete_button_clicked();
+    void show_error(std::string error);
+    void show_success(std::string success);
 
 private:
     Ui::manage_user* ui;
