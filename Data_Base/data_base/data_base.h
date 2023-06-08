@@ -54,7 +54,7 @@ class data_base {
                      ,int request_id_vac, int day_vac, int month_vac, int year_vac
                      , int shift_vac, int proof_type, std::string content_proof
                      , std::string user_signing_boss_proof);
-    void add_laboral_data(std::string user
+    int add_laboral_data(std::string user
                           , int start_day, int start_month, int start_year
                           , int end_day, int end_month, int end_year
                           , int gross_salary, int deductibles, std::string job_title);
@@ -73,6 +73,7 @@ class data_base {
     bool change_roles(std::string user, char roles);
     bool change_vacations(std::string user, int vacations);
     bool set_end_date_laboral_data(std::string user, int day, int month, int year);
+    bool change_last_laboral_data(std::string user, int last_laboral_data);
 };
 
 #endif // DATA_BASE_H

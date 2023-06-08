@@ -168,7 +168,7 @@ void data_base::add_request(std::string user,int solved, int day_request
 }
 
 // TODO(nosotros): DOCUMENTAR
-void data_base::add_laboral_data(std::string user
+int data_base::add_laboral_data(std::string user
                                 , int start_day, int start_month, int start_year
                                 , int end_day, int end_month, int end_year
                                 , int gross_salary, int deductibles, std::string job_title) {
@@ -177,7 +177,7 @@ void data_base::add_laboral_data(std::string user
     QSqlQuery laboral_data_table;
     if (!laboral_data_table.exec(laboral_data_str)) {
         qDebug() << "[BASE_DATOS] Error al crear la tabla de datos laborales: " << laboral_data_table.lastError();
-        return;
+        return -1;
     }
     // Add the new laboral data
     QSqlQuery new_laboral_data;
@@ -196,7 +196,7 @@ void data_base::add_laboral_data(std::string user
     if(!new_laboral_data.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando datos laborales: " << new_laboral_data.lastError();
     }
-    ++this->laboral_count;
+    return this->laboral_count++;
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -417,6 +417,7 @@ bool data_base::set_end_date_laboral_data(std::string user, int day, int month, 
     return success;
 }
 
+// TODO(nosotros): DOCUMENTAR
 bool data_base::verify_office_id(int office) {
     bool result = false;
     QSqlQuery find_office;
@@ -428,4 +429,18 @@ bool data_base::verify_office_id(int office) {
         result = true;
     }
     return result;
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_last_laboral_data(std::string user, int last_laboral_data) {
+    bool success = true;
+    QSqlQuery modify_user;
+    modify_user.prepare("UPDATE employees SET last_laboral_data = (:last_laboral_data) WHERE user = (:user)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":last_laboral_data", last_laboral_data);
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando la última entrada de datos laborales de " << QString::fromStdString(user);
+        success = false;
+    }
+    return success;
 }

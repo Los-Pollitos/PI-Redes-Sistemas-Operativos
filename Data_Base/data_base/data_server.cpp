@@ -647,9 +647,17 @@ void data_server::give_role(std::string remote_ip) {
 // TODO(us): Document
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
+    std::string user = "";
     int total_m = 0;
     int i = 0;
-    std::string user = "";
+    int to_send_int = 0;
+
+    std::string job_title = "\0";
+    int day = 0;
+    int month = 0;
+    int year = 0;
+    int salary = 0;
+    int deductibles = 0;
 
     // TODO(nosotros): borrar
 //    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
@@ -752,11 +760,12 @@ void data_server::process_data(std::string remote_ip) {
         case USER_OFFICE:
             // Data is set to \0
             memset(this->data, '\0', DATA_SIZE);
+            to_send = "\0";
 
             // find the user
             i = 1;  // data[0] is USER_OFFICE
             while (data[i] != '\0') {
-                to_send += data[i];
+                to_send += data[i++];
             }
 
             // ask the data base for the result
@@ -782,11 +791,12 @@ void data_server::process_data(std::string remote_ip) {
         case ALL_USERS_OFFICE:
             // Data is set to \0
             memset(this->data, '\0', DATA_SIZE);
+            to_send = "\0";
 
             // find the user
             i = 1;  // data[0] is USER_OFFICE
             while (data[i] != '\0') {
-                to_send += data[i];
+                to_send += data[i++];
             }
 
             // ask the data base for the result
@@ -812,11 +822,12 @@ void data_server::process_data(std::string remote_ip) {
         case DATA_USER:
             // Data is set to \0
             memset(this->data, '\0', DATA_SIZE);
+            to_send = "\0";
 
             // find the user
             i = 1;  // data[0] is USER_OFFICE
             while (data[i] != '\0') {
-                to_send += data[i];
+                to_send += data[i++];
             }
 
             // ask the data base for the result
@@ -840,201 +851,231 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case CHANGE_PHONE:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
-            // TODO(Angie)
+            // find the user
+            i = 1;  // data[0] is CHANGE_PHONE
+            while (data[i] != ',') {
+                user += data[i++];
+            }
+            // the ',' was found, now the phone_number will be read
+            ++i;
+            while (data[i] != '\0') {
+                to_send += data[i++];
+            }
 
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
+            // ask the data base for the result
+            if (this->base->change_phone(user, to_send)) {  // success
+                memset(this->data, '1', DATA_SIZE);
+            } else {  // the change was not possible
+                memset(this->data, '0', DATA_SIZE);
+            }
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
 
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
-
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
-
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
 
-            case CHANGE_EMAIL:
+        case CHANGE_EMAIL:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
-            // TODO(Angie)
+            // find the user
+            i = 1;  // data[0] is CHANGE_EMAIL
+            while (data[i] != ',') {
+                user += data[i++];
+            }
+            // the ',' was found, now the email will be read
+            ++i;
+            while (data[i] != '\0') {
+                to_send += data[i++];
+            }
 
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
+            // ask the data base for the result
+            if (this->base->change_email(user, to_send)) {  // success
+                memset(this->data, '1', DATA_SIZE);
+            } else {  // the change was not possible
+                memset(this->data, '0', DATA_SIZE);
+            }
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
 
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
-
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
-
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
 
-            case CHANGE_OFFICE_ID:
+        case CHANGE_OFFICE_ID:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
-            // TODO(Angie)
+            // find the user
+            i = 1;  // data[0] is CHANGE_OFFICE_ID
+            while (data[i] != ',') {
+                user += data[i++];
+            }
+            // the ',' was found, now the office will be read
+            to_send = data[++i];
+            to_send_int = to_send[0];
 
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
+            // ask the data base for the result
+            if (this->base->change_office(user, to_send_int)) {  // success
+                memset(this->data, '1', DATA_SIZE);
+            } else {  // the change was not possible
+                memset(this->data, '0', DATA_SIZE);
+            }
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
 
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
-
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
-
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
 
-            case CHANGE_ROLES:
+        case CHANGE_ROLES:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
-            // TODO(Angie)
+            // find the user
+            i = 1;  // data[0] is CHANGE_ROLES
+            while (data[i] != ',') {
+                user += data[i++];
+            }
+            // the ',' was found, now the roles will be read
+            to_send = data[++i];
 
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
+            // ask the data base for the result
+            if (this->base->change_roles(user, to_send[0])) {  // success
+                memset(this->data, '1', DATA_SIZE);
+            } else {  // the change was not possible
+                memset(this->data, '0', DATA_SIZE);
+            }
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
 
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
-
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
-
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
 
             case CHANGE_VACATIONS:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
-            // TODO(Angie)
+            // find the user
+            i = 1;  // data[0] is CHANGE_VACATIONS
+            while (data[i] != ',') {
+                user += data[i++];
+            }
+            // the ',' was found, now the vacations will be read
+            ++i;
+            while (data[i] != '\0') {
+                to_send += data[i++];
+            }
+            to_send_int = stoi(to_send);
 
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
+            // ask the data base for the result
+            if (this->base->change_vacations(user, to_send_int)) {  // success
+                memset(this->data, '1', DATA_SIZE);
+            } else {  // the change was not possible
+                memset(this->data, '0', DATA_SIZE);
+            }
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
 
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
-
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
-
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
 
-            case CHANGE_LABORAL_DATA:
+        case CHANGE_LABORAL_DATA:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
-            // TODO(Angie)
+            // save the data in the corresponding variables
+            // find the user
+            i = 1;  // data[0] is CHANGE_LABORAL_DATA
+            while (data[i] != ',') {
+                user += data[i];
+            }
+            // the ',' was found, now the day will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            day = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the month will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            month = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the year will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            year = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the job_title will be read
+            ++i;
+            while (data[i] != ',') {
+                job_title += data[i];
+            }
+            // the ',' was found, now the salary will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            salary = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the deductibles will be read
+            ++i;
+            while (data[i] != '\0') {
+                to_send += data[i];
+            }
+            deductibles = stoi(to_send);
 
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
 
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
+            // change the last laboral data's end date
+            if (this->base->set_end_date_laboral_data(user, day, month, year)) {
+                // add the new laboral data
+                to_send_int = this->base->add_laboral_data(user, day, month, year, 0, 0, 0, salary, deductibles, job_title);
+                if (to_send_int != -1) {
+                    // save the new laboral data in the user
+                    if (this->base->change_last_laboral_data(user, to_send_int)) {
+                        memset(this->data, '1', DATA_SIZE);
+                    }
+                } else {
+                    memset(this->data, '0', DATA_SIZE);
+                }
+            } else {
+                memset(this->data, '0', DATA_SIZE);
+            }
 
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
 
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
 
         case GET_ROLES:
