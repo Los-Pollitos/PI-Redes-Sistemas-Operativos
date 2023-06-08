@@ -299,7 +299,6 @@ void modify_user::update_data() {
 
 
     // TODO(Angie): hacer anotación
-    // TODO(Angie): si se cambia salary o deductions, hay que cambiar neto
     // TODO(Angie): al hacer cambio en puesto, salario o deducciones se hace new laboral data y se actualiza employee
     // TODO(Angie): si lo despiden, actualizar laboral_data
 }

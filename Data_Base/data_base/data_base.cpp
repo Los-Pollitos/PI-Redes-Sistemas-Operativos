@@ -322,3 +322,42 @@ void data_base::delete_user(std::string user) {
     this->delete_user_from_table(user, "laboral_datas");
     this->delete_user_from_table(user, "records");
 }
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_phone(std::string user, std::string phone) {
+
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_email(std::string user, std::string email) {
+
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_job_title(std::string user, std::string job_title) {
+
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_office(std::string user, int office) {
+
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_roles(std::string user, char roles) {
+
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_vacations(std::string user, int vacations) {
+
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::set_end_date_laboral_data(std::string user, int laboral_data, int day, int month, int year) {
+
+}
+
+bool data_base::verify_office_id(int office) {
+
+}
