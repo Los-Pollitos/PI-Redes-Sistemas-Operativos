@@ -95,7 +95,7 @@ void login::ask_for_token() {
     to_send += this->user_data->user;
     to_send += ",";
     std::string result = "\0";
-    result = this->local_client->send_and_receive_cypher(to_send);
+    result = this->local_client->send_and_receive(to_send);
     security security_manager;
     std::string adapted_result= "";
     int i = 0;

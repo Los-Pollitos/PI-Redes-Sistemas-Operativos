@@ -35,6 +35,7 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->name->setStyleSheet("color: #001f21;");
     this->ui->phone->setStyleSheet("color: #001f21;");
     this->ui->password->setStyleSheet("color: #001f21;");
+    this->ui->vacations->setStyleSheet("color: #001f21;");
     this->ui->record->setStyleSheet("color: #001f21;");
     this->ui->checkbox_active->setStyleSheet("color: #001f21;");
     this->ui->checkbox_admin_config->setStyleSheet("color: #001f21;");
@@ -69,7 +70,7 @@ void modify_user::on_comboBox_activated(int index) {
     }
 
     // set the data in the ui
-    int office_id = (int) this->user_info.office_id;
+    int office_id = (int) (this->user_info.office_id - 48);
     ui->name->setReadOnly(true);
     ui->name->setText(QString::fromStdString(this->user_info.name));
     ui->id->setReadOnly(true);
@@ -84,6 +85,7 @@ void modify_user::on_comboBox_activated(int index) {
     ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
     ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
     ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
+    ui->vacations->setText(QString::number(this->user_info.available_vacations));
     ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     ui->base_salary->setText(QString::number(this->user_info.salary_base));
     ui->deductions->setText(QString::number(this->user_info.deductibles));

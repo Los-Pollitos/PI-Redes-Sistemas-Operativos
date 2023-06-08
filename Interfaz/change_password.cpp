@@ -72,7 +72,7 @@ std::string change_password::ask_for_token(std::string username) {
     to_send += username;
     to_send += ",";
     std::string result = "\0";
-    result = this->local_client->send_and_receive_cypher(to_send);
+    result = this->local_client->send_and_receive(to_send);
     security security_manager;
     std::string adapted_result= "";
     int i = 0;
@@ -140,8 +140,7 @@ bool change_password::change_data(QString username, QString password, int token)
  * @brief Indicates that password must be changed
  * 
  */
-void change_password::on_pushButton_reinicarContra_clicked()
-{
+void change_password::on_pushButton_reinicarContra_clicked() {
     if (this->ui->lineEdit->text() == "" || this->ui->lineEdit_2->text() == "" ||
             this->ui->lineEdit_3->text() == "" || this->ui->lineEdit_4->text() == ""){
         QMessageBox show_message =  QMessageBox();
@@ -161,6 +160,12 @@ void change_password::on_pushButton_reinicarContra_clicked()
 
     } else {
         if (this->change_data(this->ui->lineEdit->text(), this->ui->lineEdit_2->text(), std::stoi(this->ui->lineEdit_3->text().toStdString()))) {
+            QMessageBox sucess =  QMessageBox();
+            sucess.setWindowTitle("Correcto");
+            sucess.setModal(true);
+            sucess.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            sucess.setText("El cambio de contraseña fue exitoso");
+            sucess.exec();
             this->hide();
         } else {
             QMessageBox show_message =  QMessageBox();
@@ -168,6 +173,7 @@ void change_password::on_pushButton_reinicarContra_clicked()
             show_message.setModal(true);
             show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
             show_message.setText("Datos incompletos");
+            show_message.exec();
             this->ui->lineEdit->setText("");
             this->ui->lineEdit_2->setText("");
             this->ui->lineEdit_3->setText("");

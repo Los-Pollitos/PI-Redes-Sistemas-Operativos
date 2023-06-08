@@ -53,7 +53,6 @@ class client {
 public:
     client();
     std::string send_and_receive(std::string to_send);
-    std::string send_and_receive_cypher(std::string to_send);
 private:
     void adapt_data(char* data, std::string& new_info, int pos);
 };
