@@ -199,7 +199,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
  * 
  * @param ip_remote Ip to handle log and answers
  */
-void intermediary::create_user_case(std::string ip_remote) {
+void intermediary::manage_user_case(std::string ip_remote) {
   std::string to_send_back = "\0";
   // Used to store data as it will be replaced after sending and receiving
   char temp_data[DATA_SIZE];
@@ -208,7 +208,7 @@ void intermediary::create_user_case(std::string ip_remote) {
     temp_data[i] = data[i];
   }
   // Confirm with data base if the user exists and the user to it
-  // to_send_back = this->send_and_receive_data_base(ip_remote);
+  this->send_and_receive_data_base(ip_remote);
   if (data[0] == '1') {
     // Re insert from temporal data into the actual data to make another send
     for (int i = 0; i < DATA_SIZE; ++i) {
@@ -217,22 +217,6 @@ void intermediary::create_user_case(std::string ip_remote) {
     // Insert the user into the file system
     to_send_back = this->send_and_receive_login(ip_remote);
   }
-}
-
-void intermediary::delete_user_case(std::string ip_remote) {
-  // for (int i = 0; i < DATA_SIZE; ++i) {
-  //       temp_data[i] = data[i];
-  //     }
-  //     to_send_back = this->send_and_receive_login(ip_remote);
-  //     std::cout << "volvi de fs y tengo: " << to_send_back << std::endl;
-  //     if (to_send_back[0] != '0') {
-  //       for (int i = 0; i < DATA_SIZE; ++i) {
-  //         data[i] = temp_data[i];
-  //       }
-  //       // TODO(Luis): bases de datos 
-  //       std::cout << "voy con data_base\n";
-  //       this->send_and_receive_data_base(ip_remote);
-  //     }
 }
 
 /**
@@ -263,23 +247,8 @@ void intermediary::send_to_server(std::string ip_remote) {
 
       break;
     case CREATE_USER:
-      this->create_user_case(ip_remote);
-      break;
     case DELETE_USER:
-      // TODO (Luis): Descomentar delete user case y borrar lo otro
-      for (int i = 0; i < DATA_SIZE; ++i) {
-        temp_data[i] = data[i];
-      }
-      to_send_back = this->send_and_receive_login(ip_remote);
-      std::cout << "volvi de fs y tengo: " << to_send_back << std::endl;
-      if (to_send_back[0] != '0') {
-        for (int i = 0; i < DATA_SIZE; ++i) {
-          data[i] = temp_data[i];
-        }
-        std::cout << "voy con data_base\n";
-        this->send_and_receive_data_base(ip_remote);
-      }
-      //this->delete_user_case(ip_remote);
+      this->manage_user_case(ip_remote);
       break;
     case PAYMENT_PROOF:
     case WORK_PROOF:

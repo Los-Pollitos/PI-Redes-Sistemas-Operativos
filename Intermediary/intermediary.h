@@ -35,8 +35,7 @@ class intermediary {
     struct sockaddr_storage ipRemoto;
     std::string send_and_receive_login(std::string ip_remote);
     void send_and_receive_data_base(std::string ip_remote);
-    void create_user_case(std::string ip_remote);
-    void delete_user_case(std::string ip_remote);
+    void manage_user_case(std::string ip_remote);
 
   public:
     intermediary();
