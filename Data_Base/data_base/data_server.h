@@ -49,6 +49,7 @@ private:
     void find_next(std::string& line, int& pos);
     void copy_string(std::string& line, std::string& new_line, int from, int to);
     void give_role(std::string remote_ip);
+    void create_user_case(std::string remote_ip);
 
 public:
     data_server();

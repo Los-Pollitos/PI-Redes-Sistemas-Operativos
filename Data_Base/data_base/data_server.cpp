@@ -636,6 +636,28 @@ void data_server::give_role(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
+void data_server::create_user_case(std::string remote_ip) {
+    std::string username = "";
+    // Obtain the username from data
+    for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+        username += this->data[i];
+    }
+    // Remove the unnecesary & as only one package is needed
+    read(this->connection, this->data, sizeof(this->data));
+    // Clear data
+    memset(this->data, '\0', DATA_SIZE);
+    std::string result = "0";
+    // Check if the user exists
+    if (this->base->user_exists(username)) {
+        // d_gmora,Gerardo Mora Ortiz,-,-,-,0,1,0,0
+        this->base->add_employee(username, "-", "-", "-", "-",0,1,0,0);
+        result = "1";
+    }
+    this->logger->add_answer_log(remote_ip, "sent", result);
+    data[0] = result[0];
+    write(this->connection, this->data, DATA_SIZE);
+}
+
 // TODO(us): Document
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
@@ -676,6 +698,10 @@ void data_server::process_data(std::string remote_ip) {
     switch ((int) data[0]) {
         case CREATE_USER:
             // TODO(luis): hacer
+            this->create_user_case(remote_ip);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
         case DELETE_USER:
             // TODO(luis): hacer
@@ -956,7 +982,7 @@ void data_server::process_data(std::string remote_ip) {
             write(this->connection, this->data, DATA_SIZE);
             break;
 
-            case CHANGE_VACATIONS:
+        case CHANGE_VACATIONS:
             user = "\0";
             to_send = "\0";
 
