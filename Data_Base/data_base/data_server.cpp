@@ -1085,7 +1085,54 @@ void data_server::process_data(std::string remote_ip) {
             write(this->connection, this->data, DATA_SIZE);
             break;
 
+        case ADD_RECORD:
+            // Data is set to \0
+            memset(this->data, '\0', DATA_SIZE);
+            user = "\0";
+            to_send = "\0";
 
+            // save the data in the corresponding variables
+            // find the user
+            i = 1;  // data[0] is ADD_RECORD
+            while (data[i] != ',') {
+                user += data[i];
+            }
+            // the ',' was found, now the day will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            day = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the month will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            month = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the year will be read
+            ++i;
+            while (data[i] != ',') {
+                to_send += data[i];
+            }
+            year = stoi(to_send);
+            to_send = "\0";
+            // the ',' was found, now the record will be read
+            ++i;
+            while (data[i] != '\0') {
+                to_send += data[i];
+            }
 
+            // ask the data base for the result
+            this->base->add_record(user, day, month, year, to_send);
+            memset(this->data, '1', DATA_SIZE);
+            write(this->connection, data, DATA_SIZE);
+            this->logger->add_answer_log(remote_ip, "sent", this->data);
+
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
+            break;
     }
 }

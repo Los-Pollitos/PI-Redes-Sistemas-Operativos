@@ -46,7 +46,9 @@ enum request_types {
   CHANGE_OFFICE_ID,  // 94
   CHANGE_ROLES,  // 95
   CHANGE_LABORAL_DATA,  // 96
-  CHANGE_VACATIONS  // 97
+  CHANGE_VACATIONS,  // 97
+  FIRE_EMPLOYEE,  // 98
+  ADD_RECORD  // 99
 };
 
 class log {

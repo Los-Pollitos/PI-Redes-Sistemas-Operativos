@@ -47,7 +47,8 @@ enum request_types {
   CHANGE_ROLES,
   CHANGE_LABORAL_DATA,
   CHANGE_VACATIONS,
-  FIRE_EMPLOYEE
+  FIRE_EMPLOYEE,
+  ADD_RECORD
 };
 
 class log_generator

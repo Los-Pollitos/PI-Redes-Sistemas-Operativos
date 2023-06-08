@@ -236,14 +236,12 @@ void modify_user::on_approve_changes_clicked() {
 }
 
 void modify_user::update_data() {
-    std::string to_send = "\0";
+    std::string to_send = " " + this->user_info.user;
     bool is_number = true;
-    bool salary_changed = false;
 
     // update roles
     this->update_roles();
 
-    // update phone if the size es valid (8)
     if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
         this->user_info.phone = this->ui->phone->text().toStdString();
         to_send = " " + this->user_info.phone;
@@ -253,76 +251,91 @@ void modify_user::update_data() {
     if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() > 0
                 && this->ui->email->text().length() <= 23) {
         this->user_info.email = this->ui->email->text().toStdString();
-        to_send = " " + this->user_info.email;
+        to_send += "," + this->user_info.email;
         to_send[0] = CHANGE_EMAIL;
         this->local_client->send_and_receive(to_send);
     }
     if (this->ui->office->text().toInt(&is_number, 10) != this->user_info.office_id && is_number) {  // only saved if office is a valid number
-
-        // TODO(Angie): verificar si la oficina es válida
-
         this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
-        to_send = "  ";
         to_send[0] = CHANGE_OFFICE_ID;
-        to_send[1] = this->user_info.office_id;
-        this->local_client->send_and_receive(to_send);
-    }
-    if (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() > 0
-                && this->ui->job_title->text().length() <= 50) {
-        this->user_info.job_title = this->ui->job_title->text().toStdString();
-        to_send = " " + this->user_info.job_title;
-        to_send[0] = CHANGE_JOB_TITLE;
+        to_send += "," + std::to_string(this->user_info.office_id);
         this->local_client->send_and_receive(to_send);
     }
     if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations && is_number) {
         this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
         to_send = "  ";
         to_send[0] = CHANGE_VACATIONS;
-        to_send[1] = this->user_info.available_vacations;
+        to_send += "," + std::to_string(this->user_info.available_vacations);
         this->local_client->send_and_receive(to_send);
     }
-    if (this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number) {
+    if ((this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number)
+            || (this->ui->deductions->text().toInt(&is_number, 10) != this->user_info.deductibles && is_number)
+            || (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() > 0)) {
+        // update user info
+        this->user_info.job_title = this->ui->job_title->text().toStdString();
         this->user_info.salary_base = this->ui->base_salary->text().toInt(&is_number, 10);
-        salary_changed = true;
+        this->user_info.deductibles = this->ui->net_salary->text().toInt(&is_number, 10);
+        this->user_info.salary_net = this->user_info.salary_base-this->user_info.deductibles;
+        this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
 
-        // TODO(Angie): enviar a base de datos
+        // send changes to data_base
+        to_send[0] = CHANGE_LABORAL_DATA;
+        // set the date
+        QDate date = QDate::currentDate();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        date.getDate(&year, &month, &day);
+        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+        // add laboral data info
+        to_send += "," + this->user_info.job_title;
+        to_send += "," + std::to_string(this->user_info.salary_base);
+        to_send += "," + std::to_string(this->user_info.deductibles);
     }
-    if (this->ui->deductions->text().toInt(&is_number, 10) != this->user_info.deductibles && is_number) {
-        this->user_info.deductibles = this->ui->deductions->text().toInt(&is_number, 10);
-        salary_changed = true;
-
-        // TODO(Angie): enviar a base de datos
+    if (this->ui->record->toPlainText().toStdString().length() > 0 && this->ui->record->toPlainText().toStdString().length() < 237) {  // new annotation
+        to_send[0] = ADD_RECORD;
+        QDate date = QDate::currentDate();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        date.getDate(&year, &month, &day);
+        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+        to_send += "," + this->ui->record->toPlainText().toStdString();
+        // TODO(Angie): ver si data base puede recibir '&' para mandar anotaciones largas
     }
-    if (salary_changed) {
-        this->ui->net_salary->setText(QString::number(this->user_info.salary_base-this->user_info.deductibles));
-    }
-
-
-    // TODO(Angie): hacer anotación
-    // TODO(Angie): al hacer cambio en puesto, salario o deducciones se hace new laboral data y se actualiza employee
-    // TODO(Angie): si lo despiden, actualizar laboral_data
 }
 
 void modify_user::update_roles() {
-    std::string to_send = "  ";
+    std::string to_send = " " + this->user_info.user + ",";
     to_send[0] = CHANGE_ROLES;
     int role_int = 0;
 
     // if something was modified, so data has to be updated
     // check if the employee was fired
     if (ui->checkbox_active->checkState() == Qt::Checked
-        && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
+            && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
         // the new role is fired
         this->user_info.role = UNEMPLOYEED | this->user_info.role;
-        to_send[1] = this->user_info.role;
+        to_send[0] = FIRE_EMPLOYEE;
+        to_send += this->user_info.role;
+
+        // set the date
+        QDate date = QDate::currentDate();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        date.getDate(&year, &month, &day);
+        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+
         this->local_client->send_and_receive(to_send);
+        // TODO(Angie):mostrar pop up si hubo error
 
         // once fired, nothing can be changed
         this->set_read_only();
     } else {
         // if the user is Debug, it can not have more roles
         if (ui->checkbox_debug->checkState() == Qt::Checked
-            && unmask_role(DEBUG, this->user_info.role) == Qt::Checked) {
+                && unmask_role(DEBUG, this->user_info.role) == Qt::Checked) {
             this->user_info.role = DEBUG;
 
             // the debug is exclusive of other roles
@@ -333,7 +346,7 @@ void modify_user::update_roles() {
             ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
 
             // update the data base
-            to_send[1] = this->user_info.role;
+            to_send += this->user_info.role;
             this->local_client->send_and_receive(to_send);
         } else {  // see if any role changed
             if (ui->checkbox_admin_config->checkState() == Qt::Checked) {
@@ -353,7 +366,7 @@ void modify_user::update_roles() {
             }
 
             this->user_info.role = role_int;
-            to_send[1] = this->user_info.role;
+            to_send += this->user_info.role;
             this->local_client->send_and_receive(to_send);
         }
     }

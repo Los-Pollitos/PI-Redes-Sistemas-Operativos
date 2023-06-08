@@ -42,10 +42,11 @@ enum request_types {
     CHANGE_PHONE,  // 92
     CHANGE_EMAIL,  // 93
     CHANGE_OFFICE_ID,  // 94
-    CHANGE_JOB_TITLE,
     CHANGE_ROLES,  // 95
     CHANGE_LABORAL_DATA,  // 96
-    CHANGE_VACATIONS  // 97
+    CHANGE_VACATIONS,  // 97
+    FIRE_EMPLOYEE,  // 98
+    ADD_RECORD  // 99
 };
 
 class client {

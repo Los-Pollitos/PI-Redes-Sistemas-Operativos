@@ -258,6 +258,8 @@ void intermediary::send_to_server(std::string ip_remote) {
       // TODO(us): hacer
       break;
     case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER: case GET_ROLES:
+    case CHANGE_PHONE: case CHANGE_EMAIL: case CHANGE_OFFICE_ID: case CHANGE_ROLES:
+    case CHANGE_LABORAL_DATA: case CHANGE_VACATIONS: case FIRE_EMPLOYEE: case ADD_RECORD:
       this->send_and_receive_data_base(ip_remote);
       break;
     default:
