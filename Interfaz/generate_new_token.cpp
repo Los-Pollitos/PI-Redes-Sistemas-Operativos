@@ -1,5 +1,6 @@
 #include "generate_new_token.h"
 #include "ui_generate_new_token.h"
+#include "security.h"
 
 #include <QMessageBox>
 
@@ -129,10 +130,11 @@ void generate_new_token::on_generate_button_clicked() {
 void generate_new_token::on_generate_button_2_clicked() {
     if (this->ui->password_line->text().toStdString() == this->user_data->password) {
         std::string to_send = "";
+        security security_manager;
         to_send += ((char)GET_CHANGE_TOKEN);
         to_send += this->user_data->user;
         to_send += ",";
-        to_send += this->ui->user_line->text().toStdString();
+        to_send += security_manager.encrypt(this->ui->user_line->text().toStdString());
         to_send += ",";
         to_send += this->possible_token;
         to_send += ",";
