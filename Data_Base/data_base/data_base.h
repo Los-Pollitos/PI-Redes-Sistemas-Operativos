@@ -69,11 +69,10 @@ class data_base {
     bool user_exists(std::string user);
     bool change_phone(std::string user, std::string phone);
     bool change_email(std::string user, std::string email);
-    bool change_job_title(std::string user, std::string job_title);
     bool change_office(std::string user, int office);
     bool change_roles(std::string user, char roles);
     bool change_vacations(std::string user, int vacations);
-    bool set_end_date_laboral_data(std::string user, int laboral_data, int day, int month, int year);
+    bool set_end_date_laboral_data(std::string user, int day, int month, int year);
 };
 
 #endif // DATA_BASE_H

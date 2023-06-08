@@ -325,39 +325,107 @@ void data_base::delete_user(std::string user) {
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_phone(std::string user, std::string phone) {
-
+    bool success = true;
+    QSqlQuery modify_user;
+    modify_user.prepare("UPDATE employees SET phone_number = (:phone_number) WHERE user = (:user)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":phone_number", QString::fromStdString(phone));
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando el teléfono de " << QString::fromStdString(user);
+        success = false;
+    }
+    return success;
 }
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_email(std::string user, std::string email) {
-
-}
-
-// TODO(nosotros): DOCUMENTAR
-bool data_base::change_job_title(std::string user, std::string job_title) {
-
+    bool success = true;
+    QSqlQuery modify_user;
+    modify_user.prepare("UPDATE employees SET email = (:email) WHERE user = (:user)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":email", QString::fromStdString(email));
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando el correo de " << QString::fromStdString(user);
+        success = false;
+    }
+    return success;
 }
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_office(std::string user, int office) {
-
+    bool success = true;
+    if (this->verify_office_id(office)) {
+        QSqlQuery modify_user;
+        modify_user.prepare("UPDATE employees SET office_id = (:office_id) WHERE user = (:user)");
+        modify_user.bindValue(":user", QString::fromStdString(user));
+        modify_user.bindValue(":office_id", office);
+        if (!modify_user.exec()) {
+            qDebug() << "[BASE_DATOS] Error modificando la sucursal de " << QString::fromStdString(user);
+            success = false;
+        }
+    } else {
+        success = false;
+    }
+    return success;
 }
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_roles(std::string user, char roles) {
-
+    bool success = true;
+    QSqlQuery modify_user;
+    modify_user.prepare("UPDATE employees SET roles = (:roles) WHERE user = (:user)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":roles", roles);
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando los roles de " << QString::fromStdString(user);
+        success = false;
+    }
+    return success;
 }
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_vacations(std::string user, int vacations) {
-
+    bool success = true;
+    QSqlQuery modify_user;
+    modify_user.prepare("UPDATE employees SET available_vacations = (:available_vacations) WHERE user = (:user)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":available_vacations", vacations);
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando las vacaiones disponibles de " << QString::fromStdString(user);
+        success = false;
+    }
+    return success;
 }
 
 // TODO(nosotros): DOCUMENTAR
-bool data_base::set_end_date_laboral_data(std::string user, int laboral_data, int day, int month, int year) {
+bool data_base::set_end_date_laboral_data(std::string user, int day, int month, int year) {
+    bool success = true;
+    int data_id = this->consult_employee_office(user);
+    QSqlQuery modify_user;
 
+    modify_user.prepare("UPDATE laboral_datas SET end_day = (:end_day), end_month = (:end_month), end_year = (:end_year) WHERE user = (:user) AND data_id = (:data_id)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":end_day", day);
+    modify_user.bindValue(":end_month", month);
+    modify_user.bindValue(":end_year", year);
+    modify_user.bindValue(":data_id", data_id);
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando los datos laborales # " << data_id << " de " << QString::fromStdString(user);
+        success = false;
+    }
+
+    return success;
 }
 
 bool data_base::verify_office_id(int office) {
-
+    bool result = false;
+    QSqlQuery find_office;
+    find_office.prepare("SELECT name FROM offices WHERE id = (:id)");
+    find_office.bindValue(":id", office);
+    // If a match was found
+    if (find_office.exec() && find_office.next()) {
+        // Result is true
+        result = true;
+    }
+    return result;
 }

@@ -938,39 +938,6 @@ void data_server::process_data(std::string remote_ip) {
 //            write(this->connection, this->data, DATA_SIZE);
             break;
 
-            case CHANGE_JOB_TITLE:
-
-            // TODO(Angie)
-
-//            // Data is set to \0
-//            memset(this->data, '\0', DATA_SIZE);
-
-//            // find the user
-//            i = 1;  // data[0] is USER_OFFICE
-//            while (data[i] != '\0') {
-//                to_send += data[i];
-//            }
-
-//            // ask the data base for the result
-//            to_send = this->base->consult_employee_data(to_send);
-
-//            // find the size of the package to send
-//            total_m = (int) (to_send.length() / DATA_SIZE)
-//                      + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
-
-//            // send the data
-//            for (int i = 0; i < total_m && i < 10; ++i) {
-//                adapt_data(data, to_send, DATA_SIZE * i);
-//                std::cout << "Voy a mandar: " << data << std::endl;
-//                write(this->connection, data, DATA_SIZE);
-//                this->logger->add_answer_log(remote_ip, "sent", this->data);
-//            }
-
-//            this->data[0] = '&';
-//            std::cout << " Voy a mandar " << this->data << "\n";
-//            write(this->connection, this->data, DATA_SIZE);
-            break;
-
             case CHANGE_ROLES:
 
             // TODO(Angie)
