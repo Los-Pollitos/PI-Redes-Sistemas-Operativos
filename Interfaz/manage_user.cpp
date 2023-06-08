@@ -58,7 +58,7 @@ void manage_user::on_generate_button_clicked() {
         std::string desired_password = this->ui->create_password->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-            this->send_create(desired_user, desired_password);
+            this->send_create(desired_user, desired_password, "", "");
         } else {
             // Show the user the error
             this->show_error("No se puede crear su propio usuario");
@@ -75,12 +75,18 @@ void manage_user::on_generate_button_clicked() {
     this->ui->create_name->clear();
 }
 
-std::string manage_user::send_create(std::string username, std::string password) {
+std::string manage_user::send_create(std::string username, std::string password, std::string identification, std::string name) {
+    security hasher;
     std::string to_send = "\0";
     to_send[0] = ((char)CREATE_USER);
     to_send += username;
     to_send += ",";
-    to_send += password;
+    // Hash the password
+    to_send += hasher.hash_string(password);
+    to_send += ",";
+    to_send += identification;
+    to_send += ",";
+    to_send += name;
     to_send += ",";
     return this->local_client->send_and_receive(to_send);
 }

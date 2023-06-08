@@ -3,6 +3,7 @@
 
 #include "login_info.h"
 #include "client.h"
+#include "security.h"
 
 #include <QDialog>
 
@@ -25,7 +26,7 @@ private slots:
     void on_delete_button_clicked();
     void show_error(std::string error);
     void show_success(std::string success);
-    std::string send_create(std::string username, std::string password);
+    std::string send_create(std::string username, std::string password, std::string identification, std::string name);
     std::string send_delete(std::string username);
 
 private:

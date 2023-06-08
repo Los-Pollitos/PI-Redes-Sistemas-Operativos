@@ -207,14 +207,14 @@ void intermediary::manage_user_case(std::string ip_remote) {
   for (int i = 0; i < DATA_SIZE; ++i) {
     temp_data[i] = data[i];
   }
-  // Confirm with data base if the user exists and the user to it
+  // Confirm with data base if the user exists
   this->send_and_receive_data_base(ip_remote);
   if (data[0] == '1') {
     // Re insert from temporal data into the actual data to make another send
     for (int i = 0; i < DATA_SIZE; ++i) {
       data[i] = temp_data[i];
     }
-    // Insert the user into the file system
+    // Insert or delete the user in the file system
     to_send_back = this->send_and_receive_login(ip_remote);
   }
 }
