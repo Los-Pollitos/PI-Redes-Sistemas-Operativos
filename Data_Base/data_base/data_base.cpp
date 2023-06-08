@@ -278,7 +278,9 @@ std::string data_base::consult_employee_data(std::string user) {
                     result += consult_employee.value(i).toString().toStdString() += ",";
                     break;
                 case 7:  // laboral_data
-//                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));  // TODO(Angie)
+                    //TODO(angie) borrar cout
+                    // std::cout << "voy a consult laboral data y tengo: " << user << "y  id" << consult_employee.value(i).toInt(&is_number)<< std::endl;
+                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));  // TODO(Angie)
                     break;
             }
         }
@@ -301,15 +303,14 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
     consult_laboral_data.bindValue(":data_id", data_id);
     // If a match was found
     if (consult_laboral_data.exec() && consult_laboral_data.next()) {
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 8; i < 11; ++i) {
             result += consult_laboral_data.value(i).toString().toStdString();
-            if (i != 2) {  // need a ','
-                result+= ",";
-            }
+            result+= ",";
         }
     } else {
         qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
     }
+    std::cout << "voy a retornar en consult laboral data " << result << std::endl;
     return result;
 }
 
@@ -324,7 +325,7 @@ std::string data_base::consult_employees_of_an_office(int office_id) {
     // If a match was found
     if (consult_employee.exec() && consult_employee.next()) {
         do {
-            result += consult_employee.value(0).toString().toStdString() += ",";
+           result += consult_employee.value(0).toString().toStdString() += ",";
         } while (consult_employee.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {

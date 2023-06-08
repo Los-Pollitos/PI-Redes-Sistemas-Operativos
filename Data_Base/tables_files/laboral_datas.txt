@@ -1,11 +1,11 @@
 usuario,id,diaInicio,mesInicio,añoInicio,diaFin,mesFin,añoFin,salarioBruto,deducibles,títuloPuesto
-cjimenez,1,5,6,2021,0,0,0,950900,95090,Mantenimiento del sistema
-gmora,2,1,1,2015,0,0,0,1000000,100000,Empleado
-jnuñez,3,10,5,2023,0,0,0,325000,32550,Empleado
-eguzman,4,25,8,2014,0,0,0,1300000,130000,Empleado de Recursos Humanos
-alopez,5,1,7,2016,1,1,2020,775000,77500,Empleado
-respinoza,6,20,3,2016,0,0,0,950000,95000,Empleado de contratación
-gherrera,7,10,1,2010,0,0,0,1950750,195075,Encargado de contratación y mantenimiento de la red
-rgang,8,15,12,2009,0,0,0,1540500,154050,Supervisor y Gerente de Recursos Humanos
-dcabezas,9,15,12,2009,0,0,0,1540500,154050,Supervisor y Gerente de Recursos Humanos
-alopez,10,1,1,2020,0,0,0,1600000,160000,Supervisor
+cjimenez,0,5,6,2021,0,0,0,950900,95090,Mantenimiento del sistema
+gmora,1,1,1,2015,0,0,0,1000000,100000,Empleado
+jnuñez,2,10,5,2023,0,0,0,325000,32550,Empleado
+eguzman,3,25,8,2014,0,0,0,1300000,130000,Empleado de Recursos Humanos
+alopez,4,1,7,2016,1,1,2020,775000,77500,Empleado
+respinoza,5,20,3,2016,0,0,0,950000,95000,Empleado de contratación
+gherrera,6,10,1,2010,0,0,0,1950750,195075,Encargado de contratación y mantenimiento de la red
+rgang,7,15,12,2009,0,0,0,1540500,154050,Supervisor y Gerente de Recursos Humanos
+dcabezas,8,15,12,2009,0,0,0,1540500,154050,Supervisor y Gerente de Recursos Humanos
+alopez,9,1,1,2020,0,0,0,1600000,160000,Supervisor

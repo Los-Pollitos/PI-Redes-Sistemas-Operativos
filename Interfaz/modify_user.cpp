@@ -119,6 +119,7 @@ void modify_user::set_read_only() {
 }
 
 void modify_user::load_user_data(std::string& data) {
+    // TODO(Angie) borrarle los couts que dejé por acá
     // clean the user_data strings
     this->user_info.name = "\0";
     this->user_info.identification  = "\0";
@@ -132,6 +133,7 @@ void modify_user::load_user_data(std::string& data) {
     std::string temp_deductibles = "\0";
     std::string temp_vacations = "\0";
 
+    std::cout << "data recibido para load user: "<< data << std::endl;
     while (pos < data.length()) {
         if (data[pos] != ','  && data[pos] != '\0') {
             switch(commas_found) {
@@ -156,15 +158,18 @@ void modify_user::load_user_data(std::string& data) {
                 case 6:  // vacations
                     temp_vacations += data[pos];
                     break;
-//                case 7:  // job_title
-//                    this->user_info.job_title += data[pos];
-//                    break;
-//                case 8:  // base salary
-//                    temp_salary += data[pos];
-//                    break;
-//                case 9:  // deductibles
-//                    temp_deductibles += data[pos];
-//                    break;
+                case 7: // base salary
+                    temp_salary += data[pos];
+                    // std::cout << "agrego a base_salary   " << data[pos] << std::endl;
+                    break;
+                case 8: // deductibles
+                    temp_deductibles += data[pos];
+                    // std::cout << "agrego a deductibles   " << data[pos] << std::endl;
+                    break;
+               case 9: // job_title
+                    this->user_info.job_title += data[pos];
+                    // std::cout << "agrego a job title  " << data[pos] << std::endl;
+                   break;
             }
         } else {
             ++commas_found;  // indicate a comma was found
@@ -175,10 +180,10 @@ void modify_user::load_user_data(std::string& data) {
     // TODO(Angie): borrar
     std::cout << "temp_vacations: " << temp_vacations << std::endl;
 
-//    this->user_info.available_vacations = stoi(temp_vacations);
-//    this->user_info.salary_base = stoi(temp_salary);
-//    this->user_info.deductibles = stoi(temp_deductibles);
-//    this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
+    this->user_info.available_vacations = stoi(temp_vacations);
+    this->user_info.salary_base = stoi(temp_salary);
+    this->user_info.deductibles = stoi(temp_deductibles);
+    this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
 }
 
 // Método que va a agregar los usuarios al comboBox
