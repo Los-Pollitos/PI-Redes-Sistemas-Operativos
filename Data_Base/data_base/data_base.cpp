@@ -196,6 +196,11 @@ int data_base::add_laboral_data(std::string user
     if(!new_laboral_data.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando datos laborales: " << new_laboral_data.lastError();
     }
+
+
+    // TODO(Angie): borrar
+    std::cout << "laboral_data agregada: " << user << "," << this->laboral_count << std::endl;
+
     return this->laboral_count++;
 }
 
@@ -273,10 +278,14 @@ std::string data_base::consult_employee_data(std::string user) {
                     result += consult_employee.value(i).toString().toStdString() += ",";
                     break;
                 case 7:  // laboral_data
-                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));
+//                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));  // TODO(Angie)
                     break;
             }
         }
+
+        // TODO(Angie)
+        result[result.length()-1] = '\0';
+
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
     }
@@ -287,8 +296,9 @@ std::string data_base::consult_employee_data(std::string user) {
 std::string data_base::consult_laboral_data(std::string user, int data_id) {
     std::string result = "\0";
     QSqlQuery consult_laboral_data;
-    consult_laboral_data.prepare("SELECT gross_salary, deuctibles, job_title FROM laboral_datas WHERE user = (:user) AND data_id = (:data_id)");
+    consult_laboral_data.prepare("SELECT * FROM laboral_datas WHERE user = (:user) AND data_id = (:data_id)");
     consult_laboral_data.bindValue(":user", QString::fromStdString(user));
+    consult_laboral_data.bindValue(":data_id", data_id);
     // If a match was found
     if (consult_laboral_data.exec() && consult_laboral_data.next()) {
         for (int i = 0; i < 3; ++i) {
@@ -298,7 +308,7 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
             }
         }
     } else {
-        qDebug() << "[BASE_DATOS] Error los datos laborales #" << data_id << " del usuario: " << QString::fromStdString(user);
+        qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
     }
     return result;
 }
@@ -443,7 +453,7 @@ bool data_base::set_end_date_laboral_data(std::string user, int day, int month, 
     modify_user.bindValue(":end_year", year);
     modify_user.bindValue(":data_id", data_id);
     if (!modify_user.exec()) {
-        qDebug() << "[BASE_DATOS] Error modificando los datos laborales # " << data_id << " de " << QString::fromStdString(user);
+        qDebug() << "[BASE_DATOS] Error modificando los datos laborales #" << data_id << " de " << QString::fromStdString(user);
         success = false;
     }
 

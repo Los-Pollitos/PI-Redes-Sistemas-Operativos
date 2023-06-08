@@ -16,7 +16,7 @@
 data_server::data_server() {
     // Create the data_base
     this->base = new data_base();
-    this->logger = new log_generator ();
+    this->logger = new log_generator();
     this->logger->set_params("Data_LOG.txt", "Data Server");
     this->load_from_file();
     this->connection = -1;
@@ -490,7 +490,6 @@ void data_server::load_records() {
     int end_pos = -1;
 
     std::string user = "\0";
-    int id = 0;
     int day = 0;
     int month = 0;
     int year = 0;
@@ -511,13 +510,6 @@ void data_server::load_records() {
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos ,end_pos-1);
-
-            // find the id
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the id
-            id = stoi(partial_line);
 
             // find the day
             initial_pos = end_pos;  // starts after the ','
