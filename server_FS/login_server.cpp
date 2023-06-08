@@ -306,12 +306,7 @@ void login_server::give_token(){
       this->file_system->read_until("Server", "Login.txt", ',');
       // get token
       buffer  =  this->file_system->read_until("Server", "Login.txt", ',');
-      std::cout << "voy a encriptar: " << buffer << std::endl;
       buffer = security_manager.encrypt(buffer);
-      std::cout << "buffer encriptado: " << buffer << "L" << std::endl;
-      std::cout << "encriptado .size: " << buffer.size() << std::endl;
-      std::cout << "buffer desencriptado: " << security_manager.decrypt(buffer) << std::endl;
-      std::cout << "assci ";
       std::string token_ascii = "";
       int i = 0;
       for (i = 0; i < 12; ++i) {
@@ -396,17 +391,13 @@ void login_server::change_token() {
   }
   ++i; // sikip comma
   for (int j = 0; j < 12; ++j) {
-      std::cout << " en for " << j << ":" << this->data[i] << std::endl;
       if (this->data[i+1] == ',') {
           new_token += (char)(this->data[i]-48);
-          std::cout << "\tun char: " << (int)this->data[i] << std::endl;
       } else if (this->data[i+2] == ','){
         new_token += (char)(((int)this->data[i]) - 48)*10 +(((int)this->data[i+1]) - 48);
-        std::cout << "\tdoschar " << (int)((((int)this->data[i]) - 48)*10 +(((int)this->data[i+1]) - 48)) << std::endl;
       ++i; // ignore i+1
       } else {
         new_token += (char)(((int)this->data[i] - 48)*100 + ((int)this->data[i+1] -48)*10 - +(((int)this->data[i+2] -48)));
-        std::cout << "\ttreschar " << (int)(((int)this->data[i] - 48)*100 + ((int)this->data[i+1] -48)*10 - +(((int)this->data[i+2] -48)))<< std::endl;
         i+=2; // ignore i+2
       }
       // next one would be a ,
@@ -444,7 +435,6 @@ void login_server::change_token() {
       // modify token
       security security_manager;
       new_token = security_manager.decrypt(new_token);
-      std::cout << " el token nuevo de " << username << " es " << new_token << std::endl;
       this->file_system->write("Server","Login.txt", new_token);
       memset(this->data, '\0', DATA_SIZE);
       this->data[0] = '1';
