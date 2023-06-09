@@ -813,14 +813,7 @@ void data_server::process_data(std::string remote_ip) {
             // find the user
             i = 1;  // data[0] is USER_OFFICE
 
-            // TODO(Angie): borrar
-            std::cout << "data[" << i << "] = " << data[i] << std::endl;
-
             while (data[i] != '\0') {
-
-                // TODO(Angie): borrar
-                std::cout << "data[" << i << "] = " << data[i] << std::endl;
-
                 to_send += data[i++];
             }
 

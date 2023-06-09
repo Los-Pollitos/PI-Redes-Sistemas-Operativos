@@ -8,6 +8,8 @@
 
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
     ui->setupUi(this);
+
+    // colors
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->approve_changes->setStyleSheet("color: #001f21;");
     this->ui->base_salary->setStyleSheet("color: #001f21;");
@@ -45,7 +47,28 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->checkbox_human_resources->setStyleSheet("color: #001f21;");
     this->ui->checkbox_supervisor->setStyleSheet("color: #001f21;");
     this->ui->comboBox->setStyleSheet("color: #001f21;");
+
+    // window name
     this->setWindowTitle("Modificar usuarios");
+
+    // empty text lines
+    ui->name->setText("");
+    ui->id->setText("");
+    ui->phone->setText("");
+    ui->email->setText("");
+    ui->office->setText("");
+    ui->checkbox_active->setCheckState(Qt::Unchecked);
+    ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
+    ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
+    ui->checkbox_debug->setCheckState(Qt::Unchecked);
+    ui->checkbox_employee->setCheckState(Qt::Unchecked);
+    ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
+    ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
+    ui->vacations->setText(0);
+    ui->job_title->setText(0);
+    ui->base_salary->setText(0);
+    ui->deductions->setText(0);
+    ui->net_salary->setText(0);
 }
 
 modify_user::~modify_user() {
@@ -192,6 +215,7 @@ void modify_user::add_data_to_combobox() {
     for (int i = this->ui->comboBox->count(); i > 0; --i) {
         this->ui->comboBox->removeItem(i-1);
     }
+    this->user_names.clear();
 
     int i = 0;
     // find the user's office id
