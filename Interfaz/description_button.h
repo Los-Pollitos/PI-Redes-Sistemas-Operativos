@@ -32,15 +32,15 @@ enum type_button {
 class description_button : public QPushButton {
     Q_OBJECT
 public:
-    description_button(QString name, QWidget * parent, int id, int type, int type_request = 0);
-    int get_type_request();
-    void set_type_request(int type_request);
+    description_button(QString name, QWidget * parent, int id, int type, int id_request = 0);
+    int get_id_requests();
+    void set_id_requests(int type_request);
     bool valid;
     int identifier;
 
 protected:
     int type;
-    int type_request;
+    int id_requests;
     void mousePressEvent(QMouseEvent*e) override;
 
 signals:
