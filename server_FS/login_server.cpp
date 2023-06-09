@@ -151,25 +151,56 @@ void login_server::process_data(std::string ip_remote) {
       break;
     case CREATE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
+      this->find_data(username, hash);
       this->create_user(username, hash);
       break;
     case DELETE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
-      username = "hola de login";
-      write (this->connection, username.data(), DATA_SIZE);
+      this->delete_user(username);
       break;
   }
   this->logger->add_answer_log(ip_remote,"sent",this->data);
 }
 
-//TODO(Luis): documentar y terminar
+/**
+ * @brief Creates an user inside the file system when received with a
+ * request to do so
+ * 
+ * @param username The username to be inserted
+ * @param hash The hash to be associated to the username
+ */
 void login_server::create_user(std::string& username,  std::string& hash) {
+  // Set the data to \0
+  memset(this->data, '\0', DATA_SIZE);
   // Find if the user already exists
   if (!this->existing_user(username)) {
     // If not, insert the user with the hash and generate a token
+    this->file_system->open("Server", "Login.txt");
+    std::string to_append = "," + username;
+    to_append = "," + hash + ",";
+    this->generate_token(to_append);
+    // Add to the login file
+    this->file_system->append("Login.txt", to_append);
+    // Success
+    this->data[0] = '1';
   } else {
     // Answer the request with a 0 indicating failure
+    this->data[0] = '0';
   }
+  // Answer with the result
+  write(this->connection, this->data, DATA_SIZE);
+}
+
+// TODO(Luis): documentar y terminar
+void login_server::generate_token(std::string& to_append) {
+  for (int i = 0; i < 6; ++i) {
+
+  }
+}
+
+
+void login_server::delete_user(std::string& username) {
+
 }
 
 /**
@@ -180,8 +211,24 @@ void login_server::create_user(std::string& username,  std::string& hash) {
  * @return false If the username does not exist
 */
 bool login_server::existing_user(std::string& username) {
-  //TODO(Luis): Hacer
   bool answer = false;
+  this->file_system->open("Server", "Login.txt");
+  this->file_system->reset_file_pointer("Server", "Login.txt");
+  std::string buffer = "";
+  // Read the whole file or until the username is found
+  while (buffer != username && !this->file_system->is_eof("Server", "Login.txt")) {
+    buffer = this->file_system->read_until("Server", "Login.txt", ',');
+    if (buffer != username) {
+      // Read the hash and token
+      this->file_system->read_until("Server", "Login.txt", ',');
+      this->file_system->read_until("Server", "Login.txt", ',');
+    } else {
+      // THe username is found
+      answer = true;
+    }
+  }
+  // Close the login file
+  this->file_system->close("Server", "Login.txt");
   return answer;
 }
 

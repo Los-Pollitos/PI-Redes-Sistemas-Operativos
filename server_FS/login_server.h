@@ -39,7 +39,9 @@ class login_server {
     void find_data(std::string& username,  std::string& hash);
     void process_data(std::string ip_remote);
     void adapt_data(std::string& new_info);
-    void create_user(std::string& username,  std::string& hash);
+    void create_user(std::string& username, std::string& hash);
+    void generate_token(std::string& to_append);
+    void delete_user(std::string& username);
     bool existing_user(std::string& username);
     void validate_data(std::string& username, std::string& hash);
     void give_token();
