@@ -210,6 +210,10 @@ int data_base::add_laboral_data(std::string user
 
 // TODO(nosotros): DOCUMENTAR
 void data_base::add_record(std::string user, int day, int month, int year, std::string annotation) {
+
+    // TODO(Angie): borrar
+    std::cout << "se agrega anotacion a " << user << " el " << day<< month << year << " y es: " << annotation << std::endl;
+
     // Create the record table if not created
     QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, id INTEGER, day INTEGER, month INTEGER, year INTEGER, annotation TEXT)");
     QSqlQuery record_table;
