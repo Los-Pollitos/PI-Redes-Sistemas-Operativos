@@ -32,10 +32,11 @@ data_server::~data_server() {
 
 // TODO(nosotros): documentar
 void data_server::adapt_data(char* data, std::string& new_info, int pos) {
-    for (int i = 0; i < DATA_SIZE; ++i){
+    for (int i = 0; i < DATA_SIZE-1; ++i){
         data[i] = new_info[i+pos];
     }
     pos -= 1;
+    data[DATA_SIZE-1] = '\0';
 }
 
 // TODO(nosotros): documentar

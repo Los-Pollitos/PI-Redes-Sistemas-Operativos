@@ -544,7 +544,7 @@ std::string data_base::consult_records(std::string user) {
     // If a match was found
     if (consult_record.exec() && consult_record.next()) {
         do {
-            result += this->consult_record(stoi(consult_record.value(0).toString().toStdString())) += ",";
+            result += this->consult_record(stoi(consult_record.value(0).toString().toStdString())) += "\n";
         } while (consult_record.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {
@@ -560,25 +560,31 @@ std::string data_base::consult_record(int id) {
     // (user TEXT, id INTEGER, day INTEGER, month INTEGER, year INTEGER, annotation TEXT)
 
     std::string result = "";
-    QSqlQuery consult_employee;
+    QSqlQuery consult_record;
 
-    consult_employee.prepare("SELECT day, month, year, annotation FROM employees WHERE id = (:id)");
-    consult_employee.bindValue(":id", id);
+    consult_record.prepare("SELECT * FROM records WHERE id = (:id)");
+    consult_record.bindValue(":id", id);
 
     // If a match was found
-    if (consult_employee.exec() && consult_employee.next()) {
+    if (consult_record.exec() && consult_record.next()) {
         do {
-//            result += consult_employee.value(0).toString().toStdString() += ",";
-
-            // TODO(Angie): borrar
-            std::cout << "(0): " << consult_employee.value(0).toString().toStdString();
-
-        } while (consult_employee.next());
-//        result[result.length()-1] = '\0';  // there was an extra ','
-
-
-
-
+            for (int i = 2; i < 6; ++i) {
+                switch (i) {
+                    case 2:  // day
+                        result += "[" + consult_record.value(i).toString().toStdString();
+                        break;
+                    case 3:  // month
+                        result += "-" + consult_record.value(i).toString().toStdString();
+                        break;
+                    case 4:  // year
+                        result += "-" + consult_record.value(i).toString().toStdString() += "] ";
+                        break;
+                    case 5:  // annotation
+                        result += consult_record.value(i).toString().toStdString();
+                        break;
+                }
+            }
+        } while (consult_record.next());
     } else {
         qDebug() << "[BASE_DATOS] Error buscando la anotación #" << id;
     }
