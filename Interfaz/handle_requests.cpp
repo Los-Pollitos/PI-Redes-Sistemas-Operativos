@@ -17,65 +17,13 @@ handle_requests::handle_requests(QWidget *parent) :
     this->container = new QWidget();
     ui->scrollArea->setWidget(container);
     this->layout = new QVBoxLayout(container);
-    this->requests_buttons.push_back(new description_button( "1", container, 0, 2));
-    this->connect(this->requests_buttons[0], &description_button::disapear, this
-        , &handle_requests::update_scroll);
-    this->connect(this->requests_buttons[0], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->requests_buttons.push_back(new description_button( "2", container, 1, WORK_PROOF));
-    this->connect(this->requests_buttons[1], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[1], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "3", container, 2, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[2], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[2], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "4", container, 3, SALARY_PROOF));
-    this->connect(this->requests_buttons[3], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[3], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "5", container, 4, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[4], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[4], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "6", container, 5, PAYMENT_PROOF));
-    this->connect(this->requests_buttons[5], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[5], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "7", container, 6, WORK_PROOF));
-    this->connect(this->requests_buttons[6], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[6], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "8", container, 7, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[7], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[7], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    this->requests_buttons.push_back(new description_button( "9", container, 8, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[8], &description_button::pressed, this
-                  , &handle_requests::show_description);
-    this->connect(this->requests_buttons[8], &description_button::disapear, this
-                  , &handle_requests::update_scroll);
-    layout->addWidget(this->requests_buttons[0]);
-    layout->addWidget(this->requests_buttons[1]);
-    layout->addWidget(this->requests_buttons[2]);
-    layout->addWidget(this->requests_buttons[3]);
-    layout->addWidget(this->requests_buttons[4]);
-    layout->addWidget(this->requests_buttons[5]);
-    layout->addWidget(this->requests_buttons[6]);
-    layout->addWidget(this->requests_buttons[7]);
-    layout->addWidget(this->requests_buttons[8]);
 }
 
 
 void handle_requests::set_user_login(login_info * user_login) {
     this->user_login = user_login;
+    this->update_scroll();
+    std::cout << "Volvi de uptate" << std::endl;
 }
 
 
@@ -95,28 +43,74 @@ handle_requests::~handle_requests() {
 }
 
 void handle_requests::update_scroll() {
+    std::cout << "vamos a update scroll" <<std::endl;
+    size_t length = this->requests_buttons.size();
+    for(size_t count = 0; count < length; ++count) {
+       this->layout->removeWidget(this->requests_buttons[count]);
+       this->requests_buttons[count]->hide();
+       this->requests_buttons.erase(this->requests_buttons.begin()+(count));
+    }
+
+    std::cout << "vamos a pedirle al server" <<std::endl;
+
     std::string to_server = "";
     to_server += (char)SEE_PROCESS_REQUESTS;
     to_server += this->user_login->user;
     to_server += ",";
     std::string from_server = "";
     from_server = this->local_client->send_and_receive(to_server);
+    from_server += ",";
     std::cout << "Para see process requests, recibi: " << from_server << std::endl;
 
-    size_t length = this->requests_buttons.size();
-    size_t index = 0;
-    for(size_t count = 0; count < length; ++count) {
-      if (!this->requests_buttons[index]->valid) {
-        this->layout->removeWidget(this->requests_buttons[index]);
-        this->requests_buttons[index]->hide();
-        this->requests_buttons.erase(this->requests_buttons.begin()+(index));
-      } else {
-        ++index;
-      }
-    }
-    int amount_buttons = this->requests_buttons.size();
-    for (int button = 0; button < amount_buttons; ++button) {
-      this->requests_buttons[button]->identifier = button;
+    std::string temp_user = "";
+    std::string temp_id = "";
+    std::string temp_type = "";
+    int id = 0;
+    int type = 0;
+    std::string temp_to_show = "";
+    for (int i = 0; i < from_server.length(); ++i) {
+       std::cout << "procesando: " << from_server[i] << std::endl;
+       if (from_server[i] != ',') {
+           while (from_server[i] != ':') {
+               temp_user += from_server[i];
+               ++i;
+           }
+           ++i; // skip :
+           while (from_server[i] != ':') {
+               temp_id += from_server[i];
+               ++i;
+           }
+           ++i; // skip :
+           while (from_server[i] != ':') {
+               std::cout << "while " << from_server[i] << std::endl;
+               temp_type += from_server[i];
+               ++i;
+           }
+       } else {
+           type = (int)(temp_type[0] -48);
+           id = (int)(temp_id[0] -48);
+           temp_to_show = temp_user;
+           temp_to_show += " : ";
+           switch (type) {
+               case VACATION:
+                    temp_to_show += "Vacaciones";
+                    break;
+               case PROOF:
+                    temp_to_show += "Constancia";
+                    break;
+           }
+           std::cout << "Voy a poner un boton con " << temp_to_show << std::endl;
+           this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
+           this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
+                         , &handle_requests::update_scroll);
+           this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::pressed, this
+                         , &handle_requests::show_description);
+           layout->addWidget(this->requests_buttons[requests_buttons.size()-1]);
+           temp_user = "";
+           temp_id = "";
+           temp_type = "";
+           temp_to_show = "";
+       }
     }
 }
 
