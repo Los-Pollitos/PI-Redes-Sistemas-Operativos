@@ -93,12 +93,6 @@ std::string log::get_request_type(char type) {
     case CONSULT_VACATION:
       result = "CONSULT_VACATION";
       break;
-    case CONSULT_USER_DATA:
-      result = "CONSULT_USER_DATA";
-      break;
-    case CHANGE_USER_DATA:
-      result = "CHANGE_USER_DATA";
-      break;
     case ANSWER_PAYMENT_PROOF:
       result = "ANSWER_PAYMENT_PROOF";
       break;

@@ -260,8 +260,6 @@ void intermediary::send_to_server(std::string ip_remote) {
     case CONSULT_REQUESTS:
     case VACATION_REQUEST:
     case CONSULT_VACATION:
-    case CONSULT_USER_DATA:
-    case CHANGE_USER_DATA:
     case ANSWER_PAYMENT_PROOF:
     case ANSWER_WORK_PROOF:
     case ANSWER_SALARY_PROOF:
