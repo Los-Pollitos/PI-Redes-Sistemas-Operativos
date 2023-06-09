@@ -42,7 +42,7 @@ class login_server {
     void adapt_data(std::string& new_info);
     void create_user(std::string& username, std::string& hash);
     void generate_token(std::string& to_append);
-    void delete_user(std::string& username);
+    void delete_user();
     void remove_the_user(std::string& username);
     bool existing_user(std::string& username);
     void validate_data(std::string& username, std::string& hash);

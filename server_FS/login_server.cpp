@@ -151,12 +151,11 @@ void login_server::process_data(std::string ip_remote) {
       break;
     case CREATE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
-      this->find_data(username, hash);
       this->create_user(username, hash);
       break;
     case DELETE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
-      this->delete_user(username);
+      this->delete_user();
       break;
   }
   this->logger->add_answer_log(ip_remote,"sent",this->data);
@@ -203,7 +202,12 @@ void login_server::generate_token(std::string& to_append) {
  * 
  * @param username Username to be deleted
  */
-void login_server::delete_user(std::string& username) {
+void login_server::delete_user() {
+  // Find the username
+  std::string username = "";
+  for (int i = 2; i < 12 && this->data[i] != ','; ++i) {
+    username += this->data[i];
+  }
   // Set the data to \0
   memset(this->data, '\0', DATA_SIZE);
   if (this->existing_user(username)) {
@@ -216,6 +220,9 @@ void login_server::delete_user(std::string& username) {
   }
   // Write to the intermediary the answer
   write(this->connection, this->data, DATA_SIZE);
+
+  //TODO(Luis): BORRAR
+  this->file_system->print_unit();
 }
 
 /**
