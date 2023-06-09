@@ -1221,10 +1221,18 @@ void data_server::consult_record(std::string remote_ip) {
     }
 
     // ask the data base for the result
-    this->base->consult_records(to_send);
-    memset(this->data, '1', DATA_SIZE);
-    write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(remote_ip, "sent", this->data);
+    to_send = this->base->consult_records(to_send);
+
+    // find the size of the package to send
+    int total_m = (int) (to_send.length() / DATA_SIZE) + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+
+    // send the data
+    for (int i = 0; i < total_m && i < 10; ++i) {
+        adapt_data(data, to_send, DATA_SIZE * i);
+        std::cout << "Voy a mandar: " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(remote_ip, "sent", this->data);
+    }
 
     this->data[0] = '&';
     std::cout << "Voy a mandar " << this->data << "\n";

@@ -6,6 +6,7 @@ consult_record::consult_record(QWidget *parent) : QDialog(parent), ui(new Ui::co
     this->setStyleSheet("background-color: #ECEAE5;");
     this->setWindowTitle("Consultar expediente");
     this->ui->title->setStyleSheet("color: #001f21;");
+    this->ui->plainTextEdit->setStyleSheet("color: #001f21;");
     this->local_client = 0;
     this->user_login = 0;
 }
@@ -27,6 +28,7 @@ void consult_record::set_user_login(login_info* user_login) {
 
 void consult_record::show_record() {
     std::string to_send = " " + this->user_login->user;
+    to_send[0] = RECORD_CONSULT;
     this->ui->plainTextEdit->setPlainText(QString::fromStdString(this->local_client->send_and_receive(to_send)));
     this->ui->plainTextEdit->setReadOnly(true);
 }

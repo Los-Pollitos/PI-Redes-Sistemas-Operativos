@@ -225,7 +225,11 @@ void data_base::add_record(std::string user, int day, int month, int year, std::
     if(!new_record.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando anotación: " << new_record.lastError();
     }
-    ++ this->record_count;
+
+    // TODO(Angie): borrar
+    std::cout << "agregue record # " << this->record_count << " de " << user << std::endl;
+
+    ++this->record_count;
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -398,10 +402,6 @@ bool data_base::change_email(std::string user, std::string email) {
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_office(std::string user, int office) {
-
-    // TODO(Angie): borrar
-    std::cout << "change office, user " << user << " a " << office << std::endl;
-
     bool success = true;
     if (this->verify_office_id(office)) {
         QSqlQuery modify_user;
