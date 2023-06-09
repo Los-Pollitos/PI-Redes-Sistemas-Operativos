@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "client.h"
 #include "login_info.h"
+#include "security.h"
 #include "user_data.h"
 
 namespace Ui {
