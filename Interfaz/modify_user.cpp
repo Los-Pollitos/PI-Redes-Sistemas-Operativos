@@ -47,6 +47,7 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->comboBox->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Modificar usuarios");
 }
+
 modify_user::~modify_user() {
     if (this->ui) {
         delete this->ui;
@@ -64,7 +65,7 @@ void modify_user::on_comboBox_activated(int index) {
     this->load_user_data(data_received);
 
     // if the user was fired, noting can't be changed
-    if(unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Unchecked) {
+    if(unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
         ui->checkbox_active->setCheckState(unmask_role(index, UNEMPLOYEED));
         this->set_read_only();
     }
@@ -78,7 +79,7 @@ void modify_user::on_comboBox_activated(int index) {
     ui->phone->setText(QString::fromStdString(this->user_info.phone));
     ui->email->setText(QString::fromStdString(this->user_info.email));
     ui->office->setText(QString::number(office_id));
-    ui->checkbox_admin_users->setCheckState((unmask_role(ADMIN_USER, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
+    ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
     ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
     ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
     ui->checkbox_debug->setCheckState(unmask_role(DEBUG, this->user_info.role));
@@ -178,10 +179,6 @@ void modify_user::load_user_data(std::string& data) {
         }
         ++pos;
     }
-
-    // TODO(Angie): borrar
-    std::cout << "temp_vacations: " << temp_vacations << std::endl;
-
     this->user_info.available_vacations = stoi(temp_vacations);
     this->user_info.salary_base = stoi(temp_salary);
     this->user_info.deductibles = stoi(temp_deductibles);
