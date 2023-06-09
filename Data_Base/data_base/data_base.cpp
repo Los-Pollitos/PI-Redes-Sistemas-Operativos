@@ -66,17 +66,72 @@ int data_base::get_salary(std::string user) {
     consult_actual_data.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_actual_data.exec() && consult_actual_data.next()) {
-        actual_data = consult_actual_data.value(0).toString().toStdString()[0];
+        actual_data =  std::stoi(consult_actual_data.value(0).toString().toStdString());
     }
 
-    consult_salary.prepare("SELECT gross_salary FROM employees WHERE user = (:user) AND data_id = (:actual_data)");
+    consult_salary.prepare("SELECT gross_salary FROM laboral_datas WHERE user = (:user) AND data_id = (:actual_data)");
     consult_salary.bindValue(":user", QString::fromStdString(user));
-    consult_salary.bindValue(":actual_data", QString::number(actual_data));
+    consult_salary.bindValue(":actual_data", actual_data);
     // If a match was found
     if (consult_salary.exec() && consult_salary.next()) {
-        result = consult_salary.value(0).toString().toStdString()[0];
+        result = std::stoi(consult_salary.value(0).toString().toStdString());
+    } else {
+        qDebug() << "[BASE_DATOS] Error con los datos laborales #" << actual_data << "del usuario:" << QString::fromStdString(user);
     }
 
+    return result;
+}
+
+int data_base::get_deductibles(std::string user) {
+    QSqlQuery consult_actual_data;
+    QSqlQuery consult_deductibles;
+    int actual_data = 0;
+    int result = 0;
+    consult_actual_data.prepare("SELECT last_laboral_data FROM employees WHERE user = (:user)");
+    consult_actual_data.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_actual_data.exec() && consult_actual_data.next()) {
+        actual_data =  std::stoi(consult_actual_data.value(0).toString().toStdString());
+    }
+
+    consult_deductibles.prepare("SELECT deductibles FROM laboral_datas WHERE user = (:user) AND data_id = (:actual_data)");
+    consult_deductibles.bindValue(":user", QString::fromStdString(user));
+    consult_deductibles.bindValue(":actual_data", actual_data);
+    // If a match was found
+    if (consult_deductibles.exec() && consult_deductibles.next()) {
+        result = std::stoi(consult_deductibles.value(0).toString().toStdString());
+    } else {
+        qDebug() << "[BASE_DATOS] Error con los datos laborales #" << actual_data << "del usuario:" << QString::fromStdString(user);
+    }
+
+    return result;
+}
+
+std::string data_base::get_name(std::string user){
+    QSqlQuery consult_name;
+    std::string result = "";
+    consult_name.prepare("SELECT name FROM employees WHERE user = (:user)");
+    consult_name.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_name.exec() && consult_name.next()) {
+        result =  consult_name.value(0).toString().toStdString();
+    } else {
+        qDebug() << "[BASE_DATOS] Error con el id del usuario:" << QString::fromStdString(user);
+    }
+    return result;
+}
+
+std::string data_base::get_id(std::string user){
+    QSqlQuery consult_id;
+    std::string result = "";
+    consult_id.prepare("SELECT id FROM employees WHERE user = (:user)");
+    consult_id.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_id.exec() && consult_id.next()) {
+        result =  consult_id.value(0).toString().toStdString();
+    } else {
+        qDebug() << "[BASE_DATOS] Error con el id del usuario:" << QString::fromStdString(user);
+    }
     return result;
 }
 

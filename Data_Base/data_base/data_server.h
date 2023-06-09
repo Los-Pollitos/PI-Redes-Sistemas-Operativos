@@ -17,6 +17,7 @@
 
 #include "data_base.h"
 #include "log_generator.h"
+#include "security.cpp"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -51,6 +52,7 @@ private:
     void give_role(std::string remote_ip);
     void create_user_case(std::string remote_ip);
     void delete_user_case(std::string remote_ip);
+    void consult_salary_case(std::string remote_ip);
 
 public:
     data_server();

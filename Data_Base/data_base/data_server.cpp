@@ -642,6 +642,7 @@ void data_server::give_role(std::string remote_ip) {
     }
 }
 
+
 void data_server::create_user_case(std::string remote_ip) {
     std::string username = "";
     // Obtain the username from data
@@ -681,6 +682,30 @@ void data_server::delete_user_case(std::string remote_ip) {
     }
     this->logger->add_answer_log(remote_ip, "sent", result);
     data[0] = result[0];
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::consult_salary_case(std::string remote_ip) {
+    std::string user = "";
+    for (int i = 1; i < DATA_SIZE && data[i] != ','; i++){
+        user += data[i];
+    }
+    read(this->connection, this->data, sizeof(this->data));
+    memset(this->data, '\0', DATA_SIZE);
+
+    int gross_salary = this->base->get_salary(user);
+    int deductibles = this->base->get_deductibles(user);
+    std::string name = this->base->get_name(user);
+    std::string id = this->base->get_id(user);
+    int salary = gross_salary - deductibles;
+
+    std::string to_send = name += ",";
+    to_send += id += ",";
+    to_send += std::to_string(gross_salary) += ",";
+    to_send += std::to_string(salary) += ",";
+
+    adapt_data(this->data, to_send, 0);
+    this->logger->add_answer_log(remote_ip, "sent", to_send);
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -746,11 +771,10 @@ void data_server::process_data(std::string remote_ip) {
             // TODO(Cris): hacer
             break;
         case SALARY_CONSULT:
-            for (int i = 1; i < DATA_SIZE || data[i] == '\0'; i++){
-                user += data[i];
-            }
-            std::cout << this->base->get_salary(user) << std::endl;
-            memset(this->data, '\0', DATA_SIZE);
+            this->consult_salary_case(remote_ip);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
         case RECORD_CONSULT:
             // TODO(Angie): hacer

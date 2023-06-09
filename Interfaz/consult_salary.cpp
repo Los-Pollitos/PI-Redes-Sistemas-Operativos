@@ -30,13 +30,42 @@ void consult_salary::set_client(client* local_client){
 
 void consult_salary::setUserData(login_info * user_login) {
     this->user_login = user_login;
-    std::cout << "Entrando... 1" << std::endl;
     std::string envio = "";
     envio += ((char)SALARY_CONSULT);
     envio += this->user_login->user;
-    std::cout << "Entrando... 2" << std::endl;
+    envio += ",";
     std::string result = local_client->send_and_receive(envio);
-    std::cout << "Entrando... 3" << std::endl;
+    std::string name = "";
+    std::string id = "";
+    std::string gross_salary = "";
+    std::string net_salary = "";
+    int temp = 0;
+    for (int i = 0; i < result.length(); ++i){
+        if (result[i] == ',') {
+            ++temp;
+        } else {
+            switch (temp) {
+                case 0:
+                    name += result[i];
+                    break;
+                case 1:
+                    id += result[i];
+                    break;
+                case 2:
+                    gross_salary += result[i];
+                    break;
+                case 3:
+                    net_salary += result[i];
+                    break;
+            }
+
+        }
+    }
+
+    this->ui->name->setText(QString::fromStdString(name));
+    this->ui->id->setText(QString::fromStdString(id));
+    this->ui->base_salary->setText("₡" + QString::fromStdString(gross_salary));
+    this->ui->salary->setText("₡" + QString::fromStdString(net_salary));
 }
 
 consult_salary::~consult_salary()
