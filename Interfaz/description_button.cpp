@@ -25,3 +25,10 @@ void description_button::set_id_requests(int id_requests) {
 }
 
 
+int description_button::get_type() {
+    return this->type;
+}
+
+void description_button::set_type(int type) {
+    this->type = type;
+}

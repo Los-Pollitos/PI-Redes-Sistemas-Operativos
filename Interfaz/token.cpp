@@ -96,6 +96,7 @@ void Token::on_validate_label_clicked() {
             show_message.setText("Token incorrecto");
             show_message.exec();
         }
+        this->ui->token_input->setText("");
     } catch (const std::runtime_error& exception) {
        std::cerr << exception.what() << std::endl;
     }
