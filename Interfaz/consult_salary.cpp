@@ -15,7 +15,7 @@ consult_salary::consult_salary(QWidget *parent) :
     this->ui->base_salary->setStyleSheet("color: #001f21;");
     this->ui->salary_label->setStyleSheet("color: #001f21;");
     this->ui->salary->setStyleSheet("color: #001f21;");
-    this->setWindowTitle("Consultar Salario Bruto");
+    this->setWindowTitle("Consultar Salario");
     ui->base_salary->setReadOnly(true);
     ui->salary->setReadOnly(true);
     ui->id->setReadOnly(true);
