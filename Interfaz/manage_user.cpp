@@ -115,9 +115,12 @@ void manage_user::on_delete_button_clicked() {
 
             qDebug() << "SEND ANTES";
 
-            std::string first_result = this->send_delete(desired_user, '1');
+            // std::string first_result = this->send_delete(desired_user, '1');
             std::string second_result = this->send_delete(desired_user, '2');
-            if (first_result[0] == '1' && second_result[0] == '1') {
+
+            std::cout << "SECOND RESULT: " << second_result << std::endl;
+
+            if (/*first_result[0] == '1' &&*/second_result[0] == '1') {
                 this->show_success("Se logró eliminar el usuario");
             } else {
                 this->show_error("No se logró eliminar el usuario");

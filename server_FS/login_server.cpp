@@ -214,15 +214,17 @@ void login_server::delete_user() {
     // The user exists
     this->remove_the_user(username);
     this->data[0] = '1';
+    //TODO(Luis): BORRAR
+    this->file_system->print_unit();
   } else {
     // The user does not exist, answer with 0
     this->data[0] = '0';
   }
   // Write to the intermediary the answer
-  write(this->connection, this->data, DATA_SIZE);
 
-  //TODO(Luis): BORRAR
-  this->file_system->print_unit();
+  std::cout << "Voy a enviar a intermediario " << this->data << "\n";
+
+  write(this->connection, this->data, DATA_SIZE);
 }
 
 /**

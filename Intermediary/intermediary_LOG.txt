@@ -1176,3 +1176,108 @@ Wed Jun  7 10:04:13 2023:127.0.0.1:received from client:GET_ROLES:dcabezas,
 Wed Jun  7 10:04:13 2023:127.0.0.1:sent to data base:GET_ROLES:dcabezas,
 Wed Jun  7 10:04:13 2023:127.0.0.1:received from data base:08
 Wed Jun  7 10:04:13 2023:127.0.0.1:sent to client:08
+Fri Jun  9 10:40:22 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:40:22 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:40:22 2023:127.0.0.1:received from login:1
+Fri Jun  9 10:40:22 2023:127.0.0.1:sent to client:1
+Fri Jun  9 10:40:23 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 10:40:23 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 10:40:24 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,CX Yçï`∆ı†˛
+Fri Jun  9 10:40:24 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,CX Yçï`∆ı†˛
+Fri Jun  9 10:40:30 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 10:40:30 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 10:40:30 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 10:40:30 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 10:40:42 2023:127.0.0.1:received from client:DELETE_USER:1lsolano,
+Fri Jun  9 10:40:42 2023:127.0.0.1:sent to data base:DELETE_USER:1lsolano,
+Fri Jun  9 10:41:27 2023:127.0.0.1:received from client:F1lsolano,
+Fri Jun  9 10:42:43 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:42:43 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:42:43 2023:127.0.0.1:received from login:1
+Fri Jun  9 10:42:43 2023:127.0.0.1:sent to client:1
+Fri Jun  9 10:42:44 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 10:42:44 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 10:42:44 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,€mÛ†B‡^bU˛
+Fri Jun  9 10:42:44 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,€mÛ†B‡^bU˛
+Fri Jun  9 10:43:15 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 10:43:15 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 10:43:15 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 10:43:15 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 10:43:24 2023:127.0.0.1:received from client:DELETE_USER:1lsolano,
+Fri Jun  9 10:43:24 2023:127.0.0.1:sent to data base:DELETE_USER:1lsolano,
+Fri Jun  9 10:43:49 2023:127.0.0.1:received from client:F1lsolano,
+Fri Jun  9 10:44:18 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:44:18 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:44:18 2023:127.0.0.1:received from login:1
+Fri Jun  9 10:44:18 2023:127.0.0.1:sent to client:1
+Fri Jun  9 10:44:19 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 10:44:19 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 10:44:19 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,ƒ®ò]mÓ¿,”⁄¸
+Fri Jun  9 10:44:19 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,ƒ®ò]mÓ¿,”⁄¸
+Fri Jun  9 10:44:31 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 10:44:31 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 10:44:31 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 10:44:31 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 10:44:45 2023:127.0.0.1:received from client:DELETE_USER:2lsolano,
+Fri Jun  9 10:44:45 2023:127.0.0.1:sent to login:DELETE_USER:2lsolano,
+Fri Jun  9 10:44:45 2023:127.0.0.1:received from login:0
+Fri Jun  9 10:51:06 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:51:06 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:51:06 2023:127.0.0.1:received from login:1
+Fri Jun  9 10:51:06 2023:127.0.0.1:sent to client:1
+Fri Jun  9 10:51:08 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 10:51:08 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 10:51:08 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,YJ;ÙF‡Õ£¸
+Fri Jun  9 10:51:08 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,YJ;ÙF‡Õ£¸
+Fri Jun  9 10:51:20 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 10:51:20 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 10:51:20 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 10:51:20 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 10:51:38 2023:127.0.0.1:received from client:DELETE_USER:2lsolano,
+Fri Jun  9 10:51:38 2023:127.0.0.1:sent to login:DELETE_USER:2lsolano,
+Fri Jun  9 10:51:38 2023:127.0.0.1:received from login:0
+Fri Jun  9 10:54:35 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:54:35 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:54:35 2023:127.0.0.1:received from login:1
+Fri Jun  9 10:54:35 2023:127.0.0.1:sent to client:1
+Fri Jun  9 10:54:36 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 10:54:36 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 10:54:36 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,åî°‹VÁ (ÿ_¸
+Fri Jun  9 10:54:36 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,åî°‹VÁ (ÿ_¸
+Fri Jun  9 10:54:43 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 10:54:43 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 10:54:43 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 10:54:43 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 10:54:54 2023:127.0.0.1:received from client:DELETE_USER:2lsolano,
+Fri Jun  9 10:54:54 2023:127.0.0.1:sent to login:DELETE_USER:2lsolano,
+Fri Jun  9 10:54:54 2023:127.0.0.1:received from login:0
+Fri Jun  9 10:58:25 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:58:25 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 10:58:25 2023:127.0.0.1:received from login:1
+Fri Jun  9 10:58:25 2023:127.0.0.1:sent to client:1
+Fri Jun  9 10:58:26 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 10:58:26 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 10:58:26 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,ãı™E—ù óØAˇ
+Fri Jun  9 10:58:26 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,ãı™E—ù óØAˇ
+Fri Jun  9 10:58:30 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 10:58:30 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 10:58:30 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 10:58:30 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 10:58:46 2023:127.0.0.1:received from client:DELETE_USER:2lsolano,
+Fri Jun  9 10:58:46 2023:127.0.0.1:sent to login:DELETE_USER:2lsolano,
+Fri Jun  9 10:58:46 2023:127.0.0.1:received from login:0
+Fri Jun  9 11:06:13 2023:127.0.0.1:received from client:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 11:06:13 2023:127.0.0.1:sent to login:LOGIN:gherrera,9e3a38da849505b68ad0dd89cb64e987
+Fri Jun  9 11:06:13 2023:127.0.0.1:received from login:1
+Fri Jun  9 11:06:13 2023:127.0.0.1:sent to client:1
+Fri Jun  9 11:06:14 2023:127.0.0.1:received from client:TOKEN:gherrera,
+Fri Jun  9 11:06:14 2023:127.0.0.1:sent to login:TOKEN:gherrera,
+Fri Jun  9 11:06:14 2023:127.0.0.1:received from login:53,7,4,8,3,9,0,7,6,8,5,9,bÖi±πÔ¨¸
+Fri Jun  9 11:06:14 2023:127.0.0.1:sent to client:53,7,4,8,3,9,0,7,6,8,5,9,bÖi±πÔ¨¸
+Fri Jun  9 11:06:21 2023:127.0.0.1:received from client:GET_ROLES:gherrera,
+Fri Jun  9 11:06:21 2023:127.0.0.1:sent to data base:GET_ROLES:gherrera,
+Fri Jun  9 11:06:21 2023:127.0.0.1:received from data base:1&
+Fri Jun  9 11:06:21 2023:127.0.0.1:sent to client:1&
+Fri Jun  9 11:06:34 2023:127.0.0.1:received from client:DELETE_USER:2lsolano,
+Fri Jun  9 11:06:34 2023:127.0.0.1:sent to login:DELETE_USER:2lsolano,
+Fri Jun  9 11:06:34 2023:127.0.0.1:received from login:0

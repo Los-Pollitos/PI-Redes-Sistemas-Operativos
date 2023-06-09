@@ -184,7 +184,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
       
       memset(this->data, '\0', DATA_SIZE);
       data[0] = '#';
-      std::cout << "Voy a mandar: " << data  << " a data?server "<< std::endl;
+      std::cout << "Voy a mandar: " << data  << " a data server "<< std::endl;
       write(s, this->data, DATA_SIZE);
       // No se logró leer
       if (n < 0) {
@@ -200,11 +200,18 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
  * @param ip_remote Ip to handle log and answers
  */
 void intermediary::manage_user_case(std::string ip_remote) {
+  char temporal_data[DATA_SIZE];
+  // Remove the &
+  read(this->connection, temporal_data, DATA_SIZE);
   // Check the server to send the information
   if (data[1] == '1') {
     this->send_and_receive_data_base(ip_remote);
   } else {
-    this->send_and_receive_login(ip_remote);
+    std::string answer = this->send_and_receive_login(ip_remote);
+    write(this->connection, answer.data(), DATA_SIZE);
+    memset(this->data, '\0', DATA_SIZE);
+    this->data[0] = '&';
+    write(this->connection, this->data, DATA_SIZE);
   }
 }
 
