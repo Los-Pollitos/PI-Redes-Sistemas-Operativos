@@ -253,44 +253,84 @@ void modify_user::on_approve_changes_clicked() {
         show_message.setText("Contraseña incorrecta");
         show_message.exec();
     }
+    this->ui->password->setText("");
 }
 
 void modify_user::update_data() {
-    std::string to_send = " " + this->user_info.user;
+    std::string to_send = "";
     bool is_number = true;
 
     // update roles
     this->update_roles();
 
     if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
+
+        // TODO(Angie): borrar
+        std::cout << "voy a cambiar phone" << std::endl;
+
         this->user_info.phone = this->ui->phone->text().toStdString();
-        to_send = " " + this->user_info.phone;
+        to_send = " " + this->user_info.user + "," + this->user_info.phone;
         to_send[0] = CHANGE_PHONE;
         this->local_client->send_and_receive(to_send);
+
+        // TODO(Angie): borrar
+        std::cout << "cambie phone" << std::endl;
+
     }
     if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() > 0
                 && this->ui->email->text().length() <= 23) {
+
+
+        // TODO(Angie): borrar
+        std::cout << "voy a cambiar email" << std::endl;
+
         this->user_info.email = this->ui->email->text().toStdString();
-        to_send += "," + this->user_info.email;
+        to_send = " " + this->user_info.user + "," + this->user_info.email;
         to_send[0] = CHANGE_EMAIL;
         this->local_client->send_and_receive(to_send);
+
+        // TODO(Angie): borrar
+        std::cout << "cambie email" << std::endl;
+
     }
     if (this->ui->office->text().toInt(&is_number, 10) != this->user_info.office_id && is_number) {  // only saved if office is a valid number
+
+        // TODO(Angie): borrar
+        std::cout << "voy a cambiar office" << std::endl;
+
         this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
+        to_send = " " + this->user_info.user + "," + std::to_string(this->user_info.office_id);
         to_send[0] = CHANGE_OFFICE_ID;
-        to_send += "," + std::to_string(this->user_info.office_id);
         this->local_client->send_and_receive(to_send);
+
+        // TODO(Angie): borrar
+        std::cout << "cambie office" << std::endl;
+
     }
     if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations && is_number) {
+
+        // TODO(Angie): borrar
+        std::cout << "voy a cambiar vacations" << std::endl;
+
         this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
-        to_send = "  ";
+        to_send = " " + this->user_info.user + "," +
         to_send[0] = CHANGE_VACATIONS;
         to_send += "," + std::to_string(this->user_info.available_vacations);
         this->local_client->send_and_receive(to_send);
+
+
+        // TODO(Angie): borrar
+        std::cout << "cambie vacations" << std::endl;
+
     }
     if ((this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number)
             || (this->ui->deductions->text().toInt(&is_number, 10) != this->user_info.deductibles && is_number)
             || (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() > 0)) {
+
+
+        // TODO(Angie): borrar
+        std::cout << "voy a cambiar laboral data" << std::endl;
+
         // update user info
         this->user_info.job_title = this->ui->job_title->text().toStdString();
         this->user_info.salary_base = this->ui->base_salary->text().toInt(&is_number, 10);
@@ -299,6 +339,7 @@ void modify_user::update_data() {
         this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
 
         // send changes to data_base
+        to_send = " " + this->user_info.user;
         to_send[0] = CHANGE_LABORAL_DATA;
         // set the date
         QDate date = QDate::currentDate();
@@ -311,8 +352,18 @@ void modify_user::update_data() {
         to_send += "," + this->user_info.job_title;
         to_send += "," + std::to_string(this->user_info.salary_base);
         to_send += "," + std::to_string(this->user_info.deductibles);
+
+
+        // TODO(Angie): borrar
+        std::cout << "cambie laboral data" << std::endl;
+
     }
     if (this->ui->record->toPlainText().toStdString().length() > 0 && this->ui->record->toPlainText().toStdString().length() < 237) {  // new annotation
+
+
+        // TODO(Angie): borrar
+        std::cout << "voy a agregar record" << std::endl;
+
         to_send[0] = ADD_RECORD;
         QDate date = QDate::currentDate();
         int day = 0;
@@ -322,7 +373,16 @@ void modify_user::update_data() {
         to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
         to_send += "," + this->ui->record->toPlainText().toStdString();
         // TODO(Angie): ver si data base puede recibir '&' para mandar anotaciones largas
+
+
+        // TODO(Angie): borrar
+        std::cout << "agregue record" << std::endl;
+
     }
+
+
+    // TODO(Angie): borrar
+    std::cout << "me voy de update" << std::endl;
 }
 
 void modify_user::update_roles() {

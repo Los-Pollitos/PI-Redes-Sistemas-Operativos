@@ -266,6 +266,7 @@ std::string data_base::consult_employee_data(std::string user) {
     std::string result = "";
     bool is_number = true;
     QSqlQuery consult_employee;
+    char temp_result;
     consult_employee.prepare("SELECT name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data FROM employees WHERE user = (:user)");
     consult_employee.bindValue(":user", QString::fromStdString(user));
     // If a match was found
@@ -277,9 +278,13 @@ std::string data_base::consult_employee_data(std::string user) {
                 case 2:  // phone_number
                 case 3:  // email
                 case 4:  // office ID TODO(Angie): considerar name
-                case 5:  // roles
                 case 6:  // available vacations
                     result += consult_employee.value(i).toString().toStdString() += ",";
+                    break;
+                case 5:  // roles
+                    temp_result = std::stoi(consult_employee.value(i).toString().toStdString());
+                    result += temp_result;
+                    result += ",";
                     break;
                 case 7:  // laboral_data
                     result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));
