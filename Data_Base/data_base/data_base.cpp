@@ -128,10 +128,6 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     if(!new_employee.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando empleado: " << new_employee.lastError();
     }
-
-
-    // TODO(Angie): borrar
-    std::cout << "se agrego usuario " << user << " con rol: " << (int) roles << std::endl;
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -204,11 +200,6 @@ int data_base::add_laboral_data(std::string user
     if(!new_laboral_data.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando datos laborales: " << new_laboral_data.lastError();
     }
-
-
-    //  TODO(Angie): borrar
-    std::cout << "se agregó laboral data #" << this->laboral_count << std::endl;
-
 
     return this->laboral_count++;
 }
@@ -487,10 +478,6 @@ bool data_base::verify_office_id(int office) {
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_last_laboral_data(std::string user, int last_laboral_data) {
-
-    // TODO(Angie): borrar
-    std::cout << "se cambio last laboral data de " << user << " a: " << last_laboral_data << std::endl;
-
     bool success = true;
     QSqlQuery modify_user;
     modify_user.prepare("UPDATE employees SET last_laboral_data = (:last_laboral_data) WHERE user = (:user)");

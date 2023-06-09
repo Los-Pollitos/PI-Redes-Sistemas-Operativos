@@ -788,12 +788,6 @@ void data_server::process_data(std::string remote_ip) {
         case CONSULT_VACATION:
             // TODO(Luis): hacer
             break;
-        case CONSULT_USER_DATA:
-            // TODO(Angie): hacer
-            break;
-        case CHANGE_USER_DATA:
-            // TODO(Angie): hacer
-            break;
         case ANSWER_PAYMENT_PROOF:
             // TODO(Cris): hacer
             break;

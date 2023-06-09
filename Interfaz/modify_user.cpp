@@ -126,7 +126,6 @@ void modify_user::set_read_only() {
 }
 
 void modify_user::load_user_data(std::string& data) {
-    // TODO(Angie) borrarle los couts que dejé por acá
     // clean the user_data strings
     this->user_info.name = "\0";
     this->user_info.identification  = "\0";
@@ -140,7 +139,6 @@ void modify_user::load_user_data(std::string& data) {
     std::string temp_deductibles = "\0";
     std::string temp_vacations = "\0";
 
-    std::cout << "data recibido para load user: "<< data << std::endl;
     while (pos < data.length()) {
         if (data[pos] != ','  && data[pos] != '\0') {
             switch(commas_found) {
@@ -167,15 +165,12 @@ void modify_user::load_user_data(std::string& data) {
                     break;
                 case 7: // base salary
                     temp_salary += data[pos];
-                    // std::cout << "agrego a base_salary   " << data[pos] << std::endl;
                     break;
                 case 8: // deductibles
                     temp_deductibles += data[pos];
-                    // std::cout << "agrego a deductibles   " << data[pos] << std::endl;
                     break;
                case 9: // job_title
                     this->user_info.job_title += data[pos];
-                    // std::cout << "agrego a job title  " << data[pos] << std::endl;
                    break;
             }
         } else {
@@ -290,73 +285,34 @@ void modify_user::update_data() {
     this->update_roles();
 
     if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
-
-        // TODO(Angie): borrar
-        std::cout << "voy a cambiar phone" << std::endl;
-
         this->user_info.phone = this->ui->phone->text().toStdString();
         to_send = " " + this->user_info.user + "," + this->user_info.phone;
         to_send[0] = CHANGE_PHONE;
         this->local_client->send_and_receive(to_send);
-
-        // TODO(Angie): borrar
-        std::cout << "cambie phone" << std::endl;
-
     }
     if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() > 0
                 && this->ui->email->text().length() <= 23) {
-
-
-        // TODO(Angie): borrar
-        std::cout << "voy a cambiar email" << std::endl;
-
         this->user_info.email = this->ui->email->text().toStdString();
         to_send = " " + this->user_info.user + "," + this->user_info.email;
         to_send[0] = CHANGE_EMAIL;
         this->local_client->send_and_receive(to_send);
-
-        // TODO(Angie): borrar
-        std::cout << "cambie email" << std::endl;
-
     }
     if (this->ui->office->text().toInt(&is_number, 10) != (int) this->user_info.office_id && is_number) {  // only saved if office is a valid number
-
-        // TODO(Angie): borrar
-        std::cout << "voy a cambiar office" << std::endl;
-
         this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
         to_send = " " + this->user_info.user + "," + std::to_string(this->user_info.office_id);
         to_send[0] = CHANGE_OFFICE_ID;
         this->local_client->send_and_receive(to_send);
-
-        // TODO(Angie): borrar
-        std::cout << "cambie office" << std::endl;
-
     }
     if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations && is_number) {
-
-        // TODO(Angie): borrar
-        std::cout << "voy a cambiar vacations" << std::endl;
-
         this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
         to_send = " " + this->user_info.user;
         to_send[0] = CHANGE_VACATIONS;
         to_send += "," + std::to_string(this->user_info.available_vacations);
         this->local_client->send_and_receive(to_send);
-
-
-        // TODO(Angie): borrar
-        std::cout << "cambie vacations" << std::endl;
-
     }
     if ((this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number)
             || (this->ui->deductions->text().toInt(&is_number, 10) != this->user_info.deductibles && is_number)
             || (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() > 0)) {
-
-
-        // TODO(Angie): borrar
-        std::cout << "voy a cambiar laboral data" << std::endl;
-
         // update user info
         this->user_info.job_title = this->ui->job_title->text().toStdString();
         this->user_info.salary_base = this->ui->base_salary->text().toInt(&is_number, 10);
@@ -379,18 +335,8 @@ void modify_user::update_data() {
         to_send += "," + std::to_string(this->user_info.salary_base);
         to_send += "," + std::to_string(this->user_info.deductibles);
         this->local_client->send_and_receive(to_send);
-
-
-        // TODO(Angie): borrar
-        std::cout << "cambie laboral data" << std::endl;
-
     }
     if (this->ui->record->toPlainText().toStdString().length() > 0 && this->ui->record->toPlainText().toStdString().length() < 237) {  // new annotation
-
-
-        // TODO(Angie): borrar
-        std::cout << "voy a agregar record" << std::endl;
-
         to_send = " " + this->user_info.user;
         to_send[0] = ADD_RECORD;
         QDate date = QDate::currentDate();
@@ -403,16 +349,10 @@ void modify_user::update_data() {
         this->local_client->send_and_receive(to_send);
         // TODO(Angie): ver si data base puede recibir '&' para mandar anotaciones largas
         this->ui->record->setPlainText("");
-
-        // TODO(Angie): borrar
-        std::cout << "agregue record" << std::endl;
-
     }
 
+    // refresh the data
     this->add_data_to_combobox();
-
-    // TODO(Angie): borrar
-    std::cout << "me voy de update" << std::endl;
 }
 
 void modify_user::update_roles() {
