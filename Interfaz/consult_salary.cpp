@@ -65,16 +65,12 @@ void consult_salary::setUserData(login_info * user_login) {
     std::string gross = "";
     std::string net = "";
 
-    std::cout << gross_salary << std::endl;
     gross_salary += ";";
     for (int i = 0; i < gross_salary.length() && gross_salary[i] != ';'; ++i) {
-        std::cout << gross_salary[i] << std::endl;
         if (gross_salary[i] != ',') {
             if (gross_salary[i+1] == ',') {
-                std::cout << "Voy a procesar" << gross_salary[i] << std::endl;
                 gross += (char)(gross_salary[i]-48);
-            } else if (result[i+2] == ','){
-                std::cout << "Voy a procesar" << gross_salary[i] << gross_salary[i+1] << std::endl;
+            } else if (gross_salary[i+2] == ','){
                 gross += (char)(((int)gross_salary[i]) - 48)*10 +(((int)gross_salary[i+1]) - 48);
                 ++i; // ignore i+1
             } else {
@@ -87,24 +83,28 @@ void consult_salary::setUserData(login_info * user_login) {
     }
 
     std::cout << gross << std::endl;
+    gross_salary = security_manager.decrypt(gross);
 
-    for (int i = 0; i < net_salary.length() ; ++i) {
-        if (net_salary[i+1] == ',') {
-            net += (char)(net_salary[i]-48);
-        } else if (result[i+2] == ','){
-            net += (char)(((int)net_salary[i]) - 48)*10 +(((int)net_salary[i+1]) - 48);
-            ++i; // ignore i+1
-        } else {
-            net += (char)(((int)net_salary[i] - 48)*100 + ((int)net_salary[i+1] -48)*10 - +(((int)net_salary[i+2] -48)));
-            i+=2; // ignore i+2
+    net_salary += ";";
+    std::cout << " net antes del for " << net_salary << std::endl;
+    for (int i = 0; i < net_salary.length() && net_salary[i] != ';'; ++i) {
+        if (net_salary[i] != ',') {
+            if (net_salary[i+1] == ',') {
+                net += (char)(net_salary[i]-48);
+            } else if (net_salary[i+2] == ','){
+                net += (char)(((int)net_salary[i]) - 48)*10 +(((int)net_salary[i+1]) - 48);
+                ++i; // ignore i+1
+            } else {
+                net += (char)(((int)net_salary[i] - 48)*100 + ((int)net_salary[i+1] -48)*10 - +(((int)net_salary[i+2] -48)));
+                i+=2; // ignore i+2
+            }
+            // next one would be a ,
+            i++;
         }
-        // next one would be a ,
-        i++;
     }
 
     std::cout << net << std::endl;
 
-    gross_salary = security_manager.decrypt(gross);
     net_salary = security_manager.decrypt(net);
 
     std::cout << gross_salary << std::endl;

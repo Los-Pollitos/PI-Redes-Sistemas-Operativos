@@ -101,3 +101,81 @@ Wed Jun  7 10:04:01 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531
 Wed Jun  7 10:04:01 2023:127.0.0.1:sent:hola
 Wed Jun  7 10:04:13 2023:127.0.0.1:received:GET_ROLES:dcabezas,
 Wed Jun  7 10:04:13 2023:127.0.0.1:sent:8
+Thu Jun  8 18:17:01 2023:127.0.0.1:received:GET_ROLES:rgang,
+Thu Jun  8 18:17:01 2023:127.0.0.1:sent:8
+Thu Jun  8 18:24:45 2023:127.0.0.1:received:GET_ROLES:rgang,
+Thu Jun  8 18:24:45 2023:127.0.0.1:sent:8
+Thu Jun  8 18:25:06 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:33:41 2023:127.0.0.1:received:GET_ROLES:rgang,
+Thu Jun  8 18:33:41 2023:127.0.0.1:sent:8
+Thu Jun  8 18:33:54 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:38:03 2023:127.0.0.1:received:GET_ROLES:rgang,
+Thu Jun  8 18:38:03 2023:127.0.0.1:sent:8
+Thu Jun  8 18:38:10 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:39:35 2023:127.0.0.1:received:GET_ROLES:rgang,
+Thu Jun  8 18:39:35 2023:127.0.0.1:sent:8
+Thu Jun  8 18:39:41 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:46:17 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:46:17 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 07:58:27 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 07:58:27 2023:127.0.0.1:sent:8
+Fri Jun  9 08:26:12 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:26:12 2023:127.0.0.1:sent:8
+Fri Jun  9 08:26:16 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:26:16 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:28:48 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:28:48 2023:127.0.0.1:sent:8
+Fri Jun  9 08:28:50 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:28:50 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:30:48 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:30:48 2023:127.0.0.1:sent:8
+Fri Jun  9 08:30:49 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:30:49 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:35:03 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:35:03 2023:127.0.0.1:sent:8
+Fri Jun  9 08:35:06 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:35:06 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:36:16 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:36:16 2023:127.0.0.1:sent:8
+Fri Jun  9 08:36:18 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:36:18 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:38:19 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:38:19 2023:127.0.0.1:sent:8
+Fri Jun  9 08:38:42 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:38:42 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:41:22 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:41:22 2023:127.0.0.1:sent:8
+Fri Jun  9 08:41:23 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:41:23 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:42:18 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun  9 08:42:18 2023:127.0.0.1:sent:8
+Fri Jun  9 08:42:22 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:42:22 2023:127.0.0.1:sent:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 09:12:17 2023:127.0.0.1:received:GET_ROLES:alopez,
+Fri Jun  9 09:12:17 2023:127.0.0.1:sent:(
+Fri Jun  9 09:12:25 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:12:25 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:15:23 2023:127.0.0.1:received:GET_ROLES:alopez,
+Fri Jun  9 09:15:23 2023:127.0.0.1:sent:(
+Fri Jun  9 09:15:28 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:15:28 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:17:17 2023:127.0.0.1:received:GET_ROLES:alopez,
+Fri Jun  9 09:17:17 2023:127.0.0.1:sent:(
+Fri Jun  9 09:17:29 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:17:29 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:19:38 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:19:38 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:20:24 2023:127.0.0.1:received:GET_ROLES:alopez,
+Fri Jun  9 09:20:24 2023:127.0.0.1:sent:(
+Fri Jun  9 09:20:26 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:20:26 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:21:49 2023:127.0.0.1:received:GET_ROLES:alopez,
+Fri Jun  9 09:21:49 2023:127.0.0.1:sent:(
+Fri Jun  9 09:21:50 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:21:50 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:24:17 2023:127.0.0.1:received:GET_ROLES:alopez,
+Fri Jun  9 09:24:17 2023:127.0.0.1:sent:(
+Fri Jun  9 09:24:19 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:24:19 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;
+Fri Jun  9 09:24:41 2023:127.0.0.1:received:SALARY_CONSULT:alopez,
+Fri Jun  9 09:24:41 2023:127.0.0.1:sent: Alexandra López Hernández;105503987;49,6,0,0,0,0,0, ;49,4,4,0,0,0,0, ;

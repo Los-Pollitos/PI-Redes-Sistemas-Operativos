@@ -1176,3 +1176,325 @@ Wed Jun  7 10:04:13 2023:127.0.0.1:received from client:GET_ROLES:dcabezas,
 Wed Jun  7 10:04:13 2023:127.0.0.1:sent to data base:GET_ROLES:dcabezas,
 Wed Jun  7 10:04:13 2023:127.0.0.1:received from data base:08
 Wed Jun  7 10:04:13 2023:127.0.0.1:sent to client:08
+Thu Jun  8 18:37:58 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Thu Jun  8 18:37:58 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Thu Jun  8 18:37:58 2023:127.0.0.1:received from login:1
+Thu Jun  8 18:37:58 2023:127.0.0.1:sent to client:1
+Thu Jun  8 18:37:59 2023:127.0.0.1:received from client:TOKEN:rgang,
+Thu Jun  8 18:37:59 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Thu Jun  8 18:37:59 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,ŽäÑeêê…ÐÐÃfÿ
+Thu Jun  8 18:37:59 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,ŽäÑeêê…ÐÐÃfÿ
+Thu Jun  8 18:38:03 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Thu Jun  8 18:38:03 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Thu Jun  8 18:38:03 2023:127.0.0.1:received from data base:18
+Thu Jun  8 18:38:03 2023:127.0.0.1:sent to client:18
+Thu Jun  8 18:38:10 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:38:10 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:39:29 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Thu Jun  8 18:39:29 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Thu Jun  8 18:39:29 2023:127.0.0.1:received from login:1
+Thu Jun  8 18:39:29 2023:127.0.0.1:sent to client:1
+Thu Jun  8 18:39:30 2023:127.0.0.1:received from client:TOKEN:rgang,
+Thu Jun  8 18:39:30 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Thu Jun  8 18:39:30 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,˜p 7Ÿ4‰ÐÁ‡Åý
+Thu Jun  8 18:39:30 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,˜p 7Ÿ4‰ÐÁ‡Åý
+Thu Jun  8 18:39:35 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Thu Jun  8 18:39:35 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Thu Jun  8 18:39:35 2023:127.0.0.1:received from data base:18
+Thu Jun  8 18:39:35 2023:127.0.0.1:sent to client:18
+Thu Jun  8 18:39:41 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:39:41 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:46:17 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:46:17 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Thu Jun  8 18:46:17 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Thu Jun  8 18:46:17 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 07:58:13 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 07:58:13 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 07:58:13 2023:127.0.0.1:received from login:1
+Fri Jun  9 07:58:13 2023:127.0.0.1:sent to client:1
+Fri Jun  9 07:58:14 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 07:58:14 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 07:58:14 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,®Ëëôz?ýžf†þ
+Fri Jun  9 07:58:14 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,®Ëëôz?ýžf†þ
+Fri Jun  9 07:58:27 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 07:58:27 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 07:58:27 2023:127.0.0.1:received from data base:18
+Fri Jun  9 07:58:27 2023:127.0.0.1:sent to client:18
+Fri Jun  9 07:59:42 2023:127.0.0.1:received from client:LOGIN:rgang,c7d8e4fb4c9ae7205a81de9ed552569e
+Fri Jun  9 07:59:42 2023:127.0.0.1:sent to login:LOGIN:rgang,c7d8e4fb4c9ae7205a81de9ed552569e
+Fri Jun  9 07:59:42 2023:127.0.0.1:received from login:0
+Fri Jun  9 07:59:42 2023:127.0.0.1:sent to client:0
+Fri Jun  9 07:59:58 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 07:59:58 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 07:59:58 2023:127.0.0.1:received from login:1
+Fri Jun  9 07:59:58 2023:127.0.0.1:sent to client:1
+Fri Jun  9 07:59:59 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 07:59:59 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 07:59:59 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,|5W‹ 6Nÿ
+Fri Jun  9 07:59:59 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,|5W‹ 6Nÿ
+Fri Jun  9 08:22:40 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:22:40 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:22:40 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:22:40 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:22:41 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:22:41 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:22:41 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,V÷ Üpscíý
+Fri Jun  9 08:22:41 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,V÷ Üpscíý
+Fri Jun  9 08:25:57 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:25:57 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:25:57 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:25:57 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:25:58 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:25:58 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:25:58 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,·ã½ï.Æ @?eþ
+Fri Jun  9 08:25:58 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,·ã½ï.Æ @?eþ
+Fri Jun  9 08:26:12 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:26:12 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:26:12 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:26:12 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:26:16 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:26:16 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:26:16 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:26:16 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:28:35 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:28:35 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:28:35 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:28:35 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:28:36 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:28:36 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:28:36 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,ÔRö:ÑZ«
+Fri Jun  9 08:28:36 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,ÔRö:ÑZ«
+Fri Jun  9 08:28:48 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:28:48 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:28:48 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:28:48 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:28:50 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:28:50 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:28:50 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:28:50 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:30:25 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:30:25 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:30:25 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:30:25 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:30:26 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:30:26 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:30:26 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,9¨¢£éÀ5="ü
+Fri Jun  9 08:30:26 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,9¨¢£éÀ5="ü
+Fri Jun  9 08:30:48 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:30:48 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:30:48 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:30:48 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:30:49 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:30:49 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:30:49 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:30:49 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:34:56 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:34:56 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:34:56 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:34:56 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:34:57 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:34:57 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:34:57 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,òýD W|µp¤ý
+Fri Jun  9 08:34:57 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,òýD W|µp¤ý
+Fri Jun  9 08:35:03 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:35:03 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:35:03 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:35:03 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:35:06 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:35:06 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:35:06 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:35:06 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:36:05 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:36:05 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:36:05 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:36:05 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:36:06 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:36:06 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:36:06 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,vÖ41E0QÅ´þ
+Fri Jun  9 08:36:06 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,vÖ41E0QÅ´þ
+Fri Jun  9 08:36:16 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:36:16 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:36:16 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:36:16 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:36:18 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:36:18 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:36:18 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:36:18 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:37:09 2023:127.0.0.1:received from client:LOGIN:rgang,7b0f8cd58a4cae54499eaf28650fc66e
+Fri Jun  9 08:37:09 2023:127.0.0.1:sent to login:LOGIN:rgang,7b0f8cd58a4cae54499eaf28650fc66e
+Fri Jun  9 08:37:09 2023:127.0.0.1:received from login:0
+Fri Jun  9 08:37:09 2023:127.0.0.1:sent to client:0
+Fri Jun  9 08:38:12 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:38:12 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:38:12 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:38:12 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:38:13 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:38:13 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:38:13 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,jë? 7šé`"mý
+Fri Jun  9 08:38:13 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,jë? 7šé`"mý
+Fri Jun  9 08:38:19 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:38:19 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:38:19 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:38:19 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:38:42 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:38:42 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:38:42 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:38:42 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:41:19 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:41:19 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:41:19 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:41:19 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:41:20 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:41:20 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:41:20 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,T¹™ßU'Ä 	3±þ
+Fri Jun  9 08:41:20 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,T¹™ßU'Ä 	3±þ
+Fri Jun  9 08:41:22 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:41:22 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:41:22 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:41:22 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:41:23 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:41:23 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:41:23 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:41:23 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:42:00 2023:127.0.0.1:received from client:LOGIN:rgang,d41d8cd98f00b204e9800998ecf8427e
+Fri Jun  9 08:42:00 2023:127.0.0.1:sent to login:LOGIN:rgang,d41d8cd98f00b204e9800998ecf8427e
+Fri Jun  9 08:42:00 2023:127.0.0.1:received from login:0
+Fri Jun  9 08:42:00 2023:127.0.0.1:sent to client:0
+Fri Jun  9 08:42:03 2023:127.0.0.1:received from client:LOGIN:,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:42:03 2023:127.0.0.1:sent to login:LOGIN:,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:42:03 2023:127.0.0.1:received from login:0
+Fri Jun  9 08:42:03 2023:127.0.0.1:sent to client:0
+Fri Jun  9 08:42:13 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:42:13 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:42:13 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:42:13 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:42:14 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:42:14 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:42:14 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,ß2Yž¬è  ÷cü
+Fri Jun  9 08:42:14 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,ß2Yž¬è  ÷cü
+Fri Jun  9 08:42:18 2023:127.0.0.1:received from client:GET_ROLES:rgang,
+Fri Jun  9 08:42:18 2023:127.0.0.1:sent to data base:GET_ROLES:rgang,
+Fri Jun  9 08:42:18 2023:127.0.0.1:received from data base:18
+Fri Jun  9 08:42:18 2023:127.0.0.1:sent to client:18
+Fri Jun  9 08:42:22 2023:127.0.0.1:received from client:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:42:22 2023:127.0.0.1:sent to data base:SEE_PROCESS_REQUESTS:rgang,
+Fri Jun  9 08:42:22 2023:127.0.0.1:received from data base:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:42:22 2023:127.0.0.1:sent to client:gherrera:3:0:,gherrera:4:0:
+Fri Jun  9 08:50:18 2023:127.0.0.1:received from client:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:50:18 2023:127.0.0.1:sent to login:LOGIN:rgang,a0e059e31df4f94a0992291b8d3735d3
+Fri Jun  9 08:50:18 2023:127.0.0.1:received from login:1
+Fri Jun  9 08:50:18 2023:127.0.0.1:sent to client:1
+Fri Jun  9 08:50:19 2023:127.0.0.1:received from client:TOKEN:rgang,
+Fri Jun  9 08:50:19 2023:127.0.0.1:sent to login:TOKEN:rgang,
+Fri Jun  9 08:50:19 2023:127.0.0.1:received from login:49,2,7,5,8,2,9,4,0,5,9,2,˜wÇ–9w0˜=œý
+Fri Jun  9 08:50:19 2023:127.0.0.1:sent to client:49,2,7,5,8,2,9,4,0,5,9,2,˜wÇ–9w0˜=œý
+Fri Jun  9 09:12:12 2023:127.0.0.1:received from client:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:12:12 2023:127.0.0.1:sent to login:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:12:12 2023:127.0.0.1:received from login:1
+Fri Jun  9 09:12:12 2023:127.0.0.1:sent to client:1
+Fri Jun  9 09:12:13 2023:127.0.0.1:received from client:TOKEN:alopez,
+Fri Jun  9 09:12:13 2023:127.0.0.1:sent to login:TOKEN:alopez,
+Fri Jun  9 09:12:13 2023:127.0.0.1:received from login:49,2,9,4,6,3,7,2,8,5,6,4,ƒ1båtæ i
+îÿ
+Fri Jun  9 09:12:13 2023:127.0.0.1:sent to client:49,2,9,4,6,3,7,2,8,5,6,4,ƒ1båtæ i
+îÿ
+Fri Jun  9 09:12:17 2023:127.0.0.1:received from client:GET_ROLES:alopez,
+Fri Jun  9 09:12:17 2023:127.0.0.1:sent to data base:GET_ROLES:alopez,
+Fri Jun  9 09:12:17 2023:127.0.0.1:received from data base:1(
+Fri Jun  9 09:12:17 2023:127.0.0.1:sent to client:1(
+Fri Jun  9 09:12:25 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:12:25 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:12:25 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:12:25 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:15:15 2023:127.0.0.1:received from client:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:15:15 2023:127.0.0.1:sent to login:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:15:15 2023:127.0.0.1:received from login:1
+Fri Jun  9 09:15:15 2023:127.0.0.1:sent to client:1
+Fri Jun  9 09:15:16 2023:127.0.0.1:received from client:TOKEN:alopez,
+Fri Jun  9 09:15:16 2023:127.0.0.1:sent to login:TOKEN:alopez,
+Fri Jun  9 09:15:16 2023:127.0.0.1:received from login:49,2,9,4,6,3,7,2,8,5,6,4,¯žŽÐš]è€Ø>Sý
+Fri Jun  9 09:15:16 2023:127.0.0.1:sent to client:49,2,9,4,6,3,7,2,8,5,6,4,¯žŽÐš]è€Ø>Sý
+Fri Jun  9 09:15:23 2023:127.0.0.1:received from client:GET_ROLES:alopez,
+Fri Jun  9 09:15:23 2023:127.0.0.1:sent to data base:GET_ROLES:alopez,
+Fri Jun  9 09:15:23 2023:127.0.0.1:received from data base:1(
+Fri Jun  9 09:15:23 2023:127.0.0.1:sent to client:1(
+Fri Jun  9 09:15:28 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:15:28 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:15:28 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:15:28 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:17:11 2023:127.0.0.1:received from client:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:17:11 2023:127.0.0.1:sent to login:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:17:11 2023:127.0.0.1:received from login:1
+Fri Jun  9 09:17:11 2023:127.0.0.1:sent to client:1
+Fri Jun  9 09:17:12 2023:127.0.0.1:received from client:TOKEN:alopez,
+Fri Jun  9 09:17:12 2023:127.0.0.1:sent to login:TOKEN:alopez,
+Fri Jun  9 09:17:12 2023:127.0.0.1:received from login:49,2,9,4,6,3,7,2,8,5,6,4,o&Î©üDJàõ1Îþ
+Fri Jun  9 09:17:12 2023:127.0.0.1:sent to client:49,2,9,4,6,3,7,2,8,5,6,4,o&Î©üDJàõ1Îþ
+Fri Jun  9 09:17:17 2023:127.0.0.1:received from client:GET_ROLES:alopez,
+Fri Jun  9 09:17:17 2023:127.0.0.1:sent to data base:GET_ROLES:alopez,
+Fri Jun  9 09:17:17 2023:127.0.0.1:received from data base:1(
+Fri Jun  9 09:17:17 2023:127.0.0.1:sent to client:1(
+Fri Jun  9 09:17:29 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:17:29 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:17:29 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:17:29 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:19:38 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:19:38 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:19:38 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:19:38 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:20:10 2023:127.0.0.1:received from client:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:20:10 2023:127.0.0.1:sent to login:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:20:10 2023:127.0.0.1:received from login:1
+Fri Jun  9 09:20:10 2023:127.0.0.1:sent to client:1
+Fri Jun  9 09:20:11 2023:127.0.0.1:received from client:TOKEN:alopez,
+Fri Jun  9 09:20:11 2023:127.0.0.1:sent to login:TOKEN:alopez,
+Fri Jun  9 09:20:11 2023:127.0.0.1:received from login:49,2,9,4,6,3,7,2,8,5,6,4,­õÓ€j>@FOfÿ
+Fri Jun  9 09:20:11 2023:127.0.0.1:sent to client:49,2,9,4,6,3,7,2,8,5,6,4,­õÓ€j>@FOfÿ
+Fri Jun  9 09:20:24 2023:127.0.0.1:received from client:GET_ROLES:alopez,
+Fri Jun  9 09:20:24 2023:127.0.0.1:sent to data base:GET_ROLES:alopez,
+Fri Jun  9 09:20:24 2023:127.0.0.1:received from data base:1(
+Fri Jun  9 09:20:24 2023:127.0.0.1:sent to client:1(
+Fri Jun  9 09:20:26 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:20:26 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:20:26 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:20:26 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:21:45 2023:127.0.0.1:received from client:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:21:45 2023:127.0.0.1:sent to login:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:21:45 2023:127.0.0.1:received from login:1
+Fri Jun  9 09:21:45 2023:127.0.0.1:sent to client:1
+Fri Jun  9 09:21:46 2023:127.0.0.1:received from client:TOKEN:alopez,
+Fri Jun  9 09:21:46 2023:127.0.0.1:sent to login:TOKEN:alopez,
+Fri Jun  9 09:21:46 2023:127.0.0.1:received from login:49,2,9,4,6,3,7,2,8,5,6,4,•þ—ÜÎa@ôv'ý
+Fri Jun  9 09:21:46 2023:127.0.0.1:sent to client:49,2,9,4,6,3,7,2,8,5,6,4,•þ—ÜÎa@ôv'ý
+Fri Jun  9 09:21:49 2023:127.0.0.1:received from client:GET_ROLES:alopez,
+Fri Jun  9 09:21:49 2023:127.0.0.1:sent to data base:GET_ROLES:alopez,
+Fri Jun  9 09:21:49 2023:127.0.0.1:received from data base:1(
+Fri Jun  9 09:21:49 2023:127.0.0.1:sent to client:1(
+Fri Jun  9 09:21:50 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:21:50 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:21:50 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:21:50 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:23:58 2023:127.0.0.1:received from client:LOGIN:alopez,445818d1ef3239473673fa472aa31cf9
+Fri Jun  9 09:23:58 2023:127.0.0.1:sent to login:LOGIN:alopez,445818d1ef3239473673fa472aa31cf9
+Fri Jun  9 09:23:58 2023:127.0.0.1:received from login:0
+Fri Jun  9 09:23:58 2023:127.0.0.1:sent to client:0
+Fri Jun  9 09:24:12 2023:127.0.0.1:received from client:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:24:12 2023:127.0.0.1:sent to login:LOGIN:alopez,92e9ecfc92ae9546756fffa991653511
+Fri Jun  9 09:24:12 2023:127.0.0.1:received from login:1
+Fri Jun  9 09:24:12 2023:127.0.0.1:sent to client:1
+Fri Jun  9 09:24:13 2023:127.0.0.1:received from client:TOKEN:alopez,
+Fri Jun  9 09:24:13 2023:127.0.0.1:sent to login:TOKEN:alopez,
+Fri Jun  9 09:24:13 2023:127.0.0.1:received from login:49,2,9,4,6,3,7,2,8,5,6,4,K‘0«Â€€njÿ
+Fri Jun  9 09:24:13 2023:127.0.0.1:sent to client:49,2,9,4,6,3,7,2,8,5,6,4,K‘0«Â€€njÿ
+Fri Jun  9 09:24:17 2023:127.0.0.1:received from client:GET_ROLES:alopez,
+Fri Jun  9 09:24:17 2023:127.0.0.1:sent to data base:GET_ROLES:alopez,
+Fri Jun  9 09:24:17 2023:127.0.0.1:received from data base:1(
+Fri Jun  9 09:24:17 2023:127.0.0.1:sent to client:1(
+Fri Jun  9 09:24:19 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:24:19 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:24:19 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:24:19 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:24:41 2023:127.0.0.1:received from client:SALARY_CONSULT:alopez,
+Fri Jun  9 09:24:41 2023:127.0.0.1:sent to data base:SALARY_CONSULT:alopez,
+Fri Jun  9 09:24:41 2023:127.0.0.1:received from data base: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
+Fri Jun  9 09:24:41 2023:127.0.0.1:sent to client: Alexandra LÃ³pez HernÃ¡ndez;105503987;49,6,0,0,0,0,0,
