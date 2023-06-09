@@ -7,6 +7,8 @@
 
 #include <QDialog>
 
+#include <QDebug>
+
 namespace Ui {
 class manage_user;
 }

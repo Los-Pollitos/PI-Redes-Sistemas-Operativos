@@ -50,7 +50,7 @@ manage_user::~manage_user() {
 
 void manage_user::on_generate_button_clicked() {
     // Get password from textbox
-    std::string inserted_password = this->ui->second_rh_password->text().toStdString();
+    std::string inserted_password = this->ui->first_rh_password->text().toStdString();
     if (inserted_password == this->user_login->password) {
         // The password is correct, get the desired user to be created
         std::string desired_user = this->ui->create_username->text().toStdString();
@@ -59,7 +59,6 @@ void manage_user::on_generate_button_clicked() {
         std::string name = this->ui->create_name->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-
             this->send_create(desired_user, desired_password, id, name);
         } else {
             // Show the user the error
@@ -79,8 +78,8 @@ void manage_user::on_generate_button_clicked() {
 
 std::string manage_user::send_create(std::string username, std::string password, std::string identification, std::string name) {
     security hasher;
-    std::string to_send = "\0";
-    to_send[0] = ((char)CREATE_USER);
+    std::string to_send = "";
+    to_send += ((char)CREATE_USER);
     to_send += username;
     to_send += ",";
     // Hash the password
@@ -94,8 +93,8 @@ std::string manage_user::send_create(std::string username, std::string password,
 }
 
 std::string manage_user::send_delete(std::string username) {
-    std::string to_send = "\0";
-    to_send[0] = ((char)DELETE_USER);
+    std::string to_send = "";
+    to_send += ((char)DELETE_USER);
     to_send += username;
     to_send += ",";
     return this->local_client->send_and_receive(to_send);
@@ -109,7 +108,14 @@ void manage_user::on_delete_button_clicked() {
         std::string desired_user = this->ui->delete_username->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-            this->send_delete(desired_user);
+
+            qDebug() << "SEND ANTES";
+
+            std::string result_debug = this->send_delete(desired_user);
+
+            qDebug() << "SEND DESPUES";
+
+            qDebug() << result_debug;
         } else {
             // Show the user the error
             this->show_error("No se puede eliminar su propio usuario");
