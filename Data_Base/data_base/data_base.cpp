@@ -8,6 +8,7 @@
 
 #include "data_base.h"
 #include <iostream>
+#include <vector>
 
 // TODO(nosotros): DOCUMENTAR
 data_base::data_base() {
@@ -490,4 +491,43 @@ bool data_base::change_last_laboral_data(std::string user, int last_laboral_data
         success = false;
     }
     return success;
+}
+
+
+// NUEVO
+
+// TODO(nosotros): documentar
+std::string data_base::conuslt_process_requests_of_office(int office_id) {
+    std::string result = "";
+    QSqlQuery consult_employee;
+    std::string employee_consult = this->consult_employees_of_an_office(office_id);
+    std::vector<std::string> employee_vector;
+    std::string employee = "";
+    for(size_t i = 0; i < employee_consult.length(); ++i) {
+        if (employee_consult[i] != ',') {
+            employee += employee_consult[i];
+        } else {  // is the end of the username
+            employee_vector.push_back(employee);
+            std::cout << "Empleado : " << employee << std::endl;
+            employee = "\0";  // it is cleaned for next username
+        }
+    }
+    for (int i = 0; i < employee_vector.size(); ++ i) {
+        consult_employee.prepare("SELECT * FROM requests WHERE user = (:employee) AND solved = (:solved)");
+        consult_employee.bindValue(":employee", QString::fromStdString(employee_vector[i]));
+        consult_employee.bindValue(":solved", PENDING);
+
+        // If a match was found
+        if (consult_employee.exec() && consult_employee.next()) {
+            do {
+                result += employee_vector[i]; // employee name
+                result += ":";
+                result += consult_employee.value(1).toString().toStdString() += ":"; // request id
+                result += consult_employee.value(2).toString().toStdString() += ":"; // type
+                result += ",";
+            } while (consult_employee.next());
+            result[result.length()-1] = '\0';  // there was an extra ','
+        } // NO else, because there can be no requests of an employee and that is ok
+    }
+    return result;
 }

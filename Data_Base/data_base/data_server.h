@@ -45,7 +45,7 @@ private:
     void load_records();
     void find_data(std::string& username,  std::string& hash);
     void process_data(std::string remote_ip);
-    void see_process_requests();
+    void see_process_requests(std::string remote_ip);
     void find_next(std::string& line, int& pos);
     void copy_string(std::string& line, std::string& new_line, int from, int to);
     void give_role(std::string remote_ip);

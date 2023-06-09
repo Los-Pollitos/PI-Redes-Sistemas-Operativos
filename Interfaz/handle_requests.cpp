@@ -95,6 +95,14 @@ handle_requests::~handle_requests() {
 }
 
 void handle_requests::update_scroll() {
+    std::string to_server = "";
+    to_server += (char)SEE_PROCESS_REQUESTS;
+    to_server += this->user_login->user;
+    to_server += ",";
+    std::string from_server = "";
+    from_server = this->local_client->send_and_receive(to_server);
+    std::cout << "Para see process requests, recibi: " << from_server << std::endl;
+
     size_t length = this->requests_buttons.size();
     size_t index = 0;
     for(size_t count = 0; count < length; ++count) {

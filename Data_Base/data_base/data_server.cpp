@@ -609,15 +609,29 @@ void data_server::answer_request() {
 }
 
 // TODO(nosotros): documentar
-void data_server::see_process_requests() {
-    // TODO (nosotros): adaptar
-    // Supongamos que llega: define (el que me trajo hasta acá, usuario)
-    // TODO(nosotros): sacar sucursal e ir sacando filas
-    bool rows_left = true; // this means there still is data to fill.
-    int borrar_despues = 0;  // para que pare ahorita que no sacamos nada de la base de datos
-    while (rows_left && borrar_despues < 4) {
-
+void data_server::see_process_requests(std::string remote_ip) {
+    std::string user = "";
+    for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
+        user += this->data[i];
     }
+    read(this->connection, this->data, sizeof(this->data)); // discard &
+    int office = this->base->consult_employee_office(user);
+    std::string to_send_back = this->base->conuslt_process_requests_of_office(office);
+    // find the size of the package to send
+    int total_m = (int) (to_send_back.length() / DATA_SIZE)
+                  + (((int)(to_send_back.length() % DATA_SIZE) > 0) ? 1 : 0);
+
+    // send the data
+    for (int i = 0; i < total_m; ++i) {
+        adapt_data(data, to_send_back, DATA_SIZE * i);
+        std::cout << "Voy a mandar (para process_requests): " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(remote_ip, "sent", this->data);
+    }
+
+    this->data[0] = '&';
+    std::cout << " Voy a mandar " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
 }
 
 void data_server::give_role(std::string remote_ip) {
@@ -763,7 +777,7 @@ void data_server::process_data(std::string remote_ip) {
             break;
         case SEE_PROCESS_REQUESTS:
             // TODO(todos): hacer
-            this->see_process_requests();
+            this->see_process_requests(remote_ip);
             break;
         case PROCESS_REQUESTS:
             // TODO(todos): hacer

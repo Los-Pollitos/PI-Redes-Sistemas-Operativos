@@ -75,6 +75,7 @@ class data_base {
     bool change_vacations(std::string user, int vacations);
     bool set_end_date_laboral_data(std::string user, int day, int month, int year);
     bool change_last_laboral_data(std::string user, int last_laboral_data);
+    std::string conuslt_process_requests_of_office(int office);
 };
 
 #endif // DATA_BASE_H
