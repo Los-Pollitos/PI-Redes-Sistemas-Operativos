@@ -509,7 +509,7 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
             employee = "\0";  // it is cleaned for next username
         }
     }
-    for (int i = 0; i < employee_vector.size(); ++ i) {
+    for (size_t i = 0; i < employee_vector.size(); ++ i) {
         consult_employee.prepare("SELECT * FROM requests WHERE user = (:employee) AND solved = (:solved)");
         consult_employee.bindValue(":employee", QString::fromStdString(employee_vector[i]));
         consult_employee.bindValue(":solved", PENDING);
@@ -527,4 +527,57 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
         } // NO else, because there can be no requests of an employee and that is ok
     }
     return result;
+}
+
+// TODO(nosotros): documentar
+std::string data_base::consult_records(std::string user) {
+    std::string result = "";
+    QSqlQuery consult_record;
+
+    consult_record.prepare("SELECT id FROM records WHERE user = (:user)");
+    consult_record.bindValue(":user", QString::fromStdString(user));
+
+    // If a match was found
+    if (consult_record.exec() && consult_record.next()) {
+        do {
+            result += this->consult_record(stoi(consult_record.value(0).toString().toStdString())) += ",";
+        } while (consult_record.next());
+        result[result.length()-1] = '\0';  // there was an extra ','
+    } else {
+        qDebug() << "[BASE_DATOS] Error consultando anotaciones de: " << user;
+    }
+
+    return result;
+}
+
+// TODO(nosotros): documentar
+std::string data_base::consult_record(int id) {
+
+    // (user TEXT, id INTEGER, day INTEGER, month INTEGER, year INTEGER, annotation TEXT)
+
+    std::string result = "";
+    QSqlQuery consult_employee;
+
+    consult_employee.prepare("SELECT day, month, year, annotation FROM employees WHERE id = (:id)");
+    consult_employee.bindValue(":id", id);
+
+    // If a match was found
+    if (consult_employee.exec() && consult_employee.next()) {
+        do {
+//            result += consult_employee.value(0).toString().toStdString() += ",";
+
+            // TODO(Angie): borrar
+            std::cout << "(0): " << consult_employee.value(0).toString().toStdString();
+
+        } while (consult_employee.next());
+//        result[result.length()-1] = '\0';  // there was an extra ','
+
+
+
+
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando la anotación #" << id;
+    }
+    return result;
+
 }
