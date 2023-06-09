@@ -111,11 +111,16 @@ void manage_user::on_delete_button_clicked() {
 
             qDebug() << "SEND ANTES";
 
-            std::string result_debug = this->send_delete(desired_user);
+            std::string result = this->send_delete(desired_user);
+            if (result[0] == '1') {
+                this->show_success("Se logró eliminar el usuario");
+            } else {
+                this->show_error("No se logró eliminar el usuario");
+            }
 
             qDebug() << "SEND DESPUES";
 
-            qDebug() << result_debug;
+            qDebug() << result;
         } else {
             // Show the user the error
             this->show_error("No se puede eliminar su propio usuario");
