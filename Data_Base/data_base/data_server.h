@@ -17,7 +17,7 @@
 
 #include "data_base.h"
 #include "log_generator.h"
-#include "security.cpp"
+#include "security.h"
 
 #include <arpa/inet.h>
 #include <iostream>

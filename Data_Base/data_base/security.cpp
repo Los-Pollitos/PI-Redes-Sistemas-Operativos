@@ -1,4 +1,6 @@
 #include "security.h"
+#include <QCryptographicHash>
+#include <QString>
 
 // Requires -lcrypto flag
 
@@ -10,6 +12,10 @@ security::~security(){
 
 }
 
+std::string security::hash_string(std::string password) {
+    QString answer = QString(QCryptographicHash::hash((password),QCryptographicHash::Md5).toHex());
+    return answer.toStdString();
+}
 
 std::string security::encrypt(std::string to_encrypt) {
     std::string result = "";

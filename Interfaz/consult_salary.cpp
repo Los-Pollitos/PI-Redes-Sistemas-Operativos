@@ -40,8 +40,8 @@ void consult_salary::setUserData(login_info * user_login) {
     std::string gross_salary = "";
     std::string net_salary = "";
     int temp = 0;
-    for (int i = 0; i < result.length(); ++i){
-        if (result[i] == ',') {
+    for (int i = 1; i < result.length(); ++i){
+        if (result[i] == ';') {
             ++temp;
         } else {
             switch (temp) {
@@ -61,7 +61,13 @@ void consult_salary::setUserData(login_info * user_login) {
 
         }
     }
+    security security_manager;
 
+    std::cout << gross_salary << std::endl;
+    std::cout << net_salary << std::endl;
+
+    gross_salary = security_manager.decrypt(gross_salary);
+    net_salary = security_manager.decrypt(net_salary);
     this->ui->name->setText(QString::fromStdString(name));
     this->ui->id->setText(QString::fromStdString(id));
     this->ui->base_salary->setText("₡" + QString::fromStdString(gross_salary));

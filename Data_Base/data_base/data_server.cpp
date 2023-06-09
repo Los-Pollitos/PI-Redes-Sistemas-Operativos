@@ -686,6 +686,7 @@ void data_server::delete_user_case(std::string remote_ip) {
 }
 
 void data_server::consult_salary_case(std::string remote_ip) {
+    security security_manager;
     std::string user = "";
     for (int i = 1; i < DATA_SIZE && data[i] != ','; i++){
         user += data[i];
@@ -698,11 +699,28 @@ void data_server::consult_salary_case(std::string remote_ip) {
     std::string name = this->base->get_name(user);
     std::string id = this->base->get_id(user);
     int salary = gross_salary - deductibles;
+    std::string buffer = security_manager.encrypt(std::to_string(gross_salary));
+    std::string gross_salary_ascii = "";
+    int i = 0;
+    for (i = 0; i < buffer.length(); ++i) {
+        gross_salary_ascii += std::to_string((int)buffer[i]);
+        gross_salary_ascii += ',';
+    }
+    gross_salary_ascii += '\0';
 
-    std::string to_send = name += ",";
-    to_send += id += ",";
-    to_send += std::to_string(gross_salary) += ",";
-    to_send += std::to_string(salary) += ",";
+    buffer = security_manager.encrypt(std::to_string(salary));
+    std::string net_salary_ascii = "";
+    for (i = 0; i < buffer.length(); ++i) {
+        net_salary_ascii += std::to_string((int)buffer[i]);
+        net_salary_ascii += ',';
+    }
+    net_salary_ascii += '\0';
+
+    std::string to_send = " ";
+    to_send += name + ";";
+    to_send += id + ";";
+    to_send += gross_salary_ascii + ";";
+    to_send += net_salary_ascii + ";";
 
     adapt_data(this->data, to_send, 0);
     this->logger->add_answer_log(remote_ip, "sent", to_send);
@@ -772,6 +790,7 @@ void data_server::process_data(std::string remote_ip) {
             break;
         case SALARY_CONSULT:
             this->consult_salary_case(remote_ip);
+            memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
