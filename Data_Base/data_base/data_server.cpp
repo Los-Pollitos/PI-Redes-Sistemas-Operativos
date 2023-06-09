@@ -700,21 +700,23 @@ void data_server::consult_salary_case(std::string remote_ip) {
     std::string id = this->base->get_id(user);
     int salary = gross_salary - deductibles;
     std::string buffer = security_manager.encrypt(std::to_string(gross_salary));
+
     std::string gross_salary_ascii = "";
     int i = 0;
     for (i = 0; i < buffer.length(); ++i) {
         gross_salary_ascii += std::to_string((int)buffer[i]);
-        gross_salary_ascii += ',';
+        gross_salary_ascii += ",";
     }
-    gross_salary_ascii += '\0';
+    // gross_salary_ascii += '\0';
 
     buffer = security_manager.encrypt(std::to_string(salary));
+
     std::string net_salary_ascii = "";
     for (i = 0; i < buffer.length(); ++i) {
         net_salary_ascii += std::to_string((int)buffer[i]);
-        net_salary_ascii += ',';
+        net_salary_ascii += ",";
     }
-    net_salary_ascii += '\0';
+    // net_salary_ascii += '\0';
 
     std::string to_send = " ";
     to_send += name + ";";
