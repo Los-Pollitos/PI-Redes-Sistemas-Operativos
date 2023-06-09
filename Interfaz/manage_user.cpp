@@ -92,11 +92,15 @@ std::string manage_user::send_create(std::string username, std::string password,
     return this->local_client->send_and_receive(to_send);
 }
 
-std::string manage_user::send_delete(std::string username) {
+std::string manage_user::send_delete(std::string username, char server) {
     std::string to_send = "";
     to_send += ((char)DELETE_USER);
+    to_send += server;
     to_send += username;
     to_send += ",";
+
+    std::cout << "TO SEND: " << to_send << "\n";
+
     return this->local_client->send_and_receive(to_send);
 }
 
@@ -111,8 +115,9 @@ void manage_user::on_delete_button_clicked() {
 
             qDebug() << "SEND ANTES";
 
-            std::string result = this->send_delete(desired_user);
-            if (result[0] == '1') {
+            std::string first_result = this->send_delete(desired_user, '1');
+            std::string second_result = this->send_delete(desired_user, '2');
+            if (first_result[0] == '1' && second_result[0] == '1') {
                 this->show_success("Se logró eliminar el usuario");
             } else {
                 this->show_error("No se logró eliminar el usuario");
@@ -120,7 +125,6 @@ void manage_user::on_delete_button_clicked() {
 
             qDebug() << "SEND DESPUES";
 
-            qDebug() << result;
         } else {
             // Show the user the error
             this->show_error("No se puede eliminar su propio usuario");

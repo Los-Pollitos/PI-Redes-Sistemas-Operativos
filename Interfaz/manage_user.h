@@ -29,7 +29,7 @@ private slots:
     void show_error(std::string error);
     void show_success(std::string success);
     std::string send_create(std::string username, std::string password, std::string identification, std::string name);
-    std::string send_delete(std::string username);
+    std::string send_delete(std::string username, char server);
 
 private:
     Ui::manage_user* ui;
