@@ -200,22 +200,11 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
  * @param ip_remote Ip to handle log and answers
  */
 void intermediary::manage_user_case(std::string ip_remote) {
-  std::string to_send_back = "\0";
-  // Used to store data as it will be replaced after sending and receiving
-  char temp_data[DATA_SIZE];
-  // Copy the data into temp_data as it will be needed twice
-  for (int i = 0; i < DATA_SIZE; ++i) {
-    temp_data[i] = data[i];
-  }
-  // Confirm with data base if the user exists
-  this->send_and_receive_data_base(ip_remote);
-  if (data[0] == '1') {
-    // Re insert from temporal data into the actual data to make another send
-    for (int i = 0; i < DATA_SIZE; ++i) {
-      data[i] = temp_data[i];
-    }
-    // Insert or delete the user in the file system
-    to_send_back = this->send_and_receive_login(ip_remote);
+  // Check the server to send the information
+  if (data[1] == '1') {
+    this->send_and_receive_data_base(ip_remote);
+  } else {
+    this->send_and_receive_login(ip_remote);
   }
 }
 
