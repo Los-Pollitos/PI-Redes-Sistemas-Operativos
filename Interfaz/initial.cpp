@@ -373,6 +373,8 @@ void initial::create_windows(int id, int type) {
      break;
    case SEE_RECORD:
      this->see_record->setModal(true);
+     this->see_record->set_user_login(this->users_login);
+     this->see_record->show_record();
      this->see_record->show();
      break;
    case REQUEST_HANDLER:

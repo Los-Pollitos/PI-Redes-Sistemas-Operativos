@@ -61,6 +61,7 @@ private:
     void change_office(std::string remote_ip);
     void change_roles(std::string remote_ip);
     void add_record(std::string remote_ip);
+    void consult_record(std::string remote_ip);
 
 public:
     data_server();

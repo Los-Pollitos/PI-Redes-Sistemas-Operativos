@@ -245,7 +245,6 @@ void intermediary::send_to_server(std::string ip_remote) {
     case SALARY_CONSULT:
       std::cout << "voy con data_base\n";
       this->send_and_receive_data_base(ip_remote);
-    case RECORD_CONSULT:
     case CONSULT_REQUESTS:
     case VACATION_REQUEST:
     case CONSULT_VACATION:
@@ -255,6 +254,7 @@ void intermediary::send_to_server(std::string ip_remote) {
     case ANSWER_VACATION_REQUEST:
       // TODO(us): hacer
       break;
+    case RECORD_CONSULT:
     case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER: case GET_ROLES:
     case CHANGE_PHONE: case CHANGE_EMAIL: case CHANGE_OFFICE_ID: case CHANGE_ROLES:
     case CHANGE_LABORAL_DATA: case CHANGE_VACATIONS: case FIRE_EMPLOYEE: case ADD_RECORD: case SEE_PROCESS_REQUESTS:

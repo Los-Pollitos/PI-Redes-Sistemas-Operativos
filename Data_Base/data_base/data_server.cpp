@@ -734,6 +734,7 @@ void data_server::process_data(std::string remote_ip) {
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
+
         case DELETE_USER:
             // TODO(luis): hacer
             this->delete_user_case(remote_ip);
@@ -741,6 +742,7 @@ void data_server::process_data(std::string remote_ip) {
             std::cout << " Voy a mandar " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
+
         case PAYMENT_PROOF:
             // TODO(Cris): hacer
             break;
@@ -757,9 +759,11 @@ void data_server::process_data(std::string remote_ip) {
             std::cout << this->base->get_salary(user) << std::endl;
             memset(this->data, '\0', DATA_SIZE);
             break;
+
         case RECORD_CONSULT:
-            // TODO(Angie): hacer
+            this->consult_record(remote_ip);
             break;
+
         case SEE_CONSULT_REQUESTS:
             // TODO(Angie): hacer
             break;
@@ -910,10 +914,6 @@ void data_server::get_data_user(std::string remote_ip) {
         to_send += data[i++];
     }
     to_send += "\0";
-
-    // TODO(Angie): borrar
-    std::cout << "to_send es " << to_send << std::endl;
-
 
     // ask the data base for the result
     to_send = this->base->consult_employee_data(to_send);
@@ -1208,5 +1208,25 @@ void data_server::add_record(std::string remote_ip) {
 
     this->data[0] = '&';
     std::cout << " Voy a mandar " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+// TODO(nosotros): documentar
+void data_server::consult_record(std::string remote_ip) {
+    std::string to_send = "\0";
+    int i = 1;  // data[0] is USER_OFFICE
+
+    while (this->data[i] != '\0') {
+        to_send += this->data[i++];
+    }
+
+    // ask the data base for the result
+    this->base->consult_records(to_send);
+    memset(this->data, '1', DATA_SIZE);
+    write(this->connection, this->data, DATA_SIZE);
+    this->logger->add_answer_log(remote_ip, "sent", this->data);
+
+    this->data[0] = '&';
+    std::cout << "Voy a mandar " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
