@@ -22,16 +22,25 @@ enum type_button {
      CHANGE_TOKEN,
 };
 
+#define PENDING 0
+#define ACCEPTED 1
+#define DENIED 2
+
+#define VACATION 0
+#define PROOF 1
 
 class description_button : public QPushButton {
     Q_OBJECT
 public:
-    description_button(QString name, QWidget * parent, int id, int type);
+    description_button(QString name, QWidget * parent, int id, int type, int type_request = 0);
+    int get_type_request();
+    void set_type_request(int type_request);
     bool valid;
     int identifier;
 
 protected:
     int type;
+    int type_request;
     void mousePressEvent(QMouseEvent*e) override;
 
 signals:
