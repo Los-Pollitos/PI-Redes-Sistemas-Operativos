@@ -286,20 +286,20 @@ void modify_user::update_data() {
 
     if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
         this->user_info.phone = this->ui->phone->text().toStdString();
-        to_send = " " + this->user_info.user + "," + this->user_info.phone;
+        to_send = " " + this->user_info.user + "," + this->user_info.phone + "," + this->user_login->user;
         to_send[0] = CHANGE_PHONE;
         this->local_client->send_and_receive(to_send);
     }
     if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() > 0
                 && this->ui->email->text().length() <= 23) {
         this->user_info.email = this->ui->email->text().toStdString();
-        to_send = " " + this->user_info.user + "," + this->user_info.email;
+        to_send = " " + this->user_info.user + "," + this->user_info.email + "," + this->user_login->user;
         to_send[0] = CHANGE_EMAIL;
         this->local_client->send_and_receive(to_send);
     }
     if (this->ui->office->text().toInt(&is_number, 10) != (int) this->user_info.office_id && is_number) {  // only saved if office is a valid number
         this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
-        to_send = " " + this->user_info.user + "," + std::to_string(this->user_info.office_id);
+        to_send = " " + this->user_info.user + "," + std::to_string(this->user_info.office_id) + "," + this->user_login->user;
         to_send[0] = CHANGE_OFFICE_ID;
         this->local_client->send_and_receive(to_send);
     }
@@ -308,6 +308,7 @@ void modify_user::update_data() {
         to_send = " " + this->user_info.user;
         to_send[0] = CHANGE_VACATIONS;
         to_send += "," + std::to_string(this->user_info.available_vacations);
+        to_send += "," + this->user_login->user;
         this->local_client->send_and_receive(to_send);
     }
     if ((this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number)
@@ -334,6 +335,7 @@ void modify_user::update_data() {
         to_send += "," + this->user_info.job_title;
         to_send += "," + std::to_string(this->user_info.salary_base);
         to_send += "," + std::to_string(this->user_info.deductibles);
+        to_send += "," + this->user_login->user;
         this->local_client->send_and_receive(to_send);
     }
     if (this->ui->record->toPlainText().toStdString().length() > 0 && this->ui->record->toPlainText().toStdString().length() < 237) {  // new annotation
@@ -346,6 +348,7 @@ void modify_user::update_data() {
         date.getDate(&year, &month, &day);
         to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
         to_send += "," + this->ui->record->toPlainText().toStdString();
+        to_send += "," + this->user_login->user;
         this->local_client->send_and_receive(to_send);
         // TODO(Angie): ver si data base puede recibir '&' para mandar anotaciones largas
         this->ui->record->setPlainText("");

@@ -398,6 +398,10 @@ bool data_base::change_email(std::string user, std::string email) {
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_office(std::string user, int office) {
+
+    // TODO(Angie): borrar
+    std::cout << "change office, user " << user << " a " << office << std::endl;
+
     bool success = true;
     if (this->verify_office_id(office)) {
         QSqlQuery modify_user;

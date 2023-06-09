@@ -51,6 +51,16 @@ private:
     void give_role(std::string remote_ip);
     void create_user_case(std::string remote_ip);
     void delete_user_case(std::string remote_ip);
+    void get_user_office(std::string remote_ip);
+    void get_all_users_from_office(std::string remote_ip);
+    void get_data_user(std::string remote_ip);
+    void change_phone(std::string remote_ip);
+    void change_email(std::string remote_ip);
+    void change_vacations(std::string remote_ip);
+    void change_laboral_data(std::string remote_ip);
+    void change_office(std::string remote_ip);
+    void change_roles(std::string remote_ip);
+    void add_record(std::string remote_ip);
 
 public:
     data_server();
