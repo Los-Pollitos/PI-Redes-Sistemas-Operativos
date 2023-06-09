@@ -43,7 +43,7 @@ handle_requests::~handle_requests() {
 }
 
 void handle_requests::update_scroll() {
-    std::cout << "vamos a update scroll" <<std::endl;
+    // Remove all buttos
     size_t length = this->requests_buttons.size();
     for(size_t count = 0; count < length; ++count) {
        this->layout->removeWidget(this->requests_buttons[count]);
@@ -51,8 +51,7 @@ void handle_requests::update_scroll() {
        this->requests_buttons.erase(this->requests_buttons.begin()+(count));
     }
 
-    std::cout << "vamos a pedirle al server" <<std::endl;
-
+    // Ask for information from server
     std::string to_server = "";
     to_server += (char)SEE_PROCESS_REQUESTS;
     to_server += this->user_login->user;
@@ -60,8 +59,8 @@ void handle_requests::update_scroll() {
     std::string from_server = "";
     from_server = this->local_client->send_and_receive(to_server);
     from_server += ",";
-    std::cout << "Para see process requests, recibi: " << from_server << std::endl;
 
+    // Start separating data
     std::string temp_user = "";
     std::string temp_id = "";
     std::string temp_type = "";
@@ -69,19 +68,18 @@ void handle_requests::update_scroll() {
     int type = 0;
     std::string temp_to_show = "";
     for (int i = 0; i < from_server.length(); ++i) {
-       std::cout << "procesando: " << from_server[i] << std::endl;
-       if (from_server[i] != ',') {
+       if (from_server[i] != ',') { // get username
            while (from_server[i] != ':') {
                temp_user += from_server[i];
                ++i;
            }
            ++i; // skip :
-           while (from_server[i] != ':') {
+           while (from_server[i] != ':') { // get id
                temp_id += from_server[i];
                ++i;
            }
            ++i; // skip :
-           while (from_server[i] != ':') {
+           while (from_server[i] != ':') { // get type
                std::cout << "while " << from_server[i] << std::endl;
                temp_type += from_server[i];
                ++i;
