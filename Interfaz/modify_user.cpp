@@ -50,25 +50,6 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
 
     // window name
     this->setWindowTitle("Modificar usuarios");
-
-    // empty text lines
-    ui->name->setText("");
-    ui->id->setText("");
-    ui->phone->setText("");
-    ui->email->setText("");
-    ui->office->setText("");
-    ui->checkbox_active->setCheckState(Qt::Unchecked);
-    ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
-    ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
-    ui->checkbox_debug->setCheckState(Qt::Unchecked);
-    ui->checkbox_employee->setCheckState(Qt::Unchecked);
-    ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
-    ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
-    ui->vacations->setText(0);
-    ui->job_title->setText(0);
-    ui->base_salary->setText(0);
-    ui->deductions->setText(0);
-    ui->net_salary->setText(0);
 }
 
 modify_user::~modify_user() {
@@ -211,11 +192,29 @@ void modify_user::load_user_data(std::string& data) {
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
     // clear the comboBox
-    std::cout << "!!!COUNT: " << this->ui->comboBox->count() << std::endl;
     for (int i = this->ui->comboBox->count(); i > 0; --i) {
         this->ui->comboBox->removeItem(i-1);
     }
     this->user_names.clear();
+
+    // empty text lines
+    ui->name->setText("");
+    ui->id->setText("");
+    ui->phone->setText("");
+    ui->email->setText("");
+    ui->office->setText("");
+    ui->checkbox_active->setCheckState(Qt::Unchecked);
+    ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
+    ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
+    ui->checkbox_debug->setCheckState(Qt::Unchecked);
+    ui->checkbox_employee->setCheckState(Qt::Unchecked);
+    ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
+    ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
+    ui->vacations->setText(0);
+    ui->job_title->setText(0);
+    ui->base_salary->setText(0);
+    ui->deductions->setText(0);
+    ui->net_salary->setText(0);
 
     int i = 0;
     // find the user's office id
@@ -361,7 +360,7 @@ void modify_user::update_data() {
         // update user info
         this->user_info.job_title = this->ui->job_title->text().toStdString();
         this->user_info.salary_base = this->ui->base_salary->text().toInt(&is_number, 10);
-        this->user_info.deductibles = this->ui->net_salary->text().toInt(&is_number, 10);
+        this->user_info.deductibles = this->ui->deductions->text().toInt(&is_number, 10);
         this->user_info.salary_net = this->user_info.salary_base-this->user_info.deductibles;
         this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
 
@@ -410,7 +409,7 @@ void modify_user::update_data() {
 
     }
 
-    this->hide();
+    this->add_data_to_combobox();
 
     // TODO(Angie): borrar
     std::cout << "me voy de update" << std::endl;

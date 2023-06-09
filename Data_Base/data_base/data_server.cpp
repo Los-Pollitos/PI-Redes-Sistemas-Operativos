@@ -1092,6 +1092,10 @@ void data_server::process_data(std::string remote_ip) {
             if (this->base->set_end_date_laboral_data(user, day, month, year)) {
                 // add the new laboral data
                 to_send_int = this->base->add_laboral_data(user, day, month, year, 0, 0, 0, salary, deductibles, job_title);
+
+                // TODO(Angie): borrar
+                std::cout << "base de datos agregó laboral #" << to_send_int << std::endl;
+
                 if (to_send_int != -1) {
                     // save the new laboral data in the user
                     if (this->base->change_last_laboral_data(user, to_send_int)) {

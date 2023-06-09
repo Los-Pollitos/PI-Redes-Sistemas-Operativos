@@ -205,15 +205,16 @@ int data_base::add_laboral_data(std::string user
         qDebug() << "[BASE_DATOS] Error agregando datos laborales: " << new_laboral_data.lastError();
     }
 
+
+    //  TODO(Angie): borrar
+    std::cout << "se agregó laboral data #" << this->laboral_count << std::endl;
+
+
     return this->laboral_count++;
 }
 
 // TODO(nosotros): DOCUMENTAR
 void data_base::add_record(std::string user, int day, int month, int year, std::string annotation) {
-
-    // TODO(Angie): borrar
-    std::cout << "se agrega anotacion a " << user << " el " << day<< month << year << " y es: " << annotation << std::endl;
-
     // Create the record table if not created
     QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, id INTEGER, day INTEGER, month INTEGER, year INTEGER, annotation TEXT)");
     QSqlQuery record_table;
@@ -486,6 +487,10 @@ bool data_base::verify_office_id(int office) {
 
 // TODO(nosotros): DOCUMENTAR
 bool data_base::change_last_laboral_data(std::string user, int last_laboral_data) {
+
+    // TODO(Angie): borrar
+    std::cout << "se cambio last laboral data de " << user << " a: " << last_laboral_data << std::endl;
+
     bool success = true;
     QSqlQuery modify_user;
     modify_user.prepare("UPDATE employees SET last_laboral_data = (:last_laboral_data) WHERE user = (:user)");
