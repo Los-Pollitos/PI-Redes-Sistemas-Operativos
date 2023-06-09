@@ -128,6 +128,10 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     if(!new_employee.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando empleado: " << new_employee.lastError();
     }
+
+
+    // TODO(Angie): borrar
+    std::cout << "se agrego usuario " << user << " con rol: " << (int) roles << std::endl;
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -200,10 +204,6 @@ int data_base::add_laboral_data(std::string user
     if(!new_laboral_data.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando datos laborales: " << new_laboral_data.lastError();
     }
-
-
-    // TODO(Angie): borrar
-    std::cout << "laboral_data agregada: " << user << "," << this->laboral_count << std::endl;
 
     return this->laboral_count++;
 }
@@ -282,14 +282,10 @@ std::string data_base::consult_employee_data(std::string user) {
                     result += consult_employee.value(i).toString().toStdString() += ",";
                     break;
                 case 7:  // laboral_data
-                    //TODO(angie) borrar cout
-                    // std::cout << "voy a consult laboral data y tengo: " << user << "y  id" << consult_employee.value(i).toInt(&is_number)<< std::endl;
-                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));  // TODO(Angie)
+                    result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));
                     break;
             }
         }
-
-        // TODO(Angie)
         result[result.length()-1] = '\0';
 
     } else {
@@ -309,7 +305,7 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
     if (consult_laboral_data.exec() && consult_laboral_data.next()) {
         for (int i = 8; i < 11; ++i) {
             result += consult_laboral_data.value(i).toString().toStdString();
-            result+= ",";
+            result += ",";
         }
     } else {
         qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
