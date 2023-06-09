@@ -7,8 +7,7 @@
 #include <QMessageBox>
 
 manage_user::manage_user(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::manage_user) {
+    QDialog(parent), ui(new Ui::manage_user) {
     this->ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->label->setStyleSheet("color: #001f21;");
