@@ -23,6 +23,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <vector>
 
 class login_server {
   private:
@@ -32,7 +33,7 @@ class login_server {
     char data[DATA_SIZE];
     int message_count;
     struct sockaddr_storage ipRemoto;
-    log * logger;
+    log* logger;
 
     // Methods
     void load_from_file();
@@ -42,6 +43,7 @@ class login_server {
     void create_user(std::string& username, std::string& hash);
     void generate_token(std::string& to_append);
     void delete_user(std::string& username);
+    void remove_the_user(std::string& username);
     bool existing_user(std::string& username);
     void validate_data(std::string& username, std::string& hash);
     void give_token();

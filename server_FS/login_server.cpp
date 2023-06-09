@@ -163,7 +163,7 @@ void login_server::process_data(std::string ip_remote) {
 }
 
 /**
- * @brief Creates an user inside the file system when received with a
+ * @brief Creates an user inside the login file when received with a
  * request to do so
  * 
  * @param username The username to be inserted
@@ -198,9 +198,61 @@ void login_server::generate_token(std::string& to_append) {
   }
 }
 
-
+/**
+ * @brief Handles deletion of an user from the login file
+ * 
+ * @param username Username to be deleted
+ */
 void login_server::delete_user(std::string& username) {
+  // Set the data to \0
+  memset(this->data, '\0', DATA_SIZE);
+  if (this->existing_user(username)) {
+    // The user exists
+    this->remove_the_user(username);
+    this->data[0] = '1';
+  } else {
+    // The user does not exist, answer with 0
+    this->data[0] = '0';
+  }
+  // Write to the intermediary the answer
+  write(this->connection, this->data, DATA_SIZE);
+}
 
+/**
+ * @brief Removes the username from the login file if it is confirmed
+ * to exist in it
+ * 
+ * @param username Username to be deleted
+ */
+void login_server::remove_the_user(std::string& username) {
+  std::vector<std::string> container;
+  std::string buffer = "";
+  this->file_system->open("Server", "Login.txt");
+  this->file_system->reset_file_pointer("Server", "Login.txt");
+  // Store the current contents
+  while (!this->file_system->is_eof("Server", "Login.txt")) {
+    buffer = this->file_system->read_until("Server", "Login.txt", ',');
+    if (buffer != username) {
+      // Store and read
+      buffer += "," + this->file_system->read_until("Server", "Login.txt", ',');
+      buffer += "," + this->file_system->read_until("Server", "Login.txt", ',');
+      buffer += ",";
+      container.emplace_back(buffer);
+    } else {
+      // Read the remaining information without storing it
+      this->file_system->read_until("Server", "Login.txt", ',');
+      this->file_system->read_until("Server", "Login.txt", ',');
+    }
+  }
+  // Remove the login file
+  this->file_system->deep_erase("Login.txt");
+  this->file_system->create("Login.txt");
+  // Readd everything
+  this->file_system->open("Server", "Login.txt");
+  for (int i = 0; i < container.size(); ++i) {
+    this->file_system->append("Login.txt", container[i]);
+  }
+  this->file_system->close("Server", "Login.txt");
 }
 
 /**
