@@ -59,7 +59,15 @@ void manage_user::on_generate_button_clicked() {
         std::string name = this->ui->create_name->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-            this->send_create(desired_user, desired_password, id, name);
+            std::string first_result = this->send_create(desired_user, desired_password, id, name, 1);
+            std::string second_result = this->send_create(desired_user, desired_password, id, name, 2);
+            if (first_result[0] == '1' && second_result[0] == '1') {
+                // Success
+                this->show_success("Se logró crear el usuario de manera exitosa");
+            } else {
+                // Error
+                this->show_error("No se logró crear el usuario");
+            }
         } else {
             // Show the user the error
             this->show_error("No se puede crear su propio usuario");
@@ -76,19 +84,27 @@ void manage_user::on_generate_button_clicked() {
     this->ui->create_name->clear();
 }
 
-std::string manage_user::send_create(std::string username, std::string password, std::string identification, std::string name) {
-    security hasher;
+std::string manage_user::send_create(std::string username, std::string password, std::string identification, std::string name, char server) {
     std::string to_send = "";
     to_send += ((char)CREATE_USER);
+    to_send += server;
+    to_send += this->user_login->user;
+    to_send += ",";
     to_send += username;
     to_send += ",";
-    // Hash the password
-    to_send += hasher.hash_string(password);
-    to_send += ",";
-    to_send += identification;
-    to_send += ",";
-    to_send += name;
-    to_send += ",";
+    if (server == '1') {
+        // Data base
+        to_send += identification;
+        to_send += ",";
+        to_send += name;
+        to_send += ",";
+    } else {
+        // Login
+        // Hash the password
+        security hasher;
+        to_send += hasher.hash_string(password);
+        to_send += ",";
+    }
     return this->local_client->send_and_receive(to_send);
 }
 

@@ -28,7 +28,7 @@ private slots:
     void on_delete_button_clicked();
     void show_error(std::string error);
     void show_success(std::string success);
-    std::string send_create(std::string username, std::string password, std::string identification, std::string name);
+    std::string send_create(std::string username, std::string password, std::string identification, std::string name, char server);
     std::string send_delete(std::string username, char server);
 
 private:
