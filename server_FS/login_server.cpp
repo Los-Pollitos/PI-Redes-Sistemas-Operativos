@@ -154,11 +154,11 @@ void login_server::process_data(std::string ip_remote) {
       this->create_user(username, hash);
       break;
     case DELETE_USER:
-      // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
       this->delete_user();
       break;
   }
   this->logger->add_answer_log(ip_remote,"sent",this->data);
+  this->file_system->write_unit();
 }
 
 /**
@@ -214,16 +214,12 @@ void login_server::delete_user() {
     // The user exists
     this->remove_the_user(username);
     this->data[0] = '1';
-    //TODO(Luis): BORRAR
-    this->file_system->print_unit();
   } else {
     // The user does not exist, answer with 0
     this->data[0] = '0';
   }
   // Write to the intermediary the answer
-
   std::cout << "Voy a enviar a intermediario " << this->data << "\n";
-
   write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -253,8 +249,9 @@ void login_server::remove_the_user(std::string& username) {
       this->file_system->read_until("Server", "Login.txt", ',');
     }
   }
+  this->file_system->close("Server", "Login.txt");
   // Remove the login file
-  this->file_system->deep_erase("Login.txt");
+  this->file_system->erase("Login.txt");
   this->file_system->create("Login.txt");
   // Readd everything
   this->file_system->open("Server", "Login.txt");

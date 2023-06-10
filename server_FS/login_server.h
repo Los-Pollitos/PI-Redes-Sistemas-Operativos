@@ -43,7 +43,7 @@ class login_server {
     void create_user(std::string& username, std::string& hash);
     void generate_token(std::string& to_append);
     void delete_user();
-    void remove_the_user(std::string& username);
+    
     bool existing_user(std::string& username);
     void validate_data(std::string& username, std::string& hash);
     void give_token();
@@ -55,7 +55,8 @@ class login_server {
     ~login_server();
     void wait_for_request();
     void answer_request();
-   
+    void remove_the_user(std::string& username);
+
 };
 
 #endif // LOGIN_SERVER

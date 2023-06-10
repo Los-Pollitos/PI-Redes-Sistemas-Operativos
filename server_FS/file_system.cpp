@@ -1019,14 +1019,15 @@ bool FS::move(std::string user, std::string name, std::string new_abs_path) {
 */
 void FS::write_unit() {
   std::ofstream file("fs_image.dat");
+  char space = ' ';
   for (int i = 0; i < FAT_SIZE; ++i) { 
     file << this->fat[i];
+    file << space;
   }
   for (int i = 0; i < MAX_SIZE; ++i) {
     file << this->unit[i];
   }
   file << std::endl;
-  char space = ' ';
   for (int i = 0; i < DIR_SIZE; ++i) {
     if (this->directory[i].block != EMPTY) {
       file << this->directory[i].name
@@ -1059,14 +1060,19 @@ void FS::load_unit() {
   std::getline(file, buffer);
   int buffer_count = 0;
   for (int i = 0; i < FAT_SIZE; ++i) {
-    if (buffer[buffer_count] == '-') {
-      ++buffer_count;
-      this->fat[i] = -1*(std::atoi(&buffer[buffer_count]));
+    if (buffer[buffer_count] != ' ') {
+      if (buffer[buffer_count] == '-') {
+        ++buffer_count;
+        this->fat[i] = -1*(std::atoi(&buffer[buffer_count]));
+      } else {
+        this->fat[i] = (std::atoi(&buffer[buffer_count]));
+      }
     } else {
-      this->fat[i] = (std::atoi(&buffer[buffer_count]));
+      --i;
     }
     ++buffer_count;
   }
+  ++buffer_count;
   for (int i = 0; i < MAX_SIZE; ++i) {
     if (i >= buffer.length()) {
       //this->unit[i] = '\n';
