@@ -167,19 +167,10 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
       }
       // send & to server
       write(s, this->data, DATA_SIZE);
-
+      
       // receive everything from server
       this->data[0] = 'a';
-
-      std::cout << "ANTES DE WHILE \n";
-      std::cout << (s != -1) << "\n";
-      std::cout << (n > 0) << "\n";
-      std::cout << "N: " << n << "\n";
-
       while (s != -1 && n > 0 && this->data[0] != '&') { 
-
-        std::cout << "EN WHILE \n";
-
         if ((n = read(s, this->data, DATA_SIZE)) > 0) {
           // connection es socket cliente
           std::cout << "Recibi: " << this->data << "de data base" << std::endl;
