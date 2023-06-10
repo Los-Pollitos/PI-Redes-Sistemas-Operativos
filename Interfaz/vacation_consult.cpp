@@ -5,13 +5,6 @@ vacation_consult::vacation_consult(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::vacation_consult)
 {
-    // Setup the window
-    this->setup_window();
-    // Obtain information from server
-    this->obtain_from_server();
-}
-
-void vacation_consult::setup_window() {
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->available_vacations->setStyleSheet("color: #001f21;");
@@ -24,6 +17,12 @@ void vacation_consult::setup_window() {
     ui->available_vacations->setReadOnly(true);
     ui->id->setReadOnly(true);
     ui->name->setReadOnly(true);
+    // Setup the window
+    // Obtain information from server
+}
+
+void vacation_consult::setup_window() {
+
 }
 
 std::string vacation_consult::obtain_from_server() {
@@ -32,6 +31,8 @@ std::string vacation_consult::obtain_from_server() {
     to_send += ((char)CONSULT_VACATION);
     // Add the username to know whose vacation information is desired
     to_send += this->user_login->user;
+    // Add a coma to find the end of the username
+    to_send += ',';
     return this->local_client->send_and_receive(to_send);
 }
 
@@ -42,6 +43,7 @@ void vacation_consult::set_client(client* local_client){
 
 void vacation_consult::set_user_login(login_info* user_login) {
     this->user_login = user_login;
+    this->obtain_from_server();
 }
 
 vacation_consult::~vacation_consult() {

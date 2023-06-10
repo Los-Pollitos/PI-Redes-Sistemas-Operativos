@@ -372,6 +372,7 @@ void initial::create_windows(int id, int type) {
      break;
    case SEE_VACATIONS:
      this->see_vacations->setModal(true);
+     this->see_vacations->set_user_login(this->users_login);
      this->see_vacations->show();
      break;
    case SEE_RECORD:
