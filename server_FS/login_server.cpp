@@ -22,7 +22,8 @@ login_server::login_server() {
   std::ifstream current_file("fs_image.dat");
   if (current_file.is_open()) {
     current_file.close();
-    this->file_system->load_unit();
+    // this->file_system->load_unit();
+    this->load_from_file();
   } else {
     // Load the file system from file
     this->load_from_file();
