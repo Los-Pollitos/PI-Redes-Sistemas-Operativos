@@ -152,7 +152,6 @@ void login_server::process_data(std::string ip_remote) {
       this->change_token();
       break;
     case CREATE_USER:
-      // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
       this->create_user();
       break;
     case DELETE_USER:
@@ -177,14 +176,8 @@ void login_server::create_user() {
   // Assume the user exists
   this->data[0] = '0';
   if (!this->existing_user(username)) {
-
-    std::cout << "Dentro de if \n";
-    
     // The user does not exist
     this->append_the_user(username,hash);
-
-    std::cout << "Claramente despues de append \n";
-
     // Change data to success
     this->data[0] = '1';
   }
@@ -205,30 +198,17 @@ void login_server::append_the_user(std::string& username, std::string& hash) {
   to_write += "," + hash + ",";
   // Generate the token
   int current_token = 0;
-
-  std::cout << "Antes de for y TO WRITE \n";
-
   for (int i = 0; i < 6; ++i) {
     // Generate integer numbers between 10 and 99
     current_token = rand() % 90 + 10;
     to_write += std::to_string(current_token);
-
-    std::cout << to_write << std::endl;
-
   }
   // Add a final comma
   to_write += ",";
   // Append it to the file
-
   // Open and close the file
   this->file_system->open("Server", "Login.txt");
-
-  std::cout << "No por favor\n";
-
   this->file_system->append("Login.txt", to_write);
-
-  std::cout << "Append\n";
-
   this->file_system->close("Server", "Login.txt");
 }
 
@@ -242,7 +222,7 @@ void login_server::find_create_info(std::string& username, std::string& hash) {
   // Used to store the position of the first comma
   int i = 2;
   for (i = 2; this->data[i] != ','; ++i) {
-    // TODO(Luis): el otro username
+    // The other username, used for log only
   }
   // Increase one more to avoid the comma
   ++i;
@@ -254,9 +234,6 @@ void login_server::find_create_info(std::string& username, std::string& hash) {
   for (i; this->data[i] != ','; ++i) {
     hash += this->data[i];
   }
-
-  std::cout << "USERNAME: " << username << "P\n";
-  std::cout << "HASH: " << hash << "P\n";
 }
 
 /**
