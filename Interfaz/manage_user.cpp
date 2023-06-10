@@ -18,9 +18,11 @@ manage_user::manage_user(QWidget *parent) :
     this->ui->user_name_text->setStyleSheet("color: #001f21;");
     this->ui->user_name_text_2->setStyleSheet("color: #001f21;");
     this->ui->user_name_text_3->setStyleSheet("color: #001f21;");
+    this->ui->create_username->setStyleSheet("color: #001f21;");
     this->ui->create_id->setStyleSheet("color: #001f21;");
     this->ui->create_name->setStyleSheet("color: #001f21;");
     this->ui->create_password->setStyleSheet("color: #001f21;");
+    this->ui->first_rh_password->setStyleSheet("color: #001f21;");
     this->ui->second_rh_password->setStyleSheet("color: #001f21;");
     this->ui->delete_username->setStyleSheet("color: #001f21;");
     this->ui->user_password_text->setStyleSheet("color: #001f21;");
@@ -59,9 +61,9 @@ void manage_user::on_generate_button_clicked() {
         std::string name = this->ui->create_name->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-            std::string first_result = this->send_create(desired_user, desired_password, id, name, 1);
-            std::string second_result = this->send_create(desired_user, desired_password, id, name, 2);
-            if (first_result[0] == '1' && second_result[0] == '1') {
+            // std::string first_result = this->send_create(desired_user, desired_password, id, name, '1');
+            std::string second_result = this->send_create(desired_user, desired_password, id, name, '2');
+            if (/*first_result[0] == '1' &&*/ second_result[0] == '1') {
                 // Success
                 this->show_success("Se logró crear el usuario de manera exitosa");
             } else {
@@ -105,6 +107,9 @@ std::string manage_user::send_create(std::string username, std::string password,
         to_send += hasher.hash_string(password);
         to_send += ",";
     }
+
+    std::cout << "TO SEND: " << to_send << "\n";
+
     return this->local_client->send_and_receive(to_send);
 }
 
