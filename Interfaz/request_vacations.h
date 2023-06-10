@@ -16,11 +16,14 @@ public:
     explicit request_vacations(QWidget *parent = nullptr);
     ~request_vacations();
     void set_client(client* local_client);
+    void reset_window();
+    void set_current_user(std::string user);
 
 private:
     Ui::request_vacations *ui;
     client* local_client;
     std::string to_send;
+    std::string user;
 };
 
 #endif // REQUEST_VACATIONS_H

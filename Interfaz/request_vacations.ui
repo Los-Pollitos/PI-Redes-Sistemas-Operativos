@@ -44,13 +44,18 @@
     <rect>
      <x>250</x>
      <y>80</y>
-     <width>111</width>
+     <width>116</width>
      <height>50</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="turn_lable">
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Turno a escoger</string>
       </property>
@@ -87,15 +92,20 @@
     <rect>
      <x>100</x>
      <y>80</y>
-     <width>97</width>
+     <width>99</width>
      <height>51</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QLabel" name="label_start">
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>Día a escoger:</string>
+       <string>Día a escoger</string>
       </property>
      </widget>
     </item>

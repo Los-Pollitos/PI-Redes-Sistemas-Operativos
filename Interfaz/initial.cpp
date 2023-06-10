@@ -368,6 +368,8 @@ void initial::create_windows(int id, int type) {
      break;
    case VACATION_MANAGER:
      this->vacation_manager->setModal(true);
+     this->vacation_manager->reset_window();
+     this->vacation_manager->set_current_user(this->users_login->user);
      this->vacation_manager->show();
      break;
    case SEE_VACATIONS:
