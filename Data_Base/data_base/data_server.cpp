@@ -662,7 +662,7 @@ void data_server::create_user_case(std::string remote_ip) {
     memset(this->data, '\0', DATA_SIZE);
     std::string result = "0";
     // Check if the user exists
-    if (this->base->user_exists(username)) {
+    if (!this->base->user_exists(username)) {
         this->base->add_employee(username, name, identification, "-", "-", 0, 32, 0, 0, 0);
         result = "1";
     }
