@@ -343,14 +343,17 @@ void initial::create_windows(int id, int type) {
    switch (id) {
     case WORK_PAGE:
       this->work_page->setModal(true);
+      this->work_page->setUserData(this->users_login);
       this->work_page->show();
       break;
     case PAYMENT_PAGE:
       this->payment_page->setModal(true);
+      this->payment_page->setUserData(this->users_login);
       this->payment_page->show();
       break;
    case SALARY_PAGE:
      this->salary_page->setModal(true);
+     this->salary_page->setUserData(this->users_login);
      this->salary_page->show();
      break;
    case SEE_SALARY:

@@ -27,7 +27,7 @@ void MainWindow::on_ingresar_clicked()
         wRRHHyGerente.setModal(true);
         wRRHHyGerente.exec();
     } else {
-        QMessageBox::warning(this, "Ingres", "Contraseña incorrecta");
+        QMessageBox::warning(this, "Ingreso", "Contraseña incorrecta");
     }
 }
 

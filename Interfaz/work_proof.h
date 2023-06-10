@@ -2,7 +2,9 @@
 #define WORK_PROOF_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include "client.h"
+#include "login_info.h"
 
 namespace Ui {
 class work_proof;
@@ -17,6 +19,7 @@ public:
     ~work_proof();
     int tipo;
     void set_client(client* local_client);
+    void setUserData(login_info * user_login);
 
 private slots:
     void on_pushButton_clicked();
@@ -24,6 +27,7 @@ private slots:
 private:
     Ui::work_proof *ui;
     client* local_client;
+    login_info * user_login;
 };
 
 #endif // WORK_PROOF_H
