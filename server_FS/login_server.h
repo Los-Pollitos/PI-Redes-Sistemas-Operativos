@@ -36,14 +36,15 @@ class login_server {
     log* logger;
 
     // Methods
-    void load_from_file();
     void find_data(std::string& username,  std::string& hash);
     void process_data(std::string ip_remote);
     void adapt_data(std::string& new_info);
-    void create_user(std::string& username, std::string& hash);
-    void generate_token(std::string& to_append);
+    void find_create_info(std::string& username, std::string& hash);
+    void append_the_user(std::string& username, std::string& hash);
+    void load_from_file();
+    void create_user();
     void delete_user();
-    
+
     bool existing_user(std::string& username);
     void validate_data(std::string& username, std::string& hash);
     void give_token();

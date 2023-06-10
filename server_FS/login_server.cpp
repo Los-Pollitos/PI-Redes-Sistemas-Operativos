@@ -151,50 +151,77 @@ void login_server::process_data(std::string ip_remote) {
       break;
     case CREATE_USER:
       // TODO(luis): hacer (data tiene que quedar con lo que retornó para que la bitácora lo diga)
-      this->create_user(username, hash);
+      this->create_user();
       break;
     case DELETE_USER:
       this->delete_user();
       break;
   }
-  this->logger->add_answer_log(ip_remote,"sent",this->data);
+  this->logger->add_answer_log(ip_remote, "sent", this->data);
   this->file_system->write_unit();
 }
 
 /**
  * @brief Creates an user inside the login file when received with a
  * request to do so
+ */
+void login_server::create_user() {
+  std::string username = "";
+  std::string hash = "";
+  // Obtain from data the username and hash information
+  this->find_create_info(username, hash);
+  // Set the data to \0
+  memset(this->data, '\0', DATA_SIZE);
+  // Assume the user exists
+  this->data[0] = '0';
+  if (!this->existing_user(username)) {
+    // The user does not exist
+    this->append_the_user(username,hash);
+    // Change data to success
+    this->data[0] = '1';
+  }
+  // Write to the intermediary the answer
+  std::cout << "Voy a enviar a intermediario " << this->data << "\n";
+  write(this->connection, this->data, DATA_SIZE);
+}
+
+/**
+ * @brief Adds to the Login file the username, hash, and generates a token
+ * 
+ * @param username The desired username to be inserted
+ * @param hash The associated hash to be inserted
+ */
+void login_server::append_the_user(std::string& username, std::string& hash) {
+  std::string to_write = username;
+  to_write += "," + hash;
+  // TODO(Luis): TOKEN
+}
+
+/**
+ * @brief Finds the username and hash to be added inside the datagram
  * 
  * @param username The username to be inserted
  * @param hash The hash to be associated to the username
  */
-void login_server::create_user(std::string& username,  std::string& hash) {
-  // Set the data to \0
-  memset(this->data, '\0', DATA_SIZE);
-  // Find if the user already exists
-  if (!this->existing_user(username)) {
-    // If not, insert the user with the hash and generate a token
-    this->file_system->open("Server", "Login.txt");
-    std::string to_append = "," + username;
-    to_append = "," + hash + ",";
-    this->generate_token(to_append);
-    // Add to the login file
-    this->file_system->append("Login.txt", to_append);
-    // Success
-    this->data[0] = '1';
-  } else {
-    // Answer the request with a 0 indicating failure
-    this->data[0] = '0';
+void login_server::find_create_info(std::string& username, std::string& hash) {
+  // Used to store the position of the first comma
+  int i = 0;
+  for (i = 0; this->data[i] != ','; ++i) {
+    // TODO(Luis): el otro username
   }
-  // Answer with the result
-  write(this->connection, this->data, DATA_SIZE);
-}
-
-// TODO(Luis): documentar y terminar
-void login_server::generate_token(std::string& to_append) {
-  for (int i = 0; i < 6; ++i) {
-
+  // Increase one more to avoid the comma
+  ++i;
+  for (i; this->data[i] != ','; ++i) {
+    username += this->data[i];
   }
+  // Increase one more to avoid the comma
+  ++i;
+  for (i; this->data[i] != ','; ++i) {
+    hash += this->data[i];
+  }
+
+  std::cout << "USERNAME: " << username << "\n";
+  std::cout << "HASH: " << hash << "\n";
 }
 
 /**
@@ -480,7 +507,6 @@ void login_server::change_password() {
 /**
  * @brief Extracts usernamen and new token in order to change it
  * in the file system
- * 
  */
 void login_server::change_token() {
   std::string username = "";
@@ -494,7 +520,7 @@ void login_server::change_token() {
       username += this->data[i];
     }
   }
-  ++i; // sikip comma
+  ++i; // skip comma
   for (int j = 0; j < 12; ++j) {
       if (this->data[i+1] == ',') {
           new_token += (char)(this->data[i]-48);
