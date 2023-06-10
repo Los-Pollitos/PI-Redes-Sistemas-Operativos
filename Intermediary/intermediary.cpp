@@ -259,7 +259,7 @@ void intermediary::send_to_server(std::string ip_remote) {
       this->send_and_receive_data_base(ip_remote);
       break;
     case VACATION_REQUEST:
-      // TODO(Luis): hacer
+      this->send_and_receive_data_base(ip_remote);
       break;
     case CONSULT_VACATION:
       this->send_and_receive_data_base(ip_remote);
