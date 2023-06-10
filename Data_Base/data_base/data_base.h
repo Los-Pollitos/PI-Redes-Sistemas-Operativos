@@ -42,6 +42,7 @@ class data_base {
     void delete_user_from_table(std::string table, std::string user);
     bool verify_office_id(int office);
     std::string request_type(int type, int proof_type);
+    std::string request_status(int solved);
 
   public:
     data_base();

@@ -258,7 +258,6 @@ void intermediary::send_to_server(std::string ip_remote) {
     case SALARY_CONSULT:
       this->send_and_receive_data_base(ip_remote);
       break;
-    case CONSULT_REQUESTS:
     case VACATION_REQUEST:
     case CONSULT_VACATION:
     case ANSWER_PAYMENT_PROOF:
@@ -267,11 +266,13 @@ void intermediary::send_to_server(std::string ip_remote) {
     case ANSWER_VACATION_REQUEST:
       // TODO(us): hacer
       break;
-    case RECORD_CONSULT:
-    case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER: case GET_ROLES:
+    case RECORD_CONSULT: case ADD_RECORD:
+    case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER:
+    case GET_ROLES:
     case CHANGE_PHONE: case CHANGE_EMAIL: case CHANGE_OFFICE_ID: case CHANGE_ROLES:
-    case CHANGE_LABORAL_DATA: case CHANGE_VACATIONS: case FIRE_EMPLOYEE: case ADD_RECORD:
-    case SEE_PROCESS_REQUESTS: case CHANGE_SHIFT:
+    case CHANGE_LABORAL_DATA: case CHANGE_VACATIONS: case FIRE_EMPLOYEE: case CHANGE_SHIFT:
+    case SEE_PROCESS_REQUESTS:
+    case SEE_CONSULT_REQUESTS: case CONSULT_REQUESTS:
       this->send_and_receive_data_base(ip_remote);
       break;
     default:

@@ -580,8 +580,8 @@ void data_server::see_process_requests(std::string remote_ip) {
     int office = this->base->consult_employee_office(user);
     std::string to_send_back = this->base->conuslt_process_requests_of_office(office);
     // find the size of the package to send
-    int total_m = (int) (to_send_back.length() / DATA_SIZE-1)
-                  + (((int)(to_send_back.length() % DATA_SIZE-1) > 0) ? 1 : 0);
+    int total_m = (int) (to_send_back.length() / (DATA_SIZE-1))
+                  + (((int)(to_send_back.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 
     // send the data
     for (int i = 0; i < total_m; ++i) {
@@ -846,11 +846,13 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case SEE_CONSULT_REQUESTS:
-            // TODO(Angie): hacer
+            this->see_consult_requests(remote_ip);
             break;
+
         case CONSULT_REQUESTS:
             // TODO(Angie): hacer
             break;
+
         case SEE_PROCESS_REQUESTS:
             // TODO(todos): hacer
             this->see_process_requests(remote_ip);
@@ -945,7 +947,7 @@ void data_server::get_user_office(std::string remote_ip) {
     to_send = std::to_string(to_send_int);
 
     // find the size of the package to send
-    int total_m = (int) (to_send.length() / DATA_SIZE) + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
@@ -974,7 +976,7 @@ void data_server::get_all_users_from_office(std::string remote_ip) {
     to_send = this->base->consult_employees_of_an_office(stoi(to_send));
 
     // find the size of the package to send
-    int total_m = (int) (to_send.length() / DATA_SIZE) + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 
     // send the data
     for (int i = 0; i < total_m; ++i) {
@@ -1004,8 +1006,7 @@ void data_server::get_data_user(std::string remote_ip) {
     to_send = this->base->consult_employee_data(to_send);
 
     // find the size of the package to send
-    int total_m = (int) (to_send.length() / DATA_SIZE)
-            + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
@@ -1340,7 +1341,35 @@ void data_server::consult_record(std::string remote_ip) {
     to_send = this->base->consult_records(to_send);
 
     // find the size of the package to send
-    int total_m = (int) (to_send.length() / DATA_SIZE) + (((int)(to_send.length() % DATA_SIZE) > 0) ? 1 : 0);
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1))+ (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
+
+    // send the data
+    for (int i = 0; i < total_m && i < 10; ++i) {
+        adapt_data(data, to_send, DATA_SIZE * i);
+        std::cout << "Voy a mandar: " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(remote_ip, "sent", this->data);
+    }
+
+    this->data[0] = '&';
+    std::cout << "Voy a mandar " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+// TODO(nosotros): documentar
+void data_server::see_consult_requests(std::string remote_ip) {
+    std::string to_send = "\0";
+    int i = 1;
+
+    while (this->data[i] != '\0') {
+        to_send += this->data[i++];
+    }
+
+    // ask the data base for the result
+    to_send = this->base->consult_requests(to_send);
+
+    // find the size of the package to send
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {

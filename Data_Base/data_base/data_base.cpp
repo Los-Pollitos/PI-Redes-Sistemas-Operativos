@@ -45,7 +45,6 @@ data_base::~data_base() {
 char data_base::get_rol(std::string user, int & error) {
     QSqlQuery consult_role;
     char result = '\0';
-    std::cout << "me pidieron el rol de " << user << std::endl;
     consult_role.prepare("SELECT roles FROM employees WHERE user = (:user)");
     consult_role.bindValue(":user", QString::fromStdString(user));
     // If a match was found
@@ -605,11 +604,11 @@ std::string data_base::consult_requests(std::string user) {
             result += consult_requests.value(0).toString().toStdString() + "-";  // id
             result += consult_requests.value(3).toString().toStdString() + "-";  // type
             result += this->request_type(consult_requests.value(3).toInt(), consult_requests.value(4).toInt()) + ": ";
-            result += consult_requests.value(2).toString().toStdString() += ",";  // status
+            result += this->request_status(consult_requests.value(2).toInt()) += ",";  // status
         } while (consult_requests.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {
-        qDebug() << "[BASE_DATOS] Error consultando anotaciones de: " << user;
+        qDebug() << "[BASE_DATOS] Error consultando las solicitudes de: " << user;
     }
 
     return result;
@@ -634,6 +633,22 @@ std::string data_base::request_type(int type, int proof_type) {
         }
     }
 
+    return result;
+}
+
+std::string data_base::request_status(int solved) {
+    std::string result = "\0";
+    switch(solved) {
+        case PENDING:
+            result += "En proceso";
+            break;
+        case ACCEPTED:
+            result += "Aceptada";
+            break;
+        case DENIED:
+            result += "Rechazada";
+            break;
+    }
     return result;
 }
 

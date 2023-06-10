@@ -49,7 +49,7 @@ void consult_requests::update_scroll() {
     }
 
     // Ask for information from server
-    std::string to_send = " " + this->user_login->user + ",";
+    std::string to_send = " " + this->user_login->user;
     to_send[0] = SEE_CONSULT_REQUESTS;
     to_send =  this->local_client->send_and_receive(to_send);
 
@@ -69,11 +69,19 @@ void consult_requests::update_scroll() {
             id_temp += to_send[i++];
         }
         id = stoi(id_temp);
+        ++i;
+
+        // TODO(Angie): borrar
+        qDebug() << "id:" << id_temp;
 
         while(to_send[i] != '-') {  // type
             type_temp += to_send[i++];
         }
         type = stoi(type_temp);
+        ++i;
+
+        // TODO(Angie): borrar
+        qDebug() << "type:" << type_temp;
 
         while(to_send[i] != ',' && to_send[i] != '\0') {
             button_content += to_send[i++];

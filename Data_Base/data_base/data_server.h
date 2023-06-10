@@ -67,6 +67,7 @@ private:
     void consult_salary_case(std::string remote_ip);
     void proof_case(std::string remote_ip);
     void obtain_create_information(std::string& username, std::string& identification, std::string& name);
+    void see_consult_requests(std::string remote_ip);
 
 public:
     data_server();
