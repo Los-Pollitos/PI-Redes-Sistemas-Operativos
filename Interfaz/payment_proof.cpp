@@ -11,6 +11,7 @@ payment_proof::payment_proof(QWidget *parent) :
     this->ui->textBrowser->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Comprobante de pago");
     this->local_client = new client();
+    this->user_login = new login_info();
 }
 
 payment_proof::~payment_proof()
@@ -25,7 +26,28 @@ void payment_proof::set_client(client* local_client){
     this->local_client = local_client;
 }
 
-void payment_proof::on_pushButton_clicked()
-{
+void payment_proof::setUserData(login_info *user_login) {
+    this->user_login = user_login;
+}
+
+void payment_proof::on_pushButton_clicked() {
+    std::string user = this->user_login->user;
+    std::time_t actual_time = std::time(nullptr);
+    std::tm* now = std::localtime(&actual_time);
+
+    int actual_day = now->tm_mday;
+    int actual_month = now->tm_mon;
+    int actual_year = now->tm_year;
+
+    std::string to_send = "";
+    to_send += ((char)PAYMENT_PROOF);
+    to_send += user + ",";
+    to_send += std::to_string(actual_day) + ",";
+    to_send += std::to_string(actual_month) + ",";
+    to_send += std::to_string(actual_year) + ",";
+
+    std::string result = local_client->send_and_receive(to_send);
+
     this->close();
+
 }

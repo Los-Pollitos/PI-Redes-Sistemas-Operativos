@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <arpa/inet.h>
+#include <ctime>
 #include <iostream>
 #include <netdb.h>
 #include <string.h>

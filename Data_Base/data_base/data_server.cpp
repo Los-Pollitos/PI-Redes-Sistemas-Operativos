@@ -744,6 +744,43 @@ void data_server::consult_salary_case(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
+void data_server::proof_case(std::string remote_ip) {
+    int type = (int)data[0] - 71;
+
+    std::string user = "";
+    std::string day = "";
+    std::string month = "";
+    std::string year = "";
+    int i = 0;
+    int j = 0;
+    for (i = 1; i < DATA_SIZE && data[i] != ','; i++){
+        user += data[i];
+    }
+
+    for (j = i+1; j < DATA_SIZE && data[j] != ','; j++) {
+        day += data[j];
+    }
+
+    for (i = j+1; i < DATA_SIZE && data[i] != ','; i++) {
+        month += data[i];
+    }
+
+    for (j = i+1; j < DATA_SIZE && data[j] != ','; j++) {
+        year += data[j];
+    }
+
+
+    // Remove the unnecesary & as only one package is needed
+    read(this->connection, this->data, sizeof(this->data));
+    // Clear data
+    memset(this->data, '\0', DATA_SIZE);
+    std::string result = "1";
+    this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, 0,0,0,0,0, type,"","");
+    this->logger->add_answer_log(remote_ip, "sent", result);
+    data[0] = '1';
+    write(this->connection, this->data, DATA_SIZE);
+}
+
 // TODO(us): Document
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
@@ -790,13 +827,25 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case PAYMENT_PROOF:
-            // TODO(Cris): hacer
+            this->proof_case(remote_ip);
+            memset(this->data, '\0', DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
         case WORK_PROOF:
-            // TODO(Cris): hacer
+            this->proof_case(remote_ip);
+            memset(this->data, '\0', DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
         case SALARY_PROOF:
-            // TODO(Cris): hacer
+            this->proof_case(remote_ip);
+            memset(this->data, '\0', DATA_SIZE);
+            this->data[0] = '&';
+            std::cout << " Voy a mandar " << this->data << "\n";
+            write(this->connection, this->data, DATA_SIZE);
             break;
         case SALARY_CONSULT:
             this->consult_salary_case(remote_ip);

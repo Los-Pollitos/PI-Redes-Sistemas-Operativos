@@ -160,7 +160,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
           write(s, this->data, DATA_SIZE);
           this->logger->add_to_log(ip_remote, "sent to data base", this->data);
           n = read(this->connection, this->data, sizeof(this->data));
-          std::cout << "Recibí: " << this->data << std::endl;
+          std::cout << "Recibí: " << this->data << "" << std::endl;
           if (this->data[0] != '&') {
            this->logger->add_answer_log(ip_remote, "received from client", this->data);
           }
@@ -247,10 +247,12 @@ void intermediary::send_to_server(std::string ip_remote) {
       this->manage_user_case(ip_remote);
       break;
     case PAYMENT_PROOF:
+      this->send_and_receive_data_base(ip_remote);
     case WORK_PROOF:
+      this->send_and_receive_data_base(ip_remote);
     case SALARY_PROOF:
+      this->send_and_receive_data_base(ip_remote);
     case SALARY_CONSULT:
-      std::cout << "voy con data_base\n";
       this->send_and_receive_data_base(ip_remote);
     case CONSULT_REQUESTS:
     case VACATION_REQUEST:

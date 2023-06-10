@@ -64,6 +64,7 @@ private:
     void add_record(std::string remote_ip);
     void consult_record(std::string remote_ip);
     void consult_salary_case(std::string remote_ip);
+    void proof_case(std::string remote_ip);
 
 public:
     data_server();
