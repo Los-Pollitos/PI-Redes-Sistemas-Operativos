@@ -44,6 +44,7 @@ private:
     void load_laboral_data();
     void load_requests();
     void load_records();
+    void consult_vacations(std::string remote_ip);
     void find_data(std::string& username,  std::string& hash);
     void process_data(std::string remote_ip);
     void see_process_requests(std::string remote_ip);

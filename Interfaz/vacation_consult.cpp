@@ -17,12 +17,6 @@ vacation_consult::vacation_consult(QWidget *parent) :
     ui->available_vacations->setReadOnly(true);
     ui->id->setReadOnly(true);
     ui->name->setReadOnly(true);
-    // Setup the window
-    // Obtain information from server
-}
-
-void vacation_consult::setup_window() {
-
 }
 
 std::string vacation_consult::obtain_from_server() {
@@ -43,7 +37,33 @@ void vacation_consult::set_client(client* local_client){
 
 void vacation_consult::set_user_login(login_info* user_login) {
     this->user_login = user_login;
-    this->obtain_from_server();
+    this->show_result(this->obtain_from_server());
+}
+
+void vacation_consult::show_result(std::string result) {
+    // Obtain the name
+    std::string name = "";
+    int i = 0;
+    for (; result[i] != ','; ++i) {
+        name += result[i];
+    }
+    ++i;
+    // Obtain the identification
+    std::string identification = "";
+    for (; result[i] != ','; ++i) {
+        identification += result[i];
+    }
+    ++i;
+    // Obtain the vacation information
+    std::string vacations = "";
+    for (; result[i] != ','; ++i) {
+        vacations += result[i];
+    }
+    ++i;
+    // Show the results
+    this->ui->name->setText(QString::fromStdString(name));
+    this->ui->id->setText(QString::fromStdString(identification));
+    this->ui->available_vacations->setText(QString::fromStdString(vacations));
 }
 
 vacation_consult::~vacation_consult() {

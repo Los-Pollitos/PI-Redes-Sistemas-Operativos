@@ -26,7 +26,7 @@ private:
     login_info* user_login;
 
     // Methods
-    void setup_window();
+    void show_result(std::string result);
     std::string obtain_from_server();
 };
 

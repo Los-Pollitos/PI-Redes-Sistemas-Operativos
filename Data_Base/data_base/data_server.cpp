@@ -634,8 +634,36 @@ void data_server::create_user_case(std::string remote_ip) {
         this->base->add_employee(username, name, identification, "-", "-", 0, 32, 0, 0, 0);
         result = "1";
     }
-    this->logger->add_answer_log(remote_ip, "sent", result);
+    this->logger->add_to_log(remote_ip, "sent", result);
     data[0] = result[0];
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::consult_vacations(std::string remote_ip) {
+    std::string to_send = "";
+    std::string username = "";
+    std::string name = "";
+    std::string identification = "";
+    std::string vacations = "";
+    // Obtain the username
+    for (int i = 1; i < 10 && this->data[i] != ','; ++i) {
+        username += this->data[i];
+    }
+    // Obtain the name from the database
+    name = this->base->get_name(username);
+    // Obtain the identification from the database
+    identification = this->base->get_id(username);
+    // Obtain the vacations from the database
+    vacations = this->base->get_available_vacations(username);
+    to_send += name + "," + identification + "," + vacations + ",";
+    this->logger->add_answer_log(remote_ip, "sent", to_send);
+    // Adapt the data to send it
+    this->adapt_data(this->data, to_send, 0);
+    // Send the answer
+    write(this->connection, this->data, DATA_SIZE);
+    // Send the &
+    this->data[0] = '&';
+    std::cout << " Voy a mandar " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -643,8 +671,8 @@ void data_server::obtain_create_information(std::string& username, std::string& 
     // Obtain the other username
     // Used to store the position of the first comma
     int i = 2;
-    for (i = 2; this->data[i] != ','; ++i) {
-        // TODO(Luis): el otro username
+    for (; this->data[i] != ','; ++i) {
+        // Ignore the username of the request
     }
     // Increase one more to avoid the comma
     ++i;
@@ -660,11 +688,6 @@ void data_server::obtain_create_information(std::string& username, std::string& 
     for (; this->data[i] != ','; ++i) {
         name += this->data[i];
     }
-
-    std::cout << "USERNAME: " << username << std::endl;
-    std::cout << "IDENTIFICATION: " << identification << std::endl;
-    std::cout << "NAME: " << name << std::endl;
-
 }
 
 void data_server::delete_user_case(std::string remote_ip) {
@@ -797,7 +820,6 @@ void data_server::process_data(std::string remote_ip) {
 
     switch ((int) data[0]) {
         case CREATE_USER:
-            // TODO(luis): hacer
             this->create_user_case(remote_ip);
             this->data[0] = '&';
             std::cout << " Voy a mandar " << this->data << "\n";
@@ -805,7 +827,6 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case DELETE_USER:
-            // TODO(luis): hacer
             this->delete_user_case(remote_ip);
             this->data[0] = '&';
             std::cout << " Voy a mandar " << this->data << "\n";
@@ -865,6 +886,7 @@ void data_server::process_data(std::string remote_ip) {
             break;
         case CONSULT_VACATION:
             // TODO(Luis): hacer
+            this->consult_vacations(remote_ip);
             break;
         case ANSWER_PAYMENT_PROOF:
             // TODO(Cris): hacer

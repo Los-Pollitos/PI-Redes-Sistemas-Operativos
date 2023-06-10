@@ -135,6 +135,28 @@ std::string data_base::get_id(std::string user){
     return result;
 }
 
+std::string data_base::get_available_vacations(std::string user) {
+    std::string result = "";
+    int container = -1;
+    QSqlQuery consult;
+    consult.prepare("SELECT available_vacations, shift_available FROM employees WHERE user = (:user)");
+    consult.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult.exec() && consult.next()) {
+        container = consult.value(0).toInt();
+        result += std::to_string(container);
+        result += '.';
+        container = consult.value(1).toInt();
+        if (container == 1) {
+            result += '5';
+        } else {
+            result += std::to_string(container);
+        }
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
+    }
+    return result;
+}
 
 // TODO(nosotros): DOCUMENTAR
 void data_base::add_office(int id, std::string name) {
