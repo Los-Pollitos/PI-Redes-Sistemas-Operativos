@@ -219,8 +219,8 @@ void login_server::append_the_user(std::string& username, std::string& hash) {
  */
 void login_server::find_create_info(std::string& username, std::string& hash) {
   // Used to store the position of the first comma
-  int i = 0;
-  for (i = 0; this->data[i] != ','; ++i) {
+  int i = 2;
+  for (i = 2; this->data[i] != ','; ++i) {
     // TODO(Luis): el otro username
   }
   // Increase one more to avoid the comma
