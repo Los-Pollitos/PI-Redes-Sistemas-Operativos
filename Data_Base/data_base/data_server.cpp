@@ -700,7 +700,6 @@ void data_server::delete_user_case(std::string remote_ip) {
     }
     this->logger->add_answer_log(remote_ip, "sent", result);
     data[0] = result[0];
-    std::cout << "VOY A MANDARLE" << data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
