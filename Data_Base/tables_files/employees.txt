@@ -1,11 +1,11 @@
-usuario,nombre,identificación,numero,correo,oficina,rol,vacacionesDisponibles,trabajoActual
-cjimenez,Carlos Jiménez Nuñez,118590672,887654321,cjimenez@pollitos.org,3,34,10,0
-gmora,Gerardo Mora Ortiz,223459809,76540987,gmora@pollitos.org,1,32,5,1
-jnunez,Julia Núñez Solís,509876349,67891234,jnunez@pollitos.org,5,32,0,2
-eguzman,Emma Guzmán Santamaría,345678901,89012345,eguzman@pollitos.org,1,48,15,3
-alopez,Alexandra López Hernández,105503987,66554433,alopez@pollitos.org,3,40,15,9
-respinoza,Roberto Espinoza Víquez,612589087,77889900,respinoza@pollitos.org,4,36,14,5
-gherrera,Génesis Monserrath Herrera Knyght,512348739,89012332,gherrera@pollitos.org,4,38,20,6
-rgang,Ricardo De Jesus Gang Vincenzi,900960738,88112265,rgang@pollitos.org,4,56,14,7
-dcabezas,Daniel Armando Cabezas Vindas,110810568,65438901,dcabezas@pollitos.org,2,56,15,8
-d_gmora,Gerardo Mora Ortiz,-,-,-,0,1,0,0
+usuario,nombre,identificación,numero,correo,oficina,rol,vacacionesDisponibles,turnoDisponible,trabajoActual
+cjimenez,Carlos Jiménez Nuñez,118590672,887654321,cjimenez@pollitos.org,3,34,10,0,0
+gmora,Gerardo Mora Ortiz,223459809,76540987,gmora@pollitos.org,1,32,5,1,1
+jnunez,Julia Núñez Solís,509876349,67891234,jnunez@pollitos.org,5,32,0,0,2
+eguzman,Emma Guzmán Santamaría,345678901,89012345,eguzman@pollitos.org,1,48,15,0,3
+alopez,Alexandra López Hernández,105503987,66554433,alopez@pollitos.org,3,40,15,1,9
+respinoza,Roberto Espinoza Víquez,612589087,77889900,respinoza@pollitos.org,4,36,14,0,5
+gherrera,Génesis Monserrath Herrera Knyght,512348739,89012332,gherrera@pollitos.org,4,38,20,0,6
+rgang,Ricardo De Jesus Gang Vincenzi,900960738,88112265,rgang@pollitos.org,4,56,14,1,7
+dcabezas,Daniel Armando Cabezas Vindas,110810568,65438901,dcabezas@pollitos.org,2,56,15,1,8
+d_gmora,Gerardo Mora Ortiz,-,-,-,0,1,0,0,0

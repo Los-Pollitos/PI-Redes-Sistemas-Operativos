@@ -45,7 +45,8 @@ enum request_types {
     CHANGE_LABORAL_DATA,
     CHANGE_VACATIONS,
     FIRE_EMPLOYEE,
-    ADD_RECORD
+    ADD_RECORD,
+    CHANGE_SHIFT
 };
 
 class client {

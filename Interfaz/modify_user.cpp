@@ -46,6 +46,7 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->checkbox_employee->setStyleSheet("color: #001f21;");
     this->ui->checkbox_human_resources->setStyleSheet("color: #001f21;");
     this->ui->checkbox_supervisor->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_shift->setStyleSheet("color: #001f21;");
     this->ui->comboBox->setStyleSheet("color: #001f21;");
 
     // window name
@@ -91,6 +92,7 @@ void modify_user::on_comboBox_activated(int index) {
     ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
     ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
     ui->vacations->setText(QString::number(this->user_info.available_vacations));
+    ui->checkbox_shift->setCheckState((this->user_info.shift_available == true) ? Qt::Checked : Qt::Unchecked);
     ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     ui->base_salary->setText(QString::number(this->user_info.salary_base));
     ui->deductions->setText(QString::number(this->user_info.deductibles));
@@ -112,6 +114,8 @@ void modify_user::set_read_only() {
     ui->checkbox_human_resources->setFocusPolicy(Qt::NoFocus);
     ui->checkbox_supervisor->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->checkbox_supervisor->setFocusPolicy(Qt::NoFocus);
+    ui->checkbox_shift->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->checkbox_shift->setFocusPolicy(Qt::NoFocus);
 
     // read only the text edits
     ui->name->setReadOnly(true);
@@ -138,6 +142,7 @@ void modify_user::load_user_data(std::string& data) {
     std::string temp_salary = "\0";
     std::string temp_deductibles = "\0";
     std::string temp_vacations = "\0";
+    std::string temp_shift = "\0";
 
     while (pos < data.length()) {
         if (data[pos] != ','  && data[pos] != '\0') {
@@ -163,15 +168,18 @@ void modify_user::load_user_data(std::string& data) {
                 case 6:  // vacations
                     temp_vacations += data[pos];
                     break;
-                case 7: // base salary
+                case 7:  // shift
+                    temp_shift += data[pos];
+                    break;
+                case 8: // base salary
                     temp_salary += data[pos];
                     break;
-                case 8: // deductibles
+                case 9: // deductibles
                     temp_deductibles += data[pos];
                     break;
-               case 9: // job_title
+                case 10: // job_title
                     this->user_info.job_title += data[pos];
-                   break;
+                    break;
             }
         } else {
             ++commas_found;  // indicate a comma was found
@@ -182,6 +190,7 @@ void modify_user::load_user_data(std::string& data) {
     this->user_info.salary_base = stoi(temp_salary);
     this->user_info.deductibles = stoi(temp_deductibles);
     this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
+    this->user_info.shift_available = (stoi(temp_shift) == 1 ? true : false);
 }
 
 // Método que va a agregar los usuarios al comboBox
@@ -205,6 +214,7 @@ void modify_user::add_data_to_combobox() {
     ui->checkbox_employee->setCheckState(Qt::Unchecked);
     ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
     ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
+    ui->checkbox_shift->setCheckState(Qt::Unchecked);
     ui->vacations->setText(0);
     ui->job_title->setText(0);
     ui->base_salary->setText(0);
@@ -308,6 +318,15 @@ void modify_user::update_data() {
         to_send = " " + this->user_info.user;
         to_send[0] = CHANGE_VACATIONS;
         to_send += "," + std::to_string(this->user_info.available_vacations);
+        to_send += "," + this->user_login->user;
+        this->local_client->send_and_receive(to_send);
+    }
+    if ((ui->checkbox_shift->checkState() == Qt::Checked && this->user_info.shift_available == false)
+        || (ui->checkbox_shift->checkState() == Qt::Unchecked && this->user_info.shift_available == true)) {
+        this->user_info.shift_available = !this->user_info.shift_available;  // set to the contrary
+        to_send = " " + this->user_info.user;
+        to_send[0] = CHANGE_SHIFT;
+        to_send += "," + std::to_string(this->user_info.shift_available ? 1 : 0);
         to_send += "," + this->user_login->user;
         this->local_client->send_and_receive(to_send);
     }

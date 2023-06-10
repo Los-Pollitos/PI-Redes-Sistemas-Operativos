@@ -296,7 +296,7 @@
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>150</y>
+     <y>190</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -312,7 +312,7 @@
    <property name="geometry">
     <rect>
      <x>730</x>
-     <y>150</y>
+     <y>190</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -322,7 +322,7 @@
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>190</y>
+     <y>230</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -338,7 +338,7 @@
    <property name="geometry">
     <rect>
      <x>730</x>
-     <y>190</y>
+     <y>230</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -348,7 +348,7 @@
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>230</y>
+     <y>270</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -364,7 +364,7 @@
    <property name="geometry">
     <rect>
      <x>730</x>
-     <y>230</y>
+     <y>270</y>
      <width>341</width>
      <height>25</height>
     </rect>
@@ -403,7 +403,7 @@
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>270</y>
+     <y>310</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -419,9 +419,9 @@
    <property name="geometry">
     <rect>
      <x>730</x>
-     <y>270</y>
+     <y>310</y>
      <width>341</width>
-     <height>191</height>
+     <height>151</height>
     </rect>
    </property>
   </widget>
@@ -475,6 +475,19 @@
      <width>341</width>
      <height>25</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkbox_shift">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>150</y>
+     <width>341</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Turno de vacaciones disponible</string>
    </property>
   </widget>
  </widget>

@@ -156,13 +156,12 @@ void data_base::add_office(int id, std::string name) {
 }
 
 // TODO(nosotros): DOCUMENTAR
-// TODO(nosotros): Ver si cambiar char por string, porque lo saca mal
 void data_base::add_employee(std::string user, std::string name, std::string id
                             , std::string phone_number, std::string email
                             , int office_id, char roles, int available_vacations
-                            , int last_laboral_data) {
+                            , int shift_available, int last_laboral_data) {
     // Create the employee table if not created
-    QString employee_str("CREATE TABLE IF NOT EXISTS employees (user TEXT, name TEXT, id TEXT, phone_number TEXT, email TEXT, office_id INTEGER, roles TEXT, available_vacations INTEGER, last_laboral_data INTEGER)");
+    QString employee_str("CREATE TABLE IF NOT EXISTS employees (user TEXT, name TEXT, id TEXT, phone_number TEXT, email TEXT, office_id INTEGER, roles TEXT, available_vacations INTEGER, shift_available INTEGER, last_laboral_data INTEGER)");
     QSqlQuery employee_table;
     if (!employee_table.exec(employee_str)) {
         qDebug() << "[BASE_DATOS] Error al crear la tabla de empleados: " << employee_table.lastError();
@@ -170,7 +169,7 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     }
     // Add the new employee
     QSqlQuery new_employee;
-    new_employee.prepare("INSERT INTO employees (user, name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data) VALUES (:user, :name, :id, :phone_number, :email, :office_id, :roles, :available_vacations, :last_laboral_data)");
+    new_employee.prepare("INSERT INTO employees (user, name, id, phone_number, email, office_id, roles, available_vacations, shift_available, last_laboral_data) VALUES (:user, :name, :id, :phone_number, :email, :office_id, :roles, :available_vacations, :shift_available, :last_laboral_data)");
     new_employee.bindValue(":user", QString::fromStdString(user));
     new_employee.bindValue(":name", QString::fromStdString(name));
     new_employee.bindValue(":id", QString::fromStdString(id));
@@ -179,6 +178,7 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     new_employee.bindValue(":office_id", office_id);
     new_employee.bindValue(":roles", roles);
     new_employee.bindValue(":available_vacations", available_vacations);
+    new_employee.bindValue(":shift_available", shift_available);
     new_employee.bindValue(":last_laboral_data", last_laboral_data);
     if(!new_employee.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando empleado: " << new_employee.lastError();
@@ -280,10 +280,6 @@ void data_base::add_record(std::string user, int day, int month, int year, std::
     if(!new_record.exec()) {
         qDebug() << "[BASE_DATOS] Error agregando anotación: " << new_record.lastError();
     }
-
-    // TODO(Angie): borrar
-    std::cout << "agregue record # " << this->record_count << " de " << user << std::endl;
-
     ++this->record_count;
 }
 
@@ -322,11 +318,11 @@ std::string data_base::consult_employee_data(std::string user) {
     bool is_number = true;
     QSqlQuery consult_employee;
     char temp_result;
-    consult_employee.prepare("SELECT name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data FROM employees WHERE user = (:user)");
+    consult_employee.prepare("SELECT name, id, phone_number, email, office_id, roles, available_vacations, shift_available, last_laboral_data FROM employees WHERE user = (:user)");
     consult_employee.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_employee.exec() && consult_employee.next()) {
-        for (int i = 0; i < 8; ++i) {
+        for (int i = 0; i < 9; ++i) {
             switch(i) {
                 case 0:  // name
                 case 1:  // identification
@@ -334,6 +330,7 @@ std::string data_base::consult_employee_data(std::string user) {
                 case 3:  // email
                 case 4:  // office ID TODO(Angie): considerar name
                 case 6:  // available vacations
+                case 7:  // shift_available
                     result += consult_employee.value(i).toString().toStdString() += ",";
                     break;
                 case 5:  // roles
@@ -341,7 +338,7 @@ std::string data_base::consult_employee_data(std::string user) {
                     result += temp_result;
                     result += ",";
                     break;
-                case 7:  // laboral_data
+                case 8:  // laboral_data
                     result += this->consult_laboral_data(user, consult_employee.value(i).toInt(&is_number));
                     break;
             }
@@ -496,6 +493,20 @@ bool data_base::change_vacations(std::string user, int vacations) {
     modify_user.bindValue(":available_vacations", vacations);
     if (!modify_user.exec()) {
         qDebug() << "[BASE_DATOS] Error modificando las vacaiones disponibles de " << QString::fromStdString(user);
+        success = false;
+    }
+    return success;
+}
+
+// TODO(nosotros): DOCUMENTAR
+bool data_base::change_shift(std::string user, int shift_available) {
+    bool success = true;
+    QSqlQuery modify_user;
+    modify_user.prepare("UPDATE employees SET shift_available = (:shift_available) WHERE user = (:user)");
+    modify_user.bindValue(":user", QString::fromStdString(user));
+    modify_user.bindValue(":shift_available", shift_available);
+    if (!modify_user.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando los turnos disponibles de " << QString::fromStdString(user);
         success = false;
     }
     return success;

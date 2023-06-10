@@ -58,6 +58,7 @@ private:
     void change_phone(std::string remote_ip);
     void change_email(std::string remote_ip);
     void change_vacations(std::string remote_ip);
+    void change_shift(std::string remote_ip);
     void change_laboral_data(std::string remote_ip);
     void change_office(std::string remote_ip);
     void change_roles(std::string remote_ip);

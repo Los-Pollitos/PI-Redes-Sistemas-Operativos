@@ -66,8 +66,8 @@ void data_server::copy_string(std::string& line, std::string& new_line, int from
 void data_server::load_from_file() {
     this->load_offices();
     this->load_employees();
-    this->load_requests();  // TODO(nosotros): arreglar: no crea la tabla
-    this->load_laboral_data();  // TODO(nosotros): arreglar: no crea la tabla
+    this->load_requests();
+    this->load_laboral_data();
     this->load_records();
 }
 
@@ -127,6 +127,7 @@ void data_server::load_employees() {
     int office_id = 0;
     char roles = '0';
     int available_vacations = 0;
+    int shift_available = 0;
     int last_laboral_data = 0;
 
     QFile employee_file("../tables_files/employees.txt");
@@ -190,6 +191,13 @@ void data_server::load_employees() {
             // save the available_vacations
             available_vacations = stoi(partial_line);
 
+            // find the shift_available
+            initial_pos = end_pos;  // starts after the ','
+            this->find_next(line, end_pos);
+            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
+            // save the shift_available
+            shift_available = stoi(partial_line);
+
             // find the last_laboral_data
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
@@ -198,7 +206,8 @@ void data_server::load_employees() {
             last_laboral_data = stoi(partial_line);
 
             // add to offices table
-            this->base->add_employee(user, name, id, phone_number, email, office_id, roles, available_vacations, last_laboral_data);
+            this->base->add_employee(user, name, id, phone_number, email, office_id
+                    , roles, available_vacations, shift_available, last_laboral_data);
         }
         employee_file.close();
     }
@@ -212,7 +221,6 @@ void data_server::load_laboral_data() {
     int end_pos = -1;
 
     std::string user = "\0";
-    int data_id = 0;
     int start_day = 0;
     int start_month = 0;
     int start_year = 0;
@@ -238,13 +246,6 @@ void data_server::load_laboral_data() {
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos ,end_pos-1);
-
-            // find the data_id
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the data_id
-            data_id = stoi(partial_line);
 
             // find the start_day
             initial_pos = end_pos;  // starts after the ','
@@ -324,7 +325,6 @@ void data_server::load_requests() {
     int end_pos = -1;
 
     std::string user = "\0";
-    int id = 0;
     int solved = 0;
     int day_request = 0;
     int month_request = 0;
@@ -357,13 +357,6 @@ void data_server::load_requests() {
             this->find_next(line, end_pos);
             // save the user
             this->copy_string(line,user,initial_pos ,end_pos-1);
-
-            // find the id
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the id
-            id = stoi(partial_line);
 
             // find if solved
             initial_pos = end_pos;  // starts after the ','
@@ -670,7 +663,7 @@ void data_server::create_user_case(std::string remote_ip) {
     std::string result = "0";
     // Check if the user exists
     if (this->base->user_exists(username)) {
-        this->base->add_employee(username, name, identification, "-", "-", 0, 32, 0, 0);
+        this->base->add_employee(username, name, identification, "-", "-", 0, 32, 0, 0, 0);
         result = "1";
     }
     this->logger->add_answer_log(remote_ip, "sent", result);
@@ -746,7 +739,7 @@ void data_server::consult_salary_case(std::string remote_ip) {
     std::string buffer = security_manager.encrypt(std::to_string(gross_salary));
 
     std::string gross_salary_ascii = "";
-    int i = 0;
+    size_t i = 0;
     for (i = 0; i < buffer.length(); ++i) {
         gross_salary_ascii += std::to_string((int)buffer[i]);
         gross_salary_ascii += ",";
@@ -814,10 +807,6 @@ void data_server::proof_case(std::string remote_ip) {
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
     std::string user = "";
-    int total_m = 0;
-
-    // TODO(nosotros): borrar
-//    std::cout << "tengo: " << data[0] << " antes de switch  y DELETE_USER es " << (char) DELETE_USER << std::endl;
 
     /*
       * Nota: cada vez que haga un write (sin contar & y #) hay que meterlo en el log.
@@ -954,6 +943,10 @@ void data_server::process_data(std::string remote_ip) {
 
         case CHANGE_LABORAL_DATA:
             this->change_laboral_data(remote_ip);
+            break;
+
+        case CHANGE_SHIFT:
+            this->change_shift(remote_ip);
             break;
 
         case GET_ROLES:
@@ -1138,6 +1131,37 @@ void data_server::change_vacations(std::string remote_ip) {
 
     // ask the data base for the result
     if (this->base->change_vacations(user, to_send_int)) {  // success
+        memset(this->data, '1', DATA_SIZE);
+    } else {  // the change was not possible
+        memset(this->data, '0', DATA_SIZE);
+    }
+    write(this->connection, this->data, DATA_SIZE);
+    this->logger->add_answer_log(remote_ip, "sent", this->data);
+
+    this->data[0] = '&';
+    std::cout << "Voy a mandar " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+// TODO(nosotros): documentar
+void data_server::change_shift(std::string remote_ip) {
+    std::string user = "\0";
+    std::string to_send = "\0";
+
+    // find the user
+    int i = 1;  // data[0] is CHANGE_SHIFT
+    while (this->data[i] != ',') {
+        user += this->data[i++];
+    }
+    // the ',' was found, now the shift will be read
+    ++i;
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    int to_send_int = stoi(to_send);
+
+    // ask the data base for the result
+    if (this->base->change_shift(user, to_send_int)) {  // success
         memset(this->data, '1', DATA_SIZE);
     } else {  // the change was not possible
         memset(this->data, '0', DATA_SIZE);

@@ -26,6 +26,7 @@ struct user_data {
     int salary_net;
     int assigned_vacations;
     int available_vacations;
+    bool shift_available;
 };
 
 #endif // USER_DATA_H

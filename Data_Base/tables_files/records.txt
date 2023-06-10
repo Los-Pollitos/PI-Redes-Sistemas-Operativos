@@ -1,4 +1,4 @@
-usuario,id,dia,mes,año,anotación
+usuario,dia,mes,año,anotación
 gmora,1,2,2015,Lleva un mes en el trabajo. Ha mostrado una gran disciplina y dedicación.
 gmora,3,3,2016,Llegada tardía (1 hora).
 eguzman,9,8,2017,No ha revisado solicitudes en 1 mes.
