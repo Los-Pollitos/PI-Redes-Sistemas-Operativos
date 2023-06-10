@@ -6,84 +6,103 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>300</height>
+    <width>447</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label_start">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>70</y>
-     <width>231</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Fecha de inicio de las vacaciones:</string>
-   </property>
-  </widget>
-  <widget class="QDateEdit" name="start_date">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>65</y>
-     <width>110</width>
-     <height>26</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QDateEdit" name="end_date">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>125</y>
-     <width>110</width>
-     <height>26</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_end">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>130</y>
-     <width>231</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Fecha de fin de las vacaciones:</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="reset">
    <property name="geometry">
     <rect>
-     <x>108</x>
-     <y>210</y>
+     <x>50</x>
+     <y>180</y>
      <width>111</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>Reestablecer</string>
+    <string>Agregar día</string>
    </property>
   </widget>
   <widget class="QPushButton" name="confirm">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>210</y>
+     <x>280</x>
+     <y>180</y>
      <width>111</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>Confirmar</string>
+    <string>Enviar solicitud</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>80</y>
+     <width>111</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_start_2">
+      <property name="text">
+       <string>Turno a escoger</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox">
+      <item>
+       <property name="text">
+        <string>Día entero</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Mañana</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Tarde</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>80</y>
+     <width>97</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_start">
+      <property name="text">
+       <string>Día a escoger:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDateEdit" name="start_date"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
