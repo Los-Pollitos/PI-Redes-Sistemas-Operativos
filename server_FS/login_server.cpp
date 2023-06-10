@@ -200,7 +200,8 @@ void login_server::append_the_user(std::string& username, std::string& hash) {
   // Generate the token
   int current_token = 0;
   for (int i = 0; i < 6; ++i) {
-    current_token = rand()%100;
+    // Generate integer numbers between 10 and 99
+    current_token = rand() % 99 + 10;
     to_write += std::to_string(current_token);
   }
   // Add a final comma
