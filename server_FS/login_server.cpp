@@ -27,6 +27,8 @@ login_server::login_server() {
     // Load the file system from file
     this->load_from_file();
   }
+  // Set a seed to generate token for the first time
+  srand(time(NULL));
 }
 
 /*
@@ -192,9 +194,20 @@ void login_server::create_user() {
  * @param hash The associated hash to be inserted
  */
 void login_server::append_the_user(std::string& username, std::string& hash) {
+  // Prepare the string with the necessary info
   std::string to_write = username;
-  to_write += "," + hash;
-  // TODO(Luis): TOKEN
+  to_write += "," + hash + ",";
+  // Generate the token
+  int current_token = 0;
+  for (int i = 0; i < 6; ++i) {
+    current_token = rand()%100;
+    to_write += std::to_string(current_token);
+  }
+  // Add a final comma
+  to_write += ",";
+  // Append it to the file
+  this->file_system->open("Server", "Login.txt");
+  this->file_system->append("Login.txt", to_write);
 }
 
 /**
