@@ -61,9 +61,9 @@ void manage_user::on_generate_button_clicked() {
         std::string name = this->ui->create_name->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-            // std::string first_result = this->send_create(desired_user, desired_password, id, name, '1');
+            std::string first_result = this->send_create(desired_user, desired_password, id, name, '1');
             std::string second_result = this->send_create(desired_user, desired_password, id, name, '2');
-            if (/*first_result[0] == '1' &&*/ second_result[0] == '1') {
+            if (first_result[0] == '1' && second_result[0] == '1') {
                 // Success
                 this->show_success("Se logró crear el usuario de manera exitosa");
             } else {
@@ -163,7 +163,7 @@ void manage_user::show_success(std::string success) {
     QMessageBox success_box;
     success_box.setText(QString::fromStdString(success));
     success_box.setWindowTitle("Información");
-    success_box.setModal(true);
+        success_box.setModal(true);
     success_box.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
     success_box.exec();
 }
