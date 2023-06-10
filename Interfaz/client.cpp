@@ -15,9 +15,10 @@ client::client() {
  * @param pos Position to start the transfer
  */
 void client::adapt_data(char* data, std::string& new_info, int pos) {
-    for (int i = 0; i < CLIENT_DATA_SIZE; ++i){
+    for (int i = 0; i < CLIENT_DATA_SIZE-1; ++i){
         data[i] = new_info[i+pos];
     }
+    data[CLIENT_DATA_SIZE-1] = '\0';
 }
 
 /**
@@ -46,8 +47,8 @@ std::string client::send_and_receive(std::string to_send) {
             // Se logró pegar, se sacan data
             memset(data, '\0', CLIENT_DATA_SIZE);
 
-            int total_m = (int) (to_send.length() / CLIENT_DATA_SIZE)
-                          + (((int)(to_send.length() % CLIENT_DATA_SIZE) > 0) ? 1 : 0);
+            int total_m = (int) (to_send.length() / (CLIENT_DATA_SIZE-1))
+                          + (((int)(to_send.length() % (CLIENT_DATA_SIZE-1)) > 0) ? 1 : 0);
 
             for (int i = 0; i < total_m; ++i) {
                 adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
