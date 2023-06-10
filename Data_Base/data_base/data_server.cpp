@@ -333,11 +333,7 @@ void data_server::load_requests() {
     int month_answer = 0;
     int year_answer = 0;
     int type = 0;
-    int request_id_vac = 0;
-    int day_vac = 0;
-    int month_vac = 0;
-    int year_vac = 0;
-    int shift_vac = 0;
+    std::string vacations = "\0";
     int proof_type = 0;
     std::string content_proof = "\0";
     std::string user_signing_boss_proof = "\0";
@@ -414,40 +410,14 @@ void data_server::load_requests() {
             // save the type
             type = stoi(partial_line);
 
-            // find the request_id_vac
+            // find the vacations content
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the request_id_vac
-            request_id_vac = stoi(partial_line);
+            // save the vacations
+            this->copy_string(line,vacations,initial_pos ,end_pos-1);
 
-            // find the day_vac
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the day_vac
-            day_vac = stoi(partial_line);
-
-            // find the month_vac
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the month_vac
-            month_vac = stoi(partial_line);
-
-            // find the year_vac
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the year_vac
-            year_vac = stoi(partial_line);
-
-            // find the shift_vac
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            this->copy_string(line,partial_line,initial_pos ,end_pos-1);
-            // save the shift_vac
-            shift_vac = stoi(partial_line);
+            // TODO(angie): borrar
+            std::cout << "contenido vacaciones:" << vacations << std::endl;
 
             // find the proof_type
             initial_pos = end_pos;  // starts after the ','
@@ -469,8 +439,9 @@ void data_server::load_requests() {
             this->copy_string(line,user_signing_boss_proof,initial_pos ,end_pos-1);
 
             this->base->add_request(user, solved, day_request, month_request, year_request, day_answer
-                                    , month_answer, year_answer, type, request_id_vac, day_vac, month_vac
-                                    , year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof);
+                                    , month_answer, year_answer, type, vacations, proof_type
+                                    , content_proof, user_signing_boss_proof);
+
         }
         request_file.close();
     }
@@ -796,7 +767,7 @@ void data_server::proof_case(std::string remote_ip) {
     // Clear data
     memset(this->data, '\0', DATA_SIZE);
     std::string result = "1";
-    this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, 0,0,0,0,0, type,"","");
+    this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, "", type,"","");
     this->logger->add_answer_log(remote_ip, "sent", result);
     data[0] = ' ';
     data[1] = '1';

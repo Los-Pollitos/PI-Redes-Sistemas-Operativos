@@ -20,8 +20,8 @@
 #define WORK_PROOF_T 1
 #define SALARY_PROOF_T 2
 
-#define MORNING_SHIFT 0
-#define EVENING_SHIFT 1
+#define MORNING_SHIFT 1
+#define EVENING_SHIFT 2
 
 #include <QSqlQuery>
 #include <QSqlError>
@@ -51,8 +51,7 @@ class data_base {
                       , int shift_available, int last_laboral_data);
     void add_request(std::string user, int solved, int day_request, int month_request, int year_request
                      ,int day_answer, int month_answer, int year_answer, int type
-                     ,int request_id_vac, int day_vac, int month_vac, int year_vac
-                     , int shift_vac, int proof_type, std::string content_proof
+                     , std::string vacations, int proof_type, std::string content_proof
                      , std::string user_signing_boss_proof);
     int add_laboral_data(std::string user
                           , int start_day, int start_month, int start_year

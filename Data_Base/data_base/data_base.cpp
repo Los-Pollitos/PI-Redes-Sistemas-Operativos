@@ -189,11 +189,10 @@ void data_base::add_employee(std::string user, std::string name, std::string id
 void data_base::add_request(std::string user,int solved, int day_request
                             , int month_request, int year_request
                             ,int day_answer, int month_answer, int year_answer, int type
-                            ,int request_id_vac, int day_vac, int month_vac, int year_vac
-                            , int shift_vac, int proof_type, std::string content_proof
+                            ,std::string vacations, int proof_type, std::string content_proof
                             , std::string user_signing_boss_proof) {
     // Create the request table if not created
-    QString request_str("CREATE TABLE IF NOT EXISTS requests (user TEXT, id INTEGER, solved INTEGER, day_request INTEGER, month_request INTEGER, year_request INTEGER, day_answer INTEGER, month_answer INTEGER, year_answer INTEGER, type INTEGER, request_id_vac INTEGER, day_vac INTEGER, month_vac INTEGER, year_vac INTEGER, shift_vac INTEGER, proof_type INTEGER, content_proof TEXT, user_signing_boss_proof TEXT)");
+    QString request_str("CREATE TABLE IF NOT EXISTS requests (user TEXT, id INTEGER, solved INTEGER, day_request INTEGER, month_request INTEGER, year_request INTEGER, day_answer INTEGER, month_answer INTEGER, year_answer INTEGER, type INTEGER, vacations TEXT, proof_type INTEGER, content_proof TEXT, user_signing_boss_proof TEXT)");
     QSqlQuery request_table;
     if (!request_table.exec(request_str)) {
         qDebug() << "[BASE_DATOS] Error al crear la tabla de solicitudes: " << request_table.lastError();
@@ -201,7 +200,7 @@ void data_base::add_request(std::string user,int solved, int day_request
     }
     // Add the new request
     QSqlQuery new_request;
-    new_request.prepare("INSERT INTO requests (user, id, solved, day_request, month_request, year_request, day_answer, month_answer, year_answer, type, request_id_vac, day_vac, month_vac, year_vac, shift_vac, proof_type, content_proof, user_signing_boss_proof) VALUES (:user, :id, :solved, :day_request, :month_request, :year_request, :day_answer, :month_answer, :year_answer, :type, :request_id_vac, :day_vac, :month_vac, :year_vac, :shift_vac, :proof_type, :content_proof, :user_signing_boss_proof)");
+    new_request.prepare("INSERT INTO requests (user, id, solved, day_request, month_request, year_request, day_answer, month_answer, year_answer, type, vacations, proof_type, content_proof, user_signing_boss_proof) VALUES (:user, :id, :solved, :day_request, :month_request, :year_request, :day_answer, :month_answer, :year_answer, :type, :vacations, :proof_type, :content_proof, :user_signing_boss_proof)");
     new_request.bindValue(":user", QString::fromStdString(user));
     new_request.bindValue(":id", this->request_count);
     new_request.bindValue(":solved", solved);
@@ -212,11 +211,7 @@ void data_base::add_request(std::string user,int solved, int day_request
     new_request.bindValue(":month_answer", month_answer);
     new_request.bindValue(":year_answer", year_answer);
     new_request.bindValue(":type", type);
-    new_request.bindValue(":request_id_vac", request_id_vac);
-    new_request.bindValue(":day_vac", day_vac);
-    new_request.bindValue(":month_vac", month_vac);
-    new_request.bindValue(":year_vac", year_vac);
-    new_request.bindValue(":shift_vac", shift_vac);
+    new_request.bindValue(":vacations", QString::fromStdString(vacations));
     new_request.bindValue(":proof_type", proof_type);
     new_request.bindValue(":content_proof", QString::fromStdString(content_proof));
     new_request.bindValue(":user_signing_boss_proof", QString::fromStdString(user_signing_boss_proof));
@@ -559,9 +554,6 @@ bool data_base::change_last_laboral_data(std::string user, int last_laboral_data
     }
     return success;
 }
-
-
-// NUEVO
 
 // TODO(nosotros): documentar
 std::string data_base::conuslt_process_requests_of_office(int office_id) {
