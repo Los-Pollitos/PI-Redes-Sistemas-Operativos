@@ -83,7 +83,7 @@ void login_server::wait_for_request() {
   socklen_t l = sizeof(this->ipRemoto);
   char strIpRemoto[INET6_ADDRSTRLEN];
   int port;
-  std::cout << std::endl << "[SERVIDOR ESCUCHANDO]" << std::endl;
+  std::cout << std::endl << "[SERVIDOR LOGIN ESCUCHANDO]" << std::endl;
   while (this->message_count < 5000) {
     // Search for a connection
     this->connection = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
