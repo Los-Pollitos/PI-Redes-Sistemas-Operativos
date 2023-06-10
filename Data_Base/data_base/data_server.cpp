@@ -693,14 +693,14 @@ void data_server::delete_user_case(std::string remote_ip) {
     std::string result = "0";
     // Check if the user exists
     if (this->base->user_exists(username)) {
+
         this->base->delete_user(username);
+
         result = "1";
     }
     this->logger->add_answer_log(remote_ip, "sent", result);
     data[0] = result[0];
-
     std::cout << "VOY A MANDARLE" << data << "\n";
-
     write(this->connection, this->data, DATA_SIZE);
 }
 

@@ -109,22 +109,13 @@ void manage_user::on_delete_button_clicked() {
         std::string desired_user = this->ui->delete_username->text().toStdString();
         if (desired_user != this->user_login->user) {
             // Send the information to the intermediary to handle it
-
-            qDebug() << "SEND ANTES";
-
             std::string first_result = this->send_delete(desired_user, '1');
-            // std::string second_result = this->send_delete(desired_user, '2');
-
-            std::cout << "FIRST RESULT: " << first_result << std::endl;
-
-            if (first_result[0] == '1' /*&& second_result[0] == '1'*/) {
+            std::string second_result = this->send_delete(desired_user, '2');
+            if (first_result[0] == '1' && second_result[0] == '1') {
                 this->show_success("Se logró eliminar el usuario");
             } else {
                 this->show_error("No se logró eliminar el usuario");
             }
-
-            qDebug() << "SEND DESPUES";
-
         } else {
             // Show the user the error
             this->show_error("No se puede eliminar su propio usuario");
