@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="reset">
+  <widget class="QPushButton" name="add_day">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -39,7 +39,7 @@
     <string>Enviar solicitud</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -50,7 +50,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QLabel" name="label_start_2">
+     <widget class="QLabel" name="turn_lable">
       <property name="text">
        <string>Turno a escoger</string>
       </property>
@@ -82,7 +82,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>100</x>
