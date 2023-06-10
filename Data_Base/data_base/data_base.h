@@ -37,9 +37,11 @@ class data_base {
     int record_count;
     int laboral_count;
     int request_count;
+
     // Methods
     void delete_user_from_table(std::string table, std::string user);
     bool verify_office_id(int office);
+    std::string request_type(int type, int proof_type);
 
   public:
     data_base();
@@ -79,6 +81,8 @@ class data_base {
     bool set_end_date_laboral_data(std::string user, int day, int month, int year);
     bool change_last_laboral_data(std::string user, int last_laboral_data);
     std::string conuslt_process_requests_of_office(int office);
+    std::string consult_requests(std::string user);
+    std::string consult_request(int id);
     std::string consult_records(std::string user);
     std::string consult_record(int id);
 };

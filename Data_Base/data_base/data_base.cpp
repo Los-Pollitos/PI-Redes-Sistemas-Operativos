@@ -592,6 +592,56 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
 }
 
 // TODO(nosotros): documentar
+std::string data_base::consult_requests(std::string user) {
+    std::string result = "";
+    QSqlQuery consult_requests;
+
+    consult_requests.prepare("SELECT id, solved, type, proof_type FROM requests WHERE user = (:user)");
+    consult_requests.bindValue(":user", QString::fromStdString(user));
+
+    // If a match was found
+    if (consult_requests.exec() && consult_requests.next()) {
+        do {
+            result += consult_requests.value(0).toString().toStdString() + " - ";  // id
+            result += this->request_type(consult_requests.value(1).toInt(), consult_requests.value(2).toInt());
+            result += ",";  // to separate the requests
+        } while (consult_requests.next());
+        result[result.length()-1] = '\0';  // there was an extra ','
+    } else {
+        qDebug() << "[BASE_DATOS] Error consultando anotaciones de: " << user;
+    }
+
+    return result;
+}
+
+std::string data_base::request_type(int type, int proof_type) {
+    std::string result = "\0";
+
+    if (type == VACATION) {
+        result = "Vacaciones";
+    } else {  //
+        switch(proof_type) {
+            case PAYMENT_PROOF_T:
+                result += "Constancia de pago";
+                break;
+            case WORK_PROOF_T:
+                result += "Constancia de trabajo";
+                break;
+            case SALARY_PROOF_T:
+                result += "Constancia salarial";
+                break;
+        }
+    }
+
+    return result;
+}
+
+// TODO(nosotros): documentar
+std::string data_base::consult_request(int id) {
+
+}
+
+// TODO(nosotros): documentar
 std::string data_base::consult_records(std::string user) {
     std::string result = "";
     QSqlQuery consult_record;

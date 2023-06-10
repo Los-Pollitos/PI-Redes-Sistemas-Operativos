@@ -46,7 +46,7 @@ void request_description::set_client(client* local_client){
 
 void request_description::set_atributes(int day, int month, int year,
         int& type, QString user, QString& description,
-        description_button *& parent_button, login_info * user_login,
+        description_button*& parent_button, login_info* user_login,
         bool admin) {
     this->parent_button = parent_button;
     this->description = description;

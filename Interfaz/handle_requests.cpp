@@ -67,7 +67,7 @@ void handle_requests::update_scroll() {
     int id = 0;
     int type = 0;
     std::string temp_to_show = "";
-    for (int i = 0; i < from_server.length(); ++i) {
+    for (size_t i = 0; i < from_server.length(); ++i) {
        if (from_server[i] != ',') { // get username
            while (from_server[i] != ':') {
                temp_user += from_server[i];

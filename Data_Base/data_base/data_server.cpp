@@ -416,9 +416,6 @@ void data_server::load_requests() {
             // save the vacations
             this->copy_string(line,vacations,initial_pos ,end_pos-1);
 
-            // TODO(angie): borrar
-            std::cout << "contenido vacaciones:" << vacations << std::endl;
-
             // find the proof_type
             initial_pos = end_pos;  // starts after the ','
             this->find_next(line, end_pos);
