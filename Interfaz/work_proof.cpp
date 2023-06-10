@@ -48,7 +48,7 @@ void work_proof::on_pushButton_clicked() {
 
     std::string result = local_client->send_and_receive(to_send);
 
-    if (result == "1") {
+    if (result[1] == '1') {
         QMessageBox show_message =  QMessageBox();
         show_message.setWindowTitle("Enviado");
         show_message.setModal(true);

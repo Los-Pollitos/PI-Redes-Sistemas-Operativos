@@ -769,7 +769,6 @@ void data_server::proof_case(std::string remote_ip) {
         year += data[j];
     }
 
-
     // Remove the unnecesary & as only one package is needed
     read(this->connection, this->data, sizeof(this->data));
     // Clear data
@@ -777,7 +776,8 @@ void data_server::proof_case(std::string remote_ip) {
     std::string result = "1";
     this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, 0,0,0,0,0, type,"","");
     this->logger->add_answer_log(remote_ip, "sent", result);
-    data[0] = '1';
+    data[0] = ' ';
+    data[1] = '1';
     write(this->connection, this->data, DATA_SIZE);
 }
 

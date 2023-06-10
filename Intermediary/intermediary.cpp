@@ -248,12 +248,16 @@ void intermediary::send_to_server(std::string ip_remote) {
       break;
     case PAYMENT_PROOF:
       this->send_and_receive_data_base(ip_remote);
+      break;
     case WORK_PROOF:
       this->send_and_receive_data_base(ip_remote);
+      break;
     case SALARY_PROOF:
       this->send_and_receive_data_base(ip_remote);
+      break;
     case SALARY_CONSULT:
       this->send_and_receive_data_base(ip_remote);
+      break;
     case CONSULT_REQUESTS:
     case VACATION_REQUEST:
     case CONSULT_VACATION:

@@ -2,6 +2,7 @@
 #define PAYMENT_PROOF_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include "client.h"
 #include "login_info.h"
 

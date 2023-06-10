@@ -48,6 +48,14 @@ void payment_proof::on_pushButton_clicked() {
 
     std::string result = local_client->send_and_receive(to_send);
 
-    this->close();
+    if (result[1] == '1') {
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Enviado");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("La solicitud fue realizada correctamente");
+        show_message.exec();
+    }
 
+    this->close();
 }
