@@ -21,9 +21,7 @@ namespace Ui {
 class consult_requests;
 }
 
-class consult_requests : public QDialog
-{
-    Q_OBJECT
+class consult_requests : public QDialog { Q_OBJECT
 
 public:
     explicit consult_requests(QWidget *parent = nullptr);
@@ -37,8 +35,10 @@ private:
     Ui::consult_requests *ui;
     std::vector<description_button*> requests_buttons;
     request_description * description;
-    login_info * users_login;
+    login_info * user_login;
     client* local_client;
+
+    void update_scroll();
 
 protected slots:
     void show_description(int id, int type);

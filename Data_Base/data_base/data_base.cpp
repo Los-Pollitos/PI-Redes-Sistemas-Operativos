@@ -602,9 +602,10 @@ std::string data_base::consult_requests(std::string user) {
     // If a match was found
     if (consult_requests.exec() && consult_requests.next()) {
         do {
-            result += consult_requests.value(0).toString().toStdString() + " - ";  // id
-            result += this->request_type(consult_requests.value(1).toInt(), consult_requests.value(2).toInt());
-            result += ",";  // to separate the requests
+            result += consult_requests.value(0).toString().toStdString() + "-";  // id
+            result += consult_requests.value(3).toString().toStdString() + "-";  // type
+            result += this->request_type(consult_requests.value(3).toInt(), consult_requests.value(4).toInt()) + ": ";
+            result += consult_requests.value(2).toString().toStdString() += ",";  // status
         } while (consult_requests.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {

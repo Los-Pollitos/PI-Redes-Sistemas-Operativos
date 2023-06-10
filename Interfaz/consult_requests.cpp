@@ -17,62 +17,7 @@ consult_requests::consult_requests(QWidget *parent) :
     this->description = new request_description(nullptr);
     ui->scrollArea->setWidget(container);
     this->layout = new QVBoxLayout(container);
-    this->requests_buttons.push_back(new description_button( "1", container, 0, 2));
-    this->connect(this->requests_buttons[0], &description_button::pressed, this
-                  , &consult_requests::show_description);
-    this->requests_buttons.push_back(new description_button( "2", container, 1, WORK_PROOF));
-    this->connect(this->requests_buttons[1], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "3", container, 2, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[2], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "4", container, 3, SALARY_PROOF));
-    this->connect(this->requests_buttons[3], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "5", container, 4, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[4], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "6", container, 5, PAYMENT_PROOF));
-    this->connect(this->requests_buttons[5], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "7", container, 6, WORK_PROOF));
-    this->connect(this->requests_buttons[6], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "8", container, 7, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[7], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    this->requests_buttons.push_back(new description_button( "9", container, 8, REQUEST_VACATIONS));
-    this->connect(this->requests_buttons[8], &description_button::pressed, this
-                  , &consult_requests::show_description);
-
-    layout->addWidget(this->requests_buttons[0]);
-    layout->addWidget(this->requests_buttons[1]);
-    layout->addWidget(this->requests_buttons[2]);
-    layout->addWidget(this->requests_buttons[3]);
-    layout->addWidget(this->requests_buttons[4]);
-    layout->addWidget(this->requests_buttons[5]);
-    layout->addWidget(this->requests_buttons[6]);
-    layout->addWidget(this->requests_buttons[7]);
-    layout->addWidget(this->requests_buttons[8]);
-
 }
-
-
-void consult_requests::set_client(client* local_client){
-    this->local_client = local_client;
-}
-
-void consult_requests::set_user_login(login_info * user_login) {
-    this->users_login = user_login;
-}
-
 
 consult_requests::~consult_requests() {
     if (this->ui) {
@@ -85,14 +30,70 @@ consult_requests::~consult_requests() {
     }
 }
 
+void consult_requests::set_client(client* local_client){
+    this->local_client = local_client;
+}
+
+void consult_requests::set_user_login(login_info * user_login) {
+    this->user_login = user_login;
+    this->update_scroll();
+}
+
+void consult_requests::update_scroll() {
+    // Remove all buttos
+    size_t length = this->requests_buttons.size();
+    for(size_t count = 0; count < length; ++count) {
+        this->layout->removeWidget(this->requests_buttons[count]);
+        this->requests_buttons[count]->hide();
+        this->requests_buttons.erase(this->requests_buttons.begin()+(count));
+    }
+
+    // Ask for information from server
+    std::string to_send = " " + this->user_login->user + ",";
+    to_send[0] = SEE_CONSULT_REQUESTS;
+    to_send =  this->local_client->send_and_receive(to_send);
+
+    // Separate the data received
+    std::string id_temp = "\0";
+    std::string type_temp = "\0";
+    std::string button_content = "\0";
+    int id = 0;
+    int type = 0;
+
+    for (size_t i = 0; i < to_send.length(); ++i) {
+        id_temp = "\0";
+        type_temp = "\0";
+        button_content = "\0";
+
+        while(to_send[i] != '-') {  // id
+            id_temp += to_send[i++];
+        }
+        id = stoi(id_temp);
+
+        while(to_send[i] != '-') {  // type
+            type_temp += to_send[i++];
+        }
+        type = stoi(type_temp);
+
+        while(to_send[i] != ',' && to_send[i] != '\0') {
+            button_content += to_send[i++];
+        }
+
+        this->requests_buttons.push_back(new description_button(QString::fromStdString(button_content), container, requests_buttons.size()-1, type, id));
+        this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
+                      , &consult_requests::update_scroll);
+        this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::pressed, this
+                      , &consult_requests::show_description);
+        layout->addWidget(this->requests_buttons[requests_buttons.size()-1]);
+    }
+}
 
 void consult_requests::show_description(int id, int type) {
-    // TODO (nosotros): Borrar y cambiar la fecha y la descripción (se realizará cuando se tengan los datos del servidor)
-    Q_UNUSED(id)
-    QString newString = "Me gusta jugar";
-    int new_type = type;
-    this->description->set_client(this->local_client);
-    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->users_login, false);
-    this->description->setModal(true);
-    this->description->show();
+//    Q_UNUSED(id)
+//    QString newString = "Me gusta jugar";
+//    int new_type = type;
+//    this->description->set_client(this->local_client);
+//    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_login, true);
+//    this->description->setModal(true);
+//    this->description->show();
 }
