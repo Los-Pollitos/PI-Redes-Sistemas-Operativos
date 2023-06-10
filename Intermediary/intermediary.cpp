@@ -160,7 +160,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
           write(s, this->data, DATA_SIZE);
           this->logger->add_to_log(ip_remote, "sent to data base", this->data);
           n = read(this->connection, this->data, sizeof(this->data));
-          std::cout << "Recibí: " << this->data << std::endl;
+          std::cout << "Recibí: " << this->data << "de cliente" << std::endl;
           if (this->data[0] != '&') {
            this->logger->add_answer_log(ip_remote, "received from client", this->data);
           }
@@ -170,7 +170,16 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
 
       // receive everything from server
       this->data[0] = 'a';
+
+      std::cout << "ANTES DE WHILE \n";
+      std::cout << (s != -1) << "\n";
+      std::cout << (n > 0) << "\n";
+      std::cout << "N: " << n << "\n";
+
       while (s != -1 && n > 0 && this->data[0] != '&') { 
+
+        std::cout << "EN WHILE \n";
+
         if ((n = read(s, this->data, DATA_SIZE)) > 0) {
           // connection es socket cliente
           std::cout << "Recibi: " << this->data << "de data base" << std::endl;
@@ -201,12 +210,12 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
  */
 void intermediary::manage_user_case(std::string ip_remote) {
   char temporal_data[DATA_SIZE];
-  // Remove the &
-  read(this->connection, temporal_data, DATA_SIZE);
   // Check the server to send the information
   if (data[1] == '1') {
     this->send_and_receive_data_base(ip_remote);
   } else {
+    // Remove the &
+    read(this->connection, temporal_data, DATA_SIZE);
     std::string answer = this->send_and_receive_login(ip_remote);
     write(this->connection, answer.data(), DATA_SIZE);
     memset(this->data, '\0', DATA_SIZE);

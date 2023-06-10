@@ -98,9 +98,6 @@ std::string manage_user::send_delete(std::string username, char server) {
     to_send += server;
     to_send += username;
     to_send += ",";
-
-    std::cout << "TO SEND: " << to_send << "\n";
-
     return this->local_client->send_and_receive(to_send);
 }
 
@@ -115,12 +112,12 @@ void manage_user::on_delete_button_clicked() {
 
             qDebug() << "SEND ANTES";
 
-            // std::string first_result = this->send_delete(desired_user, '1');
-            std::string second_result = this->send_delete(desired_user, '2');
+            std::string first_result = this->send_delete(desired_user, '1');
+            // std::string second_result = this->send_delete(desired_user, '2');
 
-            std::cout << "SECOND RESULT: " << second_result << std::endl;
+            std::cout << "FIRST RESULT: " << first_result << std::endl;
 
-            if (/*first_result[0] == '1' &&*/second_result[0] == '1') {
+            if (first_result[0] == '1' /*&& second_result[0] == '1'*/) {
                 this->show_success("Se logró eliminar el usuario");
             } else {
                 this->show_error("No se logró eliminar el usuario");
