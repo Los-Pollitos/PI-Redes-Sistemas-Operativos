@@ -68,8 +68,8 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[PENDING_REQUESTS], &description_button::pressed, this
        , &initial::create_windows);
 
-    this->requests_buttons.push_back(new description_button( "Solicitar vacaciones", container, VACATION_MANGER, 0));
-    this->connect(this->requests_buttons[VACATION_MANGER], &description_button::pressed, this
+    this->requests_buttons.push_back(new description_button( "Solicitar vacaciones", container, VACATION_MANAGER, 0));
+    this->connect(this->requests_buttons[VACATION_MANAGER], &description_button::pressed, this
            , &initial::create_windows);
 
     this->requests_buttons.push_back(new description_button( "Saldo de vacaciones", container, SEE_VACATIONS, 0));
@@ -183,7 +183,7 @@ void initial::update_scrollbar() {
         this->layout->addWidget(this->requests_buttons[SALARY_PAGE]);
         this->layout->addWidget(this->requests_buttons[SEE_SALARY]);
         this->layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
-        this->layout->addWidget(this->requests_buttons[VACATION_MANGER]);
+        this->layout->addWidget(this->requests_buttons[VACATION_MANAGER]);
         this->layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
         this->layout->addWidget(this->requests_buttons[SEE_RECORD]);
         this->requests_buttons[EMPLOYEE_SEP]->show();
@@ -192,7 +192,7 @@ void initial::update_scrollbar() {
         this->requests_buttons[SALARY_PAGE]->show();
         this->requests_buttons[SEE_SALARY]->show();
         this->requests_buttons[PENDING_REQUESTS]->show();
-        this->requests_buttons[VACATION_MANGER]->show();
+        this->requests_buttons[VACATION_MANAGER]->show();
         this->requests_buttons[SEE_VACATIONS]->show();
         this->requests_buttons[SEE_RECORD]->show();
     } else {
@@ -208,8 +208,8 @@ void initial::update_scrollbar() {
         this->requests_buttons[SEE_SALARY]->hide();
         this->layout->removeWidget(this->requests_buttons[PENDING_REQUESTS]);
         this->requests_buttons[PENDING_REQUESTS]->hide();
-        this->layout->removeWidget(this->requests_buttons[VACATION_MANGER]);
-        this->requests_buttons[VACATION_MANGER]->hide();
+        this->layout->removeWidget(this->requests_buttons[VACATION_MANAGER]);
+        this->requests_buttons[VACATION_MANAGER]->hide();
         this->layout->removeWidget(this->requests_buttons[SEE_VACATIONS]);
         this->requests_buttons[SEE_VACATIONS]->hide();
         this->layout->removeWidget(this->requests_buttons[SEE_RECORD]);
@@ -366,7 +366,7 @@ void initial::create_windows(int id, int type) {
      this->pending_requests->set_user_login(this->users_login);
      this->pending_requests->show();
      break;
-   case VACATION_MANGER:
+   case VACATION_MANAGER:
      this->vacation_manager->setModal(true);
      this->vacation_manager->show();
      break;

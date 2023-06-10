@@ -20,7 +20,7 @@ public:
 private:
     Ui::request_vacations *ui;
     client* local_client;
-
+    std::string to_send;
 };
 
 #endif // REQUEST_VACATIONS_H

@@ -11,7 +11,7 @@ enum type_button {
      SALARY_PAGE,
      SEE_SALARY,
      PENDING_REQUESTS,
-     VACATION_MANGER,
+     VACATION_MANAGER,
      SEE_VACATIONS,
      SEE_RECORD,
      SUPERVISOR_SEP,
