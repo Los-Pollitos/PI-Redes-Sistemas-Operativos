@@ -5,6 +5,13 @@ vacation_consult::vacation_consult(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::vacation_consult)
 {
+    // Setup the window
+    this->setup_window();
+    // Obtain information from server
+    this->obtain_from_server();
+}
+
+void vacation_consult::setup_window() {
     ui->setupUi(this);
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->available_vacations->setStyleSheet("color: #001f21;");
@@ -13,17 +20,28 @@ vacation_consult::vacation_consult(QWidget *parent) :
     this->ui->id_label->setStyleSheet("color: #001f21;");
     this->ui->name->setStyleSheet("color: #001f21;");
     this->ui->name_label->setStyleSheet("color: #001f21;");
-    this->ui->vacations->setStyleSheet("color: #001f21;");
-    this->ui->vacations_label->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Vacaciones disponibles");
     ui->available_vacations->setReadOnly(true);
-    ui->vacations->setReadOnly(true);
     ui->id->setReadOnly(true);
     ui->name->setReadOnly(true);
 }
 
+std::string vacation_consult::obtain_from_server() {
+    std::string to_send = "";
+    // Setup the char for the intermediary
+    to_send += ((char)CONSULT_VACATION);
+    // Add the username to know whose vacation information is desired
+    to_send += this->user_login->user;
+    return this->local_client->send_and_receive(to_send);
+}
+
+
 void vacation_consult::set_client(client* local_client){
     this->local_client = local_client;
+}
+
+void vacation_consult::set_user_login(login_info* user_login) {
+    this->user_login = user_login;
 }
 
 vacation_consult::~vacation_consult() {
