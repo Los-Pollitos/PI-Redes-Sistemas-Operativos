@@ -60,7 +60,6 @@ void vacation_consult::show_result(std::string result) {
         vacations += result[i];
     }
     ++i;
-    // Show the results
     this->ui->name->setText(QString::fromStdString(name));
     this->ui->id->setText(QString::fromStdString(identification));
     this->ui->available_vacations->setText(QString::fromStdString(vacations));
