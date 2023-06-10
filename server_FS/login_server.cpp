@@ -210,7 +210,7 @@ void login_server::append_the_user(std::string& username, std::string& hash) {
 
   for (int i = 0; i < 6; ++i) {
     // Generate integer numbers between 10 and 99
-    current_token = rand() % 99 + 10;
+    current_token = rand() % 90 + 10;
     to_write += std::to_string(current_token);
 
     std::cout << to_write << std::endl;
