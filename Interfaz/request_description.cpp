@@ -3,7 +3,7 @@
 
 #include <QMessageBox>
 
-QString request_type(int type) {
+QString request_description::request_type(int type) {
     QString string_type = "Solicitud de Vacaciones";
     switch (type) {
     case WORK_PROOF:
@@ -83,7 +83,7 @@ void request_description::set_atributes(int day, int month, int year,
     this->ui->label_descripcion->setPlainText(description);
     this->ui->label_descripcion->setReadOnly(true);
     this->ui->label_fecha->setText(date_string);
-    QString type_string = request_type(this->type);
+    QString type_string = this->request_type(this->type);
     this->ui->label_tipo->setText(type_string);
     this->ui->lineEdit->setEchoMode(QLineEdit::Password);
     this->user_login = user_login;
@@ -150,6 +150,30 @@ void request_description::on_file_button_clicked() {
     //pdf.setTitle("Prueba para Los Pollitos");
     //pdf.setPageSize(QPagedPaintDevice::A4);
 }
+
+void request_description::generate_pdf(const QString& file_path, const QString& text, const QString& image_path) {
+    QPdfWriter pdf_writer(file_path);
+    pdf_writer.setPageSize(QPageSize(QPageSize::Letter));
+    pdf_writer.setPageMargins(QMarginsF(15, 15, 30, 30));
+    QPainter painter(&pdf_writer);
+    painter.setFont(QFont("Times New Roman", 12));
+    // Load the image
+    QImage image(image_path);
+    if (!image.isNull()) {
+        // Scale the image to fit within the page width
+        QImage scaled_image = image.scaledToWidth(pdf_writer.width() - 5000, Qt::SmoothTransformation);
+        // Calculate the position to draw the image
+        QRectF image_rect(pdf_writer.width() - 1500, pdf_writer.height() - 12000, scaled_image.width(), scaled_image.height());
+        // Draw the image
+        painter.drawImage(image_rect, scaled_image);
+    } else {
+        qDebug() << "Failed to load image";
+    }
+    // Draw the text
+    painter.drawText(QRectF(15, 15, pdf_writer.width() - 60, pdf_writer.height() - 190), text);
+    painter.end();
+}
+
 
 void request_description::handle_request(int solved) {
     std::time_t actual_time = std::time(nullptr);

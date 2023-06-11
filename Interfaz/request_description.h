@@ -2,7 +2,9 @@
 #define REQUEST_DESCRIPTION_H
 
 #include <QDialog>
+#include <QPainter>
 #include <QPdfWriter>
+#include <QImage>
 
 #include "description_button.h"
 #include "login_info.h"
@@ -30,13 +32,11 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
-
     void on_buttonBox_rejected();
-
-
     void on_file_button_clicked();
 
 private:
+    // Attributes
     Ui::request_description *ui;
     int date[3];
     int type;
@@ -46,6 +46,10 @@ private:
     QString description;
     login_info * user_login;
     client* local_client;
+
+    // Private method
+    void generate_pdf(const QString& file_path, const QString& text, const QString& image_path);
+    QString request_type(int type);
 };
 
 #endif // REQUEST_DESCRIPTION_H
