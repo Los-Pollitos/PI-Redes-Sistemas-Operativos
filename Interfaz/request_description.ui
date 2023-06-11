@@ -153,7 +153,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Adjuntar archivo</string>
+    <string>Descargar archivo</string>
    </property>
   </widget>
   <widget class="QPlainTextEdit" name="label_descripcion">

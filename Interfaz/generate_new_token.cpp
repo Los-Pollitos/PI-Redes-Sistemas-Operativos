@@ -147,7 +147,7 @@ void generate_new_token::on_generate_button_2_clicked() {
         result = this->local_client->send_and_receive(to_send);
         if (result[0] == '1') {
             QMessageBox show_message =  QMessageBox();
-            show_message.setWindowTitle("Information");
+            show_message.setWindowTitle("Información");
             show_message.setModal(true);
             show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
             show_message.setText("El token ha sido actualizado");

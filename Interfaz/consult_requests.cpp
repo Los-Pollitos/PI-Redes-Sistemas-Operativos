@@ -69,9 +69,6 @@ void consult_requests::update_scroll() {
             id_temp += to_send[i++];
         }
 
-        // TODO(nosotros): borrar
-        qDebug() << id_temp;
-
         id = stoi(id_temp);
         ++i;
 
@@ -98,6 +95,9 @@ void consult_requests::show_description(int vector_pos, int type) {
     std::string to_send = " " + std::to_string(this->requests_buttons[vector_pos + 1]->get_id_requests()) + "," + std::to_string(type);
     to_send[0] = CONSULT_REQUESTS;
     to_send = this->local_client->send_and_receive(to_send);  // day, month, year, content
+    if (type == VACATION) {
+        to_send = to_send.substr(0, to_send.find("&"));
+    }
 
     int pos = 0;
     std::string temp = "\0";
@@ -130,7 +130,7 @@ void consult_requests::show_description(int vector_pos, int type) {
     ++pos;
 
     // content
-    while(to_send[pos] != '\0') {
+    while(to_send[pos] != ',' && to_send[pos] != '\0' && to_send[pos] != '&') {
         content += to_send[pos++];
     }
     content += '\0';

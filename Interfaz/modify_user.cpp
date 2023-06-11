@@ -220,6 +220,7 @@ void modify_user::add_data_to_combobox() {
     ui->base_salary->setText(0);
     ui->deductions->setText(0);
     ui->net_salary->setText(0);
+    ui->password->setText("");
 
     int i = 0;
     // find the user's office id
