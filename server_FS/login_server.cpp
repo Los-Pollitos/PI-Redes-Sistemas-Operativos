@@ -118,7 +118,7 @@ void login_server::answer_request() {
   while (this->connection != -1 &&
          (n = read(this->connection, this->data, DATA_SIZE)) > 0) {
     // connection es socket cliente
-    std::cout << "Recibi: " << this->data << std::endl;
+    std::cout << "[SERVIDOR LOGIN RECIBIO]: " << this->data << std::endl;
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
@@ -183,7 +183,7 @@ void login_server::create_user() {
     this->data[0] = '1';
   }
   // Write to the intermediary the answer
-  std::cout << "Voy a enviar a intermediario " << this->data << "\n";
+  std::cout << "[SERVIDOR LOGIN -> INTERMEDIARIO] " << this->data << "\n";
   write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -259,7 +259,7 @@ void login_server::delete_user() {
     this->data[0] = '0';
   }
   // Write to the intermediary the answer
-  std::cout << "Voy a enviar a intermediario " << this->data << "\n";
+  std::cout << "[SERVIDOR LOGIN -> INTERMEDIARIO] " << this->data << "\n";
   write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -455,12 +455,10 @@ void login_server::give_token(){
       std::string token_ascii = "";
       int i = 0;
       for (i = 0; i < 12; ++i) {
-        std::cout << (int)buffer[i] << " ";
         token_ascii += std::to_string((int)buffer[i]);
         token_ascii += ',';
       }
       token_ascii += '\0';
-      std::cout << std::endl;
       this->adapt_data(token_ascii);
       this->data[12] = ',';
     } else {
