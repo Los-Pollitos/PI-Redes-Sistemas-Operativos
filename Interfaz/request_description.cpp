@@ -53,32 +53,35 @@ void request_description::set_atributes(int day, int month, int year,
     this->date[2] = year;
     this->type= type;
     this->admin = admin;
+    this->user = user;
+    this->description = description;
+
     if (!this->admin) {
        this->ui->file_button->setText("Descargar archivo");
        this->ui->buttonBox->hide();
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
-    } else {
+       if (this->type == REQUEST_VACATIONS_D) {
+           this->ui->file_button->hide();
+       } else {
+           this->ui->file_button->show();
+       }
+    } else {  // is admin
         this->ui->file_button->hide();
         this->ui->buttonBox->show();
         this->ui->password_label->show();
         this->ui->lineEdit->show();
         this->ui->accept_label->show();
     }
-    if (this->type == REQUEST_VACATIONS_D) {
-        this->ui->file_button->hide();
-    } else {
-        this->ui->file_button->show();
-    }
-    this->user = user;
-    this->description = description;
+
     QString date_string = QString::number(day);
     date_string += "/";
     date_string += QString::number(month);
     date_string += "/";
     date_string += QString::number(year);
-    this->ui->label_descripcion->setText(description);
+    this->ui->label_descripcion->setPlainText(description);
+    this->ui->label_descripcion->setReadOnly(true);
     this->ui->label_fecha->setText(date_string);
     QString type_string = request_type(this->type);
     this->ui->label_tipo->setText(type_string);
@@ -86,8 +89,7 @@ void request_description::set_atributes(int day, int month, int year,
     this->user_login = user_login;
 }
 
-request_description::~request_description()
-{
+request_description::~request_description() {
     if (this->ui) {
         delete this->ui;
         this->ui = 0;
@@ -98,24 +100,16 @@ void request_description::on_buttonBox_accepted() {
     QString password = this->ui->lineEdit->text();
     this->ui->lineEdit->clear();
     if (password.toStdString() == this->user_login->password) {
-        if (this->type == REQUEST_VACATIONS_D) {
-            QMessageBox show_message =  QMessageBox();
-            show_message.setWindowTitle("Correcto");
-            show_message.setModal(true);
-            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
-            show_message.setText("Solicitud aceptada");
-            show_message.exec();
-            this->parent_button->valid = false;
-            this->close();
-            emit this->parent_button->disapear(this->parent_button->identifier);
-        } else {
-            QMessageBox show_message =  QMessageBox();
-            show_message.setWindowTitle("Error");
-            show_message.setModal(true);
-            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
-            show_message.setText("Debe incluir un archivo de constancia");
-            show_message.exec();
-        }
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Correcto");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Solicitud aceptada");
+        show_message.exec();
+        this->handle_request(ACCEPTED);
+        this->parent_button->valid = false;
+        this->close();
+        emit this->parent_button->disapear(this->parent_button->identifier);
     } else {
         QMessageBox show_message =  QMessageBox();
         show_message.setWindowTitle("Error");
@@ -125,7 +119,6 @@ void request_description::on_buttonBox_accepted() {
         show_message.exec();
     }
 }
-
 
 void request_description::on_buttonBox_rejected() {
     QString password = this->ui->lineEdit->text();
@@ -137,6 +130,7 @@ void request_description::on_buttonBox_rejected() {
         show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
         show_message.setText("Solicitud denegada");
         show_message.exec();
+        this->handle_request(DENIED);
         this->close();
         this->parent_button->valid = false;
         emit this->parent_button->disapear(this->parent_button->identifier);
@@ -149,7 +143,6 @@ void request_description::on_buttonBox_rejected() {
         show_message.exec();
     }
 }
-
 
 void request_description::on_file_button_clicked() {
     // TODO(cristopher): hacer lo de descargar un archivo (no es para esta entrega)
@@ -168,7 +161,7 @@ void request_description::handle_request(int solved) {
 
     std::string to_send = "";
     to_send += ((char)PROCESS_REQUESTS);
-    to_send += user_login->user;
+    to_send += user_login->user + ",";
     to_send += std::to_string(parent_button->get_id_requests()) + ",";
     to_send += std::to_string(solved) + ",";
     to_send += std::to_string(actual_day) + ",";
@@ -177,7 +170,5 @@ void request_description::handle_request(int solved) {
 
 
     this->local_client->send_and_receive(to_send);
-
-
 }
 

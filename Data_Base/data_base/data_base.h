@@ -87,6 +87,8 @@ class data_base {
     std::string consult_records(std::string user);
     std::string consult_record(int id);
     std::string get_available_vacations(std::string user);
+    bool change_request_solved(int id, int solved, int day_answer, int month_answer
+                               , int year_answer, std::string user_signing_boss_proof);
 };
 
 #endif // DATA_BASE_H

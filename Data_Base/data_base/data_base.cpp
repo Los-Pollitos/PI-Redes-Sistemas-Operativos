@@ -240,11 +240,6 @@ void data_base::add_request(std::string user,int solved, int day_request
         qDebug() << "[BASE_DATOS] Error agregando solicitud: " << new_request.lastError();
     }
     ++this->request_count;
-
-
-    // TODO(nostros): borrar
-    std::cout << "agregue #" << request_count-1 << " de " << user << " de tipo " << type << std::endl;
-
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -598,7 +593,7 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
         }
     }
     for (size_t i = 0; i < employee_vector.size(); ++ i) {
-        consult_employee.prepare("SELECT * FROM requests WHERE user = (:employee) AND solved = (:solved)");
+        consult_employee.prepare("SELECT id, type FROM requests WHERE user = (:employee) AND solved = (:solved)");
         consult_employee.bindValue(":employee", QString::fromStdString(employee_vector[i]));
         consult_employee.bindValue(":solved", PENDING);
 
@@ -607,12 +602,16 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
             do {
                 result += employee_vector[i]; // employee name
                 result += ":";
-                result += consult_employee.value(1).toString().toStdString() += ":"; // request id
-                result += consult_employee.value(2).toString().toStdString() += ":"; // type
+                result += consult_employee.value(0).toString().toStdString() += ":"; // request id
+                result += consult_employee.value(1).toString().toStdString() += ":"; // type
                 result += ",";
             } while (consult_employee.next());
-            result[result.length()-1] = '\0';  // there was an extra ','
-        } // NO else, because there can be no requests of an employee and that is ok
+        }
+    }
+    if (result.length() == 0) {
+        result = "0";  // no requests are needed to be proccessed
+    } else {
+        result[result.length()-1] = '\0';  // there was an extra ','
     }
     return result;
 }
@@ -707,6 +706,7 @@ std::string data_base::consult_request(int id, int type) {
     } else {
             qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id << "de tipo:" << type;
     }
+    result += "\0";
 
     return result;
 }
@@ -764,5 +764,22 @@ std::string data_base::consult_record(int id) {
         qDebug() << "[BASE_DATOS] Error buscando la anotación #" << id;
     }
     return result;
+}
 
+bool data_base::change_request_solved(int id, int solved, int day_answer, int month_answer
+                           , int year_answer, std::string user_signing_boss_proof) {
+    bool success = true;
+    QSqlQuery modify_request;
+    modify_request.prepare("UPDATE requests SET solved = (:solved), day_answer = (:day_answer), month_answer = (:month_answer), year_answer = (:year_answer), user_signing_boss_proof = (:user_signing_boss_proof) WHERE id = (:id)");
+    modify_request.bindValue(":id", id);
+    modify_request.bindValue(":solved", solved);
+    modify_request.bindValue(":day_answer", day_answer);
+    modify_request.bindValue(":month_answer", month_answer);
+    modify_request.bindValue(":year_answer", year_answer);
+    modify_request.bindValue(":user_signing_boss_proof", QString::fromStdString(user_signing_boss_proof));
+    if (!modify_request.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando la solicitud" << QString::fromStdString(user_signing_boss_proof);
+        success = false;
+    }
+    return success;
 }

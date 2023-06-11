@@ -42,13 +42,13 @@ handle_requests::~handle_requests() {
 }
 
 void handle_requests::update_scroll() {
-    // Remove all buttos
+    // Remove all buttons
     size_t length = this->requests_buttons.size();
     for(size_t count = 0; count < length; ++count) {
        this->layout->removeWidget(this->requests_buttons[count]);
        this->requests_buttons[count]->hide();
-       this->requests_buttons.erase(this->requests_buttons.begin()+(count));
     }
+    this->requests_buttons.clear();
 
     // Ask for information from server
     std::string to_server = "";
@@ -57,56 +57,57 @@ void handle_requests::update_scroll() {
     to_server += ",";
     std::string from_server = "";
     from_server = this->local_client->send_and_receive(to_server);
-    from_server += ",";
+    if (from_server[0] != '0') {  // there is a button to create
+       from_server += ",";
 
-    // Start separating data
-    std::string temp_user = "";
-    std::string temp_id = "";
-    std::string temp_type = "";
-    int id = 0;
-    int type = 0;
-    std::string temp_to_show = "";
-    for (size_t i = 0; i < from_server.length(); ++i) {
-       if (from_server[i] != ',') { // get username
-           while (from_server[i] != ':') {
-               temp_user += from_server[i];
-               ++i;
-           }
-           ++i; // skip :
-           while (from_server[i] != ':') { // get id
-               temp_id += from_server[i];
-               ++i;
-           }
-           ++i; // skip :
-           while (from_server[i] != ':') { // get type
-               std::cout << "while " << from_server[i] << std::endl;
-               temp_type += from_server[i];
-               ++i;
-           }
-       } else {
-           type = (int)(temp_type[0] -48);
-           id = (int)(temp_id[0] -48);
-           temp_to_show = temp_user;
-           temp_to_show += " : ";
-           switch (type) {
+       // Start separating data
+       std::string temp_user = "";
+       std::string temp_id = "";
+       std::string temp_type = "";
+       int id = 0;
+       int type = 0;
+       std::string temp_to_show = "";
+       for (size_t i = 0; i < from_server.length(); ++i) {
+           if (from_server[i] != ',') { // get username
+               while (from_server[i] != ':') {
+                   temp_user += from_server[i];
+                   ++i;
+               }
+               ++i; // skip :
+               while (from_server[i] != ':') { // get id
+                   temp_id += from_server[i];
+                   ++i;
+               }
+               ++i; // skip :
+               while (from_server[i] != ':') { // get type
+                   temp_type += from_server[i];
+                   ++i;
+               }
+           } else {
+               type = (int)(temp_type[0] -48);
+               id = (int)(temp_id[0] -48);
+               temp_to_show = temp_user;
+               temp_to_show += ": ";
+               switch (type) {
                case VACATION:
-                    temp_to_show += "Vacaciones";
-                    break;
+                   temp_to_show += "Vacaciones";
+                   break;
                case PROOF:
-                    temp_to_show += "Constancia";
-                    break;
+                   temp_to_show += "Constancia";
+                   break;
+               }
+               std::cout << "Voy a poner un boton con " << temp_to_show << std::endl;
+               this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
+               this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
+                             , &handle_requests::update_scroll);
+               this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::pressed, this
+                             , &handle_requests::show_description);
+               layout->addWidget(this->requests_buttons[requests_buttons.size()-1]);
+               temp_user = "";
+               temp_id = "";
+               temp_type = "";
+               temp_to_show = "";
            }
-           std::cout << "Voy a poner un boton con " << temp_to_show << std::endl;
-           this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
-           this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
-                         , &handle_requests::update_scroll);
-           this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::pressed, this
-                         , &handle_requests::show_description);
-           layout->addWidget(this->requests_buttons[requests_buttons.size()-1]);
-           temp_user = "";
-           temp_id = "";
-           temp_type = "";
-           temp_to_show = "";
        }
     }
 }
@@ -147,13 +148,13 @@ void handle_requests::show_description(int vector_pos, int type) {
     ++pos;
 
     // content
-    while(to_send[pos] != '\0') {
+    while(to_send[pos] != ',') {
        content += to_send[pos++];
     }
 
     this->description->set_client(this->local_client);
     this->description->set_atributes(day, month, year, type, QString::fromStdString(this->user_login->user)
-                                     , content, this->requests_buttons[vector_pos + 1], this->user_login, false);
+                                     , content, this->requests_buttons[vector_pos + 1], this->user_login, true);
     this->description->setModal(true);
     this->description->show();
 }

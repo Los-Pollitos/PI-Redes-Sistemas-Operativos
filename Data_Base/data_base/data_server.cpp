@@ -922,10 +922,11 @@ void data_server::process_data(std::string remote_ip) {
         case SEE_PROCESS_REQUESTS:
             this->see_process_requests(remote_ip);
             break;
-        case PROCESS_REQUESTS:
-            // TODO(todos): hacer
 
+        case PROCESS_REQUESTS:
+            this->process_requests(remote_ip);
             break;
+
         case VACATION_REQUEST:
             this->vacation_request(remote_ip);
             break;
@@ -1472,6 +1473,80 @@ void data_server::consult_request(std::string remote_ip) {
 
     // ask the data base for the result
     to_send = this->base->consult_request(id, type);
+
+    // find the size of the package to send
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
+
+    // send the data
+    for (int i = 0; i < total_m && i < 10; ++i) {
+        adapt_data(data, to_send, DATA_SIZE * i);
+        std::cout << "Voy a mandar: " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(remote_ip, "sent", this->data);
+    }
+
+    this->data[0] = '&';
+    std::cout << "Voy a mandar " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::process_requests(std::string remote_ip) {
+    std::string to_send = "\0";
+    int i = 1;
+    int id = 0;
+    int solved = 0;
+    int day = 0;
+    int month = 0;
+    int year = 0;
+    std::string signing_boss = "\0";
+
+    // find the data
+    // find the signing boss
+    while (this->data[i] != ',') {
+        signing_boss += this->data[i++];
+    }
+    ++i;
+
+    // find the id
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    id = stoi(to_send);
+    to_send = "\0";
+    ++i;
+
+    // find if solved
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    solved = stoi(to_send);
+    to_send = "\0";
+    ++i;
+
+    // find the day
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    day = stoi(to_send);
+    to_send = "\0";
+    ++i;
+
+    // find the month
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    month = stoi(to_send);
+    to_send = "\0";
+    ++i;
+
+    // find the year
+    while (this->data[i] != '\0') {
+        to_send += this->data[i++];
+    }
+    year = stoi(to_send);
+
+    // ask the data base for the answer
+    to_send = (this->base->change_request_solved(id, solved, day, month, year, signing_boss) ? 1 : 0);
 
     // find the size of the package to send
     int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
