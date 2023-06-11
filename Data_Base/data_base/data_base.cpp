@@ -240,6 +240,11 @@ void data_base::add_request(std::string user,int solved, int day_request
         qDebug() << "[BASE_DATOS] Error agregando solicitud: " << new_request.lastError();
     }
     ++this->request_count;
+
+
+    // TODO(nostros): borrar
+    std::cout << "agregue #" << request_count-1 << " de " << user << " de tipo " << type << std::endl;
+
 }
 
 // TODO(nosotros): DOCUMENTAR
@@ -678,22 +683,29 @@ std::string data_base::request_status(int solved) {
 std::string data_base::consult_request(int id, int type) {
     std::string result = "";
     QSqlQuery consult_request;
+    QString request_str = "\0";
 
-    QString content_type = ((type == VACATION)? "vacations" : "content_proof, user_signing_boss");
+    if (type == VACATION){
+        request_str = "SELECT day_request, month_request, year_request, vacations FROM requests WHERE id = (:id)";
+    } else {
+        request_str = "SELECT day_request, month_request, year_request, content_proof, user_signing_boss_proof FROM requests WHERE id = (:id)";
+    }
 
-    consult_request.prepare("SELECT day_request, month_request, year_request " + content_type + " FROM requests WHERE id = (:id)");
+    consult_request.prepare(request_str);
     consult_request.bindValue(":id", id);
 
     // If a match was found
     if (consult_request.exec() && consult_request.next()) {
-            do {
-                result += consult_request.value(0).toString().toStdString() + ",";  // day
-                result += consult_request.value(1).toString().toStdString() + ",";  // month
-                result += consult_request.value(2).toString().toStdString() + ",";  // year
-                result += consult_request.value(3).toString().toStdString();  // content
-            } while (consult_request.next());
+            result += consult_request.value(0).toString().toStdString() + ",";  // day
+            result += consult_request.value(1).toString().toStdString() + ",";  // month
+            result += consult_request.value(2).toString().toStdString() + ",";  // year
+            result += consult_request.value(3).toString().toStdString();  // content
+
+            if (type != VACATION) {
+                result += "," + consult_request.value(4).toString().toStdString();
+            }
     } else {
-            qDebug() << "[BASE_DATOS] Error consultando la solicitud #:" << id << "de tipo:" << type;
+            qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id << "de tipo:" << type;
     }
 
     return result;

@@ -7,10 +7,8 @@
 #include "login_info.h"
 #include "client.h"
 
-#define REQUEST_VACATIONS 1
-#define PAYMENT_PROOF 2
-#define WORK_PROOF 3
-#define SALARY_PROOF 4
+#define REQUEST_VACATIONS 0
+#define PROOF 1
 
 
 namespace Ui {
