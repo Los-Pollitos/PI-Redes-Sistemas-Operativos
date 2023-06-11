@@ -558,7 +558,7 @@ void data_server::answer_request() {
     while (this->connection != -1 &&
            (n = read(this->connection, this->data, sizeof(this->data))) > 0) {
         // connection es socket cliente
-        std::cout << "Recibi: " << this->data << std::endl;
+        std::cout << "[SERVIDOR DE DATOS RECIBIE] " << this->data << std::endl;
         if (this->data[0] == '#') {
             close(this->connection);
         } else {
@@ -586,13 +586,13 @@ void data_server::see_process_requests(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m; ++i) {
         adapt_data(data, to_send_back, DATA_SIZE * i);
-        std::cout << "Voy a mandar (para process_requests): " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -644,7 +644,7 @@ void data_server::vacation_request(std::string remote_ip) {
     std::string receive = "";
     int n = 1;
     while (this->connection != -1 && n > 0 && this->data[0] != '&') {
-        std::cout << "Recibi " << this->data << "\n";
+        std::cout << "[SERVIDOR DATOS RECIBE]  " << this->data << "\n";
         // Copy the packets into receive
         for (int i = 0; i < DATA_SIZE && this->data[i] != '\0'; ++i) {
             receive += this->data[i];
@@ -679,7 +679,7 @@ void data_server::vacation_request(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
     // Send the &
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
     this->logger->add_to_log(remote_ip, "sent", result);
 }
@@ -708,7 +708,7 @@ void data_server::consult_vacations(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
     // Send the &
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -867,14 +867,14 @@ void data_server::process_data(std::string remote_ip) {
         case CREATE_USER:
             this->create_user_case(remote_ip);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
 
         case DELETE_USER:
             this->delete_user_case(remote_ip);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
 
@@ -882,28 +882,28 @@ void data_server::process_data(std::string remote_ip) {
             this->proof_case(remote_ip);
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
         case WORK_PROOF:
             this->proof_case(remote_ip);
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
         case SALARY_PROOF:
             this->proof_case(remote_ip);
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
         case SALARY_CONSULT:
             this->consult_salary_case(remote_ip);
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
 
@@ -989,7 +989,7 @@ void data_server::process_data(std::string remote_ip) {
         case GET_ROLES:
             this->give_role(remote_ip);
             this->data[0] = '&';
-            std::cout << " Voy a mandar " << this->data << "\n";
+            std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
 
@@ -1019,13 +1019,13 @@ void data_server::get_user_office(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1048,13 +1048,13 @@ void data_server::get_all_users_from_office(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1078,13 +1078,13 @@ void data_server::get_data_user(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1114,7 +1114,7 @@ void data_server::change_phone(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1144,7 +1144,7 @@ void data_server::change_email(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1175,7 +1175,7 @@ void data_server::change_vacations(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1206,7 +1206,7 @@ void data_server::change_shift(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1267,10 +1267,6 @@ void data_server::change_laboral_data(std::string remote_ip) {
     if (this->base->set_end_date_laboral_data(user, day, month, year)) {
         // add the new laboral data
         int to_send_int = this->base->add_laboral_data(user, day, month, year, 0, 0, 0, salary, deductibles, job_title);
-
-        // TODO(Angie): borrar
-        std::cout << "base de datos agregó laboral #" << to_send_int << std::endl;
-
             if (to_send_int != -1) {
                 // save the new laboral data in the user
                 if (this->base->change_last_laboral_data(user, to_send_int)) {
@@ -1287,7 +1283,7 @@ void data_server::change_laboral_data(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1315,7 +1311,7 @@ void data_server::change_office(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1342,7 +1338,7 @@ void data_server::change_roles(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1391,7 +1387,7 @@ void data_server::add_record(std::string remote_ip) {
     this->logger->add_answer_log(remote_ip, "sent", this->data);
 
     this->data[0] = '&';
-    std::cout << " Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1413,13 +1409,13 @@ void data_server::consult_record(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1441,13 +1437,13 @@ void data_server::see_consult_requests(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1480,13 +1476,13 @@ void data_server::consult_request(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -1554,12 +1550,12 @@ void data_server::process_requests(std::string remote_ip) {
     // send the data
     for (int i = 0; i < total_m && i < 10; ++i) {
         adapt_data(data, to_send, DATA_SIZE * i);
-        std::cout << "Voy a mandar: " << data << std::endl;
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(remote_ip, "sent", this->data);
     }
 
     this->data[0] = '&';
-    std::cout << "Voy a mandar " << this->data << "\n";
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
 }

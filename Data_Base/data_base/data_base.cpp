@@ -588,7 +588,6 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
             employee += employee_consult[i];
         } else {  // is the end of the username
             employee_vector.push_back(employee);
-            std::cout << "Empleado : " << employee << std::endl;
             employee = "\0";  // it is cleaned for next username
         }
     }
