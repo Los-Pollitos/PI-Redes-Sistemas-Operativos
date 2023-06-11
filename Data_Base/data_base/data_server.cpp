@@ -639,6 +639,51 @@ void data_server::create_user_case(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
+void data_server::vacation_request(std::string remote_ip) {
+    std::string result = "";
+    std::string receive = "";
+    int n = 1;
+    while (this->connection != -1 && n > 0 && this->data[0] != '&') {
+        std::cout << "Recibi " << this->data << "\n";
+        // Copy the packets into receive
+        for (int i = 0; i < DATA_SIZE && this->data[i] != '\0'; ++i) {
+            receive += this->data[i];
+        }
+        // Read the next
+        n = read(this->connection, this->data, sizeof(this->data));
+    }
+    // Obtain the username
+    std::string username = "";
+    int i = 1;
+    for (; i < 11 && receive[i] != ','; ++i) {
+        username += receive[i];
+    }
+    // Move from the ,
+    ++i;
+    // Obtain the vacation part
+    std::string vacation = "";
+    for (; receive[i] != '\0'; ++i) {
+        vacation += receive[i];
+    }
+    // Obtain the current date
+    QDate date = QDate::currentDate();
+    int day = date.day();
+    int month = date.month();
+    int year = date.year();
+    // Prepare to add to data base
+    this->base->add_request(username, 0, day, month, year, 0, 0, 0, 0, vacation, 0, "\0", "\0");
+    result = "1";
+    memset(this->data, '\0', DATA_SIZE);
+    this->data[0] = result[0];
+    // Send the answer
+    write(this->connection, this->data, DATA_SIZE);
+    // Send the &
+    this->data[0] = '&';
+    std::cout << " Voy a mandar " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+    this->logger->add_to_log(remote_ip, "sent", result);
+}
+
 void data_server::consult_vacations(std::string remote_ip) {
     std::string to_send = "";
     std::string username = "";
@@ -882,10 +927,9 @@ void data_server::process_data(std::string remote_ip) {
             // TODO(todos): hacer
             break;
         case VACATION_REQUEST:
-            // TODO(Luis): hacer
+            this->vacation_request(remote_ip);
             break;
         case CONSULT_VACATION:
-            // TODO(Luis): hacer
             this->consult_vacations(remote_ip);
             break;
         case ANSWER_PAYMENT_PROOF:

@@ -40,13 +40,13 @@ void consult_requests::set_user_login(login_info * user_login) {
 }
 
 void consult_requests::update_scroll() {
-    // Remove all buttos
+    // Remove all buttons
     size_t length = this->requests_buttons.size();
     for(size_t count = 0; count < length; ++count) {
         this->layout->removeWidget(this->requests_buttons[count]);
         this->requests_buttons[count]->hide();
-        this->requests_buttons.erase(this->requests_buttons.begin()+(count));
     }
+    this->requests_buttons.clear();
 
     // Ask for information from server
     std::string to_send = " " + this->user_login->user;
@@ -71,17 +71,11 @@ void consult_requests::update_scroll() {
         id = stoi(id_temp);
         ++i;
 
-        // TODO(Angie): borrar
-        qDebug() << "id:" << id_temp;
-
         while(to_send[i] != '-') {  // type
             type_temp += to_send[i++];
         }
         type = stoi(type_temp);
         ++i;
-
-        // TODO(Angie): borrar
-        qDebug() << "type:" << type_temp;
 
         while(to_send[i] != ',' && to_send[i] != '\0') {
             button_content += to_send[i++];
