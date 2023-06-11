@@ -151,6 +151,9 @@ void handle_requests::show_description(int vector_pos, int type) {
     while(to_send[pos] != ',') {
        content += to_send[pos++];
     }
+    content += '\0';
+
+    std::cout << "content size: " << content.size() << std::endl;
 
     this->description->set_client(this->local_client);
     this->description->set_atributes(day, month, year, type, QString::fromStdString(this->user_login->user)
