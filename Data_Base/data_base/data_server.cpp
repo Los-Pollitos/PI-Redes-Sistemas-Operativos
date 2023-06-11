@@ -920,11 +920,11 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case SEE_PROCESS_REQUESTS:
-            // TODO(todos): hacer
             this->see_process_requests(remote_ip);
             break;
         case PROCESS_REQUESTS:
             // TODO(todos): hacer
+
             break;
         case VACATION_REQUEST:
             this->vacation_request(remote_ip);
