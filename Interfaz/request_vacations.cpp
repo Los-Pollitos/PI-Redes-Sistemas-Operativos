@@ -27,7 +27,6 @@ request_vacations::~request_vacations() {
     }
 }
 
-
 void request_vacations::set_client(client* local_client) {
     this->local_client = local_client;
 }
@@ -45,3 +44,12 @@ void request_vacations::set_current_user(std::string user) {
     this->to_send += user;
     this->to_send += ',';
 }
+
+void request_vacations::on_add_day_clicked() {
+
+}
+
+void request_vacations::on_confirm_clicked() {
+
+}
+

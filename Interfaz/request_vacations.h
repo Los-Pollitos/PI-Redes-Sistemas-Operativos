@@ -19,6 +19,10 @@ public:
     void reset_window();
     void set_current_user(std::string user);
 
+private slots:
+    void on_add_day_clicked();
+    void on_confirm_clicked();
+
 private:
     Ui::request_vacations *ui;
     client* local_client;
