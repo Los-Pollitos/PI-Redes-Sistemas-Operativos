@@ -60,8 +60,6 @@ void request_description::set_atributes(int day, int month, int year,
 
     std::string text = parent_button->text().toStdString();
 
-    std::cout << text << std::endl;
-
     while (text[j] != ':') {
         ++j;
     }
@@ -157,10 +155,21 @@ void request_description::on_buttonBox_rejected() {
 }
 
 void request_description::on_file_button_clicked() {
-    // TODO(cristopher): hacer lo de descargar un archivo (no es para esta entrega)
-    //QPdfWriter pdf = new QPdfWriter("Prueba.pdf");
-    //pdf.setTitle("Prueba para Los Pollitos");
-    //pdf.setPageSize(QPagedPaintDevice::A4);
+    std::string to_send = "";
+
+    switch (this->type) {
+    case 0:
+        to_send += ((char)ANSWER_PAYMENT_PROOF);
+        break;
+    case 1:
+        to_send += ((char)ANSWER_WORK_PROOF);
+        break;
+    case 2:
+        to_send += ((char)ANSWER_SALARY_PROOF);
+        break;
+    }
+    to_send += std::to_string(parent_button->get_id_requests());
+    to_send = this->local_client->send_and_receive(to_send);
 }
 
 void request_description::generate_pdf(const QString& file_path, const QString& text, const QString& image_path) {
