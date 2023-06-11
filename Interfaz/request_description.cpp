@@ -56,13 +56,25 @@ void request_description::set_atributes(int day, int month, int year,
     this->user = user;
     this->description = description;
 
+    int j = 0;
+
+    std::string text = parent_button->text().toStdString();
+
+    std::cout << text << std::endl;
+
+    while (text[j] != ':') {
+        ++j;
+    }
+    j += 2;
+
+
     if (!this->admin) {
        this->ui->file_button->setText("Descargar archivo");
        this->ui->buttonBox->hide();
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
-       if (this->type == REQUEST_VACATIONS_D) {
+       if (this->type == REQUEST_VACATIONS_D || text[j] != 'A') {
            this->ui->file_button->hide();
        } else {
            this->ui->file_button->show();

@@ -130,7 +130,7 @@ void consult_requests::show_description(int vector_pos, int type) {
     ++pos;
 
     // content
-    while(to_send[pos] != '\0') {
+    while(to_send[pos] != ',') {
         content += to_send[pos++];
     }
     content += '\0';
