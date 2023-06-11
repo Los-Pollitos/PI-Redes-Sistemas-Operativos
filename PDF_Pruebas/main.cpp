@@ -7,7 +7,7 @@ void generatePdf(const QString& filePath, const QString& text, const QString& im
 {
     QPdfWriter pdfWriter(filePath);
     pdfWriter.setPageSize(QPageSize(QPageSize::Letter));
-    pdfWriter.setPageMargins(QMarginsF(30, 15, 30, 30));
+    pdfWriter.setPageMargins(QMarginsF(15, 15, 30, 30));
 
     QPainter painter(&pdfWriter);
     painter.setFont(QFont("Times New Roman", 12));
@@ -35,6 +35,9 @@ void generatePdf(const QString& filePath, const QString& text, const QString& im
     // Draw the text
     painter.drawText(QRectF(15, 15, pdfWriter.width() - 60, pdfWriter.height() - 190), text);
 
+    QString text2 = "THIS IS A TEST";
+    painter.drawText(QRectF(15, pdfWriter.height() - 12000, pdfWriter.width() - 60, pdfWriter.height() - 190), text2);
+
     painter.end();
 
     qDebug() << "Left the function ";
@@ -47,7 +50,7 @@ int main(int argc, char *argv[])
     QString filePath = "output.pdf";
     QString imagePath = "pollitos_incorporated_icon.png";
 
-    generatePdf(filePath, "Hello, World!", imagePath);
+    generatePdf(filePath, "Hello, World!\n\n\n\n\nA", imagePath);
 
     return app.exec();
 }
