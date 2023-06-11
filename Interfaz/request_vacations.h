@@ -2,6 +2,7 @@
 #define REQUEST_VACATIONS_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include "client.h"
 
 namespace Ui {
@@ -24,10 +25,16 @@ private slots:
     void on_confirm_clicked();
 
 private:
+    // Attributes
     Ui::request_vacations *ui;
     client* local_client;
     std::string to_send;
     std::string user;
+    bool added_date;
+
+    // Methods
+    void show_error(std::string error);
+    void show_success(std::string success);
 };
 
 #endif // REQUEST_VACATIONS_H
