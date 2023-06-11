@@ -34,7 +34,7 @@ class description_button : public QPushButton {
 public:
     description_button(QString name, QWidget * parent, int id, int type, int id_request = 0);
     int get_id_requests();
-    void set_id_requests(int type_request);
+    void set_id_requests(int id_requests);
     int get_type();
     void set_type(int type);
     bool valid;
