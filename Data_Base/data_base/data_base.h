@@ -83,7 +83,7 @@ class data_base {
     bool change_last_laboral_data(std::string user, int last_laboral_data);
     std::string conuslt_process_requests_of_office(int office);
     std::string consult_requests(std::string user);
-    std::string consult_request(int id);
+    std::string consult_request(int id, int type);
     std::string consult_records(std::string user);
     std::string consult_record(int id);
     std::string get_available_vacations(std::string user);

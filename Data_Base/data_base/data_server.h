@@ -71,6 +71,7 @@ private:
     void proof_case(std::string remote_ip);
     void obtain_create_information(std::string& username, std::string& identification, std::string& name);
     void see_consult_requests(std::string remote_ip);
+    void consult_request(std::string remote_ip);
     void vacation_request(std::string remote_ip);
 
 public:

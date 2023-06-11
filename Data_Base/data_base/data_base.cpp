@@ -675,8 +675,29 @@ std::string data_base::request_status(int solved) {
 }
 
 // TODO(nosotros): documentar
-std::string data_base::consult_request(int id) {
+std::string data_base::consult_request(int id, int type) {
+    std::string result = "";
+    QSqlQuery consult_request;
 
+    QString content_type = ((type == VACATION)? "vacations" : "content_proof, user_signing_boss");
+
+    consult_request.prepare("SELECT day_request, month_request, year_request " + content_type + " FROM requests WHERE id = (:id) AND type = (:type");
+    consult_request.bindValue(":id", id);
+    consult_request.bindValue(":type", type);
+
+    // If a match was found
+    if (consult_request.exec() && consult_request.next()) {
+            do {
+                result += consult_request.value(0).toString().toStdString() + ",";  // day
+                result += consult_request.value(1).toString().toStdString() + ",";  // month
+                result += consult_request.value(2).toString().toStdString() + ",";  // year
+                result += consult_request.value(3).toString().toStdString();  // content
+            } while (consult_request.next());
+    } else {
+            qDebug() << "[BASE_DATOS] Error consultando la solicitud #:" << id << "de tipo:" << type;
+    }
+
+    return result;
 }
 
 // TODO(nosotros): documentar
