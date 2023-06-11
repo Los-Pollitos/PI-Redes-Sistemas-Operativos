@@ -25,7 +25,6 @@ request_description::request_description(QWidget *parent) :
     this->setWindowTitle("Descripción");
     this->uploaded_file = false;
     this->setStyleSheet("background-color: #ECEAE5;");
-    this->ui->accept_button->setStyleSheet("color: #001f21;");
     this->ui->accept_label->setStyleSheet("color: #001f21;");
     this->ui->buttonBox->setStyleSheet("color: #001f21;");
     this->ui->file_button->setStyleSheet("color: #001f21;");
@@ -61,14 +60,12 @@ void request_description::set_atributes(int day, int month, int year,
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
-       this->ui->accept_button->show();
     } else {
         this->ui->file_button->setText("Adjuntar archivo");
         this->ui->buttonBox->show();
         this->ui->password_label->show();
         this->ui->lineEdit->show();
         this->ui->accept_label->show();
-        this->ui->accept_button->hide();
     }
     if (this->type == REQUEST_VACATIONS) {
         this->ui->file_button->hide();
