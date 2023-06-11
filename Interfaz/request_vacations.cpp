@@ -63,7 +63,6 @@ void request_vacations::on_add_day_clicked() {
 void request_vacations::on_confirm_clicked() {
     if (this->added_date) {
         this->to_send += "\0";
-        std::cout << "TO SEND " << to_send;
         to_send = this->local_client->send_and_receive(to_send);
         if (to_send[0] == '1') {
             this->show_success("Solicitud hecha de manera exitosa");

@@ -52,27 +52,27 @@ std::string client::send_and_receive(std::string to_send) {
 
             for (int i = 0; i < total_m; ++i) {
                 adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
-                std::cout << "Voy a mandar: " << data << std::endl;
+                std::cout << "[CLIENTE RECIBE] " << data << std::endl;
                 write(s, data, CLIENT_DATA_SIZE);
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
             to_send = "&";
             adapt_data(data, to_send, 0);
-            std::cout << "Voy a mandar: " << data << std::endl;
+            std::cout << "[CLIENTE ENVIA] " << data << std::endl;
             write(s, data, CLIENT_DATA_SIZE);
 
             data[0] = '0';
             while (((n = read(s, data, CLIENT_DATA_SIZE)) > 0) && (data[0] != '&')) {
                 // connection es socket cliente
                 resultado += data;
-                std::cout << "Recibi: " << data << std::endl;
+                std::cout << "[CLIENTE RECIBE] " << data << std::endl;
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
             to_send = "#";
             adapt_data(data, to_send, 0);
-            std::cout << "Voy a mandar: " << data << std::endl;
+            std::cout << "[CLIENTE ENVIA]" << data << std::endl;
             write(s, data, CLIENT_DATA_SIZE);
             // No se logró leer
             if (n < 0) {

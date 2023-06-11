@@ -96,7 +96,6 @@ void handle_requests::update_scroll() {
                    temp_to_show += "Constancia";
                    break;
                }
-               std::cout << "Voy a poner un boton con " << temp_to_show << std::endl;
                this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
                this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
                              , &handle_requests::update_scroll);
@@ -152,8 +151,6 @@ void handle_requests::show_description(int vector_pos, int type) {
        content += to_send[pos++];
     }
     content += '\0';
-
-    std::cout << "content size: " << content.size() << std::endl;
 
     this->description->set_client(this->local_client);
     this->description->set_atributes(day, month, year, type, QString::fromStdString(this->user_login->user)

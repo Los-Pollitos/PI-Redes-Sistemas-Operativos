@@ -108,8 +108,6 @@ std::string manage_user::send_create(std::string username, std::string password,
         to_send += ",";
     }
 
-    std::cout << "TO SEND: " << to_send << "\n";
-
     return this->local_client->send_and_receive(to_send);
 }
 

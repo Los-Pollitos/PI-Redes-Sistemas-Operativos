@@ -82,11 +82,9 @@ void consult_salary::setUserData(login_info * user_login) {
         }
     }
 
-    std::cout << gross << std::endl;
     gross_salary = security_manager.decrypt(gross);
 
     net_salary += ";";
-    std::cout << " net antes del for " << net_salary << std::endl;
     for (int i = 0; i < net_salary.length() && net_salary[i] != ';'; ++i) {
         if (net_salary[i] != ',') {
             if (net_salary[i+1] == ',') {
@@ -103,12 +101,7 @@ void consult_salary::setUserData(login_info * user_login) {
         }
     }
 
-    std::cout << net << std::endl;
-
     net_salary = security_manager.decrypt(net);
-
-    std::cout << gross_salary << std::endl;
-    std::cout << net_salary << std::endl;
 
     this->ui->name->setText(QString::fromStdString(name));
     this->ui->id->setText(QString::fromStdString(id));
