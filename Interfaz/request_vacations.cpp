@@ -73,7 +73,8 @@ void request_vacations::on_confirm_clicked() {
         // Clean in case of another request
         this->added_date = false;
         // Readd the user to to_send
-        this->to_send = user;
+        this->to_send = ((char)VACATION_REQUEST);
+        this->to_send += this->user;
         this->to_send += ',';
     } else {
         this->show_error("Inserte al menos una fecha antes de enviar");
