@@ -56,12 +56,22 @@ void request_description::set_atributes(int day, int month, int year,
     this->user = user;
     this->description = description;
 
+    int j = 0;
+
+    std::string text = parent_button->text().toStdString();
+
+    while (text[j] != ':') {
+        ++j;
+    }
+    j += 2;
+
+
     if (!this->admin) {
        this->ui->buttonBox->hide();
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
-       if (this->type == REQUEST_VACATIONS_D) {
+       if (this->type == REQUEST_VACATIONS_D || text[j] != 'A') {
            this->ui->file_button->hide();
        } else {
            this->ui->file_button->show();
@@ -150,10 +160,21 @@ void request_description::on_buttonBox_rejected() {
 }
 
 void request_description::on_file_button_clicked() {
-    // TODO(cristopher): hacer lo de descargar un archivo (no es para esta entrega)
-    //QPdfWriter pdf = new QPdfWriter("Prueba.pdf");
-    //pdf.setTitle("Prueba para Los Pollitos");
-    //pdf.setPageSize(QPagedPaintDevice::A4);
+    std::string to_send = "";
+
+    switch (this->type) {
+    case 0:
+        to_send += ((char)ANSWER_PAYMENT_PROOF);
+        break;
+    case 1:
+        to_send += ((char)ANSWER_WORK_PROOF);
+        break;
+    case 2:
+        to_send += ((char)ANSWER_SALARY_PROOF);
+        break;
+    }
+    to_send += std::to_string(parent_button->get_id_requests());
+    to_send = this->local_client->send_and_receive(to_send);
 }
 
 void request_description::generate_pdf(const QString& file_path, const QString& text, const QString& image_path) {

@@ -802,7 +802,7 @@ void data_server::consult_salary_case(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-void data_server::proof_case(std::string remote_ip) {
+void data_server::proof_case(std::string remote_ip, std::string description) {
     int type = (int)data[0] - 71;
 
     std::string user = "";
@@ -832,7 +832,7 @@ void data_server::proof_case(std::string remote_ip) {
     // Clear data
     memset(this->data, '\0', DATA_SIZE);
     std::string result = "1";
-    this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, "", type,"","");
+    this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, "", type, description,"");
     this->logger->add_answer_log(remote_ip, "sent", result);
     data[0] = ' ';
     data[1] = '1';
@@ -879,21 +879,21 @@ void data_server::process_data(std::string remote_ip) {
             break;
 
         case PAYMENT_PROOF:
-            this->proof_case(remote_ip);
+            this->proof_case(remote_ip, "Solicitud de constancia de pago");
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
             std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
         case WORK_PROOF:
-            this->proof_case(remote_ip);
+            this->proof_case(remote_ip, "Solicitud de constancia laboral");
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
             std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
         case SALARY_PROOF:
-            this->proof_case(remote_ip);
+            this->proof_case(remote_ip, "Solicitud de constancia salarial");
             memset(this->data, '\0', DATA_SIZE);
             this->data[0] = '&';
             std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
