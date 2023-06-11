@@ -625,7 +625,7 @@ std::string data_base::consult_requests(std::string user) {
         do {
             result += consult_requests.value(0).toString().toStdString() + "-";  // id
             result += consult_requests.value(3).toString().toStdString() + "-";  // type
-            result += this->request_type(consult_requests.value(3).toInt(), consult_requests.value(4).toInt()) + ": ";
+            result += this->request_type(consult_requests.value(2).toInt(), consult_requests.value(3).toInt()) + ": ";
             result += this->request_status(consult_requests.value(1).toInt()) += ",";  // status
         } while (consult_requests.next());
         result[result.length()-1] = '\0';  // there was an extra ','
@@ -641,7 +641,7 @@ std::string data_base::request_type(int type, int proof_type) {
 
     if (type == VACATION) {
         result = "Vacaciones";
-    } else {  //
+    } else {
         switch(proof_type) {
             case PAYMENT_PROOF_T:
                 result += "Constancia de pago";
