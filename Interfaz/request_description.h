@@ -2,13 +2,14 @@
 #define REQUEST_DESCRIPTION_H
 
 #include <QDialog>
+#include <QPdfWriter>
 
 #include "description_button.h"
 #include "login_info.h"
 #include "client.h"
 
-#define REQUEST_VACATIONS 0
-#define PROOF 1
+#define REQUEST_VACATIONS_D 0
+#define PROOF_D 1
 
 
 namespace Ui {
@@ -25,6 +26,7 @@ public:
     void set_atributes(int day, int month, int year, int& type, QString user, QString& description, description_button *& parent_button, login_info * user_login, bool admin);
     ~request_description();
     void set_client (client * local_client);
+    void handle_request(int solved);
 
 private slots:
     void on_buttonBox_accepted();
@@ -39,7 +41,6 @@ private:
     int date[3];
     int type;
     bool admin;
-    bool uploaded_file;
     description_button * parent_button;
     QString user;
     QString description;

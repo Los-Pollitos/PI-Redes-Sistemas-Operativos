@@ -23,7 +23,6 @@ request_description::request_description(QWidget *parent) :
     ui(new Ui::request_description) {
     ui->setupUi(this);
     this->setWindowTitle("Descripción");
-    this->uploaded_file = false;
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->accept_label->setStyleSheet("color: #001f21;");
     this->ui->buttonBox->setStyleSheet("color: #001f21;");
@@ -61,13 +60,13 @@ void request_description::set_atributes(int day, int month, int year,
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
     } else {
-        this->ui->file_button->setText("Adjuntar archivo");
+        this->ui->file_button->hide();
         this->ui->buttonBox->show();
         this->ui->password_label->show();
         this->ui->lineEdit->show();
         this->ui->accept_label->show();
     }
-    if (this->type == REQUEST_VACATIONS) {
+    if (this->type == REQUEST_VACATIONS_D) {
         this->ui->file_button->hide();
     } else {
         this->ui->file_button->show();
@@ -85,7 +84,6 @@ void request_description::set_atributes(int day, int month, int year,
     this->ui->label_tipo->setText(type_string);
     this->ui->lineEdit->setEchoMode(QLineEdit::Password);
     this->user_login = user_login;
-    this->uploaded_file = false;
 }
 
 request_description::~request_description()
@@ -100,7 +98,7 @@ void request_description::on_buttonBox_accepted() {
     QString password = this->ui->lineEdit->text();
     this->ui->lineEdit->clear();
     if (password.toStdString() == this->user_login->password) {
-        if (this->type == REQUEST_VACATIONS || this->uploaded_file == true) {
+        if (this->type == REQUEST_VACATIONS_D) {
             QMessageBox show_message =  QMessageBox();
             show_message.setWindowTitle("Correcto");
             show_message.setModal(true);
@@ -154,14 +152,32 @@ void request_description::on_buttonBox_rejected() {
 
 
 void request_description::on_file_button_clicked() {
-    if (this->admin) {
-        // TODO(cristopher): hacer lo de subir un archivo (no es para esta entrega)
-        this->uploaded_file = true;
-        // TODO (cristopher): esto hay que ponerlo true solo si sí subió el archivo
-        // la idea es que el programa no deje aceptar una solicitud de constancia si
-        // no ha subido el archivo (no es para esta entrega)
-    } else {
-        // TODO(cristopher): hacer lo de descargar un archivo (no es para esta entrega)
-    }
+    // TODO(cristopher): hacer lo de descargar un archivo (no es para esta entrega)
+    //QPdfWriter pdf = new QPdfWriter("Prueba.pdf");
+    //pdf.setTitle("Prueba para Los Pollitos");
+    //pdf.setPageSize(QPagedPaintDevice::A4);
+}
+
+void request_description::handle_request(int solved) {
+    std::time_t actual_time = std::time(nullptr);
+    std::tm* now = std::localtime(&actual_time);
+
+    int actual_day = now->tm_mday;
+    int actual_month = now->tm_mon;
+    int actual_year = now->tm_year + 1900;
+
+    std::string to_send = "";
+    to_send += ((char)PROCESS_REQUESTS);
+    to_send += user_login->user;
+    to_send += std::to_string(parent_button->get_id_requests()) + ",";
+    to_send += std::to_string(solved) + ",";
+    to_send += std::to_string(actual_day) + ",";
+    to_send += std::to_string(actual_month) + ",";
+    to_send += std::to_string(actual_year) + '\0';
+
+
+    this->local_client->send_and_receive(to_send);
+
+
 }
 

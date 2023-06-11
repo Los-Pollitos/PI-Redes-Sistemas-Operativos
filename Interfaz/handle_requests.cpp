@@ -23,7 +23,6 @@ handle_requests::handle_requests(QWidget *parent) :
 void handle_requests::set_user_login(login_info * user_login) {
     this->user_login = user_login;
     this->update_scroll();
-    std::cout << "Volvi de uptate" << std::endl;
 }
 
 
@@ -112,13 +111,49 @@ void handle_requests::update_scroll() {
     }
 }
 
-void handle_requests::show_description(int id, int type) {
-    // TODO (nosotros): Borrar y cambiar la fecha y la descripción (se realizará cuando se tengan los datos del servidor)
-    Q_UNUSED(id)
-    QString newString = "Me gusta jugar";
-    int new_type = type;
+void handle_requests::show_description(int vector_pos, int type) {
+    std::string to_send = " " + std::to_string(this->requests_buttons[vector_pos + 1]->get_id_requests()) + "," + std::to_string(type);
+    to_send[0] = CONSULT_REQUESTS;
+    to_send = this->local_client->send_and_receive(to_send);  // day, month, year, content
+
+    int pos = 0;
+    std::string temp = "\0";
+    int day = 0;
+    int month = 0;
+    int year = 0;
+    QString content = "\0";
+
+    // day
+    while(to_send[pos] != ',') {
+       temp += to_send[pos++];
+    }
+    day = stoi(temp);
+    temp = "\0";
+    ++pos;
+
+    // month
+    while(to_send[pos] != ',') {
+       temp += to_send[pos++];
+    }
+    month = stoi(temp);
+    temp = "\0";
+    ++pos;
+
+    // year
+    while(to_send[pos] != ',') {
+       temp += to_send[pos++];
+    }
+    year = stoi(temp);
+    ++pos;
+
+    // content
+    while(to_send[pos] != '\0') {
+       content += to_send[pos++];
+    }
+
     this->description->set_client(this->local_client);
-    this->description->set_atributes(9, 8, 2020, new_type, newString, newString, this->requests_buttons[id], this->user_login, true);
+    this->description->set_atributes(day, month, year, type, QString::fromStdString(this->user_login->user)
+                                     , content, this->requests_buttons[vector_pos + 1], this->user_login, false);
     this->description->setModal(true);
     this->description->show();
 }
