@@ -95,7 +95,7 @@ void consult_requests::update_scroll() {
 }
 
 void consult_requests::show_description(int vector_pos, int type) {
-    std::string to_send = " " + std::to_string(this->requests_buttons[vector_pos]->get_id_requests()) + "," + std::to_string(type);
+    std::string to_send = " " + std::to_string(this->requests_buttons[vector_pos + 1]->get_id_requests()) + "," + std::to_string(type);
     to_send[0] = CONSULT_REQUESTS;
     to_send = this->local_client->send_and_receive(to_send);  // day, month, year, content
 
@@ -136,7 +136,7 @@ void consult_requests::show_description(int vector_pos, int type) {
 
     this->description->set_client(this->local_client);
     this->description->set_atributes(day, month, year, type, QString::fromStdString(this->user_login->user)
-                                     , content, this->requests_buttons[vector_pos], this->user_login, false);
+                                     , content, this->requests_buttons[vector_pos + 1], this->user_login, false);
     this->description->setModal(true);
     this->description->show();
 }

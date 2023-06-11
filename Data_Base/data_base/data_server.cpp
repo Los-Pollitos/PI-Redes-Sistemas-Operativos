@@ -21,6 +21,7 @@ data_server::data_server() {
     this->load_from_file();
     this->connection = -1;
     this->message_count = 0;
+    this->base->consult_request(4,0);
 }
 
 /*

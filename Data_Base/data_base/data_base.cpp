@@ -681,9 +681,8 @@ std::string data_base::consult_request(int id, int type) {
 
     QString content_type = ((type == VACATION)? "vacations" : "content_proof, user_signing_boss");
 
-    consult_request.prepare("SELECT day_request, month_request, year_request " + content_type + " FROM requests WHERE id = (:id) AND type = (:type");
+    consult_request.prepare("SELECT day_request, month_request, year_request " + content_type + " FROM requests WHERE id = (:id)");
     consult_request.bindValue(":id", id);
-    consult_request.bindValue(":type", type);
 
     // If a match was found
     if (consult_request.exec() && consult_request.next()) {
