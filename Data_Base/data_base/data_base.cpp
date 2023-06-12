@@ -10,6 +10,8 @@
 #include <iostream>
 #include <vector>
 
+#include <locale>
+
 // TODO(nosotros): DOCUMENTAR
 data_base::data_base() {
     this->base = QSqlDatabase::addDatabase("QSQLITE");
@@ -789,21 +791,95 @@ std::string data_base::consult_record(int id) {
 }
 
 bool data_base::change_request_solved(int id, int solved, int day_answer, int month_answer
-                           , int year_answer, std::string user_signing_boss_proof) {
+                                      , int year_answer, std::string user_signing_boss_proof) {
     bool success = true;
-    QSqlQuery modify_request;
-    modify_request.prepare("UPDATE requests SET solved = (:solved), day_answer = (:day_answer), month_answer = (:month_answer), year_answer = (:year_answer), user_signing_boss_proof = (:user_signing_boss_proof) WHERE id = (:id)");
-    modify_request.bindValue(":id", id);
-    modify_request.bindValue(":solved", solved);
-    modify_request.bindValue(":day_answer", day_answer);
-    modify_request.bindValue(":month_answer", month_answer);
-    modify_request.bindValue(":year_answer", year_answer);
-    modify_request.bindValue(":user_signing_boss_proof", QString::fromStdString(user_signing_boss_proof));
-    if (!modify_request.exec()) {
-        qDebug() << "[BASE_DATOS] Error modificando la solicitud" << QString::fromStdString(user_signing_boss_proof);
-        success = false;
+    if (solved) {
+        // Used to remove the days from the employee
+        QSqlQuery check_vacation;
+        check_vacation.prepare("SELECT * FROM requests WHERE id = (:id)");
+        check_vacation.bindValue(":id", id);
+        if (check_vacation.exec()  && check_vacation.next()) {
+            std::string temporal_type = check_vacation.value(9).toString().toStdString();
+            if (temporal_type == "0") {
+                std::string user = check_vacation.value(0).toString().toStdString();
+                double current_vacations = std::stod(this->get_available_vacations(user));
+                double remove = this->get_vacations_from_string(check_vacation.value(10).toString().toStdString());
+                current_vacations -= remove;
+                this->transform_vacations(current_vacations, user);
+            }
+        } else {
+            qDebug() << "[BASE_DATOS] Error modificando las vacaciones";
+            success = false;
+        }
+    }
+    if (success) {
+        QSqlQuery modify_request;
+        modify_request.prepare("UPDATE requests SET solved = (:solved), day_answer = (:day_answer), month_answer = (:month_answer), year_answer = (:year_answer), user_signing_boss_proof = (:user_signing_boss_proof) WHERE id = (:id)");
+        modify_request.bindValue(":id", id);
+        modify_request.bindValue(":solved", solved);
+        modify_request.bindValue(":day_answer", day_answer);
+        modify_request.bindValue(":month_answer", month_answer);
+        modify_request.bindValue(":year_answer", year_answer);
+        modify_request.bindValue(":user_signing_boss_proof", QString::fromStdString(user_signing_boss_proof));
+        if (!modify_request.exec()) {
+            qDebug() << "[BASE_DATOS] Error modificando la solicitud" << QString::fromStdString(user_signing_boss_proof);
+            success = false;
+        }
     }
     return success;
+}
+
+void data_base::transform_vacations(double current_vacations, std::string user) {
+    std::string temp_string = std::to_string(current_vacations);
+    std::string vacations = "";
+    int shift = 0;
+    bool dot_found = false;
+    for (size_t i = 0; i < temp_string.size(); ++i) {
+        if (temp_string[i] == '.') {
+            dot_found = true;
+            ++i;
+        }
+        if (!dot_found) {
+            vacations += temp_string[i];
+        } else {
+            if (temp_string[i] == '5') {
+                shift = 1;
+            }
+        }
+    }
+    int vacation_number = std::stoi(vacations);
+    QSqlQuery modify_vacations;
+    modify_vacations.prepare("UPDATE employees SET available_vacations = (:available_vacations), shift_available = (:shift_available) WHERE user = (:user)");
+    modify_vacations.bindValue(":available_vacations", vacation_number);
+    modify_vacations.bindValue(":shift_available", shift);
+    modify_vacations.bindValue(":user", QString::fromStdString(user));
+    if (!modify_vacations.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando vacaciones de usuario";
+    }
+}
+
+double data_base::get_vacations_from_string(std::string vacations) {
+    int found_comma = 0;
+    std::string temp_string = "";
+    for (size_t i = 0; i < vacations.size(); ++i) {
+        if (vacations[i] == ',') {
+            ++found_comma;
+            ++i;
+        }
+        if (found_comma == 1) {
+            temp_string += vacations[i];
+        }
+    }
+    // Save the original global locale
+    std::locale original_locale = std::locale::global(std::locale::classic());
+    // Create a temporary "C" locale
+    std::locale c_locale("C");
+    // Set the temporary locale as the global locale
+    std::locale::global(c_locale);
+    double answer = std::stod(temp_string);
+    // Restore the original global locale
+    std::locale::global(original_locale);
+    return answer;
 }
 
 void data_base::encrypt(std::string& to_encript, int from_encrypt) {

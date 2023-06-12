@@ -42,9 +42,11 @@ class data_base {
 
     // Methods
     void delete_user_from_table(std::string table, std::string user);
+    void transform_vacations(double salary, std::string user);
     bool verify_office_id(int office);
     std::string request_type(int type, int proof_type);
     std::string request_status(int solved);
+    double get_vacations_from_string(std::string vacations);
     void encrypt(std::string& to_encrypt, int from_encrypt);
 
   public:
