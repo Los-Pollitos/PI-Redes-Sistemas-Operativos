@@ -202,15 +202,9 @@ void modify_user::load_user_data(std::string& data) {
         }
         ++pos;
     }
-
-    qDebug() << "TEMP VACATIONS";
-
     this->user_info.available_vacations = stoi(temp_vacations);
     this->decrypt_salary(temp_salary, temp_deductibles);
     this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
-
-    qDebug() << "SHIFT AVAILABLE";
-
     this->user_info.shift_available = (stoi(temp_shift) == 1 ? true : false);
 }
 
@@ -253,10 +247,7 @@ void modify_user::decrypt_salary(std::string salary, std::string deductibles) {
             i++;
         }
     }
-
-    qDebug() << "SALARY DECRYPT";
     this->user_info.salary_base = stoi(security_manager.decrypt(salary_temp));
-
     // deductibles
     for (size_t i = 0; i < deductibles.length(); ++i) {
         if (deductibles[i] != '.') {
@@ -273,8 +264,6 @@ void modify_user::decrypt_salary(std::string salary, std::string deductibles) {
             i++;
         }
     }
-
-    qDebug() << "DEDUCTIBLE";
     this->user_info.deductibles = stoi(security_manager.decrypt(deductibles_temp));
 }
 
@@ -315,8 +304,6 @@ void modify_user::add_data_to_combobox() {
         } else {  // is the end of the username
             if (new_user != this->user_login->user) {  // an user cannot modify itself
                 this->user_names.push_back(new_user);
-
-                qDebug() << "PUSH BACK: " << new_user;
             }
             new_user = "";  // it is cleaned for next username
         }

@@ -621,19 +621,12 @@ void data_server::create_user_case(std::string remote_ip) {
     std::string result = "0";
     // Check if the user does not exist and if the office is valid
     if (!this->base->user_exists(username) && office != -1) {
-
-        qDebug() << "USER" << username;
-        qDebug() << "NAME" << name;
-        qDebug() << "IDENTIFICATION" << identification;
-        qDebug() << "OFFICE" << office;
-
         this->base->add_employee(username, name, identification, "0", "-", office, 32, 0, 0, this->base->get_laboral_count());
-
+        // Add the date
         QDate date = QDate::currentDate();
         int day = date.day();
         int month = date.month();
         int year = date.year();
-
         this->base->add_laboral_data(username, day, month, year, 0, 0, 0, 0, 0, "Empleado nuevo");
         result = "1";
     }
