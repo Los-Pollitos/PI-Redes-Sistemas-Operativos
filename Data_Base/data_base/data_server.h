@@ -70,7 +70,7 @@ private:
     void consult_record(std::string remote_ip);
     void consult_salary_case(std::string remote_ip);
     void proof_case(std::string remote_ip, std::string description);
-    void obtain_create_information(std::string& username, std::string& identification, std::string& name);
+    void obtain_create_information(std::string& username, std::string& identification, std::string& name, int& office);
     void see_consult_requests(std::string remote_ip);
     void consult_request(std::string remote_ip);
     void vacation_request(std::string remote_ip);

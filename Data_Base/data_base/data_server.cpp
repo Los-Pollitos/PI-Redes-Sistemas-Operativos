@@ -612,15 +612,16 @@ void data_server::create_user_case(std::string remote_ip) {
     std::string username = "";
     std::string identification = "";
     std::string name = "";
-    this->obtain_create_information(username, identification, name);
+    int office = 0;
+    this->obtain_create_information(username, identification, name, office);
     // Remove the unnecesary & as only one package is needed
     read(this->connection, this->data, sizeof(this->data));
     // Clear data
     memset(this->data, '\0', DATA_SIZE);
     std::string result = "0";
-    // Check if the user exists
-    if (!this->base->user_exists(username)) {
-        this->base->add_employee(username, name, identification, "-", "-", 0, 32, 0, 0, 0);
+    // Check if the user does not exist and if the office is valid
+    if (!this->base->user_exists(username) && office != -1) {
+        this->base->add_employee(username, name, identification, "-", "-", office, 32, 0, 0, 0);
         result = "1";
     }
     this->logger->add_to_log(remote_ip, "sent", result);
@@ -717,13 +718,17 @@ void data_server::consult_vacations(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-void data_server::obtain_create_information(std::string& username, std::string& identification, std::string& name) {
+void data_server::obtain_create_information(std::string& username, std::string& identification, std::string& name, int& office) {
     // Obtain the other username
     // Used to store the position of the first comma
     int i = 2;
+    std::string creator_user = "";
     for (; this->data[i] != ','; ++i) {
-        // Ignore the username of the request
+        creator_user += this->data[i];
     }
+
+    // qDebug() << "CREATOR: " << creator_user;
+
     // Increase one more to avoid the comma
     ++i;
     for (; this->data[i] != ','; ++i) {
@@ -738,6 +743,11 @@ void data_server::obtain_create_information(std::string& username, std::string& 
     for (; this->data[i] != ','; ++i) {
         name += this->data[i];
     }
+    // Obtain the office of the creator
+    office = this->base->consult_employee_office(creator_user);
+
+
+    // qDebug() << "OFFICE " << office;
 }
 
 void data_server::delete_user_case(std::string remote_ip) {
