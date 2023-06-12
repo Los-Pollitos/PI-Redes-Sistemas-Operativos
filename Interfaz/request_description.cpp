@@ -263,7 +263,7 @@ void request_description::generate_pay_PDF(std::string result){
 
     int temp = 0;
 
-    for (int i = 0; i < result.length(); ++i){
+    for (size_t i = 0; i < result.length(); ++i){
         if (result[i] == ',') {
            ++temp;
         } else {

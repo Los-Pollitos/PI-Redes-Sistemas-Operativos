@@ -102,9 +102,6 @@ std::string log::get_request_type(char type) {
     case ANSWER_SALARY_PROOF:
       result = "ANSWER_SALARY_PROOF";
       break;
-    case ANSWER_VACATION_REQUEST:
-      result = "ANSWER_VACATION_REQUEST";
-      break;
     case USER_OFFICE:
       result = "USER_OFFICE";
       break;

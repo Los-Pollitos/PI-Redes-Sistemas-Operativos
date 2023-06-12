@@ -40,7 +40,7 @@ void consult_salary::setUserData(login_info * user_login) {
     std::string gross_salary = "";
     std::string net_salary = "";
     int temp = 0;
-    for (int i = 1; i < result.length(); ++i){
+    for (size_t i = 1; i < result.length(); ++i){
         if (result[i] == ';') {
             ++temp;
         } else {
@@ -66,7 +66,7 @@ void consult_salary::setUserData(login_info * user_login) {
     std::string net = "";
 
     gross_salary += ";";
-    for (int i = 0; i < gross_salary.length() && gross_salary[i] != ';'; ++i) {
+    for (size_t i = 0; i < gross_salary.length() && gross_salary[i] != ';'; ++i) {
         if (gross_salary[i] != ',') {
             if (gross_salary[i+1] == ',') {
                 gross += (char)(gross_salary[i]-48);
@@ -85,7 +85,7 @@ void consult_salary::setUserData(login_info * user_login) {
     gross_salary = security_manager.decrypt(gross);
 
     net_salary += ";";
-    for (int i = 0; i < net_salary.length() && net_salary[i] != ';'; ++i) {
+    for (size_t i = 0; i < net_salary.length() && net_salary[i] != ';'; ++i) {
         if (net_salary[i] != ',') {
             if (net_salary[i+1] == ',') {
                 net += (char)(net_salary[i]-48);

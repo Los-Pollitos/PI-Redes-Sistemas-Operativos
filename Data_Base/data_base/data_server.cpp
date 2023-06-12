@@ -32,7 +32,6 @@ data_server::~data_server() {
     delete this->base;
 }
 
-// TODO(nosotros): documentar
 void data_server::adapt_data(char* data, std::string& new_info, int pos) {
     for (int i = 0; i < DATA_SIZE-1; ++i){
         data[i] = new_info[i+pos];
@@ -41,7 +40,6 @@ void data_server::adapt_data(char* data, std::string& new_info, int pos) {
     data[DATA_SIZE-1] = '\0';
 }
 
-// TODO(nosotros): documentar
 void data_server::find_next(std::string& line, int& pos) {
     int stop = 0;
     for (; pos < (int)line.length() && stop == 0; ++pos) {
@@ -51,7 +49,6 @@ void data_server::find_next(std::string& line, int& pos) {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::copy_string(std::string& line, std::string& new_line, int from, int to) {
     new_line.resize(to-from);
 
@@ -71,7 +68,6 @@ void data_server::load_from_file() {
     this->load_records();
 }
 
-// TODO(nosotros): documentar
 void data_server::load_offices() {
     std::string line = " ";
     std::string partial_line = "!";
@@ -112,7 +108,6 @@ void data_server::load_offices() {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::load_employees() {
     std::string line = "\0";
     std::string partial_line = "\0";
@@ -213,7 +208,6 @@ void data_server::load_employees() {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::load_laboral_data() {
     std::string line = "\0";
     std::string partial_line = "\0";
@@ -317,7 +311,6 @@ void data_server::load_laboral_data() {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::load_requests() {
     std::string line = "\0";
     std::string partial_line = "\0";
@@ -444,7 +437,6 @@ void data_server::load_requests() {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::load_records() {
     std::string line = "\0";
     std::string partial_line = "\0";
@@ -568,7 +560,6 @@ void data_server::answer_request() {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::see_process_requests(std::string remote_ip) {
     std::string user = "";
     for (int i = 1; i < DATA_SIZE && this->data[i] != ','; ++i) {
@@ -976,10 +967,6 @@ void data_server::process_data(std::string remote_ip) {
             write(this->connection, this->data, DATA_SIZE);
             break;
 
-        case ANSWER_VACATION_REQUEST:
-            // TODO(Cris): hacer
-            break;
-
         case USER_OFFICE:
             this->get_user_office(remote_ip);
             break;
@@ -1033,7 +1020,6 @@ void data_server::process_data(std::string remote_ip) {
     }
 }
 
-// TODO(nosotros): documentar
 void data_server::get_user_office(std::string remote_ip) {
     std::string to_send = "\0";
     int to_send_int = 0;
@@ -1063,7 +1049,6 @@ void data_server::get_user_office(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::get_all_users_from_office(std::string remote_ip) {
     std::string to_send = "\0";
     int i = 1;  // data[0] is USER_OFFICE
@@ -1092,7 +1077,6 @@ void data_server::get_all_users_from_office(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::get_data_user(std::string remote_ip) {
     std::string to_send = "\0";
 
@@ -1122,7 +1106,6 @@ void data_server::get_data_user(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::change_phone(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1152,7 +1135,6 @@ void data_server::change_phone(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::change_email(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1182,7 +1164,6 @@ void data_server::change_email(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::change_vacations(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1213,7 +1194,6 @@ void data_server::change_vacations(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::change_shift(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1244,7 +1224,6 @@ void data_server::change_shift(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::change_laboral_data(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1366,7 +1345,6 @@ void data_server::decrypt_salary(std::string salary, std::string deductibles, in
     deductibles_int = stoi(security_manager.decrypt(deductibles_temp));
 }
 
-// TODO(nosotros): documentar
 void data_server::change_office(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1394,7 +1372,6 @@ void data_server::change_office(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::change_roles(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1421,7 +1398,6 @@ void data_server::change_roles(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::add_record(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
@@ -1470,7 +1446,6 @@ void data_server::add_record(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::consult_record(std::string remote_ip) {
     std::string to_send = "\0";
     int i = 1;  // data[0] is USER_OFFICE
@@ -1498,7 +1473,6 @@ void data_server::consult_record(std::string remote_ip) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(nosotros): documentar
 void data_server::see_consult_requests(std::string remote_ip) {
     std::string to_send = "\0";
     int i = 1;
@@ -1658,7 +1632,7 @@ void data_server::pdf_data_payment(std::string remote_ip) {
 
     int temp = 0;
 
-    for (int i = 1; i < result.length(); ++i){
+    for (size_t i = 1; i < result.length(); ++i){
         if (result[i] == ',') {
                 ++temp;
         } else {
@@ -1696,7 +1670,7 @@ void data_server::pdf_data_payment(std::string remote_ip) {
 
 
     temp = 0;
-    for (int i = 0; i < result.length(); ++i){
+    for (size_t i = 0; i < result.length(); ++i){
         if (result[i] == ',') {
             ++temp;
         } else {
@@ -1755,7 +1729,7 @@ void data_server::pdf_data_work(std::string remote_ip) {
 
     int temp = 0;
 
-    for (int i = 1; i < result.length(); ++i){
+    for (size_t i = 1; i < result.length(); ++i){
         if (result[i] == ',') {
             ++temp;
         } else {
@@ -1822,7 +1796,7 @@ void data_server::pdf_data_salary(std::string remote_ip) {
 
     int temp = 0;
 
-    for (int i = 1; i < result.length(); ++i){
+    for (size_t i = 1; i < result.length(); ++i){
         if (result[i] == ',') {
             ++temp;
         } else {

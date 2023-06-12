@@ -114,9 +114,6 @@ std::string log_generator::get_request_type(char type) {
         case ANSWER_SALARY_PROOF:
             result = "ANSWER_SALARY_PROOF";
             break;
-        case ANSWER_VACATION_REQUEST:
-            result = "ANSWER_VACATION_REQUEST";
-            break;
         case USER_OFFICE:
             result = "USER_OFFICE";
             break;
@@ -146,9 +143,6 @@ std::string log_generator::get_request_type(char type) {
             break;
         case CHANGE_VACATIONS:
             result = "CHANGE_VACATIONS";
-            break;
-        case FIRE_EMPLOYEE:
-            result = "FIRE_EMPLOYEE";
             break;
         case ADD_RECORD:
             result = "ADD_RECORD";

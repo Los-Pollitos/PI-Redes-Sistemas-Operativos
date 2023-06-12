@@ -403,7 +403,6 @@ void modify_user::update_roles() {
 
         // the new role is fired
         this->user_info.role = UNEMPLOYEED | this->user_info.role;
-        to_send[0] = FIRE_EMPLOYEE;
         to_send += this->user_info.role;
 
         // set the date
