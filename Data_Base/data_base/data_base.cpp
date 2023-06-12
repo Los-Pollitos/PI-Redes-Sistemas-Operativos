@@ -179,6 +179,9 @@ void data_base::add_employee(std::string user, std::string name, std::string id
                             , std::string phone_number, std::string email
                             , int office_id, char roles, int available_vacations
                             , int shift_available, int last_laboral_data) {
+
+    qDebug() << "Office" << office_id;
+
     // Create the employee table if not created
     QString employee_str("CREATE TABLE IF NOT EXISTS employees (user TEXT, name TEXT, id TEXT, phone_number TEXT, email TEXT, office_id INTEGER, roles TEXT, available_vacations INTEGER, shift_available INTEGER, last_laboral_data INTEGER)");
     QSqlQuery employee_table;
@@ -318,6 +321,10 @@ int data_base::consult_employee_office(std::string user) {
         qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
     }
     return result;
+}
+
+int data_base::get_laboral_count() {
+    return this->laboral_count;
 }
 
 int data_base::consult_last_laboral_data(std::string user) {

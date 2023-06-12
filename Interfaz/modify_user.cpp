@@ -297,16 +297,20 @@ void modify_user::add_data_to_combobox() {
     }
     data_received = this->local_client->send_and_receive(to_send);
 
+    data_received += ",";
+
     // store the usernames individually
-    std::string new_user = "\0";
+    std::string new_user = "";
     for(size_t i = 0; i < data_received.length(); ++i) {
         if (data_received[i] != ',') {
             new_user += data_received[i];
         } else {  // is the end of the username
             if (new_user != this->user_login->user) {  // an user cannot modify itself
                 this->user_names.push_back(new_user);
+
+                qDebug() << "PUSH BACK: " << new_user;
             }
-            new_user = "\0";  // it is cleaned for next username
+            new_user = "";  // it is cleaned for next username
         }
     }
 

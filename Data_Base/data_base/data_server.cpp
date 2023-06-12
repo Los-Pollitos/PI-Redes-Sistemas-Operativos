@@ -621,7 +621,14 @@ void data_server::create_user_case(std::string remote_ip) {
     std::string result = "0";
     // Check if the user does not exist and if the office is valid
     if (!this->base->user_exists(username) && office != -1) {
-        this->base->add_employee(username, name, identification, "-", "-", office, 32, 0, 0, 0);
+        this->base->add_employee(username, name, identification, "0", "-", office, 32, 0, 0, this->base->get_laboral_count());
+
+        QDate date = QDate::currentDate();
+        int day = date.day();
+        int month = date.month();
+        int year = date.year();
+
+        this->base->add_laboral_data(username, day, month, year, 0, 0, 0, 0, 0, "Empleado nuevo");
         result = "1";
     }
     this->logger->add_to_log(remote_ip, "sent", result);
@@ -726,9 +733,6 @@ void data_server::obtain_create_information(std::string& username, std::string& 
     for (; this->data[i] != ','; ++i) {
         creator_user += this->data[i];
     }
-
-    // qDebug() << "CREATOR: " << creator_user;
-
     // Increase one more to avoid the comma
     ++i;
     for (; this->data[i] != ','; ++i) {
@@ -745,9 +749,6 @@ void data_server::obtain_create_information(std::string& username, std::string& 
     }
     // Obtain the office of the creator
     office = this->base->consult_employee_office(creator_user);
-
-
-    // qDebug() << "OFFICE " << office;
 }
 
 void data_server::delete_user_case(std::string remote_ip) {
