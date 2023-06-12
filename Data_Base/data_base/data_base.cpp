@@ -783,3 +783,47 @@ bool data_base::change_request_solved(int id, int solved, int day_answer, int mo
     }
     return success;
 }
+
+std::string data_base::get_request_date_signing(int id){
+    std::string result = "";
+    QSqlQuery consult_request;
+    QString request_str = "\0";
+
+    request_str = "SELECT day_answer, month_answer, year_answer, user_signing_boss_proof, last_laboral_data, user FROM requests WHERE id = (:id)";
+
+
+    consult_request.prepare(request_str);
+    consult_request.bindValue(":id", id);
+
+    // If a match was found
+    if (consult_request.exec() && consult_request.next()) {
+        result += consult_request.value(0).toString().toStdString() + ",";  // day
+        result += consult_request.value(1).toString().toStdString() + ",";  // month
+        result += consult_request.value(2).toString().toStdString() + ",";  // year
+        result += consult_request.value(3).toString().toStdString() + ",";  // user_signing_boss_proof
+        result += consult_request.value(4).toString().toStdString();  // last_laboral_data
+        result += consult_request.value(5).toString().toStdString();  // user
+    } else {
+        qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id;
+    }
+    result += "\0";
+
+    return result;
+}
+
+std::string data_base::get_pay_data(std::string user, int data_id){
+    std::string result = "\0";
+    QSqlQuery consult_laboral_data;
+    consult_laboral_data.prepare("SELECT gross_salary, deductibles, job_title FROM laboral_datas WHERE user = (:user) AND data_id = (:data_id)");
+    consult_laboral_data.bindValue(":user", QString::fromStdString(user));
+    consult_laboral_data.bindValue(":data_id", data_id);
+    // If a match was found
+    if (consult_laboral_data.exec() && consult_laboral_data.next()) {
+        result += consult_laboral_data.value(0).toString().toStdString() + ",";  // salary
+        result += consult_laboral_data.value(1).toString().toStdString() + ",";  // deductibles
+        result += consult_laboral_data.value(2).toString().toStdString() + ",";  // job_title
+    } else {
+        qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
+    }
+    return result;
+}

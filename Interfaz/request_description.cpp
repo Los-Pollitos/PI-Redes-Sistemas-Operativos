@@ -168,7 +168,7 @@ void request_description::on_file_button_clicked() {
         to_send += ((char)ANSWER_SALARY_PROOF);
         break;
     }
-    to_send += std::to_string(parent_button->get_id_requests());
+    to_send += std::to_string(parent_button->get_id_requests()) + ",";
     to_send = this->local_client->send_and_receive(to_send);
 }
 
