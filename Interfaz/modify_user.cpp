@@ -151,7 +151,7 @@ void modify_user::load_user_data(std::string& data) {
 
     size_t pos = 0;
     int commas_found = 0;
-    std::string temp_salary = "\0";
+    std::string temp_salary = "";
     std::string temp_deductibles = "\0";
     std::string temp_vacations = "\0";
     std::string temp_shift = "\0";
@@ -199,10 +199,76 @@ void modify_user::load_user_data(std::string& data) {
         ++pos;
     }
     this->user_info.available_vacations = stoi(temp_vacations);
-    this->user_info.salary_base = stoi(temp_salary);
-    this->user_info.deductibles = stoi(temp_deductibles);
+    this->decrypt_salary(temp_salary, temp_deductibles);
+
+    qDebug() << "volvi de decrypt_________________________";
+
     this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
     this->user_info.shift_available = (stoi(temp_shift) == 1 ? true : false);
+}
+
+void modify_user::encrypt_salary(std::string& salary,std::string& deductibles) {
+    security security_manager;
+    std::string buffer = security_manager.encrypt(std::to_string(this->user_info.salary_base));
+
+    // salary
+    for (size_t i = 0; i < buffer.length(); ++i) {
+        salary += std::to_string((int)buffer[i]);
+        salary += ".";
+    }
+
+    // deductibles
+    buffer = security_manager.encrypt(std::to_string(this->user_info.deductibles));
+    for (size_t i = 0; i < buffer.length(); ++i) {
+        deductibles += std::to_string((int)buffer[i]);
+        deductibles += ".";
+    }
+}
+
+void modify_user::decrypt_salary(std::string salary, std::string deductibles) {
+    security security_manager;
+    std::string salary_temp = "\0";
+    std::string deductibles_temp = "\0";
+
+    qDebug() << "temp_salary: " << salary;
+
+    // salary
+    for (size_t i = 0; i < salary.length(); ++i) {
+        if (salary[i] != '.') {
+            if (salary[i+1] == '.') {
+                    salary_temp += (char)(salary[i]-48);
+            } else if (salary[i+2] == '.'){
+                    salary_temp += (char)(((int)salary[i]) - 48)*10 +(((int)salary[i+1]) - 48);
+                    ++i; // ignore i+1
+            } else {
+                    salary_temp += (char)(((int)salary[i] - 48)*100 + ((int)salary[i+1] -48)*10 - +(((int)salary[i+2] -48)));
+                    i+=2; // ignore i+2
+            }
+            // next one would be a '.'
+            i++;
+        }
+    }
+
+    this->user_info.salary_base = stoi(security_manager.decrypt(salary_temp));
+
+    // deductibles
+    for (size_t i = 0; i < deductibles.length(); ++i) {
+        if (deductibles[i] != '.') {
+            if (deductibles[i+1] == '.') {
+                    deductibles_temp += (char)(deductibles[i]-48);
+            } else if (deductibles[i+2] == '.'){
+                    deductibles_temp += (char)(((int)deductibles[i]) - 48)*10 +(((int)deductibles[i+1]) - 48);
+                    ++i; // ignore i+1
+            } else {
+                    deductibles_temp += (char)(((int)deductibles[i] - 48)*100 + ((int)deductibles[i+1] -48)*10 - +(((int)deductibles[i+2] -48)));
+                    i+=2; // ignore i+2
+            }
+            // next one would be a '.'
+            i++;
+        }
+    }
+
+    this->user_info.deductibles = stoi(security_manager.decrypt(deductibles_temp));
 }
 
 // Método que va a agregar los usuarios al comboBox
@@ -516,11 +582,18 @@ void modify_user::update_laboral_data() {
         int year = 0;
         date.getDate(&year, &month, &day);
         to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+
+        // encrypt salary and deductibles
+        std::string salary_encripted = "\0";
+        std::string deductibles_encripted = "\0";
+        this->encrypt_salary(salary_encripted, deductibles_encripted);
+
         // add laboral data info
         to_send += "," + this->user_info.job_title;
-        to_send += "," + std::to_string(this->user_info.salary_base);
-        to_send += "," + std::to_string(this->user_info.deductibles);
+        to_send += "," + salary_encripted;
+        to_send += "," + deductibles_encripted;
         to_send += "," + this->user_login->user;
+
         this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el puesto, salario y/o deducciones");
     } else if (!salary_is_number || !deductible_is_number || this->ui->job_title->text().length() <= 0) {
         this->check_error("0", "Error: el salario y las deducciones deben ser números y el puesto debe ser mayor a 0 caracteres");

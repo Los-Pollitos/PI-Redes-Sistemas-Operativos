@@ -75,6 +75,7 @@ private:
     void consult_request(std::string remote_ip);
     void vacation_request(std::string remote_ip);
     void process_requests(std::string remote_ip);
+    void decrypt_salary(std::string salary, std::string deductibles, int& salary_int, int& deductibles_int);
 
 public:
     data_server();

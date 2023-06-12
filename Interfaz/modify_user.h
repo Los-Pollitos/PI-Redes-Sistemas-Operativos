@@ -7,6 +7,7 @@
 #include <QDialog>
 #include "client.h"
 #include "login_info.h"
+#include "security.h"
 #include "user_data.h"
 
 
@@ -42,6 +43,8 @@ private slots:
     void set_colors();
     void set_data_ui();
     void empty_text();
+    void encrypt_salary(std::string& salary,std::string& deductibles);
+    void decrypt_salary(std::string salary, std::string deductibles);
 
 private:
     Ui::modify_user* ui;

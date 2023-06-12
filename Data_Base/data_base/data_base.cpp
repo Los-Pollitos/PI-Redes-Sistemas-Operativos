@@ -369,16 +369,37 @@ std::string data_base::consult_employee_data(std::string user) {
 
 // TODO(nosotros): documentar
 std::string data_base::consult_laboral_data(std::string user, int data_id) {
+    security security_manager;
     std::string result = "\0";
+    std::string salary_encrypt = "\0";
+    std::string deductibles_encrypt = "\0";
+    int salary = 0;
+    int deductibles = 0;
     QSqlQuery consult_laboral_data;
+
     consult_laboral_data.prepare("SELECT * FROM laboral_datas WHERE user = (:user) AND data_id = (:data_id)");
     consult_laboral_data.bindValue(":user", QString::fromStdString(user));
     consult_laboral_data.bindValue(":data_id", data_id);
+
     // If a match was found
     if (consult_laboral_data.exec() && consult_laboral_data.next()) {
         for (int i = 8; i < 11; ++i) {
-            result += consult_laboral_data.value(i).toString().toStdString();
-            result += ",";
+            switch(i) {
+                case 8:  // salary
+                    salary = consult_laboral_data.value(i).toInt();
+                    this->encrypt(salary_encrypt, salary);
+                    result += salary_encrypt + ",";
+                    break;
+                case 9:  // deductibles
+                    deductibles = consult_laboral_data.value(i).toInt();
+                    this->encrypt(deductibles_encrypt, deductibles);
+                    result += deductibles_encrypt + ",";
+                    break;
+                case 10:  // job_title
+                    result += consult_laboral_data.value(i).toString().toStdString();
+                    result += ",";
+                    break;
+            }
         }
     } else {
         qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
@@ -789,3 +810,27 @@ bool data_base::change_request_solved(int id, int solved, int day_answer, int mo
     }
     return success;
 }
+
+void data_base::encrypt(std::string& to_encript, int from_encrypt) {
+
+    qDebug() << "voy a encriptar: " << from_encrypt;
+
+    security security_manager;
+    std::string buffer = security_manager.encrypt(std::to_string(from_encrypt));
+    to_encript = "\0";
+
+    qDebug() << "encriptado es: " << buffer;
+
+    qDebug() << "si decrypt: " << security_manager.decrypt(buffer);
+
+
+    // salary
+    for (size_t i = 0; i < buffer.length(); ++i) {
+        to_encript += std::to_string((int) buffer[i]);
+        to_encript += ".";
+    }
+
+
+    qDebug() << "pos ASCII es: " << to_encript;
+}
+

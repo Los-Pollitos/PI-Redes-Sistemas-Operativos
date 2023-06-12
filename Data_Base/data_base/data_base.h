@@ -30,6 +30,8 @@
 #include <QDebug>
 #include <string>
 
+#include "security.h"
+
 class data_base {
   private:
     // Attributes
@@ -43,6 +45,7 @@ class data_base {
     bool verify_office_id(int office);
     std::string request_type(int type, int proof_type);
     std::string request_status(int solved);
+    void encrypt(std::string& to_encrypt, int from_encrypt);
 
   public:
     data_base();

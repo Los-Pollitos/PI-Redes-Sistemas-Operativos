@@ -1236,6 +1236,10 @@ void data_server::change_laboral_data(std::string remote_ip) {
     std::string user = "\0";
     std::string to_send = "\0";
     std::string job_title = "\0";
+    std::string temp_salary = "\0";
+    std::string temp_deductibles = "\0";
+    int salary = 0;
+    int deductibles = 0;
 
     // save the data in the corresponding variables
     // find the user
@@ -1272,16 +1276,14 @@ void data_server::change_laboral_data(std::string remote_ip) {
     // the ',' was found, now the salary will be read
     ++i;
     while (this->data[i] != ',') {
-        to_send += this->data[i++];
+        temp_salary += this->data[i++];
     }
-    int salary = stoi(to_send);
-    to_send = "\0";
     // the ',' was found, now the deductibles will be read
     ++i;
     while (this->data[i] != ',') {
-        to_send += this->data[i++];
+        temp_deductibles += this->data[i++];
     }
-    int deductibles = stoi(to_send);
+    this->decrypt_salary(temp_salary, temp_deductibles, salary, deductibles);
 
 
     // change the last laboral data's end date
@@ -1306,6 +1308,46 @@ void data_server::change_laboral_data(std::string remote_ip) {
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::decrypt_salary(std::string salary, std::string deductibles, int& salary_int, int& deductibles_int) {
+    security security_manager;
+    std::string salary_temp = "\0";
+    std::string deductibles_temp = "\0";
+
+    // salary
+    for (size_t i = 0; i < salary.length(); ++i) {
+        if (salary[i] != '.') {
+            if (salary[i+1] == '.') {
+                salary_temp += (char)(salary[i]-48);
+            } else if (salary[i+2] == ','){
+                salary_temp += (char)(((int)salary[i]) - 48)*10 +(((int)salary[i+1]) - 48);
+                ++i; // ignore i+1
+            } else {
+                salary_temp += (char)(((int)salary[i] - 48)*100 + ((int)salary[i+1] -48)*10 - +(((int)salary[i+2] -48)));
+                i+=2; // ignore i+2
+            }
+        }
+    }
+
+    salary_int = stoi(security_manager.decrypt(salary_temp));
+
+    // deductibles
+    for (size_t i = 0; i < salary.length(); ++i) {
+        if (deductibles[i] != '.') {
+            if (deductibles[i+1] == '.') {
+                deductibles_temp += (char)(deductibles[i]-48);
+            } else if (deductibles[i+2] == ','){
+                deductibles_temp += (char)(((int)deductibles[i]) - 48)*10 +(((int)deductibles[i+1]) - 48);
+                ++i; // ignore i+1
+            } else {
+                deductibles_temp += (char)(((int)deductibles[i] - 48)*100 + ((int)deductibles[i+1] -48)*10 - +(((int)deductibles[i+2] -48)));
+                i+=2; // ignore i+2
+            }
+        }
+    }
+
+    deductibles_int = stoi(security_manager.decrypt(deductibles_temp));
 }
 
 // TODO(nosotros): documentar
