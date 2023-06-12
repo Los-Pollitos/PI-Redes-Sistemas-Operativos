@@ -104,6 +104,7 @@ void modify_user::set_data_ui() {
     ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
     ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
     ui->vacations->setText(QString::number(this->user_info.available_vacations));
+    ui->checkbox_shift->setCheckState(this->user_info.shift_available ? Qt::Checked : Qt::Unchecked);
     ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     ui->base_salary->setText(QString::number(this->user_info.salary_base));
     ui->deductions->setText(QString::number(this->user_info.deductibles));
@@ -206,9 +207,6 @@ void modify_user::load_user_data(std::string& data) {
 
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
-    this->changed = false;
-    this->correct_changes = false;
-
     // clear the comboBox
     for (int i = this->ui->comboBox->count(); i > 0; --i) {
         this->ui->comboBox->removeItem(i-1);
@@ -311,7 +309,8 @@ void modify_user::on_approve_changes_clicked() {
         show_message.setText("Contraseña incorrecta");
         show_message.exec();
     }
-    this->ui->password->setText("");
+    this->changed = false;
+    this->correct_changes = false;
 }
 
 void modify_user::update_data() {
@@ -477,10 +476,12 @@ void modify_user::update_vacations() {
 
     if ((ui->checkbox_shift->checkState() == Qt::Checked && this->user_info.shift_available == false)
             || (ui->checkbox_shift->checkState() == Qt::Unchecked && this->user_info.shift_available == true)) {
+
+        std::cout << "cambiando shift" << std::endl;
+
         this->changed = true;
         this->user_info.shift_available = !this->user_info.shift_available;  // set to the contrary
-        to_send = " " + this->user_info.user;
-        to_send[0] = CHANGE_SHIFT;
+        to_send = (char) CHANGE_SHIFT + this->user_info.user;
         to_send += "," + std::to_string(this->user_info.shift_available ? 1 : 0);
         to_send += "," + this->user_login->user;
         this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el turno disponible");
