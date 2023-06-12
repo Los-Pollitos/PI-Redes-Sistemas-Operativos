@@ -1575,6 +1575,8 @@ void data_server::process_requests(std::string remote_ip) {
     }
     year = stoi(to_send);
 
+    signing_boss = this->base->get_name(signing_boss);
+
     // ask the data base for the answer
     to_send = (this->base->change_request_solved(id, solved, day, month, year, signing_boss) ? 1 : 0);
 
@@ -1667,6 +1669,8 @@ void data_server::pdf_data_payment(std::string remote_ip) {
         }
     }
 
+    signing = this->base->get_name(signing);
+
     std::string to_send = name + ",";
     to_send += user_id + ",";
     to_send += day + ",";
@@ -1677,10 +1681,7 @@ void data_server::pdf_data_payment(std::string remote_ip) {
     to_send += salary + ",";
     to_send += deductibles + ",";
     to_send += job_title + ",";
-    to_send += user_id + ",";
     to_send += user_office + ",";
-
-    std::cout << to_send << std::endl;
 
     int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 
@@ -1693,9 +1694,135 @@ void data_server::pdf_data_payment(std::string remote_ip) {
 }
 
 void data_server::pdf_data_work(std::string remote_ip) {
+    std::string id = "";
+    int i = 1;
+    while (data[i] != ',') {
+        id += data[i];
+        ++i;
+    }
 
+    std::string result = this->base->get_request_date_signing(stoi(id));
+    std::string day;
+    std::string month;
+    std::string year;
+    std::string signing;
+    std::string user;
+
+    int temp = 0;
+
+    for (int i = 1; i < result.length(); ++i){
+        if (result[i] == ',') {
+            ++temp;
+        } else {
+            switch (temp) {
+            case 0:
+                day += result[i];
+                break;
+            case 1:
+                month += result[i];
+                break;
+            case 2:
+                year += result[i];
+                break;
+            case 3:
+                signing += result[i];
+                break;
+            case 4:
+                user += result[i];
+                break;
+            }
+        }
+    }
+
+    signing = this->base->get_name(signing);
+
+    std::string name = this->base->get_name(user);
+    std::string user_id = this->base->get_id(user);
+    std::string user_office = this->base->consult_office_name(this->base->consult_employee_office(user));
+    std::string laboral_datas = this->base->consult_laboral_datas(user);
+
+    std::string to_send = name + ",";
+    to_send += user_id + ",";
+    to_send += day + ",";
+    to_send += month + ",";
+    to_send += year + ",";
+    to_send += signing + ",";
+    to_send += user_office + ",";
+    to_send += laboral_datas;
+
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
+
+    for (int i = 0; i < total_m && i < 10; ++i) {
+        adapt_data(data, to_send, DATA_SIZE * i);
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(remote_ip, "sent", this->data);
+    }
 }
 
 void data_server::pdf_data_salary(std::string remote_ip) {
+    std::string id = "";
+    int i = 1;
+    while (data[i] != ',') {
+        id += data[i];
+        ++i;
+    }
 
+    std::string result = this->base->get_request_date_signing(stoi(id));
+    std::string day;
+    std::string month;
+    std::string year;
+    std::string signing;
+    std::string user;
+
+    int temp = 0;
+
+    for (int i = 1; i < result.length(); ++i){
+        if (result[i] == ',') {
+            ++temp;
+        } else {
+            switch (temp) {
+            case 0:
+                day += result[i];
+                break;
+            case 1:
+                month += result[i];
+                break;
+            case 2:
+                year += result[i];
+                break;
+            case 3:
+                signing += result[i];
+                break;
+            case 4:
+                user += result[i];
+                break;
+            }
+        }
+    }
+
+    std::string name = this->base->get_name(user);
+    std::string user_id = this->base->get_id(user);
+    std::string user_office = this->base->consult_office_name(this->base->consult_employee_office(user));
+    std::string laboral_datas = this->base->consult_laboral_datas(user);
+
+    signing = this->base->get_name(signing);
+
+    std::string to_send = name + ",";
+    to_send += user_id + ",";
+    to_send += day + ",";
+    to_send += month + ",";
+    to_send += year + ",";
+    to_send += signing + ",";
+    to_send += user_office + ",";
+    to_send += laboral_datas;
+
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
+
+    for (int i = 0; i < total_m && i < 10; ++i) {
+        adapt_data(data, to_send, DATA_SIZE * i);
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(remote_ip, "sent", this->data);
+    }
 }

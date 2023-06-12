@@ -48,8 +48,11 @@ private:
     client* local_client;
 
     // Private method
-    void generate_pdf(const QString& file_path, const QString& text, const QString& image_path);
+    void generate_pdf(const QString& file_path, const QString& text, const QString& header, const QString& image_path, const QString& title);
     QString request_type(int type);
+    void generate_pay_PDF(std::string result);
+    void generate_work_PDF(std::string result);
+    void generate_salary_PDF(std::string result);
 };
 
 #endif // REQUEST_DESCRIPTION_H

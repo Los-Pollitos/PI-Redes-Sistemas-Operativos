@@ -846,3 +846,25 @@ std::string data_base::get_actual_laboral_data(std::string user) {
     }
     return result;
 }
+
+std::string data_base::consult_laboral_datas(std::string user) {
+    std::string result = "";
+    QSqlQuery consult_laboral_data;
+
+    consult_laboral_data.prepare("SELECT * FROM laboral_datas WHERE user = (:user)");
+    consult_laboral_data.bindValue(":user", QString::fromStdString(user));
+
+    // If a match was found
+    if (consult_laboral_data.exec() && consult_laboral_data.next()) {
+        do {
+            for (int i = 2; i < 11; ++i) {
+                result += consult_laboral_data.value(i).toString().toStdString();
+                result += ";";
+            }
+            result[result.length()-1] = ',';
+        } while (consult_laboral_data.next());
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando los datos laborales de: " << user;
+    }
+    return result;
+}
