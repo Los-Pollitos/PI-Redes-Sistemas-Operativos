@@ -1,7 +1,6 @@
 #ifndef SECURITY_H
 #define SECURITY_H
 
-// TODO(nosotros): revisar si todos se ocupan
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

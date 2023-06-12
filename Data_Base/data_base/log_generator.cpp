@@ -6,9 +6,6 @@
  * Emilia Víquez (C18625)
  */
 
-//TODO: delete
-#include <iostream>
-
 #include "log_generator.h"
 #include <ctime>
 #include <QFile>

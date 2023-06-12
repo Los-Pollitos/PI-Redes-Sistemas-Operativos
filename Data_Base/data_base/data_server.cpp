@@ -844,7 +844,6 @@ void data_server::proof_case(std::string remote_ip, std::string description) {
     write(this->connection, this->data, DATA_SIZE);
 }
 
-// TODO(us): Document
 void data_server::process_data(std::string remote_ip) {
     std::string to_send = " ";
     std::string user = "";

@@ -8,10 +8,6 @@
 
 #include <QCoreApplication>
 #include <iostream>
-
-// TODO(nosotros): BORRAR ESTE HEADER
-#include "data_base.h"
-
 #include "data_server.h"
 
 int main(int argc, char *argv[]) {
