@@ -31,6 +31,7 @@ class intermediary {
     int connection;
     char data[DATA_SIZE];
     int message_count;
+    bool continue_waiting;
     log * logger;
     struct sockaddr_storage ipRemoto;
     std::string send_and_receive_login(std::string ip_remote);

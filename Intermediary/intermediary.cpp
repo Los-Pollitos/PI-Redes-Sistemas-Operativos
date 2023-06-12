@@ -14,6 +14,7 @@
  */
 intermediary::intermediary() {
   this->logger = new log ("intermediary_LOG.txt", "Intermediary Server");
+  this->continue_waiting = true;
 }
 
 /**
@@ -40,12 +41,11 @@ void intermediary::wait_for_request() {
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
 
-  sleep(1);
   socklen_t l = sizeof(this->ipRemoto);
   char strIpRemoto[INET6_ADDRSTRLEN];
   int port;
   std::cout << std::endl << "[INTERMEDIARIO ESCUCHANDO]" << std::endl;
-  while (this->message_count < 5000) {
+  while (continue_waiting) {
     // Search for a connection
     this->connection = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
 
@@ -53,7 +53,6 @@ void intermediary::wait_for_request() {
     if (this->connection != -1) {
       answer_request();
     }
-    sleep(1);
   }
 
   std::cout << std::endl << "[INTERMEDIARIO DETENIDO]" << std::endl;

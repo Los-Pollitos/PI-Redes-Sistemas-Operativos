@@ -444,8 +444,6 @@ void modify_user::update_office() {
     std::string to_send = "\0";
     bool is_number = true;
 
-    std::cout << "OFFICE ID: " << this->ui->office->text().toInt(&is_number, 10) << " vs " << (int) (this->user_info.office_id - 48) << std::endl;
-
     // only saved if office is a valid number
     if (this->ui->office->text().toInt(&is_number, 10) != (int) (this->user_info.office_id - 48) && is_number) {
         this->changed = true;
