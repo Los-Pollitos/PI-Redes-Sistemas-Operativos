@@ -1594,8 +1594,6 @@ void data_server::process_requests(std::string remote_ip) {
     }
     year = stoi(to_send);
 
-    signing_boss = this->base->get_name(signing_boss);
-
     // ask the data base for the answer
     to_send = (this->base->change_request_solved(id, solved, day, month, year, signing_boss) ? 1 : 0);
 
@@ -1687,8 +1685,6 @@ void data_server::pdf_data_payment(std::string remote_ip) {
             }
         }
     }
-
-    signing = this->base->get_name(signing);
 
     std::string to_send = name + ",";
     to_send += user_id + ",";
@@ -1825,7 +1821,6 @@ void data_server::pdf_data_salary(std::string remote_ip) {
     std::string user_office = this->base->consult_office_name(this->base->consult_employee_office(user));
     std::string laboral_datas = this->base->consult_laboral_datas(user);
 
-    signing = this->base->get_name(signing);
 
     std::string to_send = name + ",";
     to_send += user_id + ",";

@@ -190,10 +190,10 @@ void request_description::on_file_button_clicked() {
         this->generate_pay_PDF(to_send);
         break;
     case 'j':
-        to_send += ((char)ANSWER_WORK_PROOF);
+        this->generate_work_PDF(to_send);
         break;
     case 'a':
-        to_send += ((char)ANSWER_SALARY_PROOF);
+        this->generate_salary_PDF(to_send);
         break;
     }
 }
@@ -313,9 +313,9 @@ void request_description::generate_pay_PDF(std::string result){
     std::string text = "";
 
     header += user_office + ", Costa Rica\n";
-    header += day + " / " + month + " / " + year + "\n";
+    header += day + " - " + month + " - " + year + "\n";
     header += "Los Pollitos Inc.";
-    text += "Buenos días,\nPor este medio se hace constar el pago del empleado " + name + " con los siguientes datos:\n\n";
+    text += "A quien corresponda,\nPor este medio se hace constar el pago del empleado " + name + " con los siguientes datos:\n\n";
     text += "Nombre del empleado: " + name;
     text += "\nIdentificación del empleado: " + user_id;
     text += "\nPuesto en la empresa: " + job_title;
@@ -325,7 +325,7 @@ void request_description::generate_pay_PDF(std::string result){
     text += "Atentamente,\n";
     text += signing;
 
-    QString filePath = "../docs/output.pdf";
+    QString filePath = "../docs/Constancia_de_pago.pdf";
     QString imagePath = ":/icons/pollitos_incorporated_icon.png";
 
     this->generate_pdf(filePath, QString::fromStdString(text), QString::fromStdString(header), imagePath, QString::fromStdString(title));
@@ -333,10 +333,275 @@ void request_description::generate_pay_PDF(std::string result){
 }
 
 void request_description::generate_work_PDF(std::string result) {
+    std::string name = "";
+    std::string user_id = "";
+    std::string day = "";
+    std::string month = "";
+    std::string year = "";
+    std::string signing = "";
+    std::string user_office = "";
+    std::string laboral_datas = "";
 
+    int temp = 0;
+    int datas = 0;
+
+    for (size_t i = 0; i < result.length(); ++i){
+        if (result[i] == ',') {
+           ++temp;
+        } else {
+           switch (temp) {
+           case 0:
+                name += result[i];
+                break;
+           case 1:
+                user_id += result[i];
+                break;
+           case 2:
+                day += result[i];
+                break;
+           case 3:
+                month += result[i];
+                break;
+           case 4:
+                year += result[i];
+                break;
+           case 5:
+                signing += result[i];
+                break;
+           case 6:
+                user_office += result[i];
+                break;
+           case 7:
+                laboral_datas += result[i];
+                if (result[i] == '|')
+                    ++datas;
+                break;
+            }
+        }
+    }
+
+    laboral_datas += ",";
+
+    std::string title = "Constancia laboral";
+
+    std::string header = "";
+    std::string text = "";
+
+    header += user_office + ", Costa Rica\n";
+    header += day + " - " + month + " - " + year + "\n";
+    header += "Los Pollitos Inc.";
+    text += "A quien corresponda,\nPor este medio se hace constar los labores del empleado " + name + " con los siguientes datos:\n\n";
+    text += "Nombre del empleado: " + name;
+    text += "\nIdentificación del empleado: " + user_id;
+    text += "\nSucursal: " + user_office;
+
+    int i = 0;
+    temp = 0;
+
+    for (int j = 0; j < datas; ++j) {
+        std::string start_day = "";
+        std::string start_month = "";
+        std::string start_year = "";
+        std::string end_day = "";
+        std::string end_month = "";
+        std::string end_year = "";
+        std::string gross_salary = "";
+        std::string deductibles = "";
+        std::string job_title = "";
+        for (i; laboral_datas[i] != '|'; ++i){
+            if (laboral_datas[i] == ';') {
+                ++temp;
+            } else {
+                switch (temp) {
+                case 0:
+                    start_day += laboral_datas[i];
+                    break;
+                case 1:
+                    start_month += laboral_datas[i];
+                    break;
+                case 2:
+                    start_year += laboral_datas[i];
+                    break;
+                case 3:
+                    end_day += laboral_datas[i];
+                    break;
+                case 4:
+                    end_month += laboral_datas[i];
+                    break;
+                case 5:
+                    end_year += laboral_datas[i];
+                    break;
+                case 6:
+                    gross_salary += laboral_datas[i];
+                    break;
+                case 7:
+                    deductibles += laboral_datas[i];
+                    break;
+                case 8:
+                    job_title += laboral_datas[i];
+                    break;
+                }
+            }
+        }
+        text += "\n\nPuesto: " + job_title + "\n";
+        text += "Desde: " + start_day + " - " + start_month + " - " + start_year + "\n";
+        text += "Hasta: ";
+        if (end_day == "0")
+            text += "La actualidad\n";
+        else
+            text += end_day + " - " + end_month + " - " + end_year + "\n";
+
+        int net_salary = stoi(gross_salary) - stoi(deductibles);
+
+        text += "Salario base: " + gross_salary + " colones\n";
+        text += "Deducciones: " + deductibles + " colones\n";
+        text += "Salario neto: " + std::to_string(net_salary) + " colones\n";
+    }
+
+    text += "\n\nAtentamente,\n";
+    text += signing;
+
+    QString filePath = "../docs/Constancia_laboral.pdf";
+    QString imagePath = ":/icons/pollitos_incorporated_icon.png";
+
+    this->generate_pdf(filePath, QString::fromStdString(text), QString::fromStdString(header), imagePath, QString::fromStdString(title));
 }
 
 void request_description::generate_salary_PDF(std::string result) {
+    std::string name = "";
+    std::string user_id = "";
+    std::string day = "";
+    std::string month = "";
+    std::string year = "";
+    std::string signing = "";
+    std::string user_office = "";
+    std::string laboral_datas = "";
 
+    int temp = 0;
+    int datas = 0;
+
+    for (size_t i = 0; i < result.length(); ++i){
+        if (result[i] == ',') {
+           ++temp;
+        } else {
+           switch (temp) {
+           case 0:
+                name += result[i];
+                break;
+           case 1:
+                user_id += result[i];
+                break;
+           case 2:
+                day += result[i];
+                break;
+           case 3:
+                month += result[i];
+                break;
+           case 4:
+                year += result[i];
+                break;
+           case 5:
+                signing += result[i];
+                break;
+           case 6:
+                user_office += result[i];
+                break;
+           case 7:
+                laboral_datas += result[i];
+                if (result[i] == '|')
+                    ++datas;
+                break;
+            }
+        }
+    }
+
+    std::cout << laboral_datas << std::endl;
+
+    laboral_datas += ",";
+
+    std::string title = "Constancia salarial";
+
+    std::string header = "";
+    std::string text = "";
+
+    header += user_office + ", Costa Rica\n";
+    header += day + " - " + month + " - " + year + "\n";
+    header += "Los Pollitos Inc.";
+    text += "A quien corresponda,\nPor este medio se hace constar los labores del empleado " + name + " con los siguientes datos:\n\n";
+    text += "Nombre del empleado: " + name;
+    text += "\nIdentificación del empleado: " + user_id;
+    text += "\nSucursal: " + user_office;
+
+    int i = 0;
+    temp = 0;
+
+    for (int j = 0; j < datas; ++j)  {
+        std::string start_day = "";
+        std::string start_month = "";
+        std::string start_year = "";
+        std::string end_day = "";
+        std::string end_month = "";
+        std::string end_year = "";
+        std::string gross_salary = "";
+        std::string deductibles = "";
+        std::string job_title = "";
+        for (i; laboral_datas[i] != '|'; ++i){
+            if (laboral_datas[i] == ';') {
+                ++temp;
+            } else {
+                switch (temp) {
+                case 0:
+                    start_day += laboral_datas[i];
+                    break;
+                case 1:
+                    start_month += laboral_datas[i];
+                    break;
+                case 2:
+                    start_year += laboral_datas[i];
+                    break;
+                case 3:
+                    end_day += laboral_datas[i];
+                    break;
+                case 4:
+                    end_month += laboral_datas[i];
+                    break;
+                case 5:
+                    end_year += laboral_datas[i];
+                    break;
+                case 6:
+                    gross_salary += laboral_datas[i];
+                    break;
+                case 7:
+                    deductibles += laboral_datas[i];
+                    break;
+                case 8:
+                    job_title += laboral_datas[i];
+                    break;
+                }
+            }
+        }
+        std::cout << job_title << std::endl;
+
+        text += "\n\nDesde: " + start_day + " - " + start_month + " - " + start_year + "\n";
+        text += "Hasta: ";
+        if (end_day == "0")
+            text += "La actualidad\n";
+        else
+            text += end_day + " - " + end_month + " - " + end_year + "\n";
+
+        int net_salary = stoi(gross_salary) - stoi(deductibles);
+
+        text += "Salario base: " + gross_salary + " colones\n";
+        text += "Deducciones: " + deductibles + " colones\n";
+        text += "Salario neto: " + std::to_string(net_salary) + " colones\n";
+    }
+
+    text += "\n\nAtentamente,\n";
+    text += signing;
+
+    QString filePath = "../docs/Constancia_salarial.pdf";
+    QString imagePath = ":/icons/pollitos_incorporated_icon.png";
+
+    this->generate_pdf(filePath, QString::fromStdString(text), QString::fromStdString(header), imagePath, QString::fromStdString(title));
 }
 

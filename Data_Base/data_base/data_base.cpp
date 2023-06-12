@@ -966,7 +966,7 @@ std::string data_base::consult_laboral_datas(std::string user) {
                 result += consult_laboral_data.value(i).toString().toStdString();
                 result += ";";
             }
-            result[result.length()-1] = ',';
+            result[result.length()-1] = '|';
         } while (consult_laboral_data.next());
     } else {
         qDebug() << "[BASE_DATOS] Error buscando los datos laborales de: " << user;
