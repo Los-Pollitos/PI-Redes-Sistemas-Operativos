@@ -548,7 +548,7 @@ void data_server::answer_request() {
     while (this->connection != -1 &&
            (n = read(this->connection, this->data, sizeof(this->data))) > 0) {
         // connection es socket cliente
-        std::cout << "[SERVIDOR DE DATOS RECIBIE] " << this->data << std::endl;
+        std::cout << "[SERVIDOR DE DATOS RECIBE] " << this->data << std::endl;
         if (this->data[0] == '#') {
             close(this->connection);
         } else {
