@@ -627,7 +627,7 @@ std::string data_base::consult_requests(std::string user) {
     if (consult_requests.exec() && consult_requests.next()) {
         do {
             result += consult_requests.value(0).toString().toStdString() + "-";  // id
-            result += consult_requests.value(3).toString().toStdString() + "-";  // type
+            result += consult_requests.value(2).toString().toStdString() + "-";  // type
             result += this->request_type(consult_requests.value(2).toInt(), consult_requests.value(3).toInt()) + ": ";
             result += this->request_status(consult_requests.value(1).toInt()) += ",";  // status
         } while (consult_requests.next());

@@ -659,17 +659,33 @@ void data_server::vacation_request(std::string remote_ip) {
     ++i;
     // Obtain the vacation part
     std::string vacation = "";
-    for (; receive[i] != '\0'; ++i) {
+    for (; receive[i] != ','; ++i) {
         vacation += receive[i];
     }
-    // Obtain the current date
-    QDate date = QDate::currentDate();
-    int day = date.day();
-    int month = date.month();
-    int year = date.year();
-    // Prepare to add to data base
-    this->base->add_request(username, 0, day, month, year, 0, 0, 0, 0, vacation, 0, "\0", "\0");
-    result = "1";
+    ++i;
+    std::string request_days = "";
+    // Obtain the requested days
+    for (; receive[i] != '\0'; ++i) {
+        request_days += receive[i];
+    }
+    std::string temporal_vac = this->base->get_available_vacations(username);
+    double requested = std::stod(request_days);
+    double contained = std::stod(temporal_vac);
+    if (requested > contained) {
+        // It can't be requested
+        result = "0";
+    } else {
+        // Obtain the current date
+        QDate date = QDate::currentDate();
+        int day = date.day();
+        int month = date.month();
+        int year = date.year();
+        // Prepare to add to data base
+        vacation += "," + request_days;
+        this->base->add_request(username, 0, day, month, year, 0, 0, 0, 0, vacation, 0, "\0", "\0");
+        result = "1";
+    }
+    // Send the answer
     memset(this->data, '\0', DATA_SIZE);
     this->data[0] = result[0];
     // Send the answer
