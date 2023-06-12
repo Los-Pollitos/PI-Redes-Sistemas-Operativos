@@ -588,7 +588,6 @@ std::string data_base::conuslt_process_requests_of_office(int office_id) {
             employee += employee_consult[i];
         } else {  // is the end of the username
             employee_vector.push_back(employee);
-            std::cout << "Empleado : " << employee << std::endl;
             employee = "\0";  // it is cleaned for next username
         }
     }
@@ -695,18 +694,25 @@ std::string data_base::consult_request(int id, int type) {
 
     // If a match was found
     if (consult_request.exec() && consult_request.next()) {
-            result += consult_request.value(0).toString().toStdString() + ",";  // day
-            result += consult_request.value(1).toString().toStdString() + ",";  // month
-            result += consult_request.value(2).toString().toStdString() + ",";  // year
-            result += consult_request.value(3).toString().toStdString();  // content
+        result += consult_request.value(0).toString().toStdString() + ",";  // day
+        result += consult_request.value(1).toString().toStdString() + ",";  // month
+        result += consult_request.value(2).toString().toStdString() + ",";  // year
+        result += consult_request.value(3).toString().toStdString();  // content
 
-            if (type != VACATION) {
-                result += "," + consult_request.value(4).toString().toStdString();
-            }
+        if (type != VACATION) {
+            result += "," + consult_request.value(4).toString().toStdString();
+        } else {
+            result[result.length()-1] = '&';
+            result += "\0";
+        }
     } else {
-            qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id << "de tipo:" << type;
+        qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id << "de tipo:" << type;
     }
-    result += "\0";
+
+
+    // TODO(nosotros): borrar
+    qDebug() << result.length();
+
 
     return result;
 }

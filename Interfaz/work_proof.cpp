@@ -31,7 +31,6 @@ void work_proof::setUserData(login_info *user_login) {
 
 void work_proof::on_pushButton_clicked() {
     std::string user = this->user_login->user;
-    std::cout << user << std::endl;
     std::time_t actual_time = std::time(nullptr);
     std::tm* now = std::localtime(&actual_time);
 

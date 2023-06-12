@@ -25,14 +25,23 @@ public:
     void add_data_to_combobox();
     void load_user_data(std::string& data);
 
-
 private slots:
     void update_data();
     Qt::CheckState unmask_role(int role_id, char role);
     void set_read_only();
     void update_roles();
+    void update_phone();
+    void update_email();
+    void update_office();
+    void update_vacations();
+    void update_laboral_data();
+    void add_record();
     void on_comboBox_activated(int index);
     void on_approve_changes_clicked();
+    void check_error(std::string received, QString error);
+    void set_colors();
+    void set_data_ui();
+    void empty_text();
 
 private:
     Ui::modify_user* ui;
@@ -40,6 +49,8 @@ private:
     login_info* user_login;
     user_data user_info;
     std::vector<std::string> user_names;
+    bool correct_changes;
+    bool changed;
 };
 
 #endif // MODIFY_USER_H

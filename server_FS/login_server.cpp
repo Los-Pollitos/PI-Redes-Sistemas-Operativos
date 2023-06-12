@@ -18,6 +18,7 @@ login_server::login_server() {
   this->connection = -1;
   this->message_count = 0;
   this->logger =  new log ("Login_LOG.txt", "Login Server");
+  this->continue_waiting = true;
   // Load the file system from image
   std::ifstream current_file("fs_image.dat");
   if (current_file.is_open()) {
@@ -82,12 +83,11 @@ void login_server::wait_for_request() {
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
 
-  sleep(1);
   socklen_t l = sizeof(this->ipRemoto);
   char strIpRemoto[INET6_ADDRSTRLEN];
   int port;
   std::cout << std::endl << "[SERVIDOR LOGIN ESCUCHANDO]" << std::endl;
-  while (this->message_count < 5000) {
+  while (this->continue_waiting) {
     // Search for a connection
     this->connection = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
 
@@ -95,7 +95,6 @@ void login_server::wait_for_request() {
     if (this->connection != -1) {
       answer_request();
     }
-    sleep(1);
   }
 
   std::cout << std::endl << "[SERVIDOR DETENIDO]" << std::endl;
@@ -118,7 +117,7 @@ void login_server::answer_request() {
   while (this->connection != -1 &&
          (n = read(this->connection, this->data, DATA_SIZE)) > 0) {
     // connection es socket cliente
-    std::cout << "Recibi: " << this->data << std::endl;
+    std::cout << "[SERVIDOR LOGIN RECIBIO]: " << this->data << std::endl;
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
@@ -183,7 +182,7 @@ void login_server::create_user() {
     this->data[0] = '1';
   }
   // Write to the intermediary the answer
-  std::cout << "Voy a enviar a intermediario " << this->data << "\n";
+  std::cout << "[SERVIDOR LOGIN -> INTERMEDIARIO] " << this->data << "\n";
   write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -259,7 +258,7 @@ void login_server::delete_user() {
     this->data[0] = '0';
   }
   // Write to the intermediary the answer
-  std::cout << "Voy a enviar a intermediario " << this->data << "\n";
+  std::cout << "[SERVIDOR LOGIN -> INTERMEDIARIO] " << this->data << "\n";
   write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -455,12 +454,10 @@ void login_server::give_token(){
       std::string token_ascii = "";
       int i = 0;
       for (i = 0; i < 12; ++i) {
-        std::cout << (int)buffer[i] << " ";
         token_ascii += std::to_string((int)buffer[i]);
         token_ascii += ',';
       }
       token_ascii += '\0';
-      std::cout << std::endl;
       this->adapt_data(token_ascii);
       this->data[12] = ',';
     } else {

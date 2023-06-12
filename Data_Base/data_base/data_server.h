@@ -35,6 +35,7 @@ private:
     int connection;
     char data[DATA_SIZE];
     int message_count;
+    bool continue_waiting;
     log_generator * logger;
     struct sockaddr_storage ipRemoto;
 

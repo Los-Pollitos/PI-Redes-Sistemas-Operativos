@@ -36,6 +36,7 @@ class login_server {
     int message_count;
     struct sockaddr_storage ipRemoto;
     log* logger;
+    bool continue_waiting;
 
     // Methods
     void find_data(std::string& username,  std::string& hash);

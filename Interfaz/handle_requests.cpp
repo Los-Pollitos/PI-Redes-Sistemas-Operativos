@@ -96,7 +96,6 @@ void handle_requests::update_scroll() {
                    temp_to_show += "Constancia";
                    break;
                }
-               std::cout << "Voy a poner un boton con " << temp_to_show << std::endl;
                this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
                this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
                              , &handle_requests::update_scroll);
@@ -116,6 +115,9 @@ void handle_requests::show_description(int vector_pos, int type) {
     std::string to_send = " " + std::to_string(this->requests_buttons[vector_pos + 1]->get_id_requests()) + "," + std::to_string(type);
     to_send[0] = CONSULT_REQUESTS;
     to_send = this->local_client->send_and_receive(to_send);  // day, month, year, content
+//    if (type == VACATION) {
+//       to_send = to_send.substr(0, to_send.find("&"));
+//    }
 
     int pos = 0;
     std::string temp = "\0";
@@ -148,12 +150,10 @@ void handle_requests::show_description(int vector_pos, int type) {
     ++pos;
 
     // content
-    while(to_send[pos] != ',') {
+    while(to_send[pos] != ',' && to_send[pos] != '\0' && to_send[pos] != '&') {
        content += to_send[pos++];
     }
     content += '\0';
-
-    std::cout << "content size: " << content.size() << std::endl;
 
     this->description->set_client(this->local_client);
     this->description->set_atributes(day, month, year, type, QString::fromStdString(this->user_login->user)

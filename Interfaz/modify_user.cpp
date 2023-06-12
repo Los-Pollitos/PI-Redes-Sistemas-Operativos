@@ -8,8 +8,24 @@
 
 modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_user) {
     ui->setupUi(this);
+    this->correct_changes = false;
+    this->changed = false;
 
     // colors
+    this->set_colors();
+
+    // window name
+    this->setWindowTitle("Modificar usuarios");
+}
+
+modify_user::~modify_user() {
+    if (this->ui) {
+        delete this->ui;
+        this->ui = 0;
+    }
+}
+
+void modify_user::set_colors() {
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->approve_changes->setStyleSheet("color: #001f21;");
     this->ui->base_salary->setStyleSheet("color: #001f21;");
@@ -31,6 +47,8 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->label_7->setStyleSheet("color: #001f21;");
     this->ui->label_9->setStyleSheet("color: #001f21;");
     this->ui->label_15->setStyleSheet("color: #001f21;");
+    this->ui->label_16->setStyleSheet("color: #001f21;");
+    this->ui->label_17->setStyleSheet("color: #001f21;");
     this->ui->net_salary->setStyleSheet("color: #001f21;");
     this->ui->office->setStyleSheet("color: #001f21;");
     this->ui->password->setStyleSheet("color: #001f21;");
@@ -48,24 +66,14 @@ modify_user::modify_user(QWidget *parent) : QDialog(parent), ui(new Ui::modify_u
     this->ui->checkbox_supervisor->setStyleSheet("color: #001f21;");
     this->ui->checkbox_shift->setStyleSheet("color: #001f21;");
     this->ui->comboBox->setStyleSheet("color: #001f21;");
-
-    // window name
-    this->setWindowTitle("Modificar usuarios");
-}
-
-modify_user::~modify_user() {
-    if (this->ui) {
-        delete this->ui;
-        this->ui = 0;
-    }
 }
 
 void modify_user::on_comboBox_activated(int index) {
     // obtain the user's data
     this->user_info.user = this->user_names[index];
-    std::string to_send = "0" + this->user_names[index];
-    to_send[0] = DATA_USER;
+    std::string to_send = (char) DATA_USER + this->user_names[index];
     std::string data_received = this->local_client->send_and_receive(to_send);
+
     // data_received tiene el formato definido en el datagrama
     this->load_user_data(data_received);
 
@@ -76,6 +84,10 @@ void modify_user::on_comboBox_activated(int index) {
     }
 
     // set the data in the ui
+    this->set_data_ui();
+}
+
+void modify_user::set_data_ui() {
     int office_id = (int) (this->user_info.office_id - 48);
     ui->name->setReadOnly(true);
     ui->name->setText(QString::fromStdString(this->user_info.name));
@@ -92,7 +104,6 @@ void modify_user::on_comboBox_activated(int index) {
     ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
     ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
     ui->vacations->setText(QString::number(this->user_info.available_vacations));
-    ui->checkbox_shift->setCheckState((this->user_info.shift_available == true) ? Qt::Checked : Qt::Unchecked);
     ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     ui->base_salary->setText(QString::number(this->user_info.salary_base));
     ui->deductions->setText(QString::number(this->user_info.deductibles));
@@ -195,6 +206,9 @@ void modify_user::load_user_data(std::string& data) {
 
 // Método que va a agregar los usuarios al comboBox
 void modify_user::add_data_to_combobox() {
+    this->changed = false;
+    this->correct_changes = false;
+
     // clear the comboBox
     for (int i = this->ui->comboBox->count(); i > 0; --i) {
         this->ui->comboBox->removeItem(i-1);
@@ -202,24 +216,7 @@ void modify_user::add_data_to_combobox() {
     this->user_names.clear();
 
     // empty text lines
-    ui->name->setText("");
-    ui->id->setText("");
-    ui->phone->setText("");
-    ui->email->setText("");
-    ui->office->setText("");
-    ui->checkbox_active->setCheckState(Qt::Unchecked);
-    ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
-    ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
-    ui->checkbox_debug->setCheckState(Qt::Unchecked);
-    ui->checkbox_employee->setCheckState(Qt::Unchecked);
-    ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
-    ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
-    ui->checkbox_shift->setCheckState(Qt::Unchecked);
-    ui->vacations->setText(0);
-    ui->job_title->setText(0);
-    ui->base_salary->setText(0);
-    ui->deductions->setText(0);
-    ui->net_salary->setText(0);
+    this->empty_text();
 
     int i = 0;
     // find the user's office id
@@ -256,6 +253,29 @@ void modify_user::add_data_to_combobox() {
     }
 }
 
+void modify_user::empty_text() {
+    this->ui->name->setText("");
+    this->ui->id->setText("");
+    this->ui->phone->setText("");
+    this->ui->email->setText("");
+    this->ui->office->setText("");
+    this->ui->checkbox_active->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_debug->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_employee->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_shift->setCheckState(Qt::Unchecked);
+    this->ui->vacations->setText(0);
+    this->ui->job_title->setText(0);
+    this->ui->base_salary->setText(0);
+    this->ui->deductions->setText(0);
+    this->ui->net_salary->setText(0);
+    this->ui->password->setText("");
+    this->ui->record->setPlainText("");
+}
+
 // role indicates the role that wants to be analized if the user has
 Qt::CheckState modify_user::unmask_role(int role_id, char role) {
     Qt::CheckState state = Qt::Unchecked;
@@ -267,17 +287,24 @@ Qt::CheckState modify_user::unmask_role(int role_id, char role) {
 }
 
 void modify_user::on_approve_changes_clicked() {
+    QMessageBox show_message = QMessageBox();
     QString password = ui->password->text();
     if (password.toStdString() == this->user_login->password) {
         this->update_data();
-        QMessageBox show_message =  QMessageBox();
-        show_message.setWindowTitle("Correcto");
-        show_message.setModal(true);
-        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
-        show_message.setText("Cambios aplicados");
-        show_message.exec();
+        if (correct_changes) {
+            show_message.setWindowTitle("Correcto");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Cambios aplicados");
+            show_message.exec();
+        } else {
+            show_message.setWindowTitle("Error");
+            show_message.setModal(true);
+            show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_message.setText("Los cambios no fueron aplicados o no había cambios");
+            show_message.exec();
+        }
     } else {
-        QMessageBox show_message =  QMessageBox();
         show_message.setWindowTitle("Error");
         show_message.setModal(true);
         show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
@@ -288,93 +315,19 @@ void modify_user::on_approve_changes_clicked() {
 }
 
 void modify_user::update_data() {
-    std::string to_send = "";
-    bool is_number = true;
-
-    // update roles
+    // update the data in the data base
     this->update_roles();
+    this->update_phone();
+    this->update_email();
+    this->update_office();
+    this->update_vacations();
+    this->update_laboral_data();
+    this->add_record();
 
-    if (this->ui->phone->text().toStdString() != this->user_info.phone && this->ui->phone->text().length() == 8) {
-        this->user_info.phone = this->ui->phone->text().toStdString();
-        to_send = " " + this->user_info.user + "," + this->user_info.phone + "," + this->user_login->user;
-        to_send[0] = CHANGE_PHONE;
-        this->local_client->send_and_receive(to_send);
+    if (this->changed) {
+        // refresh the data in the window
+        this->add_data_to_combobox();
     }
-    if (this->ui->email->text().toStdString() != this->user_info.email && this->ui->email->text().length() > 0
-                && this->ui->email->text().length() <= 23) {
-        this->user_info.email = this->ui->email->text().toStdString();
-        to_send = " " + this->user_info.user + "," + this->user_info.email + "," + this->user_login->user;
-        to_send[0] = CHANGE_EMAIL;
-        this->local_client->send_and_receive(to_send);
-    }
-    if (this->ui->office->text().toInt(&is_number, 10) != (int) this->user_info.office_id && is_number) {  // only saved if office is a valid number
-        this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
-        to_send = " " + this->user_info.user + "," + std::to_string(this->user_info.office_id) + "," + this->user_login->user;
-        to_send[0] = CHANGE_OFFICE_ID;
-        this->local_client->send_and_receive(to_send);
-    }
-    if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations && is_number) {
-        this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
-        to_send = " " + this->user_info.user;
-        to_send[0] = CHANGE_VACATIONS;
-        to_send += "," + std::to_string(this->user_info.available_vacations);
-        to_send += "," + this->user_login->user;
-        this->local_client->send_and_receive(to_send);
-    }
-    if ((ui->checkbox_shift->checkState() == Qt::Checked && this->user_info.shift_available == false)
-        || (ui->checkbox_shift->checkState() == Qt::Unchecked && this->user_info.shift_available == true)) {
-        this->user_info.shift_available = !this->user_info.shift_available;  // set to the contrary
-        to_send = " " + this->user_info.user;
-        to_send[0] = CHANGE_SHIFT;
-        to_send += "," + std::to_string(this->user_info.shift_available ? 1 : 0);
-        to_send += "," + this->user_login->user;
-        this->local_client->send_and_receive(to_send);
-    }
-    if ((this->ui->base_salary->text().toInt(&is_number, 10) != this->user_info.salary_base && is_number)
-            || (this->ui->deductions->text().toInt(&is_number, 10) != this->user_info.deductibles && is_number)
-            || (this->ui->job_title->text().toStdString() != this->user_info.job_title && this->ui->job_title->text().length() > 0)) {
-        // update user info
-        this->user_info.job_title = this->ui->job_title->text().toStdString();
-        this->user_info.salary_base = this->ui->base_salary->text().toInt(&is_number, 10);
-        this->user_info.deductibles = this->ui->deductions->text().toInt(&is_number, 10);
-        this->user_info.salary_net = this->user_info.salary_base-this->user_info.deductibles;
-        this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
-
-        // send changes to data_base
-        to_send = " " + this->user_info.user;
-        to_send[0] = CHANGE_LABORAL_DATA;
-        // set the date
-        QDate date = QDate::currentDate();
-        int day = 0;
-        int month = 0;
-        int year = 0;
-        date.getDate(&year, &month, &day);
-        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
-        // add laboral data info
-        to_send += "," + this->user_info.job_title;
-        to_send += "," + std::to_string(this->user_info.salary_base);
-        to_send += "," + std::to_string(this->user_info.deductibles);
-        to_send += "," + this->user_login->user;
-        this->local_client->send_and_receive(to_send);
-    }
-    if (this->ui->record->toPlainText().toStdString().length() > 0 && this->ui->record->toPlainText().toStdString().length() < 237) {  // new annotation
-        to_send = " " + this->user_info.user;
-        to_send[0] = ADD_RECORD;
-        QDate date = QDate::currentDate();
-        int day = 0;
-        int month = 0;
-        int year = 0;
-        date.getDate(&year, &month, &day);
-        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
-        to_send += "," + this->ui->record->toPlainText().toStdString();
-        to_send += "," + this->user_login->user;
-        this->local_client->send_and_receive(to_send);
-        // TODO(Angie): ver si data base puede recibir '&' para mandar anotaciones largas
-        this->ui->record->setPlainText("");
-    }
-
-    // refresh the data
-    this->add_data_to_combobox();
 }
 
 void modify_user::update_roles() {
@@ -386,6 +339,8 @@ void modify_user::update_roles() {
     // check if the employee was fired
     if (ui->checkbox_active->checkState() == Qt::Unchecked
             && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
+        this->changed = true;
+
         // the new role is fired
         this->user_info.role = UNEMPLOYEED | this->user_info.role;
         to_send[0] = FIRE_EMPLOYEE;
@@ -399,8 +354,7 @@ void modify_user::update_roles() {
         date.getDate(&year, &month, &day);
         to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
 
-        this->local_client->send_and_receive(to_send);
-        // TODO(Angie):mostrar pop up si hubo error
+        this->check_error(this->local_client->send_and_receive(to_send), "Error al despedir el empleado");
 
         // once fired, nothing can be changed
         this->set_read_only();
@@ -409,6 +363,7 @@ void modify_user::update_roles() {
         if (ui->checkbox_debug->checkState() == Qt::Checked
                 && unmask_role(DEBUG, this->user_info.role) == Qt::Checked) {
             this->user_info.role = DEBUG;
+            this->changed = true;
 
             // the debug is exclusive of other roles
             ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
@@ -419,7 +374,7 @@ void modify_user::update_roles() {
 
             // update the data base
             to_send += this->user_info.role;
-            this->local_client->send_and_receive(to_send);
+            this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a Depurador");
         } else {  // see if any role changed
             if (ui->checkbox_admin_config->checkState() == Qt::Checked) {
                 role_int |= ADMIN_CONFIG;
@@ -437,10 +392,172 @@ void modify_user::update_roles() {
                 role_int |= SUPERVISOR;
             }
 
-            this->user_info.role = role_int;
-            to_send += this->user_info.role;
-            this->local_client->send_and_receive(to_send);
+            if (this->user_info.role != role_int) {
+                this->changed = true;
+                this->user_info.role = role_int;
+                to_send += this->user_info.role;
+                this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar los roles");
+            }
         }
+    }
+}
+
+void modify_user::update_phone() {
+    std::string to_send = "\0";
+    bool is_number = true;
+
+    this->ui->phone->text().toInt(&is_number);
+
+    if (this->ui->phone->text().toStdString() != this->user_info.phone
+                && this->ui->phone->text().length() == 8 && is_number) {
+        this->changed = true;
+        this->user_info.phone = this->ui->phone->text().toStdString();
+        to_send = " " + this->user_info.user + "," + this->user_info.phone
+                  + "," + this->user_login->user;
+        to_send[0] = CHANGE_PHONE;
+        this->check_error(this->local_client->send_and_receive(to_send)
+                          , "Error al cambiar el número de teléfono");
+    } else if (this->ui->phone->text().length() != 8 || !is_number) {
+        this->check_error("0", "Error: el número de teléfono debe ser de 8 dígitos numéricos");
+    }
+}
+
+void modify_user::update_email() {
+    std::string to_send = "\0";
+
+    if (this->ui->email->text().toStdString() != this->user_info.email
+                && this->ui->email->text().length() > 0
+                && this->ui->email->text().length() <= 23) {
+        this->changed = true;
+        this->user_info.email = this->ui->email->text().toStdString();
+        to_send = (char) CHANGE_EMAIL + this->user_info.user + ","
+                  + this->user_info.email + "," + this->user_login->user;
+        this->check_error(this->local_client->send_and_receive(to_send)
+                          , "Error al cambiar el correo");
+    } else if (this->ui->email->text().length() < 0
+               || this->ui->email->text().length() > 23) {
+        this->check_error("0", "Error: el correo debe ser de máximo 23 caracteres");
+    }
+}
+
+void modify_user::update_office() {
+    std::string to_send = "\0";
+    bool is_number = true;
+
+    // only saved if office is a valid number
+    if (this->ui->office->text().toInt(&is_number, 10) != (int) (this->user_info.office_id - 48) && is_number) {
+        this->changed = true;
+        this->user_info.office_id = this->ui->office->text().toInt(&is_number, 10);
+        to_send = " " + this->user_info.user + "," + std::to_string(this->user_info.office_id)
+                  + "," + this->user_login->user;
+        to_send[0] = CHANGE_OFFICE_ID;
+        this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar la sucursal");
+    } else if (!is_number) {
+        this->check_error("0", "Error: sucursal inválida");
+    }
+}
+
+void modify_user::update_vacations() {
+    std::string to_send = "\0";
+    bool is_number = true;
+
+    if (this->ui->vacations->text().toInt(&is_number, 10) != this->user_info.available_vacations
+                && is_number) {
+        this->changed = true;
+        this->user_info.available_vacations = this->ui->vacations->text().toInt(&is_number, 10);
+        to_send = " " + this->user_info.user;
+        to_send[0] = CHANGE_VACATIONS;
+        to_send += "," + std::to_string(this->user_info.available_vacations);
+        to_send += "," + this->user_login->user;
+        this->check_error(this->local_client->send_and_receive(to_send)
+                          , "Error al cambiar las vacaciones disponibles");
+    } else if (!is_number) {
+        this->check_error("0", "Error: cantidad de vacaciones inválida");
+    }
+
+    if ((ui->checkbox_shift->checkState() == Qt::Checked && this->user_info.shift_available == false)
+            || (ui->checkbox_shift->checkState() == Qt::Unchecked && this->user_info.shift_available == true)) {
+        this->changed = true;
+        this->user_info.shift_available = !this->user_info.shift_available;  // set to the contrary
+        to_send = " " + this->user_info.user;
+        to_send[0] = CHANGE_SHIFT;
+        to_send += "," + std::to_string(this->user_info.shift_available ? 1 : 0);
+        to_send += "," + this->user_login->user;
+        this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el turno disponible");
+    }
+}
+
+void modify_user::update_laboral_data() {
+    std::string to_send = "\0";
+    bool salary_is_number = true;
+    bool deductible_is_number = true;
+
+    if ((this->ui->base_salary->text().toInt(&salary_is_number, 10)
+            != this->user_info.salary_base && salary_is_number)
+            || (this->ui->deductions->text().toInt(&deductible_is_number, 10)
+            != this->user_info.deductibles && deductible_is_number)
+            || (this->ui->job_title->text().toStdString()
+            != this->user_info.job_title && this->ui->job_title->text().length() > 0)) {
+        this->changed = true;
+        // update user info
+        this->user_info.job_title = this->ui->job_title->text().toStdString();
+        this->user_info.salary_base = this->ui->base_salary->text().toInt(&salary_is_number, 10);
+        this->user_info.deductibles = this->ui->deductions->text().toInt(&deductible_is_number, 10);
+        this->user_info.salary_net = this->user_info.salary_base-this->user_info.deductibles;
+        this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
+
+        // send changes to data_base
+        to_send = (char) CHANGE_LABORAL_DATA + this->user_info.user;
+        // set the date
+        QDate date = QDate::currentDate();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        date.getDate(&year, &month, &day);
+        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+        // add laboral data info
+        to_send += "," + this->user_info.job_title;
+        to_send += "," + std::to_string(this->user_info.salary_base);
+        to_send += "," + std::to_string(this->user_info.deductibles);
+        to_send += "," + this->user_login->user;
+        this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el puesto, salario y/o deducciones");
+    } else if (!salary_is_number || !deductible_is_number || this->ui->job_title->text().length() <= 0) {
+        this->check_error("0", "Error: el salario y las deducciones deben ser números y el puesto debe ser mayor a 0 caracteres");
+    }
+}
+
+void modify_user::add_record() {
+    std::string to_send = "\0";
+
+    if (this->ui->record->toPlainText().toStdString().length() > 0
+                && this->ui->record->toPlainText().toStdString().length() <= 237) {  // new annotation
+        this->changed = true;
+        to_send = " " + this->user_info.user;
+        to_send[0] = ADD_RECORD;
+        QDate date = QDate::currentDate();
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        date.getDate(&year, &month, &day);
+        to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+        to_send += "," + this->ui->record->toPlainText().toStdString();
+        to_send += "," + this->user_login->user;
+        this->check_error(this->local_client->send_and_receive(to_send), "Error al agregar una anotación");
+    } else if (this->ui->record->toPlainText().toStdString().length() > 237) {
+        this->check_error("0", "Error: la anotación es de máximo 237 caracteres");
+    }
+}
+
+void modify_user::check_error(std::string received, QString error) {
+    if (received[0] == '0') {
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText(error);
+        show_message.exec();
+    } else {
+        this->correct_changes = true;
     }
 }
 

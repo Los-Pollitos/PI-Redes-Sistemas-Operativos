@@ -67,7 +67,6 @@ void request_description::set_atributes(int day, int month, int year,
 
 
     if (!this->admin) {
-       this->ui->file_button->setText("Descargar archivo");
        this->ui->buttonBox->hide();
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
@@ -93,10 +92,16 @@ void request_description::set_atributes(int day, int month, int year,
     this->ui->label_descripcion->setPlainText(description);
     this->ui->label_descripcion->setReadOnly(true);
     this->ui->label_fecha->setText(date_string);
-    QString type_string = this->request_type(this->type);
-    this->ui->label_tipo->setText(type_string);
     this->ui->lineEdit->setEchoMode(QLineEdit::Password);
     this->user_login = user_login;
+
+    if (admin) {
+        this->ui->label_tipo->setText(QString::fromStdString
+                                      (this->parent_button->text().toStdString().substr(this->parent_button->text().toStdString().find(':')+2)));
+    } else {
+        this->ui->label_tipo->setText(QString::fromStdString
+                                      (this->parent_button->text().toStdString().substr(0, this->parent_button->text().toStdString().find(':'))));
+    }
 }
 
 request_description::~request_description() {
