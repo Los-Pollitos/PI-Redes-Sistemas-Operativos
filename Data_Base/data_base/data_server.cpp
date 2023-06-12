@@ -621,6 +621,12 @@ void data_server::create_user_case(std::string remote_ip) {
     std::string result = "0";
     // Check if the user does not exist and if the office is valid
     if (!this->base->user_exists(username) && office != -1) {
+
+        qDebug() << "USER" << username;
+        qDebug() << "NAME" << name;
+        qDebug() << "IDENTIFICATION" << identification;
+        qDebug() << "OFFICE" << office;
+
         this->base->add_employee(username, name, identification, "0", "-", office, 32, 0, 0, this->base->get_laboral_count());
 
         QDate date = QDate::currentDate();
@@ -1160,7 +1166,7 @@ void data_server::change_email(std::string remote_ip) {
     }
     // the ',' was found, now the email will be read
     ++i;
-    while (this->data[i] != '\0') {
+    while (this->data[i] != ',') {
         to_send += this->data[i++];
     }
 
