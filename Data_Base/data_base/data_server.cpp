@@ -20,6 +20,7 @@ data_server::data_server() {
     this->logger->set_params("Data_LOG.txt", "Data Server");
     this->load_from_file();
     this->connection = -1;
+    this->continue_waiting = true;
     this->message_count = 0;
 }
 
@@ -58,10 +59,8 @@ void data_server::copy_string(std::string& line, std::string& new_line, int from
     }
 }
 
-// TODO(nosotros): actualizar documentación
 /*
- * @brief Loads the file system from a .txt file containing the necessary
- * login information, creating the image of the file system for future uses.
+ * @brief Loads the data base from .txt corresponding to each table
 */
 void data_server::load_from_file() {
     this->load_offices();
@@ -523,11 +522,10 @@ void data_server::wait_for_request() {
     bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
     listen(socketServidor, 20);
 
-    sleep(1);
     socklen_t l = sizeof(this->ipRemoto);
     std::cout << std::endl << "[SERVIDOR_BASE_DATOS ESCUCHANDO]" << std::endl;
-    // TODO (nostros): Hacer bool.
-    while (this->message_count < 5000) {
+
+    while (continue_waiting == true) {
         // Search for a connection
         this->connection = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
 
@@ -535,7 +533,6 @@ void data_server::wait_for_request() {
         if (this->connection != -1) {
             answer_request();
         }
-        sleep(1);
     }
 
     std::cout << std::endl << "[SERVIDOR_BASE_DATOS DETENIDO]" << std::endl;
@@ -564,8 +561,8 @@ void data_server::answer_request() {
         } else {
             if (this->data[0] != '&') {
                 this->logger->add_to_log(strIpRemoto, "received", this->data);
+                this->process_data(strIpRemoto);
             }
-            this->process_data(strIpRemoto);
         }
     }
 }
@@ -885,6 +882,7 @@ void data_server::process_data(std::string remote_ip) {
             std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
+
         case WORK_PROOF:
             this->proof_case(remote_ip, "Solicitud de constancia laboral");
             memset(this->data, '\0', DATA_SIZE);
@@ -892,6 +890,7 @@ void data_server::process_data(std::string remote_ip) {
             std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
+
         case SALARY_PROOF:
             this->proof_case(remote_ip, "Solicitud de constancia salarial");
             memset(this->data, '\0', DATA_SIZE);
@@ -899,6 +898,7 @@ void data_server::process_data(std::string remote_ip) {
             std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
             write(this->connection, this->data, DATA_SIZE);
             break;
+
         case SALARY_CONSULT:
             this->consult_salary_case(remote_ip);
             memset(this->data, '\0', DATA_SIZE);
@@ -930,18 +930,23 @@ void data_server::process_data(std::string remote_ip) {
         case VACATION_REQUEST:
             this->vacation_request(remote_ip);
             break;
+
         case CONSULT_VACATION:
             this->consult_vacations(remote_ip);
             break;
+
         case ANSWER_PAYMENT_PROOF:
             // TODO(Cris): hacer
             break;
+
         case ANSWER_WORK_PROOF:
             // TODO(Cris): hacer
             break;
+
         case ANSWER_SALARY_PROOF:
             // TODO(Cris): hacer
             break;
+
         case ANSWER_VACATION_REQUEST:
             // TODO(Cris): hacer
             break;
