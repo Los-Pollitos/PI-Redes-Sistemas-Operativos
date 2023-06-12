@@ -89,56 +89,60 @@ void modify_user::on_comboBox_activated(int index) {
 
 void modify_user::set_data_ui() {
     int office_id = (int) (this->user_info.office_id - 48);
-    ui->name->setReadOnly(true);
-    ui->name->setText(QString::fromStdString(this->user_info.name));
-    ui->id->setReadOnly(true);
-    ui->id->setText(QString::fromStdString(this->user_info.identification));
-    ui->phone->setText(QString::fromStdString(this->user_info.phone));
-    ui->email->setText(QString::fromStdString(this->user_info.email));
-    ui->office->setText(QString::number(office_id));
-    ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
-    ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
-    ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
-    ui->checkbox_debug->setCheckState(unmask_role(DEBUG, this->user_info.role));
-    ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
-    ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
-    ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
-    ui->vacations->setText(QString::number(this->user_info.available_vacations));
-    ui->checkbox_shift->setCheckState(this->user_info.shift_available ? Qt::Checked : Qt::Unchecked);
-    ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
-    ui->base_salary->setText(QString::number(this->user_info.salary_base));
-    ui->deductions->setText(QString::number(this->user_info.deductibles));
-    ui->net_salary->setReadOnly(true);
-    ui->net_salary->setText(QString::number(this->user_info.salary_net));
+    this->ui->name->setReadOnly(true);
+    this->ui->name->setText(QString::fromStdString(this->user_info.name));
+    this->ui->id->setReadOnly(true);
+    this->ui->id->setText(QString::fromStdString(this->user_info.identification));
+    this->ui->phone->setText(QString::fromStdString(this->user_info.phone));
+    this->ui->email->setText(QString::fromStdString(this->user_info.email));
+    this->ui->office->setText(QString::number(office_id));
+    this->ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
+    this->ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
+    this->ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
+    this->ui->checkbox_debug->setCheckState(unmask_role(DEBUG, this->user_info.role));
+    this->ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
+    this->ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
+    this->ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
+    this->ui->vacations->setText(QString::number(this->user_info.available_vacations));
+    this->ui->checkbox_shift->setCheckState(this->user_info.shift_available ? Qt::Checked : Qt::Unchecked);
+    this->ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
+    this->ui->base_salary->setText(QString::number(this->user_info.salary_base));
+    this->ui->deductions->setText(QString::number(this->user_info.deductibles));
+    this->ui->net_salary->setReadOnly(true);
+    this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
 }
 
 void modify_user::set_read_only() {
     // read only the other roles
-    ui->checkbox_admin_config->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_admin_config->setFocusPolicy(Qt::NoFocus);
-    ui->checkbox_admin_users->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_admin_users->setFocusPolicy(Qt::NoFocus);
-    ui->checkbox_employee->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_employee->setFocusPolicy(Qt::NoFocus);
-    ui->checkbox_debug->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_debug->setFocusPolicy(Qt::NoFocus);
-    ui->checkbox_human_resources->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_human_resources->setFocusPolicy(Qt::NoFocus);
-    ui->checkbox_supervisor->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_supervisor->setFocusPolicy(Qt::NoFocus);
-    ui->checkbox_shift->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->checkbox_shift->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_active->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_active->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_admin_config->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_admin_config->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_admin_users->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_admin_users->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_employee->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_employee->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_debug->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_debug->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_human_resources->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_human_resources->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_supervisor->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_supervisor->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_shift->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_shift->setFocusPolicy(Qt::NoFocus);
 
     // read only the text edits
-    ui->name->setReadOnly(true);
-    ui->id->setReadOnly(true);
-    ui->phone->setReadOnly(true);
-    ui->email->setReadOnly(true);
-    ui->office->setReadOnly(true);
-    ui->job_title->setReadOnly(true);
-    ui->base_salary->setReadOnly(true);
-    ui->deductions->setReadOnly(true);
-    ui->net_salary->setReadOnly(true);
+    this->ui->name->setReadOnly(true);
+    this->ui->id->setReadOnly(true);
+    this->ui->phone->setReadOnly(true);
+    this->ui->email->setReadOnly(true);
+    this->ui->office->setReadOnly(true);
+    this->ui->job_title->setReadOnly(true);
+    this->ui->base_salary->setReadOnly(true);
+    this->ui->deductions->setReadOnly(true);
+    this->ui->net_salary->setReadOnly(true);
+    this->ui->vacations->setReadOnly(true);
+    this->ui->record->setReadOnly(true);
 }
 
 void modify_user::load_user_data(std::string& data) {
@@ -398,11 +402,12 @@ void modify_user::update_roles() {
     // if something was modified, so data has to be updated
     // check if the employee was fired
     if (ui->checkbox_active->checkState() == Qt::Unchecked
-            && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
+            && unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Unchecked) {
         this->changed = true;
 
         // the new role is fired
         this->user_info.role = UNEMPLOYEED | this->user_info.role;
+        to_send[0] = FIRE_EMPLOYEE;
         to_send += this->user_info.role;
 
         // set the date
@@ -412,6 +417,7 @@ void modify_user::update_roles() {
         int year = 0;
         date.getDate(&year, &month, &day);
         to_send += "," + std::to_string(day) + "," + std::to_string(month) + "," + std::to_string(year);
+        to_send += "," + this->user_login->user;
 
         this->check_error(this->local_client->send_and_receive(to_send), "Error al despedir el empleado");
 

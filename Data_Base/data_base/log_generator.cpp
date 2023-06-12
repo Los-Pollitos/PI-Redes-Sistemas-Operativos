@@ -144,6 +144,9 @@ std::string log_generator::get_request_type(char type) {
         case CHANGE_VACATIONS:
             result = "CHANGE_VACATIONS";
             break;
+        case FIRE_EMPLOYEE:
+            result += "FIRE_EMPLOYEE";
+            break;
         case ADD_RECORD:
             result = "ADD_RECORD";
             break;

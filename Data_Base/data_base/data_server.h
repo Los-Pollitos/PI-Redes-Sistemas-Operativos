@@ -79,6 +79,7 @@ private:
     void pdf_data_payment(std::string remote_ip);
     void pdf_data_work(std::string remote_ip);
     void pdf_data_salary(std::string remote_ip);
+    void fire_employee(std::string remote_ip);
 
 public:
     data_server();

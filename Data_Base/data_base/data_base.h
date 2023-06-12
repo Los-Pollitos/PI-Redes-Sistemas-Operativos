@@ -84,6 +84,7 @@ class data_base {
     bool change_roles(std::string user, char roles);
     bool change_vacations(std::string user, int vacations);
     bool change_shift(std::string user, int shift_available);
+    int consult_last_laboral_data(std::string user);
     bool set_end_date_laboral_data(std::string user, int day, int month, int year);
     bool change_last_laboral_data(std::string user, int last_laboral_data);
     std::string consult_process_requests_of_office(int office);

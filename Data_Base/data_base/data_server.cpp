@@ -1017,6 +1017,10 @@ void data_server::process_data(std::string remote_ip) {
         case ADD_RECORD:
             this->add_record(remote_ip);
             break;
+            
+        case FIRE_EMPLOYEE:
+            this->fire_employee(remote_ip);
+            break;
     }
 }
 
@@ -1387,6 +1391,66 @@ void data_server::change_roles(std::string remote_ip) {
     // ask the data base for the result
     if (this->base->change_roles(user, to_send[0])) {  // success
         memset(this->data, '1', DATA_SIZE);
+    } else {  // the change was not possible
+        memset(this->data, '0', DATA_SIZE);
+    }
+    write(this->connection, data, DATA_SIZE);
+    this->logger->add_answer_log(remote_ip, "sent", this->data);
+
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::fire_employee(std::string remote_ip) {
+    std::string user = "\0";
+    std::string to_send = "\0";
+    char roles = '\0';
+    int day = 0;
+    int month = 0;
+    int year = 0;
+
+    // find the user
+    int i = 1;  // data[0] is FIRE_EMPLOYEE
+    while (data[i] != ',') {
+        user += data[i++];
+    }
+    ++i;
+    // the ',' was found, now the roles will be read
+    while (data[i] != ',') {
+        to_send += data[i++];
+    }
+    roles = to_send[0];  // always 1 char
+    ++i;
+    // the ',' was found, now the day will be read
+    to_send = "\0";
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    day = stoi(to_send);
+    to_send = "\0";
+    // the ',' was found, now the month will be read
+    ++i;
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    month = stoi(to_send);
+    to_send = "\0";
+    // the ',' was found, now the year will be read
+    ++i;
+    while (this->data[i] != ',') {
+        to_send += this->data[i++];
+    }
+    year = stoi(to_send);
+
+    // ask the data base for the result
+    if (this->base->change_roles(user, roles)) {  // success
+        memset(this->data, '1', DATA_SIZE);
+        if (this->base->set_end_date_laboral_data(user, day, month, year)) {
+            memset(this->data, '1', DATA_SIZE);
+        } else {
+            memset(this->data, '0', DATA_SIZE);
+        }
     } else {  // the change was not possible
         memset(this->data, '0', DATA_SIZE);
     }

@@ -12,7 +12,6 @@
 
 #include <locale>
 
-// TODO(nosotros): DOCUMENTAR
 data_base::data_base() {
     this->base = QSqlDatabase::addDatabase("QSQLITE");
     this->base.setDatabaseName("data.db");
@@ -40,7 +39,6 @@ data_base::data_base() {
     }
 }
 
-// TODO(nosotros): DOCUMENTAR
 data_base::~data_base() {
 }
 
@@ -160,7 +158,6 @@ std::string data_base::get_available_vacations(std::string user) {
     return result;
 }
 
-// TODO(nosotros): DOCUMENTAR
 void data_base::add_office(int id, std::string name) {
     QString office_str("CREATE TABLE IF NOT EXISTS offices (id INTEGER, name TEXT)");
     QSqlQuery office_table;
@@ -178,7 +175,6 @@ void data_base::add_office(int id, std::string name) {
     }
 }
 
-// TODO(nosotros): DOCUMENTAR
 void data_base::add_employee(std::string user, std::string name, std::string id
                             , std::string phone_number, std::string email
                             , int office_id, char roles, int available_vacations
@@ -208,7 +204,6 @@ void data_base::add_employee(std::string user, std::string name, std::string id
     }
 }
 
-// TODO(nosotros): DOCUMENTAR
 void data_base::add_request(std::string user,int solved, int day_request
                             , int month_request, int year_request
                             ,int day_answer, int month_answer, int year_answer, int type
@@ -244,7 +239,6 @@ void data_base::add_request(std::string user,int solved, int day_request
     ++this->request_count;
 }
 
-// TODO(nosotros): DOCUMENTAR
 int data_base::add_laboral_data(std::string user
                                 , int start_day, int start_month, int start_year
                                 , int end_day, int end_month, int end_year
@@ -277,7 +271,6 @@ int data_base::add_laboral_data(std::string user
     return this->laboral_count++;
 }
 
-// TODO(nosotros): DOCUMENTAR
 void data_base::add_record(std::string user, int day, int month, int year, std::string annotation) {
     // Create the record table if not created
     QString record_str("CREATE TABLE IF NOT EXISTS records (user TEXT, id INTEGER, day INTEGER, month INTEGER, year INTEGER, annotation TEXT)");
@@ -301,7 +294,6 @@ void data_base::add_record(std::string user, int day, int month, int year, std::
     ++this->record_count;
 }
 
-// TODO(nosotros): DOCUMENTAR
 std::string data_base::consult_office_name(int id) {
     std::string office_name = "\0";
     QSqlQuery consult_office;
@@ -314,7 +306,6 @@ std::string data_base::consult_office_name(int id) {
     return office_name;
 }
 
-// TODO(nosotros): DOCUMENTAR
 int data_base::consult_employee_office(std::string user) {
     int result = -1;
     QSqlQuery consult_employee;
@@ -322,7 +313,6 @@ int data_base::consult_employee_office(std::string user) {
     consult_employee.bindValue(":user", QString::fromStdString(user));
     // If a match was found
     if (consult_employee.exec() && consult_employee.next()) {
-        // TODO(nosotros): DESCIFRAR
         result = consult_employee.value(0).toInt();
     } else {
         qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
@@ -330,7 +320,20 @@ int data_base::consult_employee_office(std::string user) {
     return result;
 }
 
-// TODO(nosotros): DOCUMENTAR
+int data_base::consult_last_laboral_data(std::string user) {
+    int result = -1;
+    QSqlQuery consult_employee;
+    consult_employee.prepare("SELECT last_laboral_data FROM employees WHERE user = (:user)");
+    consult_employee.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_employee.exec() && consult_employee.next()) {
+        result = consult_employee.value(0).toInt();
+    } else {
+        qDebug() << "[BASE_DATOS] Error con el usuario al buscar la última entrada laboral:" << QString::fromStdString(user);
+    }
+    return result;
+}
+
 std::string data_base::consult_employee_data(std::string user) {
     std::string result = "";
     bool is_number = true;
@@ -369,7 +372,6 @@ std::string data_base::consult_employee_data(std::string user) {
     return result;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_laboral_data(std::string user, int data_id) {
     security security_manager;
     std::string result = "\0";
@@ -410,7 +412,6 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
     return result;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_employees_of_an_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;
@@ -430,7 +431,6 @@ std::string data_base::consult_employees_of_an_office(int office_id) {
     return result;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::user_exists(std::string user) {
     bool result = false;
     QSqlQuery find_employee;
@@ -444,7 +444,6 @@ bool data_base::user_exists(std::string user) {
     return result;
 }
 
-// TODO(nosotros): DOCUMENTAR
 void data_base::delete_user_from_table(std::string user, std::string table) {
     QSqlQuery delete_from_table;
     std::string command("DELETE FROM " + table + " WHERE user = (:user)");
@@ -455,7 +454,6 @@ void data_base::delete_user_from_table(std::string user, std::string table) {
     }
 }
 
-// TODO(nosotros): DOCUMENTAR
 void data_base::delete_user(std::string user) {
     this->delete_user_from_table(user, "employees");
     this->delete_user_from_table(user, "requests");
@@ -463,7 +461,6 @@ void data_base::delete_user(std::string user) {
     this->delete_user_from_table(user, "records");
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_phone(std::string user, std::string phone) {
     bool success = true;
     QSqlQuery modify_user;
@@ -477,7 +474,6 @@ bool data_base::change_phone(std::string user, std::string phone) {
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_email(std::string user, std::string email) {
     bool success = true;
     QSqlQuery modify_user;
@@ -491,7 +487,6 @@ bool data_base::change_email(std::string user, std::string email) {
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_office(std::string user, int office) {
     bool success = true;
     if (this->verify_office_id(office)) {
@@ -509,7 +504,6 @@ bool data_base::change_office(std::string user, int office) {
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_roles(std::string user, char roles) {
     bool success = true;
     QSqlQuery modify_user;
@@ -523,7 +517,6 @@ bool data_base::change_roles(std::string user, char roles) {
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_vacations(std::string user, int vacations) {
     bool success = true;
     QSqlQuery modify_user;
@@ -537,7 +530,6 @@ bool data_base::change_vacations(std::string user, int vacations) {
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_shift(std::string user, int shift_available) {
     bool success = true;
     QSqlQuery modify_user;
@@ -551,10 +543,9 @@ bool data_base::change_shift(std::string user, int shift_available) {
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::set_end_date_laboral_data(std::string user, int day, int month, int year) {
     bool success = true;
-    int data_id = this->consult_employee_office(user);
+    int data_id = this->consult_last_laboral_data(user);
     QSqlQuery modify_user;
 
     modify_user.prepare("UPDATE laboral_datas SET end_day = (:end_day), end_month = (:end_month), end_year = (:end_year) WHERE user = (:user) AND data_id = (:data_id)");
@@ -571,7 +562,6 @@ bool data_base::set_end_date_laboral_data(std::string user, int day, int month, 
     return success;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::verify_office_id(int office) {
     bool result = false;
     QSqlQuery find_office;
@@ -585,7 +575,6 @@ bool data_base::verify_office_id(int office) {
     return result;
 }
 
-// TODO(nosotros): DOCUMENTAR
 bool data_base::change_last_laboral_data(std::string user, int last_laboral_data) {
     bool success = true;
     QSqlQuery modify_user;
@@ -599,7 +588,6 @@ bool data_base::change_last_laboral_data(std::string user, int last_laboral_data
     return success;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_process_requests_of_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;
@@ -638,7 +626,6 @@ std::string data_base::consult_process_requests_of_office(int office_id) {
     return result;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_requests(std::string user) {
     std::string result = "";
     QSqlQuery consult_requests;
@@ -700,7 +687,6 @@ std::string data_base::request_status(int solved) {
     return result;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_request(int id, int type) {
     std::string result = "";
     QSqlQuery consult_request;
@@ -735,7 +721,6 @@ std::string data_base::consult_request(int id, int type) {
     return result;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_records(std::string user) {
     std::string result = "";
     QSqlQuery consult_record;
@@ -756,7 +741,6 @@ std::string data_base::consult_records(std::string user) {
     return result;
 }
 
-// TODO(nosotros): documentar
 std::string data_base::consult_record(int id) {
     std::string result = "";
     QSqlQuery consult_record;
