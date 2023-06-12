@@ -117,6 +117,33 @@ std::string log::get_request_type(char type) {
     case GET_ROLES:
       result = "GET_ROLES";
       break;
+    case CHANGE_PHONE:
+      result = "CHANGE_PHONE";
+      break;
+    case CHANGE_EMAIL:
+      result = "CHANGE_EMAIL";
+      break;
+    case CHANGE_OFFICE_ID:
+      result = "CHANGE_OFFICE_ID";
+      break;
+    case CHANGE_ROLES:
+      result = "CHANGE_ROLES";
+      break;
+    case CHANGE_LABORAL_DATA:
+      result = "CHANGE_LABORAL_DATA";
+      break;
+    case CHANGE_VACATIONS:
+      result = "CHANGE_VACATIONS";
+      break;
+    case FIRE_EMPLOYEE:
+      result = "FIRE_EMPLOYEE";
+      break;
+    case ADD_RECORD:
+      result = "ADD_RECORD";
+      break;
+    case CHANGE_SHIFT:
+      result = "CHANGE_SHIFT";
+      break;
     default:
       result = "NONE";
   }

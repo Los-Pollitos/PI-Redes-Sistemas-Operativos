@@ -54,83 +54,110 @@ std::string log_generator::get_system_time() {
 std::string log_generator::get_request_type(char type) {
     std::string result = "";
     switch (type) {
-    case LOGIN:
-        result = "LOGIN";
-        break;
-    case TOKEN:
-        result = "TOKEN";
-        break;
-    case CHANGE_PASSWORD:
-        result = "CHANGE_PASSWORD";
-        break;
-    case CHANGE_TOKEN:
-    	result = "CHANGE_TOKEN";
-    	break;
-    case CREATE_USER:
-        result = "CREATE_USER";
-        break;
-    case DELETE_USER:
-        result = "DELETE_USER";
-        break;
-    case PAYMENT_PROOF:
-        result = "PAYMENT_PROOF";
-        break;
-    case WORK_PROOF:
-        result = "WORK_PROOF";
-        break;
-    case SALARY_PROOF:
-        result = "SALARY_PROOF";
-        break;
-    case SALARY_CONSULT:
-        result = "SALARY_CONSULT";
-        break;
-    case RECORD_CONSULT:
-        result = "RECORD_CONSULT";
-        break;
-    case SEE_CONSULT_REQUESTS:
-        result = "SEE_CONSULT_REQUESTS";
-        break;
-    case CONSULT_REQUESTS:
-        result = "CONSULT_REQUESTS";
-        break;
-    case SEE_PROCESS_REQUESTS:
-        result = "SEE_PROCESS_REQUESTS";
-        break;
-    case PROCESS_REQUESTS:
-        result = "PROCESS_REQUESTS";
-        break;
-    case VACATION_REQUEST:
-        result = "VACATION_REQUEST";
-        break;
-    case CONSULT_VACATION:
-        result = "CONSULT_VACATION";
-        break;
-    case ANSWER_PAYMENT_PROOF:
-        result = "ANSWER_PAYMENT_PROOF";
-        break;
-    case ANSWER_WORK_PROOF:
-        result = "ANSWER_WORK_PROOF";
-        break;
-    case ANSWER_SALARY_PROOF:
-        result = "ANSWER_SALARY_PROOF";
-        break;
-    case ANSWER_VACATION_REQUEST:
-        result = "ANSWER_VACATION_REQUEST";
-        break;
-    case USER_OFFICE:
-        result = "USER_OFFICE";
-        break;
-    case ALL_USERS_OFFICE:
-        result = "ALL_USERS_OFFICE";
-        break;
-    case DATA_USER:
-        result = "DATA_USER";
-        break;
-    case GET_ROLES:
-        result = "GET_ROLES";
-        break;
-    default:
-        result = "NONE";
+        case LOGIN:
+            result = "LOGIN";
+            break;
+        case TOKEN:
+            result = "TOKEN";
+            break;
+        case CHANGE_PASSWORD:
+            result = "CHANGE_PASSWORD";
+            break;
+        case CHANGE_TOKEN:
+            result = "CHANGE_TOKEN";
+            break;
+        case CREATE_USER:
+            result = "CREATE_USER";
+            break;
+        case DELETE_USER:
+            result = "DELETE_USER";
+            break;
+        case PAYMENT_PROOF:
+            result = "PAYMENT_PROOF";
+            break;
+        case WORK_PROOF:
+            result = "WORK_PROOF";
+            break;
+        case SALARY_PROOF:
+            result = "SALARY_PROOF";
+            break;
+        case SALARY_CONSULT:
+            result = "SALARY_CONSULT";
+            break;
+        case RECORD_CONSULT:
+            result = "RECORD_CONSULT";
+            break;
+        case SEE_CONSULT_REQUESTS:
+            result = "SEE_CONSULT_REQUESTS";
+            break;
+        case CONSULT_REQUESTS:
+            result = "CONSULT_REQUESTS";
+            break;
+        case SEE_PROCESS_REQUESTS:
+            result = "SEE_PROCESS_REQUESTS";
+            break;
+        case PROCESS_REQUESTS:
+            result = "PROCESS_REQUESTS";
+            break;
+        case VACATION_REQUEST:
+            result = "VACATION_REQUEST";
+            break;
+        case CONSULT_VACATION:
+            result = "CONSULT_VACATION";
+            break;
+        case ANSWER_PAYMENT_PROOF:
+            result = "ANSWER_PAYMENT_PROOF";
+            break;
+        case ANSWER_WORK_PROOF:
+            result = "ANSWER_WORK_PROOF";
+            break;
+        case ANSWER_SALARY_PROOF:
+            result = "ANSWER_SALARY_PROOF";
+            break;
+        case ANSWER_VACATION_REQUEST:
+            result = "ANSWER_VACATION_REQUEST";
+            break;
+        case USER_OFFICE:
+            result = "USER_OFFICE";
+            break;
+        case ALL_USERS_OFFICE:
+            result = "ALL_USERS_OFFICE";
+            break;
+        case DATA_USER:
+            result = "DATA_USER";
+            break;
+        case GET_ROLES:
+            result = "GET_ROLES";
+            break;
+        case CHANGE_PHONE:
+            result = "CHANGE_PHONE";
+            break;
+        case CHANGE_EMAIL:
+            result = "CHANGE_EMAIL";
+            break;
+        case CHANGE_OFFICE_ID:
+            result = "CHANGE_OFFICE_ID";
+            break;
+        case CHANGE_ROLES:
+            result = "CHANGE_ROLES";
+            break;
+        case CHANGE_LABORAL_DATA:
+            result = "CHANGE_LABORAL_DATA";
+            break;
+        case CHANGE_VACATIONS:
+            result = "CHANGE_VACATIONS";
+            break;
+        case FIRE_EMPLOYEE:
+            result = "FIRE_EMPLOYEE";
+            break;
+        case ADD_RECORD:
+            result = "ADD_RECORD";
+            break;
+        case CHANGE_SHIFT:
+            result = "CHANGE_SHIFT";
+            break;
+        default:
+            result = "NONE";
     }
 
     return result;

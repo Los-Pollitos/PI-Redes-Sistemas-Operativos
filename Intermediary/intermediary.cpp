@@ -75,7 +75,7 @@ void intermediary::answer_request() {
   while (this->connection != -1 &&
          (n = read(this->connection, this->data, DATA_SIZE)) > 0) {
     // connection es socket cliente
-    std::cout << "[INTERMEDIARIO RECIBE]: " << this->data << " de cliente" << std::endl;
+    std::cout << "[INTERMEDIARIO RECIBE DE CLIENTE] " << this->data << std::endl;
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
@@ -107,20 +107,20 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
     if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto con login" << std::endl;
     } else {
-      std::cout << "[INTERMEDIARIO -> AUTENTICACION]: " << this->data  << std::endl;
+      std::cout << "[INTERMEDIARIO -> AUTENTICACION] " << this->data  << std::endl;
       write(s, this->data, DATA_SIZE);
       this->logger->add_to_log(ip_remote, "sent to login", this->data);
 
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
-        std::cout << "[INTERMEDIARIO RECIBE DE AUTENTICACION]: " << this->data << std::endl;
+        std::cout << "[INTERMEDIARIO RECIBE DE AUTENTICACION] " << this->data << std::endl;
         result = this->data;
         this->logger->add_answer_log(ip_remote, "received from login", this->data);
       }
       
       memset(this->data, '0', DATA_SIZE);
       data[0] = '#';
-      std::cout << "[INTERMEDIARIO -> AUTENTICACION]: " << data << std::endl;
+      std::cout << "[INTERMEDIARIO -> AUTENTICACION] " << data << std::endl;
       write(s, this->data, DATA_SIZE);
       // No se logró leer
       if (n < 0) {
@@ -154,7 +154,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
     } else {
       // receive everything from client
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
-          std::cout << "[INTERMEDIARIO -> DATOS]: " << this->data << std::endl;
+          std::cout << "[INTERMEDIARIO -> DATOS] " << this->data << std::endl;
           write(s, this->data, DATA_SIZE);
           this->logger->add_to_log(ip_remote, "sent to data base", this->data);
           n = read(this->connection, this->data, sizeof(this->data));
@@ -171,7 +171,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
       while (s != -1 && n > 0 && this->data[0] != '&') { 
         if ((n = read(s, this->data, DATA_SIZE)) > 0) {
           // connection es socket cliente
-          std::cout << "[INTERMEDIARIO RECIBE DE DATOS]: " << this->data << std::endl;
+          std::cout << "[INTERMEDIARIO RECIBE DE DATOS] " << this->data << std::endl;
           write(this->connection, this->data, DATA_SIZE);
           if (this->data[0] != '&') {
             this->logger->add_answer_log(ip_remote, "received from data base", this->data);
@@ -182,7 +182,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
       
       memset(this->data, '\0', DATA_SIZE);
       data[0] = '#';
-      std::cout << "[INTERMEDIARIO -> DATOS]: " << data << std::endl;
+      std::cout << "[INTERMEDIARIO -> DATOS] " << data << std::endl;
       write(s, this->data, DATA_SIZE);
       // No se logró leer
       if (n < 0) {

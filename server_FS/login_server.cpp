@@ -459,11 +459,10 @@ void login_server::give_token(){
       }
       token_ascii += '\0';
       this->adapt_data(token_ascii);
-      this->data[12] = ',';
     } else {
       this->data[0] = 'e'; // e == error
     }
-    write(this->connection, this->data, strlen(this->data));
+    write(this->connection, this->data, DATA_SIZE);
     this->file_system->close("Server", "Login.txt");
   }
 }

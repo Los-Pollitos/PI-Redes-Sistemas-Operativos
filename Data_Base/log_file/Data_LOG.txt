@@ -1,103 +1,95 @@
 Log file of Data Server
-Mon Jun  5 20:28:43 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Mon Jun  5 20:28:43 2023:127.0.0.1:sent:hola
-Mon Jun  5 21:19:45 2023:127.0.0.1:received:CREATE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Mon Jun  5 21:21:58 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Mon Jun  5 21:21:58 2023:127.0.0.1:sent:hola
-Mon Jun  5 22:04:02 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Mon Jun  5 22:04:02 2023:127.0.0.1:sent:hola
-Tue Jun  6 07:41:48 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 07:41:48 2023:127.0.0.1:sent:hola
-Tue Jun  6 09:57:02 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 09:57:02 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:03:25 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:03:25 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:08:03 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:08:03 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:09:20 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:09:20 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:19:30 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:19:30 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:22:31 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:22:31 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:26:34 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:26:34 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:26:39 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:26:39 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:32:19 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:32:19 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:33:45 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:33:45 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:41:52 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:41:52 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:44:35 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:44:35 2023:127.0.0.1:sent:hola
-Tue Jun  6 10:51:11 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Tue Jun  6 10:51:11 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:00:33 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:00:33 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:01:00 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:01:00 2023:127.0.0.1:sent:3
-Wed Jun  7 09:04:14 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:04:14 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:04:31 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:04:31 2023:127.0.0.1:sent:3
-Wed Jun  7 09:06:53 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:06:53 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:07:16 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:07:16 2023:127.0.0.1:sent:3
-Wed Jun  7 09:10:03 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:10:03 2023:127.0.0.1:sent:3
-Wed Jun  7 09:13:48 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:13:48 2023:127.0.0.1:sent:3
-Wed Jun  7 09:15:41 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:15:41 2023:127.0.0.1:sent:&
-Wed Jun  7 09:19:18 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:19:18 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:19:41 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:19:41 2023:127.0.0.1:sent:&
-Wed Jun  7 09:22:13 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:22:13 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:22:23 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:22:23 2023:127.0.0.1:sent:&
-Wed Jun  7 09:24:24 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:24:24 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:24:39 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:24:39 2023:127.0.0.1:sent:&
-Wed Jun  7 09:25:03 2023:127.0.0.1:received:GET_ROLES:rgang,
-Wed Jun  7 09:25:03 2023:127.0.0.1:sent:8
-Wed Jun  7 09:30:02 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:30:02 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:30:56 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:30:56 2023:127.0.0.1:sent:&
-Wed Jun  7 09:32:26 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:32:26 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:32:35 2023:127.0.0.1:received:GET_ROLES:gherrera,
-Wed Jun  7 09:32:35 2023:127.0.0.1:sent:&
-Wed Jun  7 09:39:18 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:39:18 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:39:55 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:39:55 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:48:03 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:48:03 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:48:30 2023:127.0.0.1:received:GET_ROLES:rgang,
-Wed Jun  7 09:48:30 2023:127.0.0.1:sent:8
-Wed Jun  7 09:48:42 2023:127.0.0.1:received:USER_OFFICE:rgang
-Wed Jun  7 09:48:42 2023:127.0.0.1:sent:�
-Wed Jun  7 09:48:43 2023:127.0.0.1:received:ALL_USERS_OFFICE:�
-Wed Jun  7 09:57:11 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 09:57:11 2023:127.0.0.1:sent:hola
-Wed Jun  7 09:58:09 2023:127.0.0.1:received:GET_ROLES:rgang,
-Wed Jun  7 09:58:09 2023:127.0.0.1:sent:8
-Wed Jun  7 10:01:18 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 10:01:18 2023:127.0.0.1:sent:hola
-Wed Jun  7 10:01:45 2023:127.0.0.1:received:GET_ROLES:dcabezas,
-Wed Jun  7 10:01:45 2023:127.0.0.1:sent:8
-Wed Jun  7 10:02:33 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 10:02:33 2023:127.0.0.1:sent:hola
-Wed Jun  7 10:02:45 2023:127.0.0.1:received:GET_ROLES:dcabezas,
-Wed Jun  7 10:02:45 2023:127.0.0.1:sent:8
-Wed Jun  7 10:04:01 2023:127.0.0.1:received:DELETE_USER:cjimenez,78e8ee0b2f67531b8eda7678fa42fb
-Wed Jun  7 10:04:01 2023:127.0.0.1:sent:hola
-Wed Jun  7 10:04:13 2023:127.0.0.1:received:GET_ROLES:dcabezas,
-Wed Jun  7 10:04:13 2023:127.0.0.1:sent:8
+Mon Jun 12 08:23:49 2023:127.0.0.1:received:GET_ROLES:rgang,
+Mon Jun 12 08:23:49 2023:127.0.0.1:sent:8
+Mon Jun 12 08:24:07 2023:127.0.0.1:received:GET_ROLES:rgang,
+Mon Jun 12 08:24:07 2023:127.0.0.1:sent:8
+Mon Jun 12 08:26:19 2023:127.0.0.1:received:GET_ROLES:rgang,
+Mon Jun 12 08:26:19 2023:127.0.0.1:sent:8
+Mon Jun 12 08:29:27 2023:127.0.0.1:received:GET_ROLES:rgang,
+Mon Jun 12 08:29:27 2023:127.0.0.1:sent:8
+Mon Jun 12 08:29:33 2023:127.0.0.1:received:WORK_PROOF:rgang,12,5,2023,
+Mon Jun 12 08:29:33 2023:127.0.0.1:sent:1
+Mon Jun 12 08:29:40 2023:127.0.0.1:received:SALARY_CONSULT:rgang,
+Mon Jun 12 08:29:40 2023:127.0.0.1:sent: Ricardo De Jesus Gang Vincenzi;900960738;49,5,4,0,5,0,0,;49,3,8,6,4,5,0,;
+Mon Jun 12 08:29:43 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:rgang
+Mon Jun 12 08:29:43 2023:127.0.0.1:sent:1-1-Constancia de pago: Aceptada,5-1-Constancia de trabajo: En proceso
+Mon Jun 12 08:29:50 2023:127.0.0.1:received:CONSULT_REQUESTS:1,1
+Mon Jun 12 08:29:50 2023:127.0.0.1:sent:4,8,2022,Solicitud de constancia de pago,dcabezas
+Mon Jun 12 08:29:52 2023:127.0.0.1:received:ANSWER_PAYMENT_PROOF:1,
+Mon Jun 12 08:29:52 2023:127.0.0.1:sent:Ricardo De Jesus Gang Vincenzi,900960738,4,8,2022,1,Daniel Armando Cabezas Vindas,1540500,154050,Supervisor y Gerente de Recursos Humanos,Heredia,
+Mon Jun 12 08:30:28 2023:127.0.0.1:received:USER_OFFICE:rgang
+Mon Jun 12 08:30:28 2023:127.0.0.1:sent:4
+Mon Jun 12 08:30:28 2023:127.0.0.1:received:ALL_USERS_OFFICE:4
+Mon Jun 12 08:30:28 2023:127.0.0.1:sent:respinoza,gherrera,rgang
+Mon Jun 12 08:30:30 2023:127.0.0.1:received:DATA_USER:respinoza
+Mon Jun 12 08:30:30 2023:127.0.0.1:sent:Roberto Espinoza Víquez,612589087,77889900,respinoza@pollitos.inc,4,$,14,0,57.5.0.0.0.0.,57.5.0.0.0.,Empleado de contratación
+Mon Jun 12 08:31:02 2023:127.0.0.1:received:CHANGE_ROLES:respinoza,4
+Mon Jun 12 08:31:02 2023:127.0.0.1:sent:1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+Mon Jun 12 08:31:02 2023:127.0.0.1:received:CHANGE_PHONE:respinoza,77889901,rgang
+Mon Jun 12 08:31:02 2023:127.0.0.1:sent:1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+Mon Jun 12 08:31:02 2023:127.0.0.1:received:CHANGE_VACATIONS:respinoza,16,rgang
+Mon Jun 12 08:31:02 2023:127.0.0.1:sent:1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+Mon Jun 12 08:31:02 2023:127.0.0.1:received:CHANGE_LABORAL_DATA:respinoza,12,6,2023,Empleado de contratación y rh,57.5.0.0.0.1.,57.5.0.2.,rgang
+Mon Jun 12 08:31:02 2023:127.0.0.1:sent:1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+Mon Jun 12 08:31:02 2023:127.0.0.1:received:USER_OFFICE:rgang
+Mon Jun 12 08:31:02 2023:127.0.0.1:sent:4
+Mon Jun 12 08:31:02 2023:127.0.0.1:received:ALL_USERS_OFFICE:4
+Mon Jun 12 08:31:02 2023:127.0.0.1:sent:respinoza,gherrera,rgang
+Mon Jun 12 08:31:07 2023:127.0.0.1:received:USER_OFFICE:rgang
+Mon Jun 12 08:31:07 2023:127.0.0.1:sent:4
+Mon Jun 12 08:31:07 2023:127.0.0.1:received:ALL_USERS_OFFICE:4
+Mon Jun 12 08:31:07 2023:127.0.0.1:sent:respinoza,gherrera,rgang
+Mon Jun 12 08:31:09 2023:127.0.0.1:received:DATA_USER:respinoza
+Mon Jun 12 08:31:09 2023:127.0.0.1:sent:Roberto Espinoza Víquez,612589087,77889901,respinoza@pollitos.inc,4,4,16,0,57.5.0.0.0.1.,57.5.0.2.,Empleado de contratación y rh
+Mon Jun 12 08:33:05 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Mon Jun 12 08:33:05 2023:127.0.0.1:sent:"
+Mon Jun 12 08:33:09 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:cjimenez
+Mon Jun 12 08:33:09 2023:127.0.0.1:sent:0-0-Vacaciones: Rechazada
+Mon Jun 12 08:33:09 2023:127.0.0.1:received:CONSULT_REQUESTS:0,0
+Mon Jun 12 08:33:09 2023:127.0.0.1:sent:6,6,2021,7/12/2021 - Turno 2 \n8/12/2021 - Turno &
+Mon Jun 12 08:33:45 2023:127.0.0.1:received:SALARY_PROOF:cjimenez,12,5,2023,
+Mon Jun 12 08:33:45 2023:127.0.0.1:sent:1
+Mon Jun 12 08:34:03 2023:127.0.0.1:received:VACATION_REQUEST:cjimenez,15.06.2023 - Turno completo
+19.06.2023 - Turno completo
+22.06.2023 - 8 am - 12 md
+,2.5
+Mon Jun 12 08:34:03 2023:127.0.0.1:sent:NONE:
+Mon Jun 12 08:34:07 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:cjimenez
+Mon Jun 12 08:34:07 2023:127.0.0.1:sent:0-0-Vacaciones: Rechazada,6-1-Constancia salarial: En proceso,7-0-Vacaciones: En proceso
+Mon Jun 12 08:34:09 2023:127.0.0.1:received:CONSULT_REQUESTS:7,0
+Mon Jun 12 08:34:09 2023:127.0.0.1:sent:12,6,2023,15.06.2023 - Turno completo
+19.06.2023 - Turno completo
+22.06.2023 - 8 am - 12 md
+,2.&
+Mon Jun 12 08:35:17 2023:127.0.0.1:received:CONSULT_REQUESTS:6,1
+Mon Jun 12 08:35:17 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia salarial,
+Mon Jun 12 08:35:19 2023:127.0.0.1:received:CONSULT_REQUESTS:7,0
+Mon Jun 12 08:35:19 2023:127.0.0.1:sent:12,6,2023,15.06.2023 - Turno completo
+19.06.2023 - Turno completo
+22.06.2023 - 8 am - 12 md
+,2.&
+Mon Jun 12 08:35:21 2023:127.0.0.1:received:CONSULT_REQUESTS:0,0
+Mon Jun 12 08:35:21 2023:127.0.0.1:sent:6,6,2021,7/12/2021 - Turno 2 \n8/12/2021 - Turno &
+Mon Jun 12 08:35:25 2023:127.0.0.1:received:RECORD_CONSULT:cjimenez
+Mon Jun 12 08:35:29 2023:127.0.0.1:received:CONSULT_VACATION:cjimenez,
+Mon Jun 12 08:35:29 2023:127.0.0.1:sent:Carlos Jiménez Nuñez,118590672,10.0,
+Mon Jun 12 08:35:49 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Mon Jun 12 08:35:49 2023:127.0.0.1:sent:"
+Mon Jun 12 08:35:58 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Mon Jun 12 08:35:58 2023:127.0.0.1:sent:"
+Mon Jun 12 08:36:11 2023:127.0.0.1:received:PAYMENT_PROOF:cjimenez,12,5,2023,
+Mon Jun 12 08:36:11 2023:127.0.0.1:sent:1
+Mon Jun 12 08:36:14 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:cjimenez
+Mon Jun 12 08:36:14 2023:127.0.0.1:sent:0-0-Vacaciones: Rechazada,6-1-Constancia salarial: En proceso,7-0-Vacaciones: En proceso,8-1-Constancia de pago: En proceso
+Mon Jun 12 08:36:15 2023:127.0.0.1:received:CONSULT_REQUESTS:8,1
+Mon Jun 12 08:36:15 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia de pago,
+Mon Jun 12 08:38:38 2023:127.0.0.1:received:GET_ROLES:rgang,
+Mon Jun 12 08:38:38 2023:127.0.0.1:sent:8
+Mon Jun 12 08:38:40 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:rgang
+Mon Jun 12 08:38:40 2023:127.0.0.1:sent:1-1-Constancia de pago: Aceptada,5-1-Constancia de trabajo: En proceso
+Mon Jun 12 08:38:41 2023:127.0.0.1:received:CONSULT_REQUESTS:1,1
+Mon Jun 12 08:38:41 2023:127.0.0.1:sent:4,8,2022,Solicitud de constancia de pago,dcabezas
+Mon Jun 12 08:38:42 2023:127.0.0.1:received:ANSWER_PAYMENT_PROOF:1,
+Mon Jun 12 08:38:42 2023:127.0.0.1:sent:Ricardo De Jesus Gang Vincenzi,900960738,4,8,2022,1,Daniel Armando Cabezas Vindas,1540500,154050,Supervisor y Gerente de Recursos Humanos,Heredia,
+Mon Jun 12 08:40:21 2023:127.0.0.1:received:ANSWER_PAYMENT_PROOF:1,
+Mon Jun 12 08:40:21 2023:127.0.0.1:sent:Ricardo De Jesus Gang Vincenzi,900960738,4,8,2022,1,Daniel Armando Cabezas Vindas,1540500,154050,Supervisor y Gerente de Recursos Humanos,Heredia,

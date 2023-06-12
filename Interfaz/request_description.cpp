@@ -313,20 +313,20 @@ void request_description::generate_pay_PDF(std::string result){
     std::string text = "";
 
     header += user_office + ", Costa Rica\n";
-    header += day + " / " + month + " / " + year + " / \n";
+    header += day + " / " + month + " / " + year + "\n";
     header += "Los Pollitos Inc.";
-    text += "Buenos dias\nPor este medio se hace constar el pago del empleado " + name + " con los siguientes datos:\n\n";
+    text += "Buenos días,\nPor este medio se hace constar el pago del empleado " + name + " con los siguientes datos:\n\n";
     text += "Nombre del empleado: " + name;
     text += "\nIdentificación del empleado: " + user_id;
     text += "\nPuesto en la empresa: " + job_title;
     text += "\nSucursal: " + user_office;
-    text += "\nEl pago al empleado se realizo el dia " + pay_day + "/" + month + "/" + year + " y este, contando un salario bruto de " + salary;
-    text += " colones y unas deducciones de " + deductibles + " colones, termino siendo de " + std::to_string(net_salary) + " colones.\n\n";
-    text += "Atentamente\n";
+    text += "\nEl pago al empleado se realizó el día " + pay_day + "/" + month + "/" + year + " y este, contando un salario bruto de " + salary;
+    text += " colones y unas deducciones de " + deductibles + " colones, terminó siendo de " + std::to_string(net_salary) + " colones.\n\n";
+    text += "Atentamente,\n";
     text += signing;
 
-    QString filePath = "output.pdf";
-    QString imagePath = "pollitos_incorporated_icon.png";
+    QString filePath = "../docs/output.pdf";
+    QString imagePath = ":/icons/pollitos_incorporated_icon.png";
 
     this->generate_pdf(filePath, QString::fromStdString(text), QString::fromStdString(header), imagePath, QString::fromStdString(title));
 
