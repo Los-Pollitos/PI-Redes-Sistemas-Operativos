@@ -598,7 +598,7 @@ void modify_user::add_record() {
     std::string to_send = "\0";
 
     if (this->ui->record->toPlainText().toStdString().length() > 0
-                && this->ui->record->toPlainText().toStdString().length() <= 237) {  // new annotation
+                && this->ui->record->toPlainText().toStdString().length() <= 227) {  // new annotation
         this->changed = true;
         to_send = " " + this->user_info.user;
         to_send[0] = ADD_RECORD;
