@@ -71,7 +71,7 @@ void request_description::set_atributes(int day, int month, int year,
        this->ui->password_label->hide();
        this->ui->lineEdit->hide();
        this->ui->accept_label->hide();
-       if (this->type == REQUEST_VACATIONS_D || text[j] != 'A') {
+       if (this->type == REQUEST_VACATIONS_D) {
            this->ui->file_button->hide();
        } else {
            this->ui->file_button->show();
