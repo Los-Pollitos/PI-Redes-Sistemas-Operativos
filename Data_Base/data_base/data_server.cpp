@@ -22,6 +22,7 @@ data_server::data_server() {
     this->connection = -1;
     this->continue_waiting = true;
     this->message_count = 0;
+
 }
 
 /*
@@ -1605,14 +1606,13 @@ void data_server::pdf_data_payment(std::string remote_ip) {
     std::string day;
     std::string month;
     std::string year;
-    std::string laboral_data;
     std::string signing;
     std::string user;
 
     int temp = 0;
 
     for (int i = 1; i < result.length(); ++i){
-        if (result[i] == ';') {
+        if (result[i] == ',') {
                 ++temp;
         } else {
             switch (temp) {
@@ -1626,24 +1626,20 @@ void data_server::pdf_data_payment(std::string remote_ip) {
                 year += result[i];
                 break;
             case 3:
-                laboral_data += result[i];
-                break;
-
-            case 4:
                 signing += result[i];
                 break;
-
-            case 5:
+            case 4:
                 user += result[i];
                 break;
             }
         }
     }
+
     std::string name = this->base->get_name(user);
     std::string user_id = this->base->get_id(user);
     std::string user_office = this->base->consult_office_name(this->base->consult_employee_office(user));
-
-    std::string pay_day = "01";
+    std::string laboral_data = this->base->get_actual_laboral_data(user);
+    std::string pay_day = "1";
 
     std::string salary = "";
     std::string deductibles = "";
@@ -1651,9 +1647,10 @@ void data_server::pdf_data_payment(std::string remote_ip) {
 
     result = this->base->get_pay_data(user, stoi(laboral_data));
 
+
     temp = 0;
-    for (int i = 1; i < result.length(); ++i){
-        if (result[i] == ';') {
+    for (int i = 0; i < result.length(); ++i){
+        if (result[i] == ',') {
             ++temp;
         } else {
             switch (temp) {
@@ -1682,6 +1679,8 @@ void data_server::pdf_data_payment(std::string remote_ip) {
     to_send += job_title + ",";
     to_send += user_id + ",";
     to_send += user_office + ",";
+
+    std::cout << to_send << std::endl;
 
     int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
 

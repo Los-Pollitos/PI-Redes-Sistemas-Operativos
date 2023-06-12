@@ -91,6 +91,7 @@ class data_base {
                                , int year_answer, std::string user_signing_boss_proof);
     std::string get_request_date_signing(int id);
     std::string get_pay_data(std::string user, int laboral_data);
+    std::string get_actual_laboral_data(std::string user);
 };
 
 #endif // DATA_BASE_H

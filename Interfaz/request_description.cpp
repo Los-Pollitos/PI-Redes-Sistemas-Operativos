@@ -162,14 +162,23 @@ void request_description::on_buttonBox_rejected() {
 void request_description::on_file_button_clicked() {
     std::string to_send = "";
 
-    switch (this->type) {
-    case 0:
+    int j = 0;
+    std::string text = parent_button->text().toStdString();
+
+    while (text[j] != ':') {
+        ++j;
+    }
+    j -= 2;
+
+
+    switch (text[j]) {
+    case 'g':
         to_send += ((char)ANSWER_PAYMENT_PROOF);
         break;
-    case 1:
+    case 'j':
         to_send += ((char)ANSWER_WORK_PROOF);
         break;
-    case 2:
+    case 'a':
         to_send += ((char)ANSWER_SALARY_PROOF);
         break;
     }

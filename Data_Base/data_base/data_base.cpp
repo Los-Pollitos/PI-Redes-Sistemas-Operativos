@@ -795,7 +795,7 @@ std::string data_base::get_request_date_signing(int id){
     QSqlQuery consult_request;
     QString request_str = "\0";
 
-    request_str = "SELECT day_answer, month_answer, year_answer, user_signing_boss_proof, last_laboral_data, user FROM requests WHERE id = (:id)";
+    request_str = "SELECT day_answer, month_answer, year_answer, user_signing_boss_proof, user FROM requests WHERE id = (:id)";
 
 
     consult_request.prepare(request_str);
@@ -807,8 +807,7 @@ std::string data_base::get_request_date_signing(int id){
         result += consult_request.value(1).toString().toStdString() + ",";  // month
         result += consult_request.value(2).toString().toStdString() + ",";  // year
         result += consult_request.value(3).toString().toStdString() + ",";  // user_signing_boss_proof
-        result += consult_request.value(4).toString().toStdString();  // last_laboral_data
-        result += consult_request.value(5).toString().toStdString();  // user
+        result += consult_request.value(4).toString().toStdString();  // user
     } else {
         qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id;
     }
@@ -830,6 +829,20 @@ std::string data_base::get_pay_data(std::string user, int data_id){
         result += consult_laboral_data.value(2).toString().toStdString() + ",";  // job_title
     } else {
         qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
+    }
+    return result;
+}
+
+std::string data_base::get_actual_laboral_data(std::string user) {
+    std::string result = "\0";
+    QSqlQuery consult_actual_laboral;
+    consult_actual_laboral.prepare("SELECT last_laboral_data FROM employees WHERE user = (:user)");
+    consult_actual_laboral.bindValue(":user", QString::fromStdString(user));
+    // If a match was found
+    if (consult_actual_laboral.exec() && consult_actual_laboral.next()) {
+        result = consult_actual_laboral.value(0).toString().toStdString();
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando el usuario: " << QString::fromStdString(user);
     }
     return result;
 }
