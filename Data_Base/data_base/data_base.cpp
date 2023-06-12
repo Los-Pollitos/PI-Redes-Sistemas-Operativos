@@ -730,11 +730,6 @@ std::string data_base::consult_request(int id, int type) {
         qDebug() << "[BASE_DATOS] Error consultando la solicitud #" << id << "de tipo:" << type;
     }
 
-
-    // TODO(nosotros): borrar
-    qDebug() << result.length();
-
-
     return result;
 }
 
@@ -812,25 +807,14 @@ bool data_base::change_request_solved(int id, int solved, int day_answer, int mo
 }
 
 void data_base::encrypt(std::string& to_encript, int from_encrypt) {
-
-    qDebug() << "voy a encriptar: " << from_encrypt;
-
     security security_manager;
     std::string buffer = security_manager.encrypt(std::to_string(from_encrypt));
     to_encript = "\0";
-
-    qDebug() << "encriptado es: " << buffer;
-
-    qDebug() << "si decrypt: " << security_manager.decrypt(buffer);
-
 
     // salary
     for (size_t i = 0; i < buffer.length(); ++i) {
         to_encript += std::to_string((int) buffer[i]);
         to_encript += ".";
     }
-
-
-    qDebug() << "pos ASCII es: " << to_encript;
 }
 

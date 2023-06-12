@@ -1320,33 +1320,36 @@ void data_server::decrypt_salary(std::string salary, std::string deductibles, in
         if (salary[i] != '.') {
             if (salary[i+1] == '.') {
                 salary_temp += (char)(salary[i]-48);
-            } else if (salary[i+2] == ','){
+            } else if (salary[i+2] == '.'){
                 salary_temp += (char)(((int)salary[i]) - 48)*10 +(((int)salary[i+1]) - 48);
                 ++i; // ignore i+1
             } else {
                 salary_temp += (char)(((int)salary[i] - 48)*100 + ((int)salary[i+1] -48)*10 - +(((int)salary[i+2] -48)));
                 i+=2; // ignore i+2
             }
+            // next one would be a '.'
+            i++;
         }
     }
-
     salary_int = stoi(security_manager.decrypt(salary_temp));
 
     // deductibles
-    for (size_t i = 0; i < salary.length(); ++i) {
+    // deductibles
+    for (size_t i = 0; i < deductibles.length(); ++i) {
         if (deductibles[i] != '.') {
             if (deductibles[i+1] == '.') {
                 deductibles_temp += (char)(deductibles[i]-48);
-            } else if (deductibles[i+2] == ','){
+            } else if (deductibles[i+2] == '.'){
                 deductibles_temp += (char)(((int)deductibles[i]) - 48)*10 +(((int)deductibles[i+1]) - 48);
                 ++i; // ignore i+1
             } else {
                 deductibles_temp += (char)(((int)deductibles[i] - 48)*100 + ((int)deductibles[i+1] -48)*10 - +(((int)deductibles[i+2] -48)));
                 i+=2; // ignore i+2
             }
+            // next one would be a '.'
+            i++;
         }
     }
-
     deductibles_int = stoi(security_manager.decrypt(deductibles_temp));
 }
 

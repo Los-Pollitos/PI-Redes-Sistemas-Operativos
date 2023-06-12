@@ -200,9 +200,6 @@ void modify_user::load_user_data(std::string& data) {
     }
     this->user_info.available_vacations = stoi(temp_vacations);
     this->decrypt_salary(temp_salary, temp_deductibles);
-
-    qDebug() << "volvi de decrypt_________________________";
-
     this->user_info.salary_net = this->user_info.salary_base - this->user_info.deductibles;
     this->user_info.shift_available = (stoi(temp_shift) == 1 ? true : false);
 }
@@ -229,8 +226,6 @@ void modify_user::decrypt_salary(std::string salary, std::string deductibles) {
     security security_manager;
     std::string salary_temp = "\0";
     std::string deductibles_temp = "\0";
-
-    qDebug() << "temp_salary: " << salary;
 
     // salary
     for (size_t i = 0; i < salary.length(); ++i) {
