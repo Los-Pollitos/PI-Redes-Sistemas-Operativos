@@ -575,7 +575,7 @@ void data_server::see_process_requests(std::string remote_ip) {
     }
     read(this->connection, this->data, sizeof(this->data)); // discard &
     int office = this->base->consult_employee_office(user);
-    std::string to_send_back = this->base->conuslt_process_requests_of_office(office);
+    std::string to_send_back = this->base->consult_process_requests_of_office(office);
     // find the size of the package to send
     int total_m = (int) (to_send_back.length() / (DATA_SIZE-1))
                   + (((int)(to_send_back.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);

@@ -577,7 +577,7 @@ bool data_base::change_last_laboral_data(std::string user, int last_laboral_data
 }
 
 // TODO(nosotros): documentar
-std::string data_base::conuslt_process_requests_of_office(int office_id) {
+std::string data_base::consult_process_requests_of_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;
     std::string employee_consult = this->consult_employees_of_an_office(office_id);
