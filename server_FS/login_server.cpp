@@ -18,6 +18,7 @@ login_server::login_server() {
   this->connection = -1;
   this->message_count = 0;
   this->logger =  new log ("Login_LOG.txt", "Login Server");
+  this->continue_waiting = true;
   // Load the file system from image
   std::ifstream current_file("fs_image.dat");
   if (current_file.is_open()) {
@@ -82,12 +83,11 @@ void login_server::wait_for_request() {
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
 
-  sleep(1);
   socklen_t l = sizeof(this->ipRemoto);
   char strIpRemoto[INET6_ADDRSTRLEN];
   int port;
   std::cout << std::endl << "[SERVIDOR LOGIN ESCUCHANDO]" << std::endl;
-  while (this->message_count < 5000) {
+  while (this->continue_waiting) {
     // Search for a connection
     this->connection = accept(socketServidor, (struct sockaddr *)&ipRemoto, &l);
 
@@ -95,7 +95,6 @@ void login_server::wait_for_request() {
     if (this->connection != -1) {
       answer_request();
     }
-    sleep(1);
   }
 
   std::cout << std::endl << "[SERVIDOR DETENIDO]" << std::endl;
