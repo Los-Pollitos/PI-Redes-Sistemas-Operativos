@@ -577,7 +577,7 @@ bool data_base::change_last_laboral_data(std::string user, int last_laboral_data
 }
 
 // TODO(nosotros): documentar
-std::string data_base::conuslt_process_requests_of_office(int office_id) {
+std::string data_base::consult_process_requests_of_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;
     std::string employee_consult = this->consult_employees_of_an_office(office_id);
@@ -627,7 +627,7 @@ std::string data_base::consult_requests(std::string user) {
     if (consult_requests.exec() && consult_requests.next()) {
         do {
             result += consult_requests.value(0).toString().toStdString() + "-";  // id
-            result += consult_requests.value(3).toString().toStdString() + "-";  // type
+            result += consult_requests.value(2).toString().toStdString() + "-";  // type
             result += this->request_type(consult_requests.value(2).toInt(), consult_requests.value(3).toInt()) + ": ";
             result += this->request_status(consult_requests.value(1).toInt()) += ",";  // status
         } while (consult_requests.next());

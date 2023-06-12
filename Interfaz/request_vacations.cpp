@@ -18,6 +18,9 @@ request_vacations::request_vacations(QWidget *parent) :
     ui->confirm->setStyleSheet("background-color: green");
     // Set the display format
     this->ui->start_date->setDisplayFormat("dd.MM.yyyy");
+    this->whole_day = 0;
+    this->half_day = 0;
+    this->total_day = 0;
 }
 
 request_vacations::~request_vacations() {
@@ -58,10 +61,24 @@ void request_vacations::on_add_day_clicked() {
     std::string selected_turn = this->ui->comboBox->currentText().toStdString();
     // Format them into to_send
     this->to_send += selected_date + " - " + selected_turn + "\n";
+    // Add to the amount of days
+    if (selected_turn == "Turno completo") {
+        // Add to whole day
+        ++this->whole_day;
+    } else {
+        ++this->half_day;
+    }
 }
 
 void request_vacations::on_confirm_clicked() {
     if (this->added_date) {
+        // Add the days to the datagram
+        this->total_day = whole_day + half_day/2;
+        this->to_send += "," + std::to_string(total_day);
+        this->to_send += ".0";
+        if (half_day % 2 != 0) {
+            this->to_send[this->to_send.size()-1] = '5';
+        }
         this->to_send += "\0";
         to_send = this->local_client->send_and_receive(to_send);
         if (to_send[0] == '1') {
@@ -75,6 +92,9 @@ void request_vacations::on_confirm_clicked() {
         this->to_send = ((char)VACATION_REQUEST);
         this->to_send += this->user;
         this->to_send += ',';
+        this->whole_day = 0;
+        this->half_day = 0;
+        this->total_day = 0;
     } else {
         this->show_error("Inserte al menos una fecha antes de enviar");
     }

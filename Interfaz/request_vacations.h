@@ -31,6 +31,9 @@ private:
     std::string to_send;
     std::string user;
     bool added_date;
+    int whole_day;
+    int half_day;
+    int total_day;
 
     // Methods
     void show_error(std::string error);
