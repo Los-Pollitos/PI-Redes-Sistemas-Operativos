@@ -37,7 +37,6 @@ initial::initial(QWidget *parent) :
     this->new_token = new generate_new_token();
     this->vacation_manager = new request_vacations();
     this->see_vacations = new vacation_consult();
-    this->users_data = new user_data();
     this->local_client = new client();
 
 
@@ -147,7 +146,6 @@ void initial::setUserDataLogin(login_info * user_login) {
     this->users_login = user_login;
     int correct = -1;
     this->role = this->ask_for_role(correct);
-    this->read_data();
     emit this->update_buttons->update_all();
     if (correct != 1) {
         // Logout signal
@@ -322,10 +320,6 @@ initial::~initial() {
         delete this->new_token;
         this->new_token = 0;
     }
-     if (this->users_data) {
-        delete this->users_data;
-        this->users_data = 0;
-     }
      if (this->update_buttons) {
         delete this->update_buttons;
         this->update_buttons = 0;
@@ -407,36 +401,6 @@ void initial::create_windows(int id, int type) {
    }
 }
 
-// TODO(nosotros): desaparecer método y sacar rol de base de datos
-void initial::read_data() {
-    std::ifstream data ("../Etapa2/Archivos/Data.txt");
-   int assigned_vacations;
-   int available_vacations;
-   std::string salary;
-    try {
-        std::string temp = " ";
-        if (data.is_open()) {
-            while(data >> temp && temp != this->users_login->user) { /* Read until user is found*/}
-            this->users_data->user = temp;
-            this->users_data->name = "";  // se limpia
-            data >> temp;
-            while (temp[0] < 48 || temp[0] > 58) {  // no es un número
-                this->users_data->name.append(temp);
-                this->users_data->name.append(" ");
-                data >> temp;
-            }
-            users_data->identification = temp;
-            data >> salary;
-            data >> users_data->role;
-            data >> assigned_vacations;
-            data >> available_vacations;
-            temp = " ";
-            data.close();
-        }
-    } catch (const std::runtime_error& exception) {
-      std::cerr << exception.what() << std::endl;
-    }
-}
 
 
 /**
@@ -445,14 +409,7 @@ void initial::read_data() {
  */
 void initial::on_pushButton_clicked() {
     emit this->parent_button->pressed();
-    // Clean user data //TODO(us): hacer que solo limpie el rol pq solo ocupamos rol
-    this->users_data->user = "\0";
-    this->users_data->name = "\0";
-    //this->users_data->identification = 0;
-    // this->users_data->salary = "\0";
     this->role = 0;
-   //  this->users_data->assigned_vacations = 0;
-    // this->users_data->available_vacations = 0;
     // Hide initial window
     this->hide();
     this->parent_button->valid = false;

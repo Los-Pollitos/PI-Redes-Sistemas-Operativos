@@ -66,7 +66,6 @@ void change_password::set_client(client* local_client){
  *
  */
 std::string change_password::ask_for_token(std::string username) {
-    // TODO(emilia): borrar cosas
     std::string to_send = "";
     to_send += ((char)GET_TOKEN);
     to_send += username;

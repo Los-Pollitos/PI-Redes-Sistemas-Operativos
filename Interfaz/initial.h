@@ -40,7 +40,6 @@ public:
     void setUserDataLogin(login_info * user_login);
     void update_scrollbar();
     void create_windows(int id, int type);
-    void read_data();
     void set_client(client* local_client);
 
 private slots:
@@ -55,7 +54,6 @@ private:
     salary_proof *salary_page;
     consult_salary * see_salary;
     login_info * users_login;
-    user_data * users_data;
     consult_requests * pending_requests;
     consult_record * see_record;
     handle_requests * request_handler;
