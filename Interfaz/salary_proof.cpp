@@ -33,7 +33,7 @@ void salary_proof::on_pushButton_clicked() {
 
     int actual_day = now->tm_mday;
     int actual_month = now->tm_mon;
-    int actual_year = now->tm_year;
+    int actual_year = now->tm_year + 1900;
 
     std::string to_send = "";
     to_send += ((char)SALARY_PROOF);

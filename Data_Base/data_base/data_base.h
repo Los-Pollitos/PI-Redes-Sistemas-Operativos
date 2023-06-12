@@ -94,6 +94,10 @@ class data_base {
     std::string get_available_vacations(std::string user);
     bool change_request_solved(int id, int solved, int day_answer, int month_answer
                                , int year_answer, std::string user_signing_boss_proof);
+    std::string get_request_date_signing(int id);
+    std::string get_pay_data(std::string user, int laboral_data);
+    std::string get_actual_laboral_data(std::string user);
+    std::string consult_laboral_datas(std::string user);
 };
 
 #endif // DATA_BASE_H
