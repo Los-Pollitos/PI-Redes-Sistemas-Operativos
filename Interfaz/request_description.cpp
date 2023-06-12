@@ -162,25 +162,47 @@ void request_description::on_buttonBox_rejected() {
 void request_description::on_file_button_clicked() {
     std::string to_send = "";
 
-    switch (this->type) {
-    case 0:
+    int j = 0;
+    std::string text = parent_button->text().toStdString();
+
+    while (text[j] != ':') {
+        ++j;
+    }
+    j -= 2;
+
+
+    switch (text[j]) {
+    case 'g':
         to_send += ((char)ANSWER_PAYMENT_PROOF);
         break;
-    case 1:
+    case 'j':
         to_send += ((char)ANSWER_WORK_PROOF);
         break;
-    case 2:
+    case 'a':
         to_send += ((char)ANSWER_SALARY_PROOF);
         break;
     }
-    to_send += std::to_string(parent_button->get_id_requests());
+    to_send += std::to_string(parent_button->get_id_requests()) + ",";
     to_send = this->local_client->send_and_receive(to_send);
+
+    switch (text[j]) {
+    case 'g':
+        this->generate_pay_PDF(to_send);
+        break;
+    case 'j':
+        to_send += ((char)ANSWER_WORK_PROOF);
+        break;
+    case 'a':
+        to_send += ((char)ANSWER_SALARY_PROOF);
+        break;
+    }
 }
 
-void request_description::generate_pdf(const QString& file_path, const QString& text, const QString& image_path) {
+void request_description::generate_pdf(const QString& file_path, const QString& text, const QString& header, const QString& image_path, const QString& title) {
     QPdfWriter pdf_writer(file_path);
     pdf_writer.setPageSize(QPageSize(QPageSize::Letter));
-    pdf_writer.setPageMargins(QMarginsF(15, 15, 30, 30));
+    pdf_writer.setPageMargins(QMarginsF(30, 15, 30, 30));
+    pdf_writer.setTitle(title);
     QPainter painter(&pdf_writer);
     painter.setFont(QFont("Times New Roman", 12));
     // Load the image
@@ -196,7 +218,11 @@ void request_description::generate_pdf(const QString& file_path, const QString& 
         qDebug() << "Failed to load image";
     }
     // Draw the text
-    painter.drawText(QRectF(15, 15, pdf_writer.width() - 60, pdf_writer.height() - 190), text);
+    painter.drawText(QRectF(15, 15, pdf_writer.width() - 60, pdf_writer.height() - 190), header);
+    painter.setFont(QFont("Times New Roman", 24));
+    painter.drawText(QRectF(pdf_writer.width() / 2 - 1500, pdf_writer.height() / 5, pdf_writer.width() - 60, pdf_writer.height() - 190), title);
+    painter.setFont(QFont("Times New Roman", 12));
+    painter.drawText(QRectF(15, pdf_writer.height() / 3, pdf_writer.width() - 60, pdf_writer.height() - 190), text);
     painter.end();
 }
 
@@ -220,5 +246,97 @@ void request_description::handle_request(int solved) {
 
 
     this->local_client->send_and_receive(to_send);
+}
+
+void request_description::generate_pay_PDF(std::string result){
+    std::string name = "";
+    std::string user_id = "";
+    std::string day = "";
+    std::string month = "";
+    std::string year = "";
+    std::string pay_day = "";
+    std::string signing = "";
+    std::string salary = "";
+    std::string deductibles = "";
+    std::string job_title = "";
+    std::string user_office = "";
+
+    int temp = 0;
+
+    for (int i = 0; i < result.length(); ++i){
+        if (result[i] == ',') {
+           ++temp;
+        } else {
+            switch (temp) {
+            case 0:
+                name += result[i];
+                break;
+            case 1:
+                user_id += result[i];
+                break;
+            case 2:
+                day += result[i];
+                break;
+            case 3:
+                month += result[i];
+                break;
+            case 4:
+                year += result[i];
+                break;
+            case 5:
+                pay_day += result[i];
+                break;
+            case 6:
+                signing += result[i];
+                break;
+            case 7:
+                salary += result[i];
+                break;
+            case 8:
+                deductibles += result[i];
+                break;
+            case 9:
+                job_title += result[i];
+                break;
+            case 10:
+                user_office += result[i];
+                break;
+           }
+        }
+    }
+
+    int net_salary = stoi(salary) - stoi(deductibles);
+
+    std::string title = "Constancia de pago";
+
+    std::string header = "";
+    std::string text = "";
+
+    header += user_office + ", Costa Rica\n";
+    header += day + " / " + month + " / " + year + " / \n";
+    header += "Los Pollitos Inc.";
+    text += "Buenos dias\nPor este medio se hace constar el pago del empleado " + name + " con los siguientes datos:\n\n";
+    text += "Nombre del empleado: " + name;
+    text += "\nIdentificación del empleado: " + user_id;
+    text += "\nPuesto en la empresa: " + job_title;
+    text += "\nSucursal: " + user_office;
+    text += "\nEl pago al empleado se realizo el dia " + pay_day + "/" + month + "/" + year + " y este, contando un salario bruto de " + salary;
+    text += " colones y unas deducciones de " + deductibles + " colones, termino siendo de " + std::to_string(net_salary) + " colones.\n\n";
+    text += "Atentamente\n";
+    text += signing;
+
+    QString filePath = "output.pdf";
+    QString imagePath = "pollitos_incorporated_icon.png";
+
+    this->generate_pdf(filePath, QString::fromStdString(text), QString::fromStdString(header), imagePath, QString::fromStdString(title));
+
+}
+
+void request_description::generate_work_PDF(std::string result) {
+
+}
+
+void request_description::generate_salary_PDF(std::string result) {
+
 }
 
