@@ -1556,6 +1556,8 @@ void data_server::process_requests(std::string remote_ip) {
     }
     ++i;
 
+    signing_boss += this->base->get_name(signing_boss);
+
     // find the id
     while (this->data[i] != ',') {
         to_send += this->data[i++];
@@ -1748,8 +1750,6 @@ void data_server::pdf_data_work(std::string remote_ip) {
             }
         }
     }
-
-    signing = this->base->get_name(signing);
 
     std::string name = this->base->get_name(user);
     std::string user_id = this->base->get_id(user);
