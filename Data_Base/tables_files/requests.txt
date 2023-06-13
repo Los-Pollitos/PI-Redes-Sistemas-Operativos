@@ -1,6 +1,6 @@
 usuario,estado,diaSolicitud,mesSolicitud,añoSolicitud,diaRespuesta,mesRespuesta,añoRespuesta,tipo,solicitudVacaciones,tipoConstancia,contenidoConstancia,firmaConstancia
-cjimenez,2,6,6,2021,7,6,2021,0,7/12/2021 - Turno 2 \n8/12/2021 - Turno 1,0,0,0
+cjimenez,2,6,6,2021,7,6,2021,0,12.08.2023 - Turno completo\n,1.0,0,0,0
 rgang,1,4,8,2022,14,8,2022,1,0,0,Solicitud de constancia de pago,dcabezas
 dcabezas,1,4,9,2022,10,9,2022,1,0,1,Solicitud de constancia laboral,rgang
 gherrera,0,10,10,2021,19,10,2021,1,0,2,Solicitud de constancia salarial,rgang
-gherrera,0,16,2,2023,19,2,2023,0,24/12/2023 - Turno: 1 Turno: 2,0,0,0
+gherrera,0,16,2,2023,19,2,2023,0,24.12.2023 - 1 pm - 5 pm\n,0.5,0,0,0

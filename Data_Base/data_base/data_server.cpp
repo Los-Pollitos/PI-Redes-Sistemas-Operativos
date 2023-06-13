@@ -314,8 +314,11 @@ void data_server::load_laboral_data() {
 void data_server::load_requests() {
     std::string line = "\0";
     std::string partial_line = "\0";
+    std::string partial_line_2 = "\0";
     int initial_pos = 0;
+    int initial_pos_aux = 0;
     int end_pos = -1;
+    const std::string replace = "\n";  // will be used for vacation requests
 
     std::string user = "\0";
     int solved = 0;
@@ -403,11 +406,27 @@ void data_server::load_requests() {
             // save the type
             type = stoi(partial_line);
 
-            // find the vacations content
-            initial_pos = end_pos;  // starts after the ','
-            this->find_next(line, end_pos);
-            // save the vacations
-            this->copy_string(line,vacations,initial_pos ,end_pos-1);
+            if (type == VACATION) {
+                // find the vacations content
+                initial_pos = end_pos;  // starts after the ','
+                this->find_next(line, end_pos);
+                this->copy_string(line,partial_line,initial_pos,end_pos-1);
+
+                initial_pos_aux = end_pos;  // starts after the ','
+                this->find_next(line, end_pos);
+                this->copy_string(line,partial_line_2,initial_pos_aux,end_pos-1);
+                partial_line += "," + partial_line_2;
+
+                // save the vacations
+                vacations = partial_line;
+                vacations.replace(vacations.find('\\'), 2, replace);
+            } else {
+                // find the vacations content
+                initial_pos = end_pos;  // starts after the ','
+                this->find_next(line, end_pos);
+                // save the vacations
+                this->copy_string(line,vacations,initial_pos,end_pos-1);
+            }
 
             // find the proof_type
             initial_pos = end_pos;  // starts after the ','
