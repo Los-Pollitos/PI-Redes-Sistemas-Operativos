@@ -93,3 +93,121 @@ Mon Jun 12 08:38:42 2023:127.0.0.1:received:ANSWER_PAYMENT_PROOF:1,
 Mon Jun 12 08:38:42 2023:127.0.0.1:sent:Ricardo De Jesus Gang Vincenzi,900960738,4,8,2022,1,Daniel Armando Cabezas Vindas,1540500,154050,Supervisor y Gerente de Recursos Humanos,Heredia,
 Mon Jun 12 08:40:21 2023:127.0.0.1:received:ANSWER_PAYMENT_PROOF:1,
 Mon Jun 12 08:40:21 2023:127.0.0.1:sent:Ricardo De Jesus Gang Vincenzi,900960738,4,8,2022,1,Daniel Armando Cabezas Vindas,1540500,154050,Supervisor y Gerente de Recursos Humanos,Heredia,
+Mon Jun 12 23:02:40 2023:127.0.0.1:received:GET_ROLES:respinoza,
+Mon Jun 12 23:02:40 2023:127.0.0.1:sent:$
+Mon Jun 12 23:02:56 2023:127.0.0.1:received:WORK_PROOF:respinoza,12,5,2023,
+Mon Jun 12 23:02:56 2023:127.0.0.1:sent:1
+Mon Jun 12 23:03:08 2023:127.0.0.1:received:PAYMENT_PROOF:respinoza,12,5,2023,
+Mon Jun 12 23:03:08 2023:127.0.0.1:sent:1
+Mon Jun 12 23:03:12 2023:127.0.0.1:received:SALARY_PROOF:respinoza,12,5,2023,
+Mon Jun 12 23:03:12 2023:127.0.0.1:sent:1
+Mon Jun 12 23:03:13 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:respinoza
+Mon Jun 12 23:03:13 2023:127.0.0.1:sent:5-1-Constancia de trabajo: En proceso,6-1-Constancia de pago: En proceso,7-1-Constancia salarial: En proceso
+Mon Jun 12 23:03:15 2023:127.0.0.1:received:CONSULT_REQUESTS:5,1
+Mon Jun 12 23:03:15 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia laboral,
+Mon Jun 12 23:04:08 2023:127.0.0.1:received:VACATION_REQUEST:respinoza,13.06.2023 - 1 pm - 5 pm
+14.06.2023 - Turno completo
+15.06.2023 - 8 am - 12 md
+,2.0
+Mon Jun 12 23:04:08 2023:127.0.0.1:sent:NONE:
+Mon Jun 12 23:04:12 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:respinoza
+Mon Jun 12 23:04:12 2023:127.0.0.1:sent:5-1-Constancia de trabajo: En proceso,6-1-Constancia de pago: En proceso,7-1-Constancia salarial: En proceso,8-0-Vacaciones: En proceso
+Mon Jun 12 23:04:51 2023:127.0.0.1:received:CONSULT_REQUESTS:5,1
+Mon Jun 12 23:04:51 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia laboral,
+Mon Jun 12 23:05:07 2023:127.0.0.1:received:CONSULT_REQUESTS:6,1
+Mon Jun 12 23:05:07 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia de pago,
+Mon Jun 12 23:05:24 2023:127.0.0.1:received:CONSULT_REQUESTS:7,1
+Mon Jun 12 23:05:24 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia salarial,
+Mon Jun 12 23:05:36 2023:127.0.0.1:received:CONSULT_REQUESTS:8,0
+Mon Jun 12 23:05:36 2023:127.0.0.1:sent:12,6,2023,13.06.2023 - 1 pm - 5 pm
+14.06.2023 - Turno completo
+15.06.2023 - 8 am - 12 md
+,2.&
+Mon Jun 12 23:06:55 2023:127.0.0.1:received:GET_ROLES:rgang,
+Mon Jun 12 23:06:55 2023:127.0.0.1:sent:8
+Mon Jun 12 23:06:58 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:06:58 2023:127.0.0.1:sent:respinoza:5:1:,respinoza:6:1:,respinoza:7:1:,respinoza:8:0:,gherrera:3:1:,gherrera:4:0:
+Mon Jun 12 23:06:59 2023:127.0.0.1:received:CONSULT_REQUESTS:5,1
+Mon Jun 12 23:06:59 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia laboral,
+Mon Jun 12 23:07:04 2023:127.0.0.1:received:PROCESS_REQUESTS:rgang,5,1,12,5,2023
+Mon Jun 12 23:07:04 2023:127.0.0.1:sent:
+Mon Jun 12 23:07:04 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:07:04 2023:127.0.0.1:sent:respinoza:6:1:,respinoza:7:1:,respinoza:8:0:,gherrera:3:1:,gherrera:4:0:
+Mon Jun 12 23:07:05 2023:127.0.0.1:received:CONSULT_REQUESTS:6,1
+Mon Jun 12 23:07:05 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia de pago,
+Mon Jun 12 23:07:15 2023:127.0.0.1:received:PROCESS_REQUESTS:rgang,6,1,12,5,2023
+Mon Jun 12 23:07:15 2023:127.0.0.1:sent:
+Mon Jun 12 23:07:15 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:07:15 2023:127.0.0.1:sent:respinoza:7:1:,respinoza:8:0:,gherrera:3:1:,gherrera:4:0:
+Mon Jun 12 23:07:16 2023:127.0.0.1:received:CONSULT_REQUESTS:7,1
+Mon Jun 12 23:07:16 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia salarial,
+Mon Jun 12 23:07:19 2023:127.0.0.1:received:PROCESS_REQUESTS:rgang,7,1,12,5,2023
+Mon Jun 12 23:07:19 2023:127.0.0.1:sent:
+Mon Jun 12 23:07:19 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:07:19 2023:127.0.0.1:sent:respinoza:8:0:,gherrera:3:1:,gherrera:4:0:
+Mon Jun 12 23:07:20 2023:127.0.0.1:received:CONSULT_REQUESTS:8,0
+Mon Jun 12 23:07:20 2023:127.0.0.1:sent:12,6,2023,13.06.2023 - 1 pm - 5 pm
+14.06.2023 - Turno completo
+15.06.2023 - 8 am - 12 md
+,2.&
+Mon Jun 12 23:07:28 2023:127.0.0.1:received:PROCESS_REQUESTS:rgang,8,1,12,5,2023
+Mon Jun 12 23:07:28 2023:127.0.0.1:sent:
+Mon Jun 12 23:07:28 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:07:28 2023:127.0.0.1:sent:gherrera:3:1:,gherrera:4:0:
+Mon Jun 12 23:07:31 2023:127.0.0.1:received:CONSULT_REQUESTS:3,1
+Mon Jun 12 23:07:31 2023:127.0.0.1:sent:10,10,2021,Solicitud de constancia salarial,rgang
+Mon Jun 12 23:07:34 2023:127.0.0.1:received:PROCESS_REQUESTS:rgang,3,1,12,5,2023
+Mon Jun 12 23:07:34 2023:127.0.0.1:sent:
+Mon Jun 12 23:07:34 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:07:34 2023:127.0.0.1:sent:gherrera:4:0:
+Mon Jun 12 23:07:35 2023:127.0.0.1:received:CONSULT_REQUESTS:4,0
+Mon Jun 12 23:07:35 2023:127.0.0.1:sent:16,2,2023,24.12.2023 - 1 pm - 5 pm
+,0.&
+Mon Jun 12 23:07:43 2023:127.0.0.1:received:PROCESS_REQUESTS:rgang,4,1,12,5,2023
+Mon Jun 12 23:07:43 2023:127.0.0.1:sent:
+Mon Jun 12 23:07:43 2023:127.0.0.1:received:SEE_PROCESS_REQUESTS:rgang,
+Mon Jun 12 23:07:43 2023:127.0.0.1:sent:0
+Mon Jun 12 23:08:03 2023:127.0.0.1:received:GET_ROLES:respinoza,
+Mon Jun 12 23:08:03 2023:127.0.0.1:sent:$
+Mon Jun 12 23:08:05 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:respinoza
+Mon Jun 12 23:08:05 2023:127.0.0.1:sent:5-1-Constancia de trabajo: Aceptada,6-1-Constancia de pago: Aceptada,7-1-Constancia salarial: Aceptada,8-0-Vacaciones: Aceptada
+Mon Jun 12 23:08:28 2023:127.0.0.1:received:CONSULT_REQUESTS:5,1
+Mon Jun 12 23:08:28 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia laboral,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:08:41 2023:127.0.0.1:received:ANSWER_WORK_PROOF:5,
+Mon Jun 12 23:08:41 2023:127.0.0.1:sent:Roberto Espinoza Víquez,612589087,2,5,2023,Ricardo De Jesus Gang Vincenzi,Heredia,20;3;2016;0;0;0;950000;95000;Empleado de contratación|
+Mon Jun 12 23:13:26 2023:127.0.0.1:received:GET_ROLES:respinoza,
+Mon Jun 12 23:13:26 2023:127.0.0.1:sent:$
+Mon Jun 12 23:13:29 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:respinoza
+Mon Jun 12 23:13:29 2023:127.0.0.1:sent:5-1-Constancia de trabajo: Aceptada,6-1-Constancia de pago: Aceptada,7-1-Constancia salarial: Aceptada,8-0-Vacaciones: Aceptada
+Mon Jun 12 23:13:30 2023:127.0.0.1:received:CONSULT_REQUESTS:5,1
+Mon Jun 12 23:13:30 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia laboral,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:13:31 2023:127.0.0.1:received:ANSWER_WORK_PROOF:5,
+Mon Jun 12 23:13:31 2023:127.0.0.1:sent:Roberto Espinoza Víquez,612589087,2,5,2023,Ricardo De Jesus Gang Vincenzi,Heredia,20;3;2016;0;0;0;950000;95000;Empleado de contratación|
+Mon Jun 12 23:14:23 2023:127.0.0.1:received:CONSULT_REQUESTS:6,1
+Mon Jun 12 23:14:23 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia de pago,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:14:24 2023:127.0.0.1:received:ANSWER_PAYMENT_PROOF:6,
+Mon Jun 12 23:14:24 2023:127.0.0.1:sent:Roberto Espinoza Víquez,612589087,2,5,2023,1,Ricardo De Jesus Gang Vincenzi,950000,95000,Empleado de contratación,Heredia,
+Mon Jun 12 23:14:27 2023:127.0.0.1:received:CONSULT_REQUESTS:7,1
+Mon Jun 12 23:14:27 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia salarial,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:14:28 2023:127.0.0.1:received:ANSWER_SALARY_PROOF:7,
+Mon Jun 12 23:14:28 2023:127.0.0.1:sent:Roberto Espinoza Víquez,612589087,2,5,2023,Ricardo De Jesus Gang Vincenzi,Heredia,20;3;2016;0;0;0;950000;95000;Empleado de contratación|
+Mon Jun 12 23:14:31 2023:127.0.0.1:received:CONSULT_REQUESTS:6,1
+Mon Jun 12 23:14:31 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia de pago,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:14:54 2023:127.0.0.1:received:CONSULT_REQUESTS:5,1
+Mon Jun 12 23:14:54 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia laboral,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:15:01 2023:127.0.0.1:received:CONSULT_REQUESTS:7,1
+Mon Jun 12 23:15:01 2023:127.0.0.1:sent:12,5,2023,Solicitud de constancia salarial,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:15:33 2023:127.0.0.1:received:GET_ROLES:gherrera,
+Mon Jun 12 23:15:33 2023:127.0.0.1:sent:&
+Mon Jun 12 23:15:35 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:gherrera
+Mon Jun 12 23:15:35 2023:127.0.0.1:sent:3-1-Constancia salarial: Aceptada,4-0-Vacaciones: Aceptada
+Mon Jun 12 23:15:36 2023:127.0.0.1:received:CONSULT_REQUESTS:3,1
+Mon Jun 12 23:15:36 2023:127.0.0.1:sent:10,10,2021,Solicitud de constancia salarial,Ricardo De Jesus Gang Vincenzi
+Mon Jun 12 23:15:37 2023:127.0.0.1:received:ANSWER_SALARY_PROOF:3,
+Mon Jun 12 23:15:37 2023:127.0.0.1:sent:Génesis Monserrath Herrera Knyght,512348739,2,5,2023,Ricardo De Jesus Gang Vincenzi,Heredia,10;1;2010;0;0;0;1950750;195075;Encargado de contratación y mantenimiento de la red|
+Mon Jun 12 23:16:50 2023:127.0.0.1:received:GET_ROLES:gherrera,
+Mon Jun 12 23:16:50 2023:127.0.0.1:sent:&
+Mon Jun 12 23:16:52 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:gherrera
+Mon Jun 12 23:16:52 2023:127.0.0.1:sent:3-1-Constancia salarial: Aceptada,4-0-Vacaciones: Aceptada
+Mon Jun 12 23:16:55 2023:127.0.0.1:received:CONSULT_REQUESTS:3,1
+Mon Jun 12 23:16:55 2023:127.0.0.1:sent:10,10,2021,Solicitud de constancia salarial,Ricardo De Jesus Gang Vincenzi
