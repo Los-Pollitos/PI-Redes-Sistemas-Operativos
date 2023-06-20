@@ -595,6 +595,11 @@ std::string data_base::consult_process_requests_of_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;
     std::string employee_consult = this->consult_employees_of_an_office(office_id);
+
+    employee_consult[employee_consult.size() - 1] = ',';
+
+    std::cout << "EMPLOYEE CONSULT: " << employee_consult << "\n";
+
     std::vector<std::string> employee_vector;
     std::string employee = "";
     for(size_t i = 0; i < employee_consult.length(); ++i) {
@@ -602,6 +607,9 @@ std::string data_base::consult_process_requests_of_office(int office_id) {
             employee += employee_consult[i];
         } else {  // is the end of the username
             employee_vector.push_back(employee);
+
+            std::cout << "PUSHING BACK: " << employee << "\n";
+
             employee = "\0";  // it is cleaned for next username
         }
     }
@@ -609,6 +617,8 @@ std::string data_base::consult_process_requests_of_office(int office_id) {
         consult_employee.prepare("SELECT id, type FROM requests WHERE user = (:employee) AND solved = (:solved)");
         consult_employee.bindValue(":employee", QString::fromStdString(employee_vector[i]));
         consult_employee.bindValue(":solved", PENDING);
+
+        std::cout << "PIDIENDO DATOS DE: " << employee_vector[i] << "\n";
 
         // If a match was found
         if (consult_employee.exec() && consult_employee.next()) {
