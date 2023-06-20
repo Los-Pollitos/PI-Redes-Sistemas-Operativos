@@ -79,7 +79,7 @@ void intermediary::answer_request() {
     if (this->data[0] == '#') {
       close(this->connection);
     } else {
-      this->logger->add_to_log(strIpRemoto, "received from client", this->data);
+      this->logger->add_to_log(strIpRemoto, "FROM_CLIENT", this->data);
       this->send_to_server(strIpRemoto);
     }
   }
@@ -98,6 +98,8 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     std::cout << "Error de creación de socket" << std::endl;
+    this->logger->add_answer_log(ip_remote, "ERROR", "Error de creación de socket");
+
   } else {
     ipServidorLogin.sin_family = AF_INET;
     ipServidorLogin.sin_port = htons(PORT_FS);
@@ -106,16 +108,17 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto con login" << std::endl;
+          this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con login");
     } else {
       std::cout << "[INTERMEDIARIO -> AUTENTICACION] " << this->data  << std::endl;
       write(s, this->data, DATA_SIZE);
-      this->logger->add_to_log(ip_remote, "sent to login", this->data);
+      this->logger->add_to_log(ip_remote, "TO_LOGIN", this->data);
 
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
         // connection es socket cliente
         std::cout << "[INTERMEDIARIO RECIBE DE AUTENTICACION] " << this->data << std::endl;
         result = this->data;
-        this->logger->add_answer_log(ip_remote, "received from login", this->data);
+        this->logger->add_answer_log(ip_remote, "FROM_LOGIN", this->data);
       }
       
       memset(this->data, '0', DATA_SIZE);
@@ -125,6 +128,8 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
       // No se logró leer
       if (n < 0) {
         std::cout << std::endl << "Error de lectura" << std::endl;
+        this->logger->add_answer_log(ip_remote, "ERROR", "Error de lectura");
+
       }
     }
   }
@@ -143,6 +148,8 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
     std::cout << "Error de creación de socket" << std::endl;
+    this->logger->add_answer_log(ip_remote, "ERROR", "Error de creación de socket");
+    
   } else {
     ip_data_server.sin_family = AF_INET;
     ip_data_server.sin_port = htons(PORT_DB);
@@ -150,17 +157,18 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
 
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ip_data_server, sizeof(ip_data_server)) < 0) {
-      std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+      std::cout << std::endl << "Error de conexión por IP o puerto con la base de datos" << std::endl;
+      this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con la base de datos");
     } else {
       // receive everything from client
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
           std::cout << "[INTERMEDIARIO -> DATOS] " << this->data << std::endl;
           write(s, this->data, DATA_SIZE);
-          this->logger->add_to_log(ip_remote, "sent to data base", this->data);
+          this->logger->add_to_log(ip_remote, "TO_DATABASE", this->data);
           n = read(this->connection, this->data, sizeof(this->data));
           std::cout << "[INTERMEDIARIO RECIBE DE CLIENTE]" << this->data << std::endl;
           if (this->data[0] != '&') {
-           this->logger->add_answer_log(ip_remote, "received from client", this->data);
+           this->logger->add_answer_log(ip_remote, "FROM_CLIENT", this->data);
           }
       }
       // send & to server
@@ -174,8 +182,8 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
           std::cout << "[INTERMEDIARIO RECIBE DE DATOS] " << this->data << std::endl;
           write(this->connection, this->data, DATA_SIZE);
           if (this->data[0] != '&') {
-            this->logger->add_answer_log(ip_remote, "received from data base", this->data);
-            this->logger->add_answer_log(ip_remote, "sent to client", this->data);
+            this->logger->add_answer_log(ip_remote, "FROM_DATABASE", this->data);
+            this->logger->add_answer_log(ip_remote, "TO_CLIENT", this->data);
           }
         }
       }
@@ -187,6 +195,7 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
       // No se logró leer
       if (n < 0) {
         std::cout << std::endl << "Error de lectura" << std::endl;
+        this->logger->add_answer_log(ip_remote, "ERROR", "Error de lectura");
       }
     }
   }
@@ -232,7 +241,7 @@ void intermediary::send_to_server(std::string ip_remote) {
 
       write(this->connection, to_send_back.data(), DATA_SIZE);
 
-      this->logger->add_answer_log(ip_remote, "sent to client", to_send_back.data());
+      this->logger->add_answer_log(ip_remote, "TO_CLIENT", to_send_back.data());
 
       to_send_back[0] = '&';
       write(this->connection, to_send_back.data(), DATA_SIZE);
@@ -273,5 +282,6 @@ void intermediary::send_to_server(std::string ip_remote) {
       break;
     default:
       std::cerr << "Error: codigo inexistente" << std::endl;
+      this->logger->add_answer_log(ip_remote, "ERROR", "Código inexistente");
   }
 }
