@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <QProcess>
+#include <QMessageBox>
 
 auditor::auditor(QWidget *parent) :
     QDialog(parent),
@@ -25,21 +27,63 @@ auditor::~auditor() {
 void auditor::on_refresh_button_clicked(){
     // Load all from file
     this->ui->find_text->setText("");
+    this->ui->plainTextEdit->clear();
     std::ifstream  log_file ("../../intermediary_LOG.txt");
-    std::string text = "";
-    while (log_file.is_open() && !log_file.eof()) {
-        std::getline(log_file, text);
-        text += "\n";
-        this->ui->plainTextEdit->appendPlainText(QString::fromStdString(text));
-        text ="";
+    if (log_file.is_open()) {
+        std::string text = "";
+        while (log_file.is_open() && !log_file.eof()) {
+            std::getline(log_file, text);
+            text += "\n";
+            this->ui->plainTextEdit->appendPlainText(QString::fromStdString(text));
+            text ="";
+        }
+
+        log_file.close();
+    } else {
+        QMessageBox show_error =  QMessageBox();
+        show_error.setWindowTitle("Error");
+        show_error.setModal(true);
+        show_error.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_error.setText("Hubo un error al intentar leer el archivo, por favor intente más tarde o contacte al encargado");
+        show_error.exec();
     }
-
-    log_file.close();
-
 }
 
 
 void auditor::on_search_button_clicked() {
-
+    this->ui->plainTextEdit->clear();
+    std::string to_find = this->ui->find_text->text().toStdString();
+    if (to_find != "") {
+        std::string grep_command = "grep \"";
+        grep_command += to_find;
+        grep_command += "\" ../../intermediary_LOG.txt > ../temp_file.txt";
+        if (system(grep_command.data())) {
+            std::ifstream  temp_file ("../temp_file.txt");
+            std::string text = "";
+            while (temp_file.is_open() && !temp_file.eof()) {
+                std::getline(temp_file, text);
+                text += "\n";
+                this->ui->plainTextEdit->appendPlainText(QString::fromStdString(text));
+                text ="";
+            }
+            temp_file.close();
+            std::string delete_command = "rm ../temp_file.txt";
+            system(delete_command.data());
+        } else {
+            QMessageBox show_error =  QMessageBox();
+            show_error.setWindowTitle("Error");
+            show_error.setModal(true);
+            show_error.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_error.setText("Hubo un error al intentar procesar el archivo, por favor intente más tarde o contacte al encargado");
+            show_error.exec();
+        }
+    } else {
+        QMessageBox show_message =  QMessageBox();
+        show_message.setWindowTitle("Error");
+        show_message.setModal(true);
+        show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+        show_message.setText("Favor indicar el texto a buscar en la sección de buscar");
+        show_message.exec();
+    }
 }
 
