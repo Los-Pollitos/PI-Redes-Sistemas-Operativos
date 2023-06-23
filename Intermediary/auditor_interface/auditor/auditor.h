@@ -15,6 +15,10 @@ public:
     explicit auditor(QWidget *parent = nullptr);
     ~auditor();
 
+private slots:
+    void on_refresh_button_clicked();
+    void on_search_button_clicked();
+
 private:
     Ui::auditor *ui;
 };

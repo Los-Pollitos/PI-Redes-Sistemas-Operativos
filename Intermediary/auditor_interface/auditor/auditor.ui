@@ -41,7 +41,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="find_text">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -51,7 +51,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="search_button">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -64,7 +64,7 @@
     <string>Buscar</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="refresh_button">
    <property name="geometry">
     <rect>
      <x>350</x>
