@@ -9,7 +9,7 @@
 #define SUPERVISOR 8
 #define ADMIN_USER 4
 #define ADMIN_CONFIG 2
-#define DEBUG 1
+#define AUDITOR 1
 
 
 struct user_data {
