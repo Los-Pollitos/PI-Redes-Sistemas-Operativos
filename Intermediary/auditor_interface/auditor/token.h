@@ -7,6 +7,7 @@
 #include "login_info.h"
 #include "client.h"
 #include "logout_button.h"
+#include "auditor.h"
 
 namespace Ui {
 class Token;
@@ -30,6 +31,7 @@ private slots:
 private:
     Ui::Token* ui;
     login_info * user_data;
+    auditor * audit;
     int pos;
     logout_button* parent_button;
     client* local_client;

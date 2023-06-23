@@ -17,7 +17,8 @@ auditor::auditor(QWidget *parent) :
     this->ui->label->setStyleSheet("color: #001f21;");
     this->ui->find_text->setStyleSheet("color: #001f21;");
     this->ui->refresh_button->setStyleSheet("color: #001f21;");
-     this->ui->search_button->setStyleSheet("color: #001f21;");
+    this->ui->search_button->setStyleSheet("color: #001f21;");
+    this->ui->pushButton->setStyleSheet("color: #001f21;");
 }
 
 auditor::~auditor() {
@@ -57,7 +58,7 @@ void auditor::on_search_button_clicked() {
         std::string grep_command = "grep \"";
         grep_command += to_find;
         grep_command += "\" ../../intermediary_LOG.txt > ../temp_file.txt";
-        if (system(grep_command.data())) {
+        if (system(grep_command.data()) == 0) {
             std::ifstream  temp_file ("../temp_file.txt");
             std::string text = "";
             while (temp_file.is_open() && !temp_file.eof()) {
@@ -85,5 +86,17 @@ void auditor::on_search_button_clicked() {
         show_message.setText("Favor indicar el texto a buscar en la sección de buscar");
         show_message.exec();
     }
+}
+
+void auditor::set_logout_button(logout_button * parent_button) {
+    this->exit_page = parent_button;
+}
+
+
+void auditor::on_pushButton_clicked() {
+    emit this->exit_page->pressed();
+    // Hide auditor window
+    this->hide();
+    this->exit_page->valid = false;
 }
 

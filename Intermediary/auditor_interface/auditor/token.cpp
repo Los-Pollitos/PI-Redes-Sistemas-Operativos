@@ -22,6 +22,7 @@ Token::Token(QWidget *parent) :
     this->ui->token_input->setEchoMode(QLineEdit::Password);
     srand (time(NULL));
     this->setWindowTitle("Ingreso de token");
+    this->audit = new auditor();
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 }
 
@@ -43,6 +44,9 @@ Token::~Token()
     if (this->ui) {
         delete this->ui;
         this->ui = 0;
+    }
+    if (this->audit) {
+        delete this->audit;
     }
 }
 
@@ -77,7 +81,10 @@ void Token::on_validate_label_clicked() {
     try {
         if (std::stoi(tok.toStdString()) == this->user_data->token[this->pos]) {
             this->ui->token_input->clear();
-            // TODO: hacer
+            this->audit->setModal(true);
+            this->audit->set_logout_button(this->parent_button);
+            this->hide();
+            this->audit->show();
         } else {
             QMessageBox show_message =  QMessageBox();
             show_message.setWindowTitle("Error");

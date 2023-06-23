@@ -29,6 +29,7 @@ public:
 private:
     int validate_user(std::string username, std::string password);
     void ask_for_token();
+    int ask_for_role();
 
 private slots:
     void on_login_button_clicked();

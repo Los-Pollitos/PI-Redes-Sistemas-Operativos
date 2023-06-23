@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "auditor.h"
+#include "login.h"
+#include "client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    auditor * audit;
+    login * login_page;
+    client * local_client;
 };
 #endif // MAINWINDOW_H

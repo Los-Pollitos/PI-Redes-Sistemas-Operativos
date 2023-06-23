@@ -119,6 +119,24 @@ void login::ask_for_token() {
 }
 
 /**
+ * @brief asks client for user's role
+ * @return role
+ */
+int login::ask_for_role() {
+    char result = '0';
+    std::string to_send = "";
+    to_send += (char(GET_ROLES));
+    to_send += this->user_data->user;
+    to_send += ",";
+    std::string from_server = "";
+    from_server += this->local_client->send_and_receive(to_send);
+    int correct = (int)(from_server[0]-48);
+    result = from_server[1];
+    this->user_data->roles = result;
+    return correct;
+}
+
+/**
  * @brief Indicates that user must be validated
  *
  */
@@ -129,13 +147,23 @@ void login::on_login_button_clicked() {
         this->user_data = new login_info;
         this->user_data->user = username.toStdString();
         this->user_data->password = password.toStdString();
-
         this->ask_for_token();
-        this->hide();
-        this->token_page->set_client(this->local_client);
-        this->token_page->setUserData(this->user_data);
-        this->token_page->setParent_Button(this->request_button);
-        this->token_page->show();
+        if (this->ask_for_role() == 1 && ((this->user_data->roles & AUDITOR) == AUDITOR)) {
+            this->hide();
+            this->token_page->set_client(this->local_client);
+            this->token_page->setUserData(this->user_data);
+            this->token_page->setParent_Button(this->request_button);
+            this->token_page->show();
+        } else {
+            QMessageBox show_wrong_role =  QMessageBox();
+            show_wrong_role.setWindowTitle("Error");
+            show_wrong_role.setModal(true);
+            show_wrong_role.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_wrong_role.setText("Datos incorrectos");
+            show_wrong_role.exec();
+            this->ui->user_input->setText("");
+            this->ui->password_input->setText("");
+        }
     } else {
         QMessageBox show_message =  QMessageBox();
         show_message.setWindowTitle("Error");

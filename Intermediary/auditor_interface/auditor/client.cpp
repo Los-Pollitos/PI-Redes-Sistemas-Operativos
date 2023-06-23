@@ -1,4 +1,5 @@
 #include "client.h"
+#include <QMessageBox>
 
 /**
  * @brief Construct a new client::client object
@@ -43,6 +44,12 @@ std::string client::send_and_receive(std::string to_send) {
         // Se intenta pegar al servidor
         if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
             std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+            QMessageBox show_error =  QMessageBox();
+            show_error.setWindowTitle("Error");
+            show_error.setModal(true);
+            show_error.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_error.setText("Error de conexión por IP o puerto. Favor contactar al encargado");
+                show_error.exec();
         } else {
             // Se logró pegar, se sacan data
             memset(data, '\0', CLIENT_DATA_SIZE);
