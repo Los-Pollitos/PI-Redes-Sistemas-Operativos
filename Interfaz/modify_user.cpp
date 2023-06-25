@@ -99,7 +99,6 @@ void modify_user::set_data_ui() {
     this->ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
     this->ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
     this->ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
-    this->ui->checkbox_debug->setCheckState(unmask_role(DEBUG, this->user_info.role));
     this->ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
     this->ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
     this->ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
@@ -423,45 +422,27 @@ void modify_user::update_roles() {
         // once fired, nothing can be changed
         this->set_read_only();
     } else {
-        // if the user is Debug, it can not have more roles
-        if (ui->checkbox_debug->checkState() == Qt::Checked
-                && unmask_role(DEBUG, this->user_info.role) == Qt::Checked) {
-            this->user_info.role = DEBUG;
+        if (ui->checkbox_admin_config->checkState() == Qt::Checked) {
+            role_int |= ADMIN_CONFIG;
+        }
+        if (ui->checkbox_admin_users->checkState() == Qt::Checked) {
+            role_int |= ADMIN_USER;
+        }
+        if (ui->checkbox_employee->checkState() == Qt::Checked) {
+            role_int |= EMPLOYEE;
+        }
+        if (ui->checkbox_human_resources->checkState() == Qt::Checked) {
+            role_int |= HUMAN_RESOURCES;
+        }
+        if (ui->checkbox_supervisor->checkState() == Qt::Checked) {
+            role_int |= SUPERVISOR;
+        }
+
+        if (this->user_info.role != role_int) {
             this->changed = true;
-
-            // the debug is exclusive of other roles
-            ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
-            ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
-            ui->checkbox_employee->setCheckState(Qt::Unchecked);
-            ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
-            ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
-
-            // update the data base
+            this->user_info.role = role_int;
             to_send += this->user_info.role;
-            this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a Depurador");
-        } else {  // see if any role changed
-            if (ui->checkbox_admin_config->checkState() == Qt::Checked) {
-                role_int |= ADMIN_CONFIG;
-            }
-            if (ui->checkbox_admin_users->checkState() == Qt::Checked) {
-                role_int |= ADMIN_USER;
-            }
-            if (ui->checkbox_employee->checkState() == Qt::Checked) {
-                role_int |= EMPLOYEE;
-            }
-            if (ui->checkbox_human_resources->checkState() == Qt::Checked) {
-                role_int |= HUMAN_RESOURCES;
-            }
-            if (ui->checkbox_supervisor->checkState() == Qt::Checked) {
-                role_int |= SUPERVISOR;
-            }
-
-            if (this->user_info.role != role_int) {
-                this->changed = true;
-                this->user_info.role = role_int;
-                to_send += this->user_info.role;
-                this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar los roles");
-            }
+            this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar los roles");
         }
     }
 }

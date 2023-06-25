@@ -3,6 +3,7 @@
 
 #include <string>
 
+#define SUPERUSER 128
 #define UNEMPLOYEED 64
 #define EMPLOYEE 32
 #define HUMAN_RESOURCES 16
