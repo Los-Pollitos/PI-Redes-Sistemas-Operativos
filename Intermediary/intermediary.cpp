@@ -271,7 +271,7 @@ void intermediary::send_to_server(std::string ip_remote) {
       break;
     case ANSWER_PAYMENT_PROOF: case ANSWER_WORK_PROOF: case ANSWER_SALARY_PROOF:
     case RECORD_CONSULT: case ADD_RECORD:
-    case USER_OFFICE: case ALL_USERS_OFFICE: case DATA_USER:
+    case USER_OFFICE: case ALL_USERS_OFFICE: case ALL_USERS: case DATA_USER:
     case GET_ROLES:
     case CHANGE_PHONE: case CHANGE_EMAIL: case CHANGE_OFFICE_ID: case CHANGE_ROLES:
     case CHANGE_LABORAL_DATA: case CHANGE_VACATIONS: case CHANGE_SHIFT:
