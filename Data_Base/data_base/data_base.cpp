@@ -415,6 +415,24 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
     return result;
 }
 
+std::string data_base::consult_employees() {
+    std::string result = "";
+    QSqlQuery consult_employee;
+
+    consult_employee.prepare("SELECT * FROM employees");
+
+    // If a match was found
+    if (consult_employee.exec() && consult_employee.next()) {
+        do {
+            result += consult_employee.value(0).toString().toStdString() += ",";
+        } while (consult_employee.next());
+        result[result.length()-1] = '\0';  // there was an extra ','
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando todos los empleados";
+    }
+    return result;
+}
+
 std::string data_base::consult_employees_of_an_office(int office_id) {
     std::string result = "";
     QSqlQuery consult_employee;

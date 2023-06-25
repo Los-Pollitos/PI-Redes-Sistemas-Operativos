@@ -150,6 +150,9 @@ std::string log_generator::get_request_type(char type) {
         case CHANGE_SHIFT:
             result = "CHANGE_SHIFT";
             break;
+        case ALL_USERS:
+            result ="ALL_USERS";
+            break;
         default:
             result = "NONE";
     }
