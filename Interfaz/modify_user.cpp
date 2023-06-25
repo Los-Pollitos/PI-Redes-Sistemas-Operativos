@@ -60,7 +60,7 @@ void modify_user::set_colors() {
     this->ui->checkbox_active->setStyleSheet("color: #001f21;");
     this->ui->checkbox_admin_config->setStyleSheet("color: #001f21;");
     this->ui->checkbox_admin_users->setStyleSheet("color: #001f21;");
-    this->ui->checkbox_debug->setStyleSheet("color: #001f21;");
+    this->ui->checkbox_auditor->setStyleSheet("color: #001f21;");
     this->ui->checkbox_employee->setStyleSheet("color: #001f21;");
     this->ui->checkbox_human_resources->setStyleSheet("color: #001f21;");
     this->ui->checkbox_supervisor->setStyleSheet("color: #001f21;");
@@ -79,7 +79,7 @@ void modify_user::on_comboBox_activated(int index) {
 
     // if the user was fired, noting can't be changed
     if(unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) {
-        ui->checkbox_active->setCheckState(unmask_role(index, UNEMPLOYEED));
+        this->ui->checkbox_active->setCheckState(unmask_role(index, UNEMPLOYEED));
         this->set_read_only();
     }
 
@@ -96,19 +96,32 @@ void modify_user::set_data_ui() {
     this->ui->phone->setText(QString::fromStdString(this->user_info.phone));
     this->ui->email->setText(QString::fromStdString(this->user_info.email));
     this->ui->office->setText(QString::number(office_id));
-    this->ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
-    this->ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
-    this->ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
-    this->ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
-    this->ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
-    this->ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
-    this->ui->vacations->setText(QString::number(this->user_info.available_vacations));
-    this->ui->checkbox_shift->setCheckState(this->user_info.shift_available ? Qt::Checked : Qt::Unchecked);
     this->ui->job_title->setText(QString::fromStdString(this->user_info.job_title));
     this->ui->base_salary->setText(QString::number(this->user_info.salary_base));
     this->ui->deductions->setText(QString::number(this->user_info.deductibles));
     this->ui->net_salary->setReadOnly(true);
     this->ui->net_salary->setText(QString::number(this->user_info.salary_net));
+    this->ui->vacations->setText(QString::number(this->user_info.available_vacations));
+
+    if (SUPERUSER == this->user_info.role) {
+        this->ui->checkbox_active->setCheckState(Qt::Checked);
+        this->ui->checkbox_auditor->setCheckState(Qt::Checked);
+        this->ui->checkbox_admin_users->setCheckState(Qt::Checked);
+        this->ui->checkbox_admin_config->setCheckState(Qt::Checked);
+        this->ui->checkbox_employee->setCheckState(Qt::Checked);
+        this->ui->checkbox_human_resources->setCheckState(Qt::Checked);
+        this->ui->checkbox_supervisor->setCheckState(Qt::Checked);
+        this->ui->checkbox_shift->setCheckState(Qt::Checked);
+    } else {
+        this->ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
+        this->ui->checkbox_auditor->setCheckState(unmask_role(AUDITOR, this->user_info.role));
+        this->ui->checkbox_admin_users->setCheckState(unmask_role(ADMIN_USER, this->user_info.role));
+        this->ui->checkbox_admin_config->setCheckState(unmask_role(ADMIN_CONFIG, this->user_info.role));
+        this->ui->checkbox_employee->setCheckState(unmask_role(EMPLOYEE, this->user_info.role));
+        this->ui->checkbox_human_resources->setCheckState(unmask_role(HUMAN_RESOURCES, this->user_info.role));
+        this->ui->checkbox_supervisor->setCheckState(unmask_role(SUPERVISOR, this->user_info.role));
+        this->ui->checkbox_shift->setCheckState(this->user_info.shift_available ? Qt::Checked : Qt::Unchecked);
+    }
 }
 
 void modify_user::set_read_only() {
@@ -121,8 +134,8 @@ void modify_user::set_read_only() {
     this->ui->checkbox_admin_users->setFocusPolicy(Qt::NoFocus);
     this->ui->checkbox_employee->setAttribute(Qt::WA_TransparentForMouseEvents);
     this->ui->checkbox_employee->setFocusPolicy(Qt::NoFocus);
-    this->ui->checkbox_debug->setAttribute(Qt::WA_TransparentForMouseEvents);
-    this->ui->checkbox_debug->setFocusPolicy(Qt::NoFocus);
+    this->ui->checkbox_auditor->setAttribute(Qt::WA_TransparentForMouseEvents);
+    this->ui->checkbox_auditor->setFocusPolicy(Qt::NoFocus);
     this->ui->checkbox_human_resources->setAttribute(Qt::WA_TransparentForMouseEvents);
     this->ui->checkbox_human_resources->setFocusPolicy(Qt::NoFocus);
     this->ui->checkbox_supervisor->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -285,7 +298,11 @@ void modify_user::add_data_to_combobox() {
 
     // find all the users of an office
     to_send = "0";
-    to_send[0] = ALL_USERS_OFFICE;
+    if (this->unmask_role(SUPERUSER, this->user_info.role) == Qt::Checked) {
+        to_send[0] = ALL_USERS;  // can access all users
+    } else {
+        to_send[0] = ALL_USERS_OFFICE;
+    }
 
     // find the office id
     while (data_received[i] != '\0') {
@@ -323,7 +340,7 @@ void modify_user::empty_text() {
     this->ui->checkbox_active->setCheckState(Qt::Unchecked);
     this->ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
     this->ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
-    this->ui->checkbox_debug->setCheckState(Qt::Unchecked);
+    this->ui->checkbox_auditor->setCheckState(Qt::Unchecked);
     this->ui->checkbox_employee->setCheckState(Qt::Unchecked);
     this->ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
     this->ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
@@ -422,27 +439,67 @@ void modify_user::update_roles() {
         // once fired, nothing can be changed
         this->set_read_only();
     } else {
-        if (ui->checkbox_admin_config->checkState() == Qt::Checked) {
-            role_int |= ADMIN_CONFIG;
-        }
-        if (ui->checkbox_admin_users->checkState() == Qt::Checked) {
-            role_int |= ADMIN_USER;
-        }
-        if (ui->checkbox_employee->checkState() == Qt::Checked) {
-            role_int |= EMPLOYEE;
-        }
-        if (ui->checkbox_human_resources->checkState() == Qt::Checked) {
-            role_int |= HUMAN_RESOURCES;
-        }
-        if (ui->checkbox_supervisor->checkState() == Qt::Checked) {
-            role_int |= SUPERVISOR;
-        }
-
-        if (this->user_info.role != role_int) {
+        if (this->ui->checkbox_admin_config->checkState() == Qt::Checked
+                && this->ui->checkbox_admin_users->checkState() == Qt::Checked
+                && this->ui->checkbox_employee->checkState()
+                && this->ui->checkbox_human_resources->checkState() == Qt::Checked
+                && this->ui->checkbox_supervisor->checkState()
+                && this->ui->checkbox_auditor->checkState()
+                && SUPERUSER != this->user_info.role) {
+            this->user_info.role = SUPERUSER;
             this->changed = true;
-            this->user_info.role = role_int;
+
+            // the debug is exclusive of other roles
+            this->ui->checkbox_admin_users->setCheckState(Qt::Checked);
+            this->ui->checkbox_admin_config->setCheckState(Qt::Checked);
+            this->ui->checkbox_employee->setCheckState(Qt::Checked);
+            this->ui->checkbox_human_resources->setCheckState(Qt::Checked);
+            this->ui->checkbox_supervisor->setCheckState(Qt::Checked);
+            this->ui->checkbox_auditor->setCheckState(Qt::Checked);
+
+            // update the data base
             to_send += this->user_info.role;
-            this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar los roles");
+            this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a todos los permisos");
+        } else {
+            if (this->ui->checkbox_auditor->checkState() == Qt::Checked
+                    && unmask_role(AUDITOR, this->user_info.role) != Qt::Checked) {
+                this->user_info.role = AUDITOR;
+                this->changed = true;
+
+                // the debug is exclusive of other roles
+                this->ui->checkbox_admin_users->setCheckState(Qt::Unchecked);
+                this->ui->checkbox_admin_config->setCheckState(Qt::Unchecked);
+                this->ui->checkbox_employee->setCheckState(Qt::Unchecked);
+                this->ui->checkbox_human_resources->setCheckState(Qt::Unchecked);
+                this->ui->checkbox_supervisor->setCheckState(Qt::Unchecked);
+
+                // update the data base
+                to_send += this->user_info.role;
+                this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a Auditor");
+            } else {
+                if (this->ui->checkbox_admin_config->checkState() == Qt::Checked) {
+                    role_int |= ADMIN_CONFIG;
+                }
+                if (this->ui->checkbox_admin_users->checkState() == Qt::Checked) {
+                    role_int |= ADMIN_USER;
+                }
+                if (this->ui->checkbox_employee->checkState() == Qt::Checked) {
+                    role_int |= EMPLOYEE;
+                }
+                if (this->ui->checkbox_human_resources->checkState() == Qt::Checked) {
+                    role_int |= HUMAN_RESOURCES;
+                }
+                if (this->ui->checkbox_supervisor->checkState() == Qt::Checked) {
+                    role_int |= SUPERVISOR;
+                }
+
+                if (this->user_info.role != role_int) {
+                    this->changed = true;
+                    this->user_info.role = role_int;
+                    to_send += this->user_info.role;
+                    this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar los roles");
+                }
+            }
         }
     }
 }

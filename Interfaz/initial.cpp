@@ -186,74 +186,107 @@ void initial::update_scrollbar() {
         this->requests_buttons[PENDING_REQUESTS]->show();
         this->requests_buttons[SEE_RECORD]->show();
     } else {
-        if ((this->role & EMPLOYEE) == EMPLOYEE) {
+        if (this->role == SUPERUSER) {
+            // a superuser can do everything
             this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
             this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
             this->layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
             this->layout->addWidget(this->requests_buttons[SALARY_PAGE]);
-            this->layout->addWidget(this->requests_buttons[SEE_SALARY]);
             this->layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
             this->layout->addWidget(this->requests_buttons[VACATION_MANAGER]);
             this->layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
             this->layout->addWidget(this->requests_buttons[SEE_RECORD]);
-            this->requests_buttons[EMPLOYEE_SEP]->show();
-            this->requests_buttons[WORK_PAGE]->show();
-            this->requests_buttons[PAYMENT_PAGE]->show();
-            this->requests_buttons[SALARY_PAGE]->show();
-            this->requests_buttons[SEE_SALARY]->show();
-            this->requests_buttons[PENDING_REQUESTS]->show();
-            this->requests_buttons[VACATION_MANAGER]->show();
-            this->requests_buttons[SEE_VACATIONS]->show();
-            this->requests_buttons[SEE_RECORD]->show();
-        } else {
-            this->layout->removeWidget(this->requests_buttons[EMPLOYEE_SEP]);
-            this->requests_buttons[EMPLOYEE_SEP]->hide();
-            this->layout->removeWidget(this->requests_buttons[WORK_PAGE]);
-            this->requests_buttons[WORK_PAGE]->hide();
-            this->layout->removeWidget(this->requests_buttons[PAYMENT_PAGE]);
-            this->requests_buttons[PAYMENT_PAGE]->hide();
-            this->layout->removeWidget(this->requests_buttons[SALARY_PAGE]);
-            this->requests_buttons[SALARY_PAGE]->hide();
-            this->layout->removeWidget(this->requests_buttons[SEE_SALARY]);
-            this->requests_buttons[SEE_SALARY]->hide();
-            this->layout->removeWidget(this->requests_buttons[PENDING_REQUESTS]);
-            this->requests_buttons[PENDING_REQUESTS]->hide();
-            this->layout->removeWidget(this->requests_buttons[VACATION_MANAGER]);
-            this->requests_buttons[VACATION_MANAGER]->hide();
-            this->layout->removeWidget(this->requests_buttons[SEE_VACATIONS]);
-            this->requests_buttons[SEE_VACATIONS]->hide();
-            this->layout->removeWidget(this->requests_buttons[SEE_RECORD]);
-            this->requests_buttons[SEE_RECORD]->hide();
-        }
-        if (((this->role & SUPERVISOR) == SUPERVISOR) || ((this->role & HUMAN_RESOURCES) == HUMAN_RESOURCES)) {
             this->layout->addWidget(this->requests_buttons[SUPERVISOR_SEP]);
-            this->requests_buttons[SUPERVISOR_SEP]->show();
             this->layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
-            this->requests_buttons[REQUEST_HANDLER]->show();
-        } else {
-            this->layout->removeWidget(this->requests_buttons[SUPERVISOR_SEP]);
-            this->requests_buttons[SUPERVISOR_SEP]->hide();
-            this->layout->removeWidget(this->requests_buttons[REQUEST_HANDLER]);
-            this->requests_buttons[REQUEST_HANDLER]->hide();
-        }
-        if (((this->role & HUMAN_RESOURCES) == HUMAN_RESOURCES) || ((this->role & ADMIN_USER) == ADMIN_USER)) {
             this->layout->addWidget(this->requests_buttons[USER_SEP]);
             this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
             this->layout->addWidget(this->requests_buttons[USER_MOD]);
             this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
+
+            this->requests_buttons[EMPLOYEE_SEP]->show();
+            this->requests_buttons[WORK_PAGE]->show();
+            this->requests_buttons[PAYMENT_PAGE]->show();
+            this->requests_buttons[SALARY_PAGE]->show();
+            this->requests_buttons[PENDING_REQUESTS]->show();
+            this->requests_buttons[VACATION_MANAGER]->show();
+            this->requests_buttons[SEE_VACATIONS]->show();
+            this->requests_buttons[SEE_RECORD]->show();
+            this->requests_buttons[SUPERVISOR_SEP]->show();
+            this->requests_buttons[REQUEST_HANDLER]->show();
             this->requests_buttons[USER_SEP]->show();
             this->requests_buttons[USER_MANAGER]->show();
             this->requests_buttons[USER_MOD]->show();
             this->requests_buttons[CHANGE_TOKEN]->show();
         } else {
-            this->layout->removeWidget(this->requests_buttons[USER_SEP]);
-            this->requests_buttons[USER_SEP]->hide();
-            this->layout->removeWidget(this->requests_buttons[USER_MANAGER]);
-            this->requests_buttons[USER_MANAGER]->hide();
-            this->layout->removeWidget(this->requests_buttons[USER_MOD]);
-            this->requests_buttons[USER_MOD]->hide();
-            this->layout->removeWidget(this->requests_buttons[CHANGE_TOKEN]);
-            this->requests_buttons[CHANGE_TOKEN]->hide();
+            if ((this->role & EMPLOYEE) == EMPLOYEE) {
+                this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
+                this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
+                this->layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
+                this->layout->addWidget(this->requests_buttons[SALARY_PAGE]);
+                this->layout->addWidget(this->requests_buttons[SEE_SALARY]);
+                this->layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
+                this->layout->addWidget(this->requests_buttons[VACATION_MANAGER]);
+                this->layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
+                this->layout->addWidget(this->requests_buttons[SEE_RECORD]);
+                this->requests_buttons[EMPLOYEE_SEP]->show();
+                this->requests_buttons[WORK_PAGE]->show();
+                this->requests_buttons[PAYMENT_PAGE]->show();
+                this->requests_buttons[SALARY_PAGE]->show();
+                this->requests_buttons[SEE_SALARY]->show();
+                this->requests_buttons[PENDING_REQUESTS]->show();
+                this->requests_buttons[VACATION_MANAGER]->show();
+                this->requests_buttons[SEE_VACATIONS]->show();
+                this->requests_buttons[SEE_RECORD]->show();
+            } else {
+                this->layout->removeWidget(this->requests_buttons[EMPLOYEE_SEP]);
+                this->requests_buttons[EMPLOYEE_SEP]->hide();
+                this->layout->removeWidget(this->requests_buttons[WORK_PAGE]);
+                this->requests_buttons[WORK_PAGE]->hide();
+                this->layout->removeWidget(this->requests_buttons[PAYMENT_PAGE]);
+                this->requests_buttons[PAYMENT_PAGE]->hide();
+                this->layout->removeWidget(this->requests_buttons[SALARY_PAGE]);
+                this->requests_buttons[SALARY_PAGE]->hide();
+                this->layout->removeWidget(this->requests_buttons[SEE_SALARY]);
+                this->requests_buttons[SEE_SALARY]->hide();
+                this->layout->removeWidget(this->requests_buttons[PENDING_REQUESTS]);
+                this->requests_buttons[PENDING_REQUESTS]->hide();
+                this->layout->removeWidget(this->requests_buttons[VACATION_MANAGER]);
+                this->requests_buttons[VACATION_MANAGER]->hide();
+                this->layout->removeWidget(this->requests_buttons[SEE_VACATIONS]);
+                this->requests_buttons[SEE_VACATIONS]->hide();
+                this->layout->removeWidget(this->requests_buttons[SEE_RECORD]);
+                this->requests_buttons[SEE_RECORD]->hide();
+            }
+            if (((this->role & SUPERVISOR) == SUPERVISOR) || ((this->role & HUMAN_RESOURCES) == HUMAN_RESOURCES)) {
+                this->layout->addWidget(this->requests_buttons[SUPERVISOR_SEP]);
+                this->requests_buttons[SUPERVISOR_SEP]->show();
+                this->layout->addWidget(this->requests_buttons[REQUEST_HANDLER]);
+                this->requests_buttons[REQUEST_HANDLER]->show();
+            } else {
+                this->layout->removeWidget(this->requests_buttons[SUPERVISOR_SEP]);
+                this->requests_buttons[SUPERVISOR_SEP]->hide();
+                this->layout->removeWidget(this->requests_buttons[REQUEST_HANDLER]);
+                this->requests_buttons[REQUEST_HANDLER]->hide();
+            }
+            if (((this->role & HUMAN_RESOURCES) == HUMAN_RESOURCES) || ((this->role & ADMIN_USER) == ADMIN_USER)) {
+                this->layout->addWidget(this->requests_buttons[USER_SEP]);
+                this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
+                this->layout->addWidget(this->requests_buttons[USER_MOD]);
+                this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
+                this->requests_buttons[USER_SEP]->show();
+                this->requests_buttons[USER_MANAGER]->show();
+                this->requests_buttons[USER_MOD]->show();
+                this->requests_buttons[CHANGE_TOKEN]->show();
+            } else {
+                this->layout->removeWidget(this->requests_buttons[USER_SEP]);
+                this->requests_buttons[USER_SEP]->hide();
+                this->layout->removeWidget(this->requests_buttons[USER_MANAGER]);
+                this->requests_buttons[USER_MANAGER]->hide();
+                this->layout->removeWidget(this->requests_buttons[USER_MOD]);
+                this->requests_buttons[USER_MOD]->hide();
+                this->layout->removeWidget(this->requests_buttons[CHANGE_TOKEN]);
+                this->requests_buttons[CHANGE_TOKEN]->hide();
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ enum type_button {
      USER_SEP,
      USER_MANAGER,
      USER_MOD,
-     CHANGE_TOKEN,
+     CHANGE_TOKEN
 };
 
 #define PENDING 0
