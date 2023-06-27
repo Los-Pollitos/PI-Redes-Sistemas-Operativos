@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>pollitos_incorporated_icon.png</file>
+    </qresource>
+</RCC>
