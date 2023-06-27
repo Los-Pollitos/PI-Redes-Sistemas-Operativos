@@ -572,7 +572,7 @@ void data_server::answer_request() {
             close(this->connection);
         } else {
             if (this->data[0] != '&') {
-                this->logger->add_to_log(strIpRemoto, "received", this->data);
+                this->logger->add_to_log(strIpRemoto, "RECEIVED", this->data);
                 this->remote_ip = strIpRemoto;
                 this->process_data();
             }
@@ -597,7 +597,7 @@ void data_server::see_process_requests() {
         adapt_data(data, to_send_back, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -615,7 +615,7 @@ void data_server::give_role() {
     char to_send = this->base->get_rol(user, error);
     std::string to_log = "";
     to_log += to_send;
-    this->logger->add_answer_log(this->remote_ip, "sent", to_log);
+    this->logger->add_answer_log(this->remote_ip, "SENT", to_log);
     memset(this->data, '\0', DATA_SIZE);
     if (error != -1) {
         this->data[0] = '1';
@@ -650,7 +650,7 @@ void data_server::create_user_case() {
         this->base->add_laboral_data(username, day, month, year, 0, 0, 0, 0, 0, "Empleado nuevo");
         result = "1";
     }
-    this->logger->add_to_log(this->remote_ip, "sent", result);
+    this->logger->add_to_log(this->remote_ip, "SENT", result);
     data[0] = result[0];
     write(this->connection, this->data, DATA_SIZE);
 }
@@ -713,7 +713,7 @@ void data_server::vacation_request() {
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_to_log(this->remote_ip, "sent", result);
+    this->logger->add_to_log(this->remote_ip, "SENT", result);
 }
 
 void data_server::consult_vacations() {
@@ -733,7 +733,7 @@ void data_server::consult_vacations() {
     // Obtain the vacations from the database
     vacations = this->base->get_available_vacations(username);
     to_send += name + "," + identification + "," + vacations + ",";
-    this->logger->add_answer_log(this->remote_ip, "sent", to_send);
+    this->logger->add_answer_log(this->remote_ip, "SENT", to_send);
     // Adapt the data to send it
     this->adapt_data(this->data, to_send, 0);
     // Send the answer
@@ -788,7 +788,7 @@ void data_server::delete_user_case() {
 
         result = "1";
     }
-    this->logger->add_answer_log(this->remote_ip, "sent", result);
+    this->logger->add_answer_log(this->remote_ip, "SENT", result);
     data[0] = result[0];
     write(this->connection, this->data, DATA_SIZE);
 }
@@ -833,7 +833,7 @@ void data_server::consult_salary_case() {
     to_send += net_salary_ascii + ";";
 
     adapt_data(this->data, to_send, 0);
-    this->logger->add_answer_log(this->remote_ip, "sent", to_send);
+    this->logger->add_answer_log(this->remote_ip, "SENT", to_send);
     write(this->connection, this->data, DATA_SIZE);
 }
 
@@ -868,7 +868,7 @@ void data_server::proof_case(std::string description) {
     memset(this->data, '\0', DATA_SIZE);
     std::string result = "1";
     this->base->add_request(user, 0, stoi(day), stoi(month), stoi(year), 0, 0, 0, 1, "", type, description,"");
-    this->logger->add_answer_log(this->remote_ip, "sent", result);
+    this->logger->add_answer_log(this->remote_ip, "SENT", result);
     data[0] = ' ';
     data[1] = '1';
     write(this->connection, this->data, DATA_SIZE);
@@ -1094,7 +1094,7 @@ void data_server::get_user_office() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1116,7 +1116,7 @@ void data_server::get_all_users() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1144,7 +1144,7 @@ void data_server::get_all_users_from_office() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1173,7 +1173,7 @@ void data_server::get_data_user() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1203,7 +1203,7 @@ void data_server::change_phone() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1232,7 +1232,7 @@ void data_server::change_email() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1262,7 +1262,7 @@ void data_server::change_vacations() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1292,7 +1292,7 @@ void data_server::change_shift() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1370,7 +1370,7 @@ void data_server::change_laboral_data() {
     }
 
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1440,7 +1440,7 @@ void data_server::change_office() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1466,7 +1466,7 @@ void data_server::change_roles() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1526,7 +1526,7 @@ void data_server::fire_employee() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1574,7 +1574,7 @@ void data_server::add_record() {
     this->base->add_record(user, day, month, year, to_send);
     memset(this->data, '1', DATA_SIZE);
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -1600,7 +1600,7 @@ void data_server::consult_record() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1627,7 +1627,7 @@ void data_server::see_consult_requests() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1666,7 +1666,7 @@ void data_server::consult_request() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1742,7 +1742,7 @@ void data_server::process_requests() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -1841,7 +1841,7 @@ void data_server::pdf_data_payment() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 }
 
@@ -1906,7 +1906,7 @@ void data_server::pdf_data_work() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 }
 
@@ -1972,7 +1972,7 @@ void data_server::pdf_data_salary() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO]: " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 }
 
@@ -1990,7 +1990,7 @@ void data_server::get_all_offices() {
         adapt_data(data, to_send, DATA_SIZE * i);
         std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
         write(this->connection, data, DATA_SIZE);
-        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+        this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
     }
 
     this->data[0] = '&';
@@ -2024,7 +2024,7 @@ void data_server::create_office() {
     }
 
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -2053,7 +2053,7 @@ void data_server::modify_office() {
         memset(this->data, '0', DATA_SIZE);
     }
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
@@ -2084,7 +2084,7 @@ void data_server::delete_office() {
     }
 
     write(this->connection, this->data, DATA_SIZE);
-    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    this->logger->add_answer_log(this->remote_ip, "SENT", this->data);
 
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
