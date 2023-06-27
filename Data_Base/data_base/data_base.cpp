@@ -978,3 +978,47 @@ std::string data_base::consult_laboral_datas(std::string user) {
     }
     return result;
 }
+
+std::string get_all_offices() {
+    std::string result = "";
+    QSqlQuery consult_offices;
+
+    consult_offices.prepare("SELECT * FROM offices");
+
+    // If a match was found
+    if (consult_offices.exec() && consult_offices.next()) {
+        do {
+            result += consult_offices.value(0).toString().toStdString() + ".";
+            result += consult_offices.value(1).toString().toStdString() + ",";
+        } while (consult_offices.next());
+        result[result.length()-1] = '\0';  // the last space was an extra ','
+    } else {
+        qDebug() << "[BASE_DATOS] Error buscando las oficinas";
+    }
+    return result;
+}
+
+bool modify_office_name(int id, std::string name) {
+    bool success = true;
+    QSqlQuery modify_office;
+    modify_office.prepare("UPDATE office SET name = (:name) WHERE id = (:id)");
+    modify_office.bindValue(":id", id);
+    modify_office.bindValue(":name", QString::fromStdString(name));
+    if (!modify_office.exec()) {
+        qDebug() << "[BASE_DATOS] Error modificando la sucursal " << id;
+        success = false;
+    }
+    return success;
+}
+
+bool delete_office(int id) {
+    bool success = true;
+    QSqlQuery delete_office;
+    std::string command("DELETE FROM offices WHERE id = (:id)");
+    delete_office.bindValue(":id", id);
+    if (!delete_office.exec()) {
+        qDebug() << "[BASE_DATOS] Error borrando la oficina" << id;
+        success = false;
+    }
+    return success;
+}

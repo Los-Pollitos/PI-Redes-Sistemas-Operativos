@@ -43,7 +43,6 @@ class data_base {
     // Methods
     void delete_user_from_table(std::string table, std::string user);
     void transform_vacations(double salary, std::string user);
-    bool verify_office_id(int office);
     std::string request_type(int type, int proof_type);
     std::string request_status(int solved);
     double get_vacations_from_string(std::string vacations);
@@ -101,6 +100,10 @@ class data_base {
     std::string get_pay_data(std::string user, int laboral_data);
     std::string get_actual_laboral_data(std::string user);
     std::string consult_laboral_datas(std::string user);
+    std::string get_all_offices();
+    bool modify_office_name(int id, std::string name);
+    bool delete_office(int id);
+    bool verify_office_id(int office);
 };
 
 #endif // DATA_BASE_H
