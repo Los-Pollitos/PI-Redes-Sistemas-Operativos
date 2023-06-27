@@ -144,6 +144,18 @@ std::string log::get_request_type(char type) {
     case ALL_USERS:
       result = "ALL_USERS";
       break;
+    case ALL_OFFICES:
+      result = "ALL_OFFICES";
+      break;
+    case CREATE_OFFICE:
+      result = "CREATE_OFFICE";
+      break;
+    case DELETE_OFFICE:
+      result = "DELETE_OFFICE";
+      break;
+    case MODIFY_OFFICE_NAME:
+      result = "MODIFY_OFFICE_NAME";
+      break;
     default:
       result = "NONE";
   }

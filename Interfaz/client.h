@@ -49,7 +49,8 @@ enum request_types {
     ALL_USERS,
     ALL_OFFICES,
     CREATE_OFFICE,
-    DELETE_OFFICE
+    DELETE_OFFICE,
+    MODIFY_OFFICE_NAME
 };
 
 class client {

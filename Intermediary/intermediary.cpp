@@ -278,6 +278,7 @@ void intermediary::send_to_server(std::string ip_remote) {
     case FIRE_EMPLOYEE:
     case SEE_PROCESS_REQUESTS: case PROCESS_REQUESTS:
     case SEE_CONSULT_REQUESTS: case CONSULT_REQUESTS:
+    case ALL_OFFICES: case CREATE_OFFICE: case MODIFY_OFFICE_NAME: case DELETE_OFFICE:
       this->send_and_receive_data_base(ip_remote);
       break;
     default:
