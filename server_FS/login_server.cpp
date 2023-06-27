@@ -122,7 +122,7 @@ void login_server::answer_request() {
       close(this->connection);
     } else {
       // send request to log
-      this->logger->add_to_log(strIpRemoto, "received" ,this->data );
+      this->logger->add_to_log(strIpRemoto, "RECEIVED" ,this->data );
       this->process_data(strIpRemoto);
     }
   }
@@ -158,7 +158,7 @@ void login_server::process_data(std::string ip_remote) {
       this->delete_user();
       break;
   }
-  this->logger->add_answer_log(ip_remote, "sent", this->data);
+  this->logger->add_answer_log(ip_remote, "SENT", this->data);
   this->file_system->write_unit();
 }
 
