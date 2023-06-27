@@ -100,6 +100,14 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[CHANGE_TOKEN], &description_button::pressed, this
                   , &initial::create_windows);
 
+    this->requests_buttons.push_back(new description_button( "Ver sucursales", container, SEE_OFFICE, 0));
+    this->connect(this->requests_buttons[SEE_OFFICE], &description_button::pressed, this
+                  , &initial::create_windows);
+
+    this->requests_buttons.push_back(new description_button( "Modificar sucursales", container, OFFICE_MOD, 0));
+    this->connect(this->requests_buttons[OFFICE_MOD], &description_button::pressed, this
+                  , &initial::create_windows);
+
 
     for (size_t i = 0; i < this->requests_buttons.size(); ++i) {
         layout->addWidget(this->requests_buttons[i]);
@@ -202,6 +210,8 @@ void initial::update_scrollbar() {
             this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
             this->layout->addWidget(this->requests_buttons[USER_MOD]);
             this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
+            this->layout->addWidget(this->requests_buttons[SEE_OFFICE]);
+            this->layout->addWidget(this->requests_buttons[OFFICE_MOD]);
 
             this->requests_buttons[EMPLOYEE_SEP]->show();
             this->requests_buttons[WORK_PAGE]->show();
@@ -217,6 +227,8 @@ void initial::update_scrollbar() {
             this->requests_buttons[USER_MANAGER]->show();
             this->requests_buttons[USER_MOD]->show();
             this->requests_buttons[CHANGE_TOKEN]->show();
+            this->requests_buttons[SEE_OFFICE]->show();
+            this->requests_buttons[OFFICE_MOD]->show();
         } else {
             if ((this->role & EMPLOYEE) == EMPLOYEE) {
                 this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
@@ -273,10 +285,14 @@ void initial::update_scrollbar() {
                 this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
                 this->layout->addWidget(this->requests_buttons[USER_MOD]);
                 this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
+                this->layout->addWidget(this->requests_buttons[SEE_OFFICE]);
+                this->layout->addWidget(this->requests_buttons[OFFICE_MOD]);
                 this->requests_buttons[USER_SEP]->show();
                 this->requests_buttons[USER_MANAGER]->show();
                 this->requests_buttons[USER_MOD]->show();
                 this->requests_buttons[CHANGE_TOKEN]->show();
+                this->requests_buttons[SEE_OFFICE]->show();
+                this->requests_buttons[OFFICE_MOD]->show();
             } else {
                 this->layout->removeWidget(this->requests_buttons[USER_SEP]);
                 this->requests_buttons[USER_SEP]->hide();
@@ -286,6 +302,10 @@ void initial::update_scrollbar() {
                 this->requests_buttons[USER_MOD]->hide();
                 this->layout->removeWidget(this->requests_buttons[CHANGE_TOKEN]);
                 this->requests_buttons[CHANGE_TOKEN]->hide();
+                this->layout->removeWidget(this->requests_buttons[SEE_OFFICE]);
+                this->requests_buttons[SEE_OFFICE]->hide();
+                this->layout->removeWidget(this->requests_buttons[OFFICE_MOD]);
+                this->requests_buttons[OFFICE_MOD]->hide();
             }
         }
     }
