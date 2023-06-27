@@ -196,6 +196,14 @@ void request_description::on_file_button_clicked() {
         this->generate_salary_PDF(to_send);
         break;
     }
+    QMessageBox show_message =  QMessageBox();
+    show_message.setWindowTitle("Descargado");
+    show_message.setModal(true);
+    show_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+    show_message.setText("La constancia fue descargada correctamente");
+    show_message.exec();
+
+    this->hide();
 }
 
 void request_description::generate_pdf(const QString& file_path, const QString& text, const QString& header, const QString& image_path, const QString& title) {
