@@ -211,3 +211,25 @@ Mon Jun 12 23:16:52 2023:127.0.0.1:received:SEE_CONSULT_REQUESTS:gherrera
 Mon Jun 12 23:16:52 2023:127.0.0.1:sent:3-1-Constancia salarial: Aceptada,4-0-Vacaciones: Aceptada
 Mon Jun 12 23:16:55 2023:127.0.0.1:received:CONSULT_REQUESTS:3,1
 Mon Jun 12 23:16:55 2023:127.0.0.1:sent:10,10,2021,Solicitud de constancia salarial,Ricardo De Jesus Gang Vincenzi
+Fri Jun 23 11:57:18 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Fri Jun 23 11:57:18 2023:127.0.0.1:sent:#
+Fri Jun 23 11:57:44 2023:127.0.0.1:received:GET_ROLES:jnunez,
+Fri Jun 23 11:57:44 2023:127.0.0.1:sent: 
+Fri Jun 23 11:59:54 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun 23 11:59:54 2023:127.0.0.1:sent:9
+Fri Jun 23 12:02:17 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun 23 12:02:17 2023:127.0.0.1:sent:9
+Fri Jun 23 12:02:52 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun 23 12:02:52 2023:127.0.0.1:sent:9
+Fri Jun 23 12:03:56 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun 23 12:03:56 2023:127.0.0.1:sent:9
+Fri Jun 23 12:04:46 2023:127.0.0.1:received:GET_ROLES:rgang,
+Fri Jun 23 12:04:46 2023:127.0.0.1:sent:9
+Tue Jun 27 07:29:42 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Tue Jun 27 07:29:42 2023:127.0.0.1:sent:#
+Tue Jun 27 07:31:48 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Tue Jun 27 07:31:48 2023:127.0.0.1:sent:#
+Tue Jun 27 07:37:32 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Tue Jun 27 07:37:32 2023:127.0.0.1:sent:#
+Tue Jun 27 07:40:53 2023:127.0.0.1:received:GET_ROLES:cjimenez,
+Tue Jun 27 07:40:53 2023:127.0.0.1:sent:#
