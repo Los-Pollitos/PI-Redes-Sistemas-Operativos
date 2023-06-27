@@ -1054,6 +1054,22 @@ void data_server::process_data() {
         case FIRE_EMPLOYEE:
             this->fire_employee();
             break;
+
+        case ALL_OFFICES:
+            this->get_all_offices();
+            break;
+
+        case CREATE_OFFICE:
+            this->create_office();
+            break;
+
+        case DELETE_OFFICE:
+            this->delete_office();
+            break;
+
+        case MODIFY_OFFICE_NAME:
+            this->modify_office();
+            break;
     }
 }
 
@@ -1958,4 +1974,119 @@ void data_server::pdf_data_salary() {
         write(this->connection, data, DATA_SIZE);
         this->logger->add_answer_log(this->remote_ip, "sent", this->data);
     }
+}
+
+void data_server::get_all_offices() {
+    std::string to_send = "\0";
+
+    // ask the data base for the result
+    to_send = this->base->get_all_offices();
+
+    // find the size of the package to send
+    int total_m = (int) (to_send.length() / (DATA_SIZE-1)) + (((int)(to_send.length() % (DATA_SIZE-1)) > 0) ? 1 : 0);
+
+    // send the data
+    for (int i = 0; i < total_m; ++i) {
+        adapt_data(data, to_send, DATA_SIZE * i);
+        std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << data << std::endl;
+        write(this->connection, data, DATA_SIZE);
+        this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+    }
+
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::create_office() {
+    std::string id_str = "\0";
+    std::string name = "\0";
+    int id = 0;
+
+    // find the id
+    int i = 1;  // data[0] is CREATE_OFFICE
+    while (this->data[i] != ',') {
+        id_str += this->data[i++];
+    }
+    id = stoi(id_str);
+    // the ',' was found, now the name will be read
+    ++i;
+    while (this->data[i] != ',') {
+        name += this->data[i++];
+    }
+
+    // check if the office is new
+    if (!this->base->verify_office_id(id)) {
+        this->base->add_office(id, name);
+        memset(this->data, '1', DATA_SIZE);
+    } else {
+        memset(this->data, '0', DATA_SIZE);
+    }
+
+    write(this->connection, this->data, DATA_SIZE);
+    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::modify_office() {
+    std::string id = "\0";
+    std::string name = "\0";
+
+    // find the id
+    int i = 1;  // data[0] is MODIFY_OFFICE
+    while (this->data[i] != ',') {
+        id += this->data[i++];
+    }
+    // the ',' was found, now the name will be read
+    ++i;
+    while (this->data[i] != ',') {
+        name += this->data[i++];
+    }
+
+    // ask the data base for the result
+    if (this->base->modify_office_name(stoi(id), name)) {  // success
+        memset(this->data, '1', DATA_SIZE);
+    } else {  // the change was not possible
+        memset(this->data, '0', DATA_SIZE);
+    }
+    write(this->connection, this->data, DATA_SIZE);
+    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
+
+void data_server::delete_office() {
+    std::string id_str = "\0";
+    int id = 0;
+
+    // find the id
+    int i = 1;  // data[0] is MODIFY_OFFICE
+    while (this->data[i] != ',') {
+        id_str += this->data[i++];
+    }
+    id = stoi(id_str);
+
+    // verify if the office is empty
+    if (this->base->consult_employees_of_an_office(id).length() == 0) {
+        // delete the office
+        if (this->base->delete_office(id)) {
+            memset(this->data, '1', DATA_SIZE);
+        } else {
+            memset(this->data, '0', DATA_SIZE);
+        }
+    } else {
+        memset(this->data, '0', DATA_SIZE);
+    }
+
+    write(this->connection, this->data, DATA_SIZE);
+    this->logger->add_answer_log(this->remote_ip, "sent", this->data);
+
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
 }

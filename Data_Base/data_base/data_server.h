@@ -82,6 +82,10 @@ private:
     void pdf_data_salary();
     void fire_employee();
     void get_all_users();
+    void get_all_offices();
+    void create_office();
+    void modify_office();
+    void delete_office();
 
 public:
     data_server();
