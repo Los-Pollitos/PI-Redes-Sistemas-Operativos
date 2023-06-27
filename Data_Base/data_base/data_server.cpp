@@ -105,6 +105,7 @@ void data_server::load_offices() {
         office_file.close();
     } else {
         qDebug() << "[SERVIDOR_BASE_DATOS] No se pudo abrir el archivo de offices.txt";
+        this->logger->add_answer_log("DATA_BASE", "ERROR", "No se pudo abrir el archivo de offices.txt");
     }
 }
 

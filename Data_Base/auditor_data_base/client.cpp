@@ -7,6 +7,7 @@
  */
 client::client() {
     this->logger = new log_generator;
+    this->logger->set_params("Data_LOG.txt", "Data Server");
 }
 
 /**
