@@ -979,7 +979,7 @@ std::string data_base::consult_laboral_datas(std::string user) {
     return result;
 }
 
-std::string get_all_offices() {
+std::string data_base::get_all_offices() {
     std::string result = "";
     QSqlQuery consult_offices;
 
@@ -998,7 +998,7 @@ std::string get_all_offices() {
     return result;
 }
 
-bool modify_office_name(int id, std::string name) {
+bool data_base::modify_office_name(int id, std::string name) {
     bool success = true;
     QSqlQuery modify_office;
     modify_office.prepare("UPDATE office SET name = (:name) WHERE id = (:id)");
@@ -1011,7 +1011,7 @@ bool modify_office_name(int id, std::string name) {
     return success;
 }
 
-bool delete_office(int id) {
+bool data_base::delete_office(int id) {
     bool success = true;
     QSqlQuery delete_office;
     std::string command("DELETE FROM offices WHERE id = (:id)");
