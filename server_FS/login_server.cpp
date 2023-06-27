@@ -64,6 +64,7 @@ void login_server::load_from_file() {
     this->file_system->write_unit();
   } else {
     std::cerr << "No hay archivo de Login.txt" << std::endl;
+    this->logger->add_answer_log(ip_remote, "ERROR", "No hay archivo de Login.txt");
   }
 }
 
