@@ -25,7 +25,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     manage_user.cpp \
+    modify_office.cpp \
     modify_user.cpp \
+    office_description.cpp \
     payment_proof.cpp \
     request_description.cpp \
     request_vacations.cpp \
@@ -50,7 +52,9 @@ HEADERS += \
     logout_button.h \
     mainwindow.h \
     manage_user.h \
+    modify_office.h \
     modify_user.h \
+    office_description.h \
     payment_proof.h \
     request_description.h \
     request_vacations.h \
@@ -72,7 +76,9 @@ FORMS += \
     login.ui \
     mainwindow.ui \
     manage_user.ui \
+    modify_office.ui \
     modify_user.ui \
+    office_description.ui \
     payment_proof.ui \
     request_description.ui \
     request_vacations.ui \
