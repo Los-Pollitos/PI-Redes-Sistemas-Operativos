@@ -22,7 +22,8 @@
 #include "vacation_consult.h"
 #include "logout_button.h"
 #include "client.h"
-
+#include "modify_office.h"
+#include "office_description.h"
 
 namespace Ui {
 class initial;
@@ -67,6 +68,8 @@ private:
     description_button * update_buttons;
     logout_button * parent_button;
     client* local_client;
+    modify_office* office_mod;
+    office_description* see_office;
 };
 
 #endif // INITIAL_H

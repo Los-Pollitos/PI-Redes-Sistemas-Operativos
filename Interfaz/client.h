@@ -46,7 +46,10 @@ enum request_types {
     FIRE_EMPLOYEE,
     ADD_RECORD,
     CHANGE_SHIFT,
-    ALL_USERS
+    ALL_USERS,
+    ALL_OFFICES,
+    CREATE_OFFICE,
+    DELETE_OFFICE
 };
 
 class client {

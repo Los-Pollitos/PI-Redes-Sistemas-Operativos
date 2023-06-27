@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLineEdit" name="name_2">
+  <widget class="QLineEdit" name="name">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -39,7 +39,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="employee">
+  <widget class="QLabel" name="office">
    <property name="geometry">
     <rect>
      <x>10</x>

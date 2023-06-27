@@ -38,6 +38,8 @@ initial::initial(QWidget *parent) :
     this->vacation_manager = new request_vacations();
     this->see_vacations = new vacation_consult();
     this->local_client = new client();
+    this->office_mod = new modify_office();
+    this->see_office = new office_description();
 
 
     this->update_buttons =  new description_button("Manejador de botones", nullptr, -1, 0);
@@ -143,6 +145,7 @@ void initial::set_client(client* local_client){
     this->new_token->set_client(this->local_client);
     this->vacation_manager->set_client(this->local_client);
     this->see_vacations->set_client(this->local_client);
+    this->see_office->set_client(this->local_client);
 }
 
 /**
@@ -369,7 +372,7 @@ initial::~initial() {
     if (this->user_manager) {
         delete this->user_manager;
         this->user_manager = 0;
-     }
+    }
     if (this->vacation_manager) {
         delete this->vacation_manager;
         this->vacation_manager = 0;
@@ -377,11 +380,11 @@ initial::~initial() {
     if (this->see_vacations) {
         delete this->see_vacations;
         this->see_vacations = 0;
-     }
+    }
     if (this->user_mod) {
         delete this->user_mod;
         this->user_mod = 0;
-     }
+    }
     if (this->new_token) {
         delete this->new_token;
         this->new_token = 0;
@@ -389,6 +392,14 @@ initial::~initial() {
      if (this->update_buttons) {
         delete this->update_buttons;
         this->update_buttons = 0;
+    }
+     if (this->office_mod) {
+        delete this->office_mod;
+        this->office_mod = 0;
+     }
+     if (this->see_office) {
+        delete this->see_office;
+        this->see_office = 0;
      }
 }
 
@@ -411,59 +422,69 @@ void initial::create_windows(int id, int type) {
       this->payment_page->setUserData(this->users_login);
       this->payment_page->show();
       break;
-   case SALARY_PAGE:
-     this->salary_page->setModal(true);
-     this->salary_page->setUserData(this->users_login);
-     this->salary_page->show();
-     break;
-   case SEE_SALARY:
-     this->see_salary-> setUserData(this->users_login);
-     this->see_salary->setModal(true);
-     this->see_salary->show();
-     break;
-   case PENDING_REQUESTS:
-     this->pending_requests->setModal(true);
-     this->pending_requests->set_user_login(this->users_login);
-     this->pending_requests->show();
-     break;
-   case VACATION_MANAGER:
-     this->vacation_manager->setModal(true);
-     this->vacation_manager->reset_window();
-     this->vacation_manager->set_current_user(this->users_login->user);
-     this->vacation_manager->show();
-     break;
-   case SEE_VACATIONS:
-     this->see_vacations->setModal(true);
-     this->see_vacations->set_user_login(this->users_login);
-     this->see_vacations->show();
-     break;
-   case SEE_RECORD:
-     this->see_record->setModal(true);
-     this->see_record->set_user_login(this->users_login);
-     this->see_record->show_record();
-     this->see_record->show();
-     break;
-   case REQUEST_HANDLER:
-     this->request_handler->set_user_login(this->users_login);
-     this->request_handler->setModal(true);
-     this->request_handler->show();
-     break;
-   case USER_MANAGER:  
-     this->user_manager->set_user_login(this->users_login);
-     this->user_manager->setModal(true);
-     this->user_manager->show();
-     break;
-   case USER_MOD:
-     this->user_mod->set_login_info(this->users_login);
-     this->user_mod->add_data_to_combobox();
-     this->user_mod->setModal(true);
-     this->user_mod->show();
-     break;
+    case SALARY_PAGE:
+      this->salary_page->setModal(true);
+      this->salary_page->setUserData(this->users_login);
+      this->salary_page->show();
+      break;
+    case SEE_SALARY:
+      this->see_salary-> setUserData(this->users_login);
+      this->see_salary->setModal(true);
+      this->see_salary->show();
+      break;
+    case PENDING_REQUESTS:
+      this->pending_requests->setModal(true);
+      this->pending_requests->set_user_login(this->users_login);
+      this->pending_requests->show();
+      break;
+    case VACATION_MANAGER:
+      this->vacation_manager->setModal(true);
+      this->vacation_manager->reset_window();
+      this->vacation_manager->set_current_user(this->users_login->user);
+      this->vacation_manager->show();
+      break;
+    case SEE_VACATIONS:
+      this->see_vacations->setModal(true);
+      this->see_vacations->set_user_login(this->users_login);
+      this->see_vacations->show();
+      break;
+    case SEE_RECORD:
+      this->see_record->setModal(true);
+      this->see_record->set_user_login(this->users_login);
+      this->see_record->show_record();
+      this->see_record->show();
+      break;
+    case REQUEST_HANDLER:
+      this->request_handler->set_user_login(this->users_login);
+      this->request_handler->setModal(true);
+      this->request_handler->show();
+      break;
+    case USER_MANAGER:
+      this->user_manager->set_user_login(this->users_login);
+      this->user_manager->setModal(true);
+      this->user_manager->show();
+      break;
+    case USER_MOD:
+      this->user_mod->set_login_info(this->users_login);
+      this->user_mod->add_data_to_combobox();
+      this->user_mod->setModal(true);
+      this->user_mod->show();
+      break;
     case CHANGE_TOKEN:
-     this->new_token->set_login_info(this->users_login);
-     this->new_token->setModal(true);
-     this->new_token->show();
-     break;
+      this->new_token->set_login_info(this->users_login);
+      this->new_token->setModal(true);
+      this->new_token->show();
+      break;
+    case OFFICE_MOD:
+      this->office_mod->setModal(true);
+      this->office_mod->show();
+      break;
+    case SEE_OFFICE:
+      this->see_office->load_data();
+      this->see_office->set_user_name(this->users_login->user);
+      this->see_office->setModal(true);
+      this->see_office->show();
+      break;
    }
 }
 
