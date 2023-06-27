@@ -6,6 +6,7 @@
  *
  */
 client::client() {
+    this->logger = new log_generator("../../intermediary_LOG.txt", "Intermediary Server");
 }
 
 /**
@@ -61,6 +62,11 @@ std::string client::send_and_receive(std::string to_send) {
                 adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
                 write(s, data, CLIENT_DATA_SIZE);
+                if (i == 0) {
+                    this->logger->add_to_log("AUDITOR", "TO_SERVER", data);
+                } else {
+                     this->logger->add_answer_log("AUDITOR", "TO_SERVER", data);
+                }
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
@@ -74,6 +80,8 @@ std::string client::send_and_receive(std::string to_send) {
                 // connection es socket cliente
                 resultado += data;
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
+                this->logger->add_answer_log("AUDITOR", "FROM_SERVER", data);
+
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);

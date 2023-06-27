@@ -13,6 +13,7 @@ LIBS += -lcrypto
 SOURCES += \
     auditor.cpp \
     client.cpp \
+    log_generator.cpp \
     login.cpp \
     logout_button.cpp \
     main.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     auditor.h \
     client.h \
+    log_generator.h \
     login.h \
     login_info.h \
     logout_button.h \

@@ -68,7 +68,7 @@ void login::set_client(client* local_client){
 int login::validate_user(std::string username, std::string password) {
     std::string to_comunicate = "";
     security security_manager;
-    to_comunicate += ((char)GET_LOGIN);
+    to_comunicate += ((char)LOGIN);
     to_comunicate += username;
     to_comunicate += ",";
     to_comunicate += security_manager.hash_string(password);
@@ -85,7 +85,7 @@ int login::validate_user(std::string username, std::string password) {
  */
 void login::ask_for_token() {
     std::string to_send = "";
-    to_send += ((char)GET_TOKEN);
+    to_send += ((char)TOKEN);
     to_send += this->user_data->user;
     to_send += ",";
     std::string result = "\0";
