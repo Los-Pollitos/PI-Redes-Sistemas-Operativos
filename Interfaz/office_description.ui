@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>office_description</class>
  <widget class="QDialog" name="office_description">
@@ -5,13 +6,65 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>503</width>
+    <height>136</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QLineEdit" name="name_2">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>70</y>
+     <width>341</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>-40</x>
+     <y>70</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nombre:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="employee">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>25</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sucursal:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>20</y>
+     <width>341</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
