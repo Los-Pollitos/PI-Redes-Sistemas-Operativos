@@ -28,7 +28,7 @@ void auditor::on_refresh_button_clicked(){
     // Load all from file
     this->ui->find_text->setText("");
     this->ui->plainTextEdit->clear();
-    system("cp ../../intermediary_LOG.txt ../temp.txt");
+    system("cp ../interface_LOG.txt ../temp.txt");
     std::ifstream  log_file ("../temp.txt");
     if (log_file.is_open()) {
         std::string text = "";
@@ -55,11 +55,11 @@ void auditor::on_refresh_button_clicked(){
 void auditor::on_search_button_clicked() {
     this->ui->plainTextEdit->clear();
     std::string to_find = this->ui->find_text->text().toStdString();
-    system("cp ../../intermediary_LOG.txt ../../temp.txt");
+    system("cp ../interface_LOG.txt ../temp_f.txt");
     if (to_find != "") {
         std::string grep_command = "grep \"";
         grep_command += to_find;
-        grep_command += "\" ../../temp.txt > ../temp_file.txt";
+        grep_command += "\" ../temp_f.txt > ../temp_file.txt";
         if (system(grep_command.data()) == 0) {
             std::ifstream  temp_file ("../temp_file.txt");
             std::string text = "";
@@ -72,7 +72,7 @@ void auditor::on_search_button_clicked() {
             temp_file.close();
             std::string delete_command = "rm ../temp_file.txt";
             system(delete_command.data());
-            system("rm ../../temp.txt");
+            system("rm ../temp_f.txt");
         } else {
             QMessageBox show_error =  QMessageBox();
             show_error.setWindowTitle("Error");

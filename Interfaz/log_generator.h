@@ -14,12 +14,12 @@
 #include<fstream>
 
 enum request_types {
-    LOGIN = 65,  // A
-    TOKEN, // B 66
-    CHANGE_PASSWORD, // C 67
-    CHANGE_TOKEN,  // 68
+    GET_LOGIN = 65,  // A
+    GET_TOKEN, // B 66
+    GET_CHANGE_PASSWORD, // C 67
+    GET_CHANGE_TOKEN,  // 68
     CREATE_USER,  // 69
-    DELETE_USER,   // 70
+    DELETE_USER,  // 70
     PAYMENT_PROOF,  // 71
     WORK_PROOF,  // 72
     SALARY_PROOF,  // 73
@@ -47,7 +47,11 @@ enum request_types {
     FIRE_EMPLOYEE,
     ADD_RECORD,
     CHANGE_SHIFT,
-    ALL_USERS
+    ALL_USERS,
+    ALL_OFFICES,
+    CREATE_OFFICE,
+    DELETE_OFFICE,
+    MODIFY_OFFICE_NAME
 };
 
 class log_generator {

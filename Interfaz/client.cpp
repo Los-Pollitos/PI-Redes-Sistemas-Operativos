@@ -1,15 +1,17 @@
 #include "client.h"
+#include <QMessageBox>
 
 /**
  * @brief Construct a new client::client object
- * 
+ *
  */
 client::client() {
+    this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
 }
 
 /**
  * @brief Inserts a new string into data starting at received position
- * 
+ *
  * @param data Array of data into which the new info shall be placed
  * @param new_info Information that will be placed into data
  * @param pos Position to start the transfer
@@ -23,7 +25,7 @@ void client::adapt_data(char* data, std::string& new_info, int pos) {
 
 /**
  * @brief Sends and receives information to intermediary
- * 
+ *
  * @param to_send Information that needs to be sent
  * @return std::string Information received
  */
@@ -43,6 +45,12 @@ std::string client::send_and_receive(std::string to_send) {
         // Se intenta pegar al servidor
         if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
             std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
+                             QMessageBox show_error =  QMessageBox();
+            show_error.setWindowTitle("Error");
+            show_error.setModal(true);
+            show_error.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+            show_error.setText("Error de conexión por IP o puerto. Favor contactar al encargado");
+                show_error.exec();
         } else {
             // Se logró pegar, se sacan data
             memset(data, '\0', CLIENT_DATA_SIZE);
@@ -54,6 +62,11 @@ std::string client::send_and_receive(std::string to_send) {
                 adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
                 write(s, data, CLIENT_DATA_SIZE);
+                if (i == 0) {
+                    this->logger->add_to_log("AUDITOR", "TO_SERVER", data);
+                } else {
+                    this->logger->add_answer_log("AUDITOR", "TO_SERVER", data);
+                }
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
@@ -67,6 +80,8 @@ std::string client::send_and_receive(std::string to_send) {
                 // connection es socket cliente
                 resultado += data;
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
+                this->logger->add_answer_log("AUDITOR", "FROM_SERVER", data);
+
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
@@ -84,5 +99,3 @@ std::string client::send_and_receive(std::string to_send) {
 
     return resultado;
 }
-
-

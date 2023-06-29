@@ -42,16 +42,16 @@ std::string log_generator::get_system_time() {
 std::string log_generator::get_request_type(char type) {
     std::string result = "";
     switch (type) {
-    case LOGIN:
+    case GET_LOGIN:
         result = "LOGIN";
         break;
-    case TOKEN:
+    case GET_TOKEN:
         result = "TOKEN";
         break;
-    case CHANGE_PASSWORD:
+    case GET_CHANGE_PASSWORD:
         result = "CHANGE_PASSWORD";
         break;
-    case CHANGE_TOKEN:
+    case GET_CHANGE_TOKEN:
         result = "CHANGE_TOKEN";
         break;
     case CREATE_USER:
