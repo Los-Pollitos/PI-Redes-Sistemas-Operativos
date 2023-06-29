@@ -40,6 +40,8 @@ initial::initial(QWidget *parent) :
     this->local_client = new client();
     this->office_mod = new modify_office();
     this->see_office = new office_description();
+    this->auditor_page = new auditor();
+    this->sys_config_page = new sys_config();
 
 
     this->update_buttons =  new description_button("Manejador de botones", nullptr, -1, 0);
@@ -110,6 +112,18 @@ initial::initial(QWidget *parent) :
     this->connect(this->requests_buttons[OFFICE_MOD], &description_button::pressed, this
                   , &initial::create_windows);
 
+    this->requests_buttons.push_back(new description_button( "Auditoría en Interfaz:", container, AUDITOR_SEP, 0));
+
+    this->requests_buttons.push_back(new description_button( "Ver archivo de auditoría", container, AUDITOR_PAGE, 0));
+    this->connect(this->requests_buttons[AUDITOR_PAGE], &description_button::pressed, this
+                  , &initial::create_windows);
+
+    this->requests_buttons.push_back(new description_button( "Configuración de sistema en Interfaz:", container, SYS_SEP, 0));
+
+    this->requests_buttons.push_back(new description_button( "Modificar configuración del sistema", container, SYS_PAGE, 0));
+    this->connect(this->requests_buttons[SYS_PAGE], &description_button::pressed, this
+                  , &initial::create_windows);
+
 
     for (size_t i = 0; i < this->requests_buttons.size(); ++i) {
         layout->addWidget(this->requests_buttons[i]);
@@ -121,6 +135,10 @@ initial::initial(QWidget *parent) :
     this->requests_buttons[EMPLOYEE_SEP]->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
     this->requests_buttons[USER_SEP]->setEnabled(false);
     this->requests_buttons[USER_SEP]->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
+    this->requests_buttons[AUDITOR_SEP]->setEnabled(false);
+    this->requests_buttons[AUDITOR_SEP]->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
+    this->requests_buttons[SYS_SEP]->setEnabled(false);
+    this->requests_buttons[SYS_SEP]->setStyleSheet(QString("QPushButton {border: 0px;color: #001f21;}"));
 
     this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint);
 
@@ -310,6 +328,28 @@ void initial::update_scrollbar() {
                 this->layout->removeWidget(this->requests_buttons[OFFICE_MOD]);
                 this->requests_buttons[OFFICE_MOD]->hide();
             }
+            if ((this->role & AUDITOR) == AUDITOR) {
+                this->layout->addWidget(this->requests_buttons[AUDITOR_SEP]);
+                this->requests_buttons[AUDITOR_SEP]->show();
+                this->layout->addWidget(this->requests_buttons[AUDITOR_PAGE]);
+                this->requests_buttons[AUDITOR_PAGE]->show();
+            } else {
+                this->layout->removeWidget(this->requests_buttons[AUDITOR_SEP]);
+                this->requests_buttons[AUDITOR_SEP]->hide();
+                this->layout->addWidget(this->requests_buttons[AUDITOR_PAGE]);
+                this->requests_buttons[AUDITOR_PAGE]->hide();
+            }
+            if ((this->role & ADMIN_CONFIG) == ADMIN_CONFIG) {
+                this->layout->addWidget(this->requests_buttons[SYS_SEP]);
+                this->requests_buttons[SYS_SEP]->show();
+                this->layout->addWidget(this->requests_buttons[SYS_PAGE]);
+                this->requests_buttons[SYS_PAGE]->show();
+            } else {
+                this->layout->removeWidget(this->requests_buttons[SYS_SEP]);
+                this->requests_buttons[SYS_SEP]->hide();
+                this->layout->addWidget(this->requests_buttons[SYS_PAGE]);
+                this->requests_buttons[SYS_PAGE]->hide();
+            }
         }
     }
 }
@@ -484,6 +524,14 @@ void initial::create_windows(int id, int type) {
       this->see_office->set_user_name(this->users_login->user);
       this->see_office->setModal(true);
       this->see_office->show();
+      break;
+    case AUDITOR_PAGE:
+      this->auditor_page->setModal(true);
+      this->auditor_page->show();
+      break;
+    case SYS_PAGE:
+      this->sys_config_page->setModal(true);
+      this->sys_config_page->show();
       break;
    }
 }

@@ -21,7 +21,11 @@ enum type_button {
     USER_MOD,
     CHANGE_TOKEN,
     SEE_OFFICE,
-    OFFICE_MOD
+    OFFICE_MOD,
+    AUDITOR_SEP,
+    AUDITOR_PAGE,
+    SYS_SEP,
+    SYS_PAGE
 };
 
 #define PENDING 0

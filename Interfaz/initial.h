@@ -6,7 +6,8 @@
 #include <vector>
 #include <QVBoxLayout>
 
-
+#include "auditor.h"
+#include "sys_config.h"
 #include "login_info.h"
 #include "payment_proof.h"
 #include "salary_proof.h"
@@ -70,6 +71,8 @@ private:
     client* local_client;
     modify_office* office_mod;
     office_description* see_office;
+    auditor * auditor_page;
+    sys_config * sys_config_page;
 };
 
 #endif // INITIAL_H

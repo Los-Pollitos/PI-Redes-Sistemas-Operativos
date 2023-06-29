@@ -11,6 +11,7 @@ LIBS += -lcrypto
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    auditor.cpp \
     change_password.cpp \
     client.cpp \
     consult_record.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     generate_new_token.cpp \
     handle_requests.cpp \
     initial.cpp \
+    log_generator.cpp \
     login.cpp \
     logout_button.cpp \
     main.cpp \
@@ -33,11 +35,13 @@ SOURCES += \
     request_vacations.cpp \
     salary_proof.cpp \
     security.cpp \
+    sys_config.cpp \
     token.cpp \
     vacation_consult.cpp \
-    work_proof.cpp
+    work_proof.cpp \
 
 HEADERS += \
+    auditor.h \
     change_password.h \
     client.h \
     consult_record.h \
@@ -47,6 +51,7 @@ HEADERS += \
     generate_new_token.h \
     handle_requests.h \
     initial.h \
+    log_generator.h \
     login.h \
     login_info.h \
     logout_button.h \
@@ -60,12 +65,14 @@ HEADERS += \
     request_vacations.h \
     salary_proof.h \
     security.h \
+    sys_config.h \
     token.h \
     user_data.h \
     vacation_consult.h \
-    work_proof.h
+    work_proof.h \
 
 FORMS += \
+    auditor.ui \
     change_password.ui \
     consult_record.ui \
     consult_requests.ui \
@@ -83,9 +90,10 @@ FORMS += \
     request_description.ui \
     request_vacations.ui \
     salary_proof.ui \
+    sys_config.ui \
     token.ui \
     vacation_consult.ui \
-    work_proof.ui
+    work_proof.ui \
 
 # Default rules for deployment.
 TARGET = "PollitosIncorporated"
