@@ -30,7 +30,7 @@
 class login_server {
   private:
     // Atributes
-    FS *file_system;
+    FS* file_system;
     int connection;
     char data[DATA_SIZE];
     int message_count;
