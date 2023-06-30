@@ -56,8 +56,8 @@ void auditor::on_refresh_button_clicked(){
 void auditor::on_search_button_clicked() {
     this->ui->plainTextEdit->clear();
     std::string to_find = this->ui->find_text->text().toStdString();
-    system("cp ../Login_LOG.txt ../../temp.txt");
     if (to_find != "") {
+    	system("cp ../Login_LOG.txt ../../temp.txt");
         std::string grep_command = "grep \"";
         grep_command += to_find;
         grep_command += "\" ../../temp.txt > ../temp_file.txt";
@@ -79,8 +79,9 @@ void auditor::on_search_button_clicked() {
             show_error.setWindowTitle("Error");
             show_error.setModal(true);
             show_error.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
-            show_error.setText("Hubo un error al intentar procesar el archivo, por favor intente más tarde o contacte al encargado");
+            show_error.setText("Texto ingresado no aparece en el archivo, si considera que hubo un error por favor intente más tarde o contacte al encargado");
             show_error.exec();
+            system("rm ../../temp.txt");
         }
     } else {
         QMessageBox show_message =  QMessageBox();
