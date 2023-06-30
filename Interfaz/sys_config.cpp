@@ -8,15 +8,31 @@ sys_config::sys_config(QWidget *parent) :
     // Set the window name and colors
     this->setWindowTitle("Modificar configuración del sistema");
     this->setStyleSheet("background-color: #ECEAE5;");
-    this->ui->client_ip->setStyleSheet("color: #001f21;");
+    this->ui->client_ip->setStyleSheet("color: black;");
     this->ui->client_port->setStyleSheet("color: #001f21;");
     this->ui->inter_ip->setStyleSheet("color: #001f21;");
     this->ui->inter_port->setStyleSheet("color: #001f21;");
-    this->ui->file_system_ip->setStyleSheet("color: #001f21;");
+    this->ui->file_system_ip->setStyleSheet("color: black;");
     this->ui->file_system_port->setStyleSheet("color: #001f21;");
     this->ui->data_base_ip->setStyleSheet("color: #001f21;");
     this->ui->data_base_port->setStyleSheet("color: #001f21;");
-    this->ui->password_insert->setStyleSheet("color: #001f21;");
+    this->ui->password_insert->setStyleSheet("color: black;");
+    this->ui->confirm->setStyleSheet("color: #001f21;");
+    this->ui->reset->setStyleSheet("color: #001f21;");
+    this->ui->label->setStyleSheet("color: #001f21;");
+    this->ui->label_2->setStyleSheet("color: #001f21;");
+    this->ui->label_3->setStyleSheet("color: #001f21;");
+    this->ui->label_4->setStyleSheet("color: #001f21;");
+    this->ui->label_5->setStyleSheet("color: #001f21;");
+    this->ui->label_6->setStyleSheet("color: #001f21;");
+    this->ui->label_7->setStyleSheet("color: #001f21;");
+    this->ui->label_8->setStyleSheet("color: #001f21;");
+    this->ui->label_9->setStyleSheet("color: #001f21;");
+    this->ui->label_10->setStyleSheet("color: #001f21;");
+    this->ui->label_11->setStyleSheet("color: #001f21;");
+    this->ui->label_12->setStyleSheet("color: #001f21;");
+    this->ui->label_13->setStyleSheet("color: #001f21;");
+    this->ui->label_14->setStyleSheet("color: #001f21;");
     // Set the password mode for password_insert
     this->ui->password_insert->setEchoMode(QLineEdit::Password);
 }
