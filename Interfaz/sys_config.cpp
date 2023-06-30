@@ -51,17 +51,11 @@ void sys_config::on_confirm_clicked() {
     // Check if all boxes are complete
     if (this->check_if_empty() == false) {
         // Check the password
-
-        qDebug() << "Antes de check_password";
-
         if (this->check_password() == true) {
-            qDebug() << "estoy dentro";
             // Encrypt and prepare the datagram
-
             for (size_t i = 0; i < this->current_text.size(); ++i) {
                 std::cout << "Tengo" << current_text[i] << "\n";
             }
-
             // Send
             this->show_success("FULVO");
 
@@ -79,13 +73,7 @@ bool sys_config::check_if_empty() {
     // Assume the answer as true
     bool answer = false;
     // Clear the current_text vector
-
-    qDebug() << "antes de crash ?? \n";
-
     this->current_text.clear();
-
-    qDebug() << "despues de crash ?? \n";
-
     // Append to current text vector
     this->current_text.push_back(this->ui->client_ip->toPlainText().toStdString());
     this->current_text.push_back(this->ui->client_port->toPlainText().toStdString());
@@ -99,19 +87,10 @@ bool sys_config::check_if_empty() {
 
     // Check the condition
     for (size_t i = 0; i < this->current_text.size(); ++i) {
-
-        qDebug() << i;
-        qDebug() << " " << current_text[i] << "\n";
-
-        qDebug() << "antes de if ?? \n";
-
         if (this->current_text[i].size() == 0) {
             answer = true;
             break;
         }
-
-        qDebug() << "fin ?? \n";
-
     }
     return answer;
 }
@@ -119,16 +98,9 @@ bool sys_config::check_if_empty() {
 bool sys_config::check_password() {
     bool answer = false;
     std::string password = this->ui->password_insert->text().toStdString();
-
-    qDebug() << "uy " << password;
-    qDebug() << "tiene el otro: " << this->user_login->password;
-
     if (password == this->user_login->password) {
         answer = true;
     }
-
-    qDebug() << "despues de eso";
-
     return answer;
 }
 
