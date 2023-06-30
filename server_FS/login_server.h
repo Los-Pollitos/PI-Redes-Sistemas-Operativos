@@ -26,6 +26,8 @@
 #include <time.h> 
 #include <unistd.h>
 #include <vector>
+#include <fstream>
+#include <string>
 
 class login_server {
   private:
@@ -37,6 +39,7 @@ class login_server {
     struct sockaddr_storage ipRemoto;
     log* logger;
     bool continue_waiting;
+    int port;
 
     // Methods
     void find_data(std::string& username,  std::string& hash);

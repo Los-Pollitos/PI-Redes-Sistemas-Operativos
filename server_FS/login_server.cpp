@@ -13,24 +13,34 @@
  * @brief Default constructor
 */
 login_server::login_server() {
-  // Create the file system
-  this->file_system = new FS();
-  this->connection = -1;
-  this->message_count = 0;
-  this->logger =  new log ("Login_LOG.txt", "Login Server");
-  this->continue_waiting = true;
-  // Load the file system from image
-  std::ifstream current_file("fs_image.dat");
-  if (current_file.is_open()) {
-    current_file.close();
-    // this->file_system->load_unit();
-    this->load_from_file();
+  std::ifstream config_file("login_server.config");
+  if (config_file.is_open()) {
+    // The file is open, obtain the info
+    std::string temp;
+    getline(config_file, temp); 
+    this->port = std::stoi(temp);
+    std::cout << this->port << std::endl;
+    // Create the file system
+    this->file_system = new FS();
+    this->connection = -1;
+    this->message_count = 0;
+    this->logger =  new log ("Login_LOG.txt", "Login Server");
+    this->continue_waiting = true;
+    // Load the file system from image
+    std::ifstream current_file("fs_image.dat");
+    if (current_file.is_open()) {
+      current_file.close();
+      // this->file_system->load_unit();
+      this->load_from_file();
+    } else {
+      // Load the file system from file
+      this->load_from_file();
+    }
+    // Set a seed to generate token for the first time
+    srand(time(NULL));
   } else {
-    // Load the file system from file
-    this->load_from_file();
+    std::cerr << "ERROR leyendo archivo de configuración" << std::endl;
   }
-  // Set a seed to generate token for the first time
-  srand(time(NULL));
 }
 
 /*
@@ -79,7 +89,7 @@ void login_server::wait_for_request() {
   memset(this->data, '\0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
-  ip.sin_port = htons(PORT);
+  ip.sin_port = htons(this->port);
 
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
