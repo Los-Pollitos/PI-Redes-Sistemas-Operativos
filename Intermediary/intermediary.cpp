@@ -222,6 +222,37 @@ void intermediary::manage_user_case(std::string ip_remote) {
   }
 }
 
+void intermediary::modify_network_case(std::string ip_remote) {
+  // Package is meant for this server
+  if (data[1] == '1') {
+    this->set_up_intermediary(ip_remote);
+  } else {
+    // Package is for FS
+    if (data[1] == '2') {
+      this->set_up_file_system(ip_remote);
+    } else {
+      this->set_up_data_base(ip_remote);
+    }
+  }
+  
+}
+
+void intermediary::set_up_intermediary(std::string ip_remote) {
+
+}
+
+void intermediary::set_up_file_system(std::string ip_remote) {
+  char temporal_data[DATA_SIZE];
+  // Remove the &
+  read(this->connection, temporal_data, DATA_SIZE);
+
+
+}
+
+void intermediary::set_up_data_base(std::string ip_remote) {
+  this->send_and_receive_data_base(ip_remote);
+}
+
 /**
  * @brief This method extracts the first char of the received data
  * and checks which server must receive the information
@@ -280,6 +311,9 @@ void intermediary::send_to_server(std::string ip_remote) {
     case SEE_CONSULT_REQUESTS: case CONSULT_REQUESTS:
     case ALL_OFFICES: case CREATE_OFFICE: case MODIFY_OFFICE_NAME: case DELETE_OFFICE:
       this->send_and_receive_data_base(ip_remote);
+      break;
+    case MODIFY_NETWORK:
+        this->modify_network_case(ip_remote);
       break;
     default:
       std::cerr << "Error: codigo inexistente" << std::endl;
