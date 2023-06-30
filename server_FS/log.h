@@ -51,6 +51,7 @@ enum request_types {
   CREATE_OFFICE,
   DELETE_OFFICE,
   MODIFY_OFFICE_NAME,
+  FILLER,
   MODIFY_NETWORK
 };
 

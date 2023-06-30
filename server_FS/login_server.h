@@ -50,6 +50,7 @@ class login_server {
     void load_from_file();
     void create_user();
     void delete_user();
+    void modify_network();
 
     bool existing_user(std::string& username);
     void validate_data(std::string& username, std::string& hash);

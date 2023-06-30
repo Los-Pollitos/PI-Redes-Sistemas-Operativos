@@ -79,8 +79,12 @@ void sys_config::on_confirm_clicked() {
             // this->set_up_client();
 
             std::string first_answer = this->local_client->send_and_receive(to_send);
-
-            // std::string second_answer;
+            to_send = "a";
+            to_send[0] = ((char)MODIFY_NETWORK);
+            to_send += "2";
+            to_send += this->current_text[1];
+            to_send += ":";
+            std::string second_answer = this->local_client->send_and_receive(to_send);;
             to_send = "a";
             to_send[0] = ((char)MODIFY_NETWORK);
             to_send += "3";
@@ -89,7 +93,7 @@ void sys_config::on_confirm_clicked() {
             std::string third_answer = this->local_client->send_and_receive(to_send);
 
 
-            if (first_answer[0] == '1' && third_answer[0] == '1') {
+            if (first_answer[0] == '1' && third_answer[0] == '1' && second_answer[0] == '1') {
               this->show_success("FULVO");
             } else {
               this->show_error("NO FULVO");
