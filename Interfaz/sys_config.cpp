@@ -88,6 +88,33 @@ void sys_config::on_confirm_clicked() {
     }
 }
 
+void decrypt_salary(std::string salary) {
+    security security_manager;
+    std::string salary_temp = "\0";
+
+    // salary
+    for (size_t i = 0; i < salary.length(); ++i) {
+        if (salary[i] != '.') {
+            if (salary[i+1] == '.') {
+                salary_temp += (char)(salary[i]-48);
+            } else if (salary[i+2] == '.'){
+                salary_temp += (char)(((int)salary[i]) - 48)*10 +(((int)salary[i+1]) - 48);
+                ++i; // ignore i+1
+            } else {
+                salary_temp += (char)(((int)salary[i] - 48)*100 + ((int)salary[i+1] -48)*10 - +(((int)salary[i+2] -48)));
+                i+=2; // ignore i+2
+            }
+            // next one would be a '.'
+            i++;
+        }
+    }
+    salary_temp = security_manager.decrypt(salary_temp);
+    qDebug() << salary_temp.size();
+    qDebug() << "dede DECRYPT";
+    qDebug() << salary_temp;
+    qDebug() << (int)("1:2:3:4:5:6:7:8:" == salary_temp);
+}
+
 void sys_config::prepare_string(std::string& to_send) {
     security encrypter;
     std::string to_encrypt = "";
@@ -96,6 +123,8 @@ void sys_config::prepare_string(std::string& to_send) {
         to_encrypt += this->current_text[i];
         to_encrypt += ":";
     }
+
+    qDebug() << "PREPARE STRING" << to_encrypt;
 
     std::string result = encrypter.encrypt(to_encrypt);
     to_send = 'A';
@@ -106,6 +135,7 @@ void sys_config::prepare_string(std::string& to_send) {
 
     qDebug() << "SIZE" << to_send.size();
     qDebug() << to_send;
+    decrypt_salary(to_send);
 }
 
 bool sys_config::check_if_empty() {
