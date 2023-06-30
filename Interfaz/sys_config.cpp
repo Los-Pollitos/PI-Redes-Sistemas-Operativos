@@ -69,9 +69,12 @@ void sys_config::on_confirm_clicked() {
         // Check the password
         if (this->check_password() == true) {
             // Encrypt and prepare the datagram
-            for (size_t i = 0; i < this->current_text.size(); ++i) {
-                std::cout << "Tengo" << current_text[i] << "\n";
-            }
+            for (size_t i = 0; i < this->current_text.size(); ++i) {            }
+            // Prepare string
+
+            std::string to_send = "";
+            this->prepare_string(to_send);
+
             // Send
             this->show_success("FULVO");
 
@@ -83,6 +86,26 @@ void sys_config::on_confirm_clicked() {
         // Show error
         this->show_error("Por favor rellene todas las opciones");
     }
+}
+
+void sys_config::prepare_string(std::string& to_send) {
+    security encrypter;
+    std::string to_encrypt = "";
+    for (size_t i = 0; i < this->current_text.size() - 1; ++i) {
+        qDebug() << this->current_text[i];
+        to_encrypt += this->current_text[i];
+        to_encrypt += ":";
+    }
+
+    std::string result = encrypter.encrypt(to_encrypt);
+    to_send = 'A';
+    for (size_t i = 0; i < result.size(); ++i) {
+        to_send += ((int)result[i]);
+        to_send += ".";
+    }
+
+    qDebug() << "SIZE" << to_send.size();
+    qDebug() << to_send;
 }
 
 bool sys_config::check_if_empty() {

@@ -7,6 +7,7 @@
 
 #include "login_info.h"
 #include "client.h"
+#include "security.h"
 
 namespace Ui {
 class sys_config;
@@ -39,6 +40,7 @@ private:
     bool check_password();
     void show_error(std::string error);
     void show_success(std::string success);
+    void prepare_string(std::string& to_send);
 };
 
 #endif // SYS_CONFIG_H
