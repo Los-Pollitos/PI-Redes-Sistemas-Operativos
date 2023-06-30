@@ -19,10 +19,6 @@ client::client() {
     } else {
         qDebug() << "ERROR: config file no existente";
     }
-
-    std::cout << "AAAAAAAAAAAAA" << "\n";
-    std::cout << this->intermediary_ip << "\n";
-    std::cout << this->port << "\n";
 }
 
 /**

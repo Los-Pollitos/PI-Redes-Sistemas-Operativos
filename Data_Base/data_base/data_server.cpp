@@ -14,15 +14,27 @@
  * @brief Default constructor
 */
 data_server::data_server() {
-    // Create the data_base
-    this->base = new data_base();
-    this->logger = new log_generator();
-    this->logger->set_params("Data_LOG.txt", "Data Server");
-    this->load_from_file();
-    this->connection = -1;
-    this->continue_waiting = true;
-    this->message_count = 0;
+    // Setup the server
+    std::ifstream config_file("../config/data_server.config");
+    if (config_file.is_open()) {
+        // Obtain port
+        std::string temp;
+        getline(config_file, temp);
+        this->port = std::stoi(temp);
 
+        qDebug() << this->port;
+
+        // Create the data_base
+        this->base = new data_base();
+        this->logger = new log_generator();
+        this->logger->set_params("Data_LOG.txt", "Data Server");
+        this->load_from_file();
+        this->connection = -1;
+        this->continue_waiting = true;
+        this->message_count = 0;
+    } else {
+        qDebug() << "ERROR: falta de archivo de configuración";
+    }
 }
 
 /*
@@ -1071,7 +1083,33 @@ void data_server::process_data() {
         case MODIFY_OFFICE_NAME:
             this->modify_office();
             break;
+
+        case MODIFY_NETWORK:
+            this->modify_network();
+            break;
     }
+}
+
+void data_server::modify_network() {
+    std::string temp;
+    for (int i = 2; i < DATA_SIZE; ++i) {
+        if (this->data[i] != ':') {
+            temp += this->data[i];
+        } else {
+            break;
+        }
+    }
+    temp += "\n\0";
+    std::ofstream config_file("../config/data_server.config", std::fstream::trunc);
+    config_file << temp;
+
+    this->data[0] = '1';
+    this->logger->add_to_log(this->remote_ip, "SENT", "1");
+    write(this->connection, this->data, DATA_SIZE);
+
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
 }
 
 void data_server::get_user_office() {

@@ -25,6 +25,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <fstream>
 
 #include <QDate>
 
@@ -39,6 +40,7 @@ private:
     log_generator * logger;
     struct sockaddr_storage ipRemoto;
     std::string remote_ip;
+    int port;
 
     // Methods
     void adapt_data(char* data, std::string& new_info, int pos);
@@ -86,6 +88,7 @@ private:
     void create_office();
     void modify_office();
     void delete_office();
+    void modify_network();
 
 public:
     data_server();
