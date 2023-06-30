@@ -1498,6 +1498,10 @@ void data_server::change_roles() {
     // the ',' was found, now the roles will be read
     to_send = data[++i];
 
+
+    qDebug()<< "soy server: data es" << data << " user es: " << user;
+
+
     // ask the data base for the result
     if (this->base->change_roles(user, to_send[0])) {  // success
         memset(this->data, '1', DATA_SIZE);

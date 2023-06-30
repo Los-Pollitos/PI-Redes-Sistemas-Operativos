@@ -226,6 +226,7 @@ void initial::update_scrollbar() {
             this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
             this->layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
             this->layout->addWidget(this->requests_buttons[SALARY_PAGE]);
+            this->layout->addWidget(this->requests_buttons[SEE_SALARY]);
             this->layout->addWidget(this->requests_buttons[PENDING_REQUESTS]);
             this->layout->addWidget(this->requests_buttons[VACATION_MANAGER]);
             this->layout->addWidget(this->requests_buttons[SEE_VACATIONS]);
@@ -238,11 +239,16 @@ void initial::update_scrollbar() {
             this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
             this->layout->addWidget(this->requests_buttons[SEE_OFFICE]);
             this->layout->addWidget(this->requests_buttons[OFFICE_MOD]);
+            this->layout->addWidget(this->requests_buttons[AUDITOR_SEP]);
+            this->layout->addWidget(this->requests_buttons[AUDITOR_PAGE]);
+            this->layout->addWidget(this->requests_buttons[SYS_SEP]);
+            this->layout->addWidget(this->requests_buttons[SYS_PAGE]);
 
             this->requests_buttons[EMPLOYEE_SEP]->show();
             this->requests_buttons[WORK_PAGE]->show();
             this->requests_buttons[PAYMENT_PAGE]->show();
             this->requests_buttons[SALARY_PAGE]->show();
+            this->requests_buttons[SEE_SALARY]->show();
             this->requests_buttons[PENDING_REQUESTS]->show();
             this->requests_buttons[VACATION_MANAGER]->show();
             this->requests_buttons[SEE_VACATIONS]->show();
@@ -255,7 +261,15 @@ void initial::update_scrollbar() {
             this->requests_buttons[CHANGE_TOKEN]->show();
             this->requests_buttons[SEE_OFFICE]->show();
             this->requests_buttons[OFFICE_MOD]->show();
+            this->requests_buttons[AUDITOR_SEP]->show();
+            this->requests_buttons[AUDITOR_PAGE]->show();
+            this->requests_buttons[SYS_SEP]->show();
+            this->requests_buttons[SYS_PAGE]->show();
         } else {
+            this->layout->removeWidget(this->requests_buttons[SEE_OFFICE]);
+            this->requests_buttons[SEE_OFFICE]->hide();
+            this->layout->removeWidget(this->requests_buttons[OFFICE_MOD]);
+            this->requests_buttons[OFFICE_MOD]->hide();
             if ((this->role & EMPLOYEE) == EMPLOYEE) {
                 this->layout->addWidget(this->requests_buttons[EMPLOYEE_SEP]);
                 this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
@@ -311,14 +325,10 @@ void initial::update_scrollbar() {
                 this->layout->addWidget(this->requests_buttons[USER_MANAGER]);
                 this->layout->addWidget(this->requests_buttons[USER_MOD]);
                 this->layout->addWidget(this->requests_buttons[CHANGE_TOKEN]);
-                this->layout->addWidget(this->requests_buttons[SEE_OFFICE]);
-                this->layout->addWidget(this->requests_buttons[OFFICE_MOD]);
                 this->requests_buttons[USER_SEP]->show();
                 this->requests_buttons[USER_MANAGER]->show();
                 this->requests_buttons[USER_MOD]->show();
                 this->requests_buttons[CHANGE_TOKEN]->show();
-                this->requests_buttons[SEE_OFFICE]->show();
-                this->requests_buttons[OFFICE_MOD]->show();
             } else {
                 this->layout->removeWidget(this->requests_buttons[USER_SEP]);
                 this->requests_buttons[USER_SEP]->hide();
@@ -328,10 +338,6 @@ void initial::update_scrollbar() {
                 this->requests_buttons[USER_MOD]->hide();
                 this->layout->removeWidget(this->requests_buttons[CHANGE_TOKEN]);
                 this->requests_buttons[CHANGE_TOKEN]->hide();
-                this->layout->removeWidget(this->requests_buttons[SEE_OFFICE]);
-                this->requests_buttons[SEE_OFFICE]->hide();
-                this->layout->removeWidget(this->requests_buttons[OFFICE_MOD]);
-                this->requests_buttons[OFFICE_MOD]->hide();
             }
             if ((this->role & AUDITOR) == AUDITOR) {
                 this->layout->addWidget(this->requests_buttons[AUDITOR_SEP]);

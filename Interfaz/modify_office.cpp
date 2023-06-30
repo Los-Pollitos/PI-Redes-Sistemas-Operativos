@@ -6,6 +6,9 @@ modify_office::modify_office(QWidget *parent) :
     ui(new Ui::modify_office)
 {
     ui->setupUi(this);
+
+    // window name
+    this->setWindowTitle("Modificar sucursales");
 }
 
 modify_office::~modify_office()

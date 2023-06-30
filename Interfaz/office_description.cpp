@@ -5,6 +5,9 @@ office_description::office_description(QWidget *parent) : QDialog(parent), ui(ne
     this->ui->setupUi(this);
     this->ui->name->setReadOnly(true);
     this->set_colors();
+
+    // window name
+    this->setWindowTitle("Ver sucursales");
 }
 
 office_description::~office_description() {

@@ -111,7 +111,6 @@ void modify_user::set_data_ui() {
         this->ui->checkbox_employee->setCheckState(Qt::Checked);
         this->ui->checkbox_human_resources->setCheckState(Qt::Checked);
         this->ui->checkbox_supervisor->setCheckState(Qt::Checked);
-        this->ui->checkbox_shift->setCheckState(Qt::Checked);
     } else {
         this->ui->checkbox_active->setCheckState((unmask_role(UNEMPLOYEED, this->user_info.role) == Qt::Checked) ? Qt::Unchecked : Qt::Checked);
         this->ui->checkbox_auditor->setCheckState(unmask_role(AUDITOR, this->user_info.role));
@@ -298,7 +297,7 @@ void modify_user::add_data_to_combobox() {
 
     // find all the users of an office
     to_send = "0";
-    if (this->unmask_role(SUPERUSER, this->user_info.role) == Qt::Checked) {
+    if (this->user_info.role == SUPERUSER) {
         to_send[0] = ALL_USERS;  // can access all users
     } else {
         to_send[0] = ALL_USERS_OFFICE;
@@ -441,24 +440,17 @@ void modify_user::update_roles() {
     } else {
         if (this->ui->checkbox_admin_config->checkState() == Qt::Checked
                 && this->ui->checkbox_admin_users->checkState() == Qt::Checked
-                && this->ui->checkbox_employee->checkState()
+                && this->ui->checkbox_employee->checkState() == Qt::Checked
                 && this->ui->checkbox_human_resources->checkState() == Qt::Checked
-                && this->ui->checkbox_supervisor->checkState()
-                && this->ui->checkbox_auditor->checkState()
+                && this->ui->checkbox_supervisor->checkState() == Qt::Checked
+                && this->ui->checkbox_auditor->checkState() == Qt::Checked
                 && SUPERUSER != this->user_info.role) {
             this->user_info.role = SUPERUSER;
             this->changed = true;
 
-            // the debug is exclusive of other roles
-            this->ui->checkbox_admin_users->setCheckState(Qt::Checked);
-            this->ui->checkbox_admin_config->setCheckState(Qt::Checked);
-            this->ui->checkbox_employee->setCheckState(Qt::Checked);
-            this->ui->checkbox_human_resources->setCheckState(Qt::Checked);
-            this->ui->checkbox_supervisor->setCheckState(Qt::Checked);
-            this->ui->checkbox_auditor->setCheckState(Qt::Checked);
-
             // update the data base
             to_send += this->user_info.role;
+//            to_send += "," + this->user_login->user;
             this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a todos los permisos");
         } else {
             if (this->ui->checkbox_auditor->checkState() == Qt::Checked
@@ -475,6 +467,7 @@ void modify_user::update_roles() {
 
                 // update the data base
                 to_send += this->user_info.role;
+                to_send += "," + this->user_login->user;
                 this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a Auditor");
             } else {
                 if (this->ui->checkbox_admin_config->checkState() == Qt::Checked) {
@@ -497,6 +490,7 @@ void modify_user::update_roles() {
                     this->changed = true;
                     this->user_info.role = role_int;
                     to_send += this->user_info.role;
+                    to_send += "," + this->user_login->user;
                     this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar los roles");
                 }
             }

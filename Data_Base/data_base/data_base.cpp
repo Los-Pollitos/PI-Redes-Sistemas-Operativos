@@ -526,6 +526,9 @@ bool data_base::change_office(std::string user, int office) {
 }
 
 bool data_base::change_roles(std::string user, char roles) {
+
+    qDebug() << "soy change roles, es para el usuario:" << user << " con nuevos roles:" << (int) roles;
+
     bool success = true;
     QSqlQuery modify_user;
     modify_user.prepare("UPDATE employees SET roles = (:roles) WHERE user = (:user)");
