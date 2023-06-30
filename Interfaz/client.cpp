@@ -8,17 +8,13 @@
 client::client() {
     this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
     // Read the setup files
-    std::ifstream config_file;
-    config_file.open("client.config", std::ifstream::in);
+
+    std::ifstream config_file("../client.config");
     if (config_file.is_open()) {
         getline(config_file, this->intermediary_ip);
         std::string temp;
         getline(config_file, temp);
         this->port = std::stoi(temp);
-
-        qDebug() << "IP: " << this->intermediary_ip;
-        qDebug() << "PORT: " << this->port;
-
     } else {
         qDebug() << "ERROR: config file no existente";
     }
