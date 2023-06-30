@@ -2089,6 +2089,8 @@ void data_server::modify_office() {
         name += this->data[i++];
     }
 
+    qDebug() << "id es:" << stoi(id);
+
     // ask the data base for the result
     if (this->base->verify_office_id(stoi(id))
             && this->base->modify_office_name(stoi(id), name)) {  // success

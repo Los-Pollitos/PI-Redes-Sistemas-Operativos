@@ -1004,11 +1004,11 @@ std::string data_base::get_all_offices() {
 bool data_base::modify_office_name(int id, std::string name) {
     bool success = true;
     QSqlQuery modify_office;
-    modify_office.prepare("UPDATE office SET name = (:name) WHERE id = (:id)");
+    modify_office.prepare("UPDATE offices SET name = (:name) WHERE id = (:id)");
     modify_office.bindValue(":id", id);
     modify_office.bindValue(":name", QString::fromStdString(name));
     if (!modify_office.exec()) {
-        qDebug() << "[BASE_DATOS] Error modificando la sucursal " << id;
+        qDebug() << "[BASE_DATOS] Error modificando la sucursal" << id;
         success = false;
     }
     return success;

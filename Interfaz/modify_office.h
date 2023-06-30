@@ -31,6 +31,7 @@ private:
 
     void set_colors();
     void check_error(std::string received, QString error);
+    void empty_lines();
 };
 
 #endif // MODIFY_OFFICE_H
