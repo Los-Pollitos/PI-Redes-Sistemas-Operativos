@@ -157,7 +157,7 @@ std::string log::get_request_type(char type) {
       result = "MODIFY_OFFICE_NAME";
       break;
     case MODIFY_NETWORK:
-        result = "MODIFY_NETWW0RK";
+        result = "MODIFY_NETW0RK";
         break;
     default:
       result = "NONE";
