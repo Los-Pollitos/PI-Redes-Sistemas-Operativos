@@ -8,7 +8,6 @@ sys_config::sys_config(QWidget *parent) :
     // Set the window name and colors
     this->setWindowTitle("Modificar configuración del sistema");
     this->setStyleSheet("background-color: #ECEAE5;");
-    this->ui->client_ip->setStyleSheet("color: black;");
     this->ui->client_port->setStyleSheet("color: #001f21;");
     this->ui->inter_ip->setStyleSheet("color: #001f21;");
     this->ui->inter_port->setStyleSheet("color: #001f21;");
@@ -21,7 +20,6 @@ sys_config::sys_config(QWidget *parent) :
     this->ui->reset->setStyleSheet("color: #001f21;");
     this->ui->label->setStyleSheet("color: #001f21;");
     this->ui->label_2->setStyleSheet("color: #001f21;");
-    this->ui->label_3->setStyleSheet("color: #001f21;");
     this->ui->label_4->setStyleSheet("color: #001f21;");
     this->ui->label_5->setStyleSheet("color: #001f21;");
     this->ui->label_6->setStyleSheet("color: #001f21;");
@@ -51,7 +49,6 @@ void sys_config::set_user_login(login_info* user_login) {
 
 void sys_config::on_reset_clicked() {
     //Reset the window
-    this->ui->client_ip->clear();
     this->ui->client_port->clear();
     this->ui->inter_ip->clear();
     this->ui->inter_port->clear();
@@ -159,7 +156,6 @@ bool sys_config::check_if_empty() {
     // Clear the current_text vector
     this->current_text.clear();
     // Append to current text vector
-    this->current_text.push_back(this->ui->client_ip->toPlainText().toStdString());
     this->current_text.push_back(this->ui->client_port->toPlainText().toStdString());
     this->current_text.push_back(this->ui->inter_ip->toPlainText().toStdString());
     this->current_text.push_back(this->ui->inter_port->toPlainText().toStdString());
