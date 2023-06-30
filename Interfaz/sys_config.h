@@ -2,6 +2,8 @@
 #define SYS_CONFIG_H
 
 #include <QDialog>
+#include <QMessageBox>
+#include <vector>
 
 #include "login_info.h"
 #include "client.h"
@@ -24,10 +26,19 @@ private slots:
 
     void on_reset_clicked();
 
+    void on_confirm_clicked();
+
 private:
+    // Attributes
     Ui::sys_config *ui;
     login_info* user_login;
     client* local_client;
+    std::vector<std::string> current_text;
+    // Methods
+    bool check_if_empty();
+    bool check_password();
+    void show_error(std::string error);
+    void show_success(std::string success);
 };
 
 #endif // SYS_CONFIG_H

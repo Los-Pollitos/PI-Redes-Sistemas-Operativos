@@ -90,7 +90,7 @@
     <string>Configuración de servidor</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="confirm">
    <property name="geometry">
     <rect>
      <x>480</x>
