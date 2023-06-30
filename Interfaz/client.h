@@ -7,6 +7,7 @@
 #include <netdb.h>
 #include <string.h>
 #include <unistd.h>
+#include <string>
 
 #include "log_generator.h"
 

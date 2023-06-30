@@ -41,8 +41,8 @@ std::string client::send_and_receive(std::string to_send) {
         std::cout << "Error de creación de socket" << std::endl;
     } else {
         ipServidor.sin_family = AF_INET;
-        ipServidor.sin_port = htons(PORT);
-        ipServidor.sin_addr.s_addr = inet_addr("127.0.0.1");
+        ipServidor.sin_port = htons(this->port);
+        ipServidor.sin_addr.s_addr = inet_addr(this->intermediary_ip.data());
 
         // Se intenta pegar al servidor
         if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
