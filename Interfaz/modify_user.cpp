@@ -450,7 +450,7 @@ void modify_user::update_roles() {
 
             // update the data base
             to_send += this->user_info.role;
-//            to_send += "," + this->user_login->user;
+            to_send += "," + this->user_login->user;
             this->check_error(this->local_client->send_and_receive(to_send), "Error al cambiar el rol a todos los permisos");
         } else {
             if (this->ui->checkbox_auditor->checkState() == Qt::Checked

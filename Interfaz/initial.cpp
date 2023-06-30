@@ -164,6 +164,7 @@ void initial::set_client(client* local_client){
     this->vacation_manager->set_client(this->local_client);
     this->see_vacations->set_client(this->local_client);
     this->see_office->set_client(this->local_client);
+    this->office_mod->set_client(this->local_client);
 
 
     qDebug() << "Set client llamado";
@@ -527,6 +528,7 @@ void initial::create_windows(int id, int type) {
       this->new_token->show();
       break;
     case OFFICE_MOD:
+      this->office_mod->set_user_login(this->users_login);
       this->office_mod->setModal(true);
       this->office_mod->show();
       break;
