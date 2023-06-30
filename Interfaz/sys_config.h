@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <vector>
+#include <fstream>
 
 #include "login_info.h"
 #include "client.h"
@@ -41,6 +42,7 @@ private:
     void show_error(std::string error);
     void show_success(std::string success);
     void prepare_string(std::string& to_send);
+    void set_up_client();
 };
 
 #endif // SYS_CONFIG_H

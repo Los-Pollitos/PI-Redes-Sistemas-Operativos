@@ -15,6 +15,7 @@ client::client() {
         std::string temp;
         getline(config_file, temp);
         this->port = std::stoi(temp);
+        config_file.close();
     } else {
         qDebug() << "ERROR: config file no existente";
     }

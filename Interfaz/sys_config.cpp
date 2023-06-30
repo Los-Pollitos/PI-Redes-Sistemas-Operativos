@@ -69,14 +69,19 @@ void sys_config::on_confirm_clicked() {
             for (size_t i = 0; i < this->current_text.size(); ++i) {            }
             // Prepare string
 
-            std::string to_send = "A";
             // TODO(Luis): descomentar
+            // std::string to_send = "";
             // this->prepare_string(to_send);
-            for (size_t i = 0; i < this->current_text.size() - 1; ++i) {
+            std::string to_send = "A";
+            // The client port is avoided
+            for (size_t i = 1; i < this->current_text.size() - 1; ++i) {
                 qDebug() << this->current_text[i];
                 to_send += this->current_text[i];
                 to_send += ":";
             }
+
+
+            this->set_up_client();
 
             qDebug() << "TO_SEND" << to_send;
 
@@ -100,6 +105,18 @@ void sys_config::on_confirm_clicked() {
     this->ui->data_base_ip->clear();
     this->ui->data_base_port->clear();
     this->ui->password_insert->clear();
+}
+
+void sys_config::set_up_client() {
+    std::string intermediary_ip = this->current_text[1];
+    std::string port = this->current_text[0];
+    std::ofstream config_file("../client.config", std::fstream::trunc);
+    if (config_file.is_open()) {
+        config_file << intermediary_ip;
+        config_file << "\n";
+        config_file << port;
+        config_file.close();
+    }
 }
 
 void decrypt_salary(std::string salary) {
