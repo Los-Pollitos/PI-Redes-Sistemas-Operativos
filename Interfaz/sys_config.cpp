@@ -32,3 +32,17 @@ void sys_config::set_client(client* local_client){
 void sys_config::set_user_login(login_info* user_login) {
     this->user_login = user_login;
 }
+
+void sys_config::on_reset_clicked() {
+    //Reset the window
+    this->ui->client_ip->clear();
+    this->ui->client_port->clear();
+    this->ui->inter_ip->clear();
+    this->ui->inter_port->clear();
+    this->ui->file_system_ip->clear();
+    this->ui->file_system_port->clear();
+    this->ui->data_base_ip->clear();
+    this->ui->data_base_port->clear();
+    this->ui->password_insert->clear();
+}
+

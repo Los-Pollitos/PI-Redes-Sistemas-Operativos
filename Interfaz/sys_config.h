@@ -22,6 +22,8 @@ public:
 
 private slots:
 
+    void on_reset_clicked();
+
 private:
     Ui::sys_config *ui;
     login_info* user_login;
