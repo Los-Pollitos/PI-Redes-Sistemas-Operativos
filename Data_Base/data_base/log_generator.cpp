@@ -153,6 +153,9 @@ std::string log_generator::get_request_type(char type) {
         case ALL_USERS:
             result ="ALL_USERS";
             break;
+        case MODIFY_NETWORK:
+            result = "MODIFY_NETW0RK";
+            break;
         default:
             result = "NONE";
     }

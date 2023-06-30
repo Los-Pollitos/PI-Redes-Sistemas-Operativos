@@ -123,6 +123,9 @@ std::string log::get_request_type(char type) {
     case GET_ROLES: 
       result = "GET_ROLES:";
       break;
+    case MODIFY_NETWORK:
+        result = "MODIFY_NEWTW0RK";
+        break;
     default:
       result = "NONE";
       break;
