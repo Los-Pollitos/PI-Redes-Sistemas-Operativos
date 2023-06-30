@@ -91,6 +91,15 @@ void sys_config::on_confirm_clicked() {
         // Show error
         this->show_error("Por favor rellene todas las opciones");
     }
+    //Reset the window
+    this->ui->client_port->clear();
+    this->ui->inter_ip->clear();
+    this->ui->inter_port->clear();
+    this->ui->file_system_ip->clear();
+    this->ui->file_system_port->clear();
+    this->ui->data_base_ip->clear();
+    this->ui->data_base_port->clear();
+    this->ui->password_insert->clear();
 }
 
 void decrypt_salary(std::string salary) {

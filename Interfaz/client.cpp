@@ -7,6 +7,8 @@
  */
 client::client() {
     this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
+    // Read the setup files
+
 }
 
 /**

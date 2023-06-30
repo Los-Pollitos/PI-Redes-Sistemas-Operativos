@@ -12,7 +12,6 @@
 
 
 #define CLIENT_DATA_SIZE 256
-#define PORT 9090
 
 
 class client {
@@ -22,6 +21,8 @@ public:
 private:
     log_generator * logger;
     void adapt_data(char* data, std::string& new_info, int pos);
+    std::string intermediary_ip;
+    int port;
 };
 
 #endif // CLIENT_H
