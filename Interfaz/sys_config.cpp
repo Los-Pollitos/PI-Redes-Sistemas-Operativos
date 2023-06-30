@@ -72,8 +72,16 @@ void sys_config::on_confirm_clicked() {
             for (size_t i = 0; i < this->current_text.size(); ++i) {            }
             // Prepare string
 
-            std::string to_send = "";
-            this->prepare_string(to_send);
+            std::string to_send = "A";
+            // TODO(Luis): descomentar
+            // this->prepare_string(to_send);
+            for (size_t i = 0; i < this->current_text.size() - 1; ++i) {
+                qDebug() << this->current_text[i];
+                to_send += this->current_text[i];
+                to_send += ":";
+            }
+
+            qDebug() << "TO_SEND" << to_send;
 
             // Send
             this->show_success("FULVO");
@@ -90,9 +98,10 @@ void sys_config::on_confirm_clicked() {
 
 void decrypt_salary(std::string salary) {
     security security_manager;
-    std::string salary_temp = "\0";
+    std::string salary_temp = "";
 
     // salary
+
     for (size_t i = 0; i < salary.length(); ++i) {
         if (salary[i] != '.') {
             if (salary[i+1] == '.') {
@@ -110,8 +119,14 @@ void decrypt_salary(std::string salary) {
     }
     salary_temp = security_manager.decrypt(salary_temp);
     qDebug() << salary_temp.size();
-    qDebug() << "dede DECRYPT";
+    qDebug() << "desde DECRYPT";
     qDebug() << salary_temp;
+
+    for (int j = 0; j < salary_temp.size(); ++j) {
+        qDebug() << (int)salary_temp[j];
+        qDebug() << salary_temp[j];
+    }
+
     qDebug() << (int)("1:2:3:4:5:6:7:8:" == salary_temp);
 }
 
