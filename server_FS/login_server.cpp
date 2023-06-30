@@ -181,6 +181,8 @@ void login_server::modify_network() {
   std::cout << "Llego \n";
 
   std::string temp = "";
+
+  std::ofstream config_file("login_server.config", std::fstream::trunc);
   for (int i = 2; i < DATA_SIZE; ++i) {
     if (this->data[i] != ':') {
       temp += this->data[i];
@@ -188,10 +190,10 @@ void login_server::modify_network() {
       break;
     }
   }
+  config_file << temp;
   this->port = std::stoi(temp);
   this->data[0] = '1';
   write(this->connection, this->data, DATA_SIZE);
-
 
   std::cout << "VOy a salir \n";
 }
