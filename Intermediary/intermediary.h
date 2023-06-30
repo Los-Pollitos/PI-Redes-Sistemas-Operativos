@@ -34,6 +34,12 @@ class intermediary {
     int message_count;
     bool continue_waiting;
     log * logger;
+    int client_port;
+    int file_system_port;
+    int data_base_port;
+    std::string file_system_ip;
+    std::string data_base_ip;
+
     struct sockaddr_storage ipRemoto;
     std::string send_and_receive_login(std::string ip_remote);
     void send_and_receive_data_base(std::string ip_remote);
@@ -42,7 +48,7 @@ class intermediary {
     void set_up_intermediary(std::string ip_remote);
     void set_up_file_system(std::string ip_remote);
     void set_up_data_base(std::string ip_remote);
-
+  
 
   public:
     intermediary();

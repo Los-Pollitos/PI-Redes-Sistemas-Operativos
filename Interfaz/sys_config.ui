@@ -273,6 +273,17 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>inter_ip</tabstop>
+  <tabstop>inter_port</tabstop>
+  <tabstop>file_system_ip</tabstop>
+  <tabstop>file_system_port</tabstop>
+  <tabstop>data_base_ip</tabstop>
+  <tabstop>data_base_port</tabstop>
+  <tabstop>password_insert</tabstop>
+  <tabstop>confirm</tabstop>
+  <tabstop>reset</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

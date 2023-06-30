@@ -15,6 +15,21 @@
 intermediary::intermediary() {
   this->logger = new log ("intermediary_LOG.txt", "Intermediary Server");
   this->continue_waiting = true;
+
+  std::ifstream config_file("client.config");
+    if (config_file.is_open()) {
+        getline(config_file, this->file_system_ip);
+        std::string temp;
+        getline(config_file, temp);
+        this->file_system_port = std::stoi(temp);
+        getline(config_file, this->data_base_ip);
+        temp = "";
+        getline(config_file, temp);
+        this->data_base_port = std::stoi(temp);
+        config_file.close();
+    } else {
+        std::cout << "ERROR: config file no existente";
+    }
 }
 
 /**
@@ -36,7 +51,7 @@ void intermediary::wait_for_request() {
   memset(this->data, '\0', sizeof(this->data));
   ip.sin_family = AF_INET;
   ip.sin_addr.s_addr = htonl(INADDR_ANY);
-  ip.sin_port = htons(PORT_C);
+  ip.sin_port = htons(this->client_port);
 
   bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
   listen(socketServidor, 20);
@@ -102,8 +117,8 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
 
   } else {
     ipServidorLogin.sin_family = AF_INET;
-    ipServidorLogin.sin_port = htons(PORT_FS);
-    ipServidorLogin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ipServidorLogin.sin_port = htons(this->file_system_port);
+    ipServidorLogin.sin_addr.s_addr = inet_addr(this->file_system_ip.data());
 
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
@@ -152,8 +167,8 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
     
   } else {
     ip_data_server.sin_family = AF_INET;
-    ip_data_server.sin_port = htons(PORT_DB);
-    ip_data_server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ip_data_server.sin_port = htons(this->data_base_port);
+    ip_data_server.sin_addr.s_addr = inet_addr(this->data_base_ip.data());
 
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ip_data_server, sizeof(ip_data_server)) < 0) {
