@@ -27,7 +27,20 @@ void modify_office::set_colors() {
 }
 
 void modify_office::on_change_name_clicked() {
+    std::string to_send = "\0";
+    bool is_number = true;
 
+    this->ui->id->text().toInt(&is_number);
+
+    if (is_number && this->ui->name->text().length() > 0) {
+        to_send = " " + this->ui->id->text().toStdString() + "," + this->ui->name->text().toStdString()
+                  + "," + this->user_login->user;
+        to_send[0] = MODIFY_OFFICE_NAME;
+        this->check_error(this->local_client->send_and_receive(to_send)
+                          , "Error al cambiar el nombre de la sucursal. Recuerde que la sucursal debe ser válida");
+    } else if (!is_number) {
+        this->check_error("0", "Error: el idnetificador de la sucursal debe ser un número");
+    }
 }
 
 
