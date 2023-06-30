@@ -51,8 +51,11 @@ void sys_config::on_confirm_clicked() {
     // Check if all boxes are complete
     if (this->check_if_empty() == false) {
         // Check the password
+
+        qDebug() << "Antes de check_password";
+
         if (this->check_password() == true) {
-            std::cout << "estoy dentro \n";
+            qDebug() << "estoy dentro";
             // Encrypt and prepare the datagram
 
             for (size_t i = 0; i < this->current_text.size(); ++i) {
@@ -60,8 +63,7 @@ void sys_config::on_confirm_clicked() {
             }
 
             // Send
-
-
+            this->show_success("FULVO");
 
         } else {
             // Show error
@@ -75,26 +77,41 @@ void sys_config::on_confirm_clicked() {
 
 bool sys_config::check_if_empty() {
     // Assume the answer as true
-    bool answer = true;
+    bool answer = false;
     // Clear the current_text vector
-    current_text.clear();
+
+    qDebug() << "antes de crash ?? \n";
+
+    this->current_text.clear();
+
+    qDebug() << "despues de crash ?? \n";
+
     // Append to current text vector
-    current_text.push_back(this->ui->client_ip->toPlainText().toStdString());
-    current_text.push_back(this->ui->client_port->toPlainText().toStdString());
-    current_text.push_back(this->ui->inter_ip->toPlainText().toStdString());
-    current_text.push_back(this->ui->inter_port->toPlainText().toStdString());
-    current_text.push_back(this->ui->file_system_ip->toPlainText().toStdString());
-    current_text.push_back(this->ui->file_system_port->toPlainText().toStdString());
-    current_text.push_back(this->ui->data_base_ip->toPlainText().toStdString());
-    current_text.push_back(this->ui->data_base_port->toPlainText().toStdString());
-    current_text.push_back(this->ui->password_insert->text().toStdString());
+    this->current_text.push_back(this->ui->client_ip->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->client_port->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->inter_ip->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->inter_port->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->file_system_ip->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->file_system_port->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->data_base_ip->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->data_base_port->toPlainText().toStdString());
+    this->current_text.push_back(this->ui->password_insert->text().toStdString());
 
     // Check the condition
-    for (size_t i = 0; i < current_text.size(); ++i) {
-        if (current_text[i] != "") {
-            answer = false;
+    for (size_t i = 0; i < this->current_text.size(); ++i) {
+
+        qDebug() << i;
+        qDebug() << " " << current_text[i] << "\n";
+
+        qDebug() << "antes de if ?? \n";
+
+        if (this->current_text[i].size() == 0) {
+            answer = true;
             break;
         }
+
+        qDebug() << "fin ?? \n";
+
     }
     return answer;
 }
@@ -102,9 +119,16 @@ bool sys_config::check_if_empty() {
 bool sys_config::check_password() {
     bool answer = false;
     std::string password = this->ui->password_insert->text().toStdString();
+
+    qDebug() << "uy " << password;
+    qDebug() << "tiene el otro: " << this->user_login->password;
+
     if (password == this->user_login->password) {
         answer = true;
     }
+
+    qDebug() << "despues de eso";
+
     return answer;
 }
 
@@ -121,7 +145,7 @@ void sys_config::show_success(std::string success) {
     QMessageBox success_box;
     success_box.setText(QString::fromStdString(success));
     success_box.setWindowTitle("Información");
-        success_box.setModal(true);
+    success_box.setModal(true);
     success_box.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
     success_box.exec();
 }
