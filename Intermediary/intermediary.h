@@ -16,6 +16,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <fstream>
 
 #include "log.h"
 
@@ -41,6 +42,7 @@ class intermediary {
     void set_up_intermediary(std::string ip_remote);
     void set_up_file_system(std::string ip_remote);
     void set_up_data_base(std::string ip_remote);
+
 
   public:
     intermediary();

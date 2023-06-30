@@ -26,29 +26,6 @@
     <string>Confirme su contraseña: </string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="client_port">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>150</y>
-     <width>231</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>160</y>
-     <width>171</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Inserte el nuevo puerto:</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
@@ -80,29 +57,11 @@
     <string>Confirmar</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>90</y>
-     <width>101</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Cliente local</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>140</y>
+     <x>260</x>
+     <y>160</y>
      <width>221</width>
      <height>17</height>
     </rect>
@@ -114,8 +73,8 @@
   <widget class="QLabel" name="label_7">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>90</y>
+     <x>360</x>
+     <y>110</y>
      <width>101</width>
      <height>17</height>
     </rect>
@@ -132,8 +91,8 @@
   <widget class="QPlainTextEdit" name="inter_ip">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>130</y>
+     <x>420</x>
+     <y>150</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -142,8 +101,8 @@
   <widget class="QPlainTextEdit" name="inter_port">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>190</y>
+     <x>420</x>
+     <y>210</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -152,8 +111,8 @@
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>200</y>
+     <x>230</x>
+     <y>220</y>
      <width>171</width>
      <height>17</height>
     </rect>

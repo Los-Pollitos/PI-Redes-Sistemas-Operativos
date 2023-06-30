@@ -224,11 +224,11 @@ void intermediary::manage_user_case(std::string ip_remote) {
 
 void intermediary::modify_network_case(std::string ip_remote) {
   // Package is meant for this server
-  if (data[1] == '1') {
+  if (this->data[1] == '1') {
     this->set_up_intermediary(ip_remote);
   } else {
     // Package is for FS
-    if (data[1] == '2') {
+    if (this->data[1] == '2') {
       this->set_up_file_system(ip_remote);
     } else {
       this->set_up_data_base(ip_remote);
@@ -238,7 +238,28 @@ void intermediary::modify_network_case(std::string ip_remote) {
 }
 
 void intermediary::set_up_intermediary(std::string ip_remote) {
+  char temporal_data[DATA_SIZE];
+  // Remove the &
+  read(this->connection, temporal_data, DATA_SIZE);
 
+  std::ofstream config_file("intermediary.config", std::fstream::trunc);
+
+  std::string current = "";
+  for(int i = 2; i < DATA_SIZE; ++i) {
+    if (this->data[i] != ':') {
+      current += this->data[i];
+    } else {
+       current += "\n\0";
+       config_file << current;
+       current = "";
+    }
+  }
+  // Answer with success
+  current = "1";
+  write(this->connection, current.data(), DATA_SIZE);
+  memset(this->data, '\0', DATA_SIZE);
+  this->data[0] = '&';
+  write(this->connection, this->data, DATA_SIZE);
 }
 
 void intermediary::set_up_file_system(std::string ip_remote) {

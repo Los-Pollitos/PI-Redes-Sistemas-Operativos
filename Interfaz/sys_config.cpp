@@ -8,7 +8,6 @@ sys_config::sys_config(QWidget *parent) :
     // Set the window name and colors
     this->setWindowTitle("Modificar configuración del sistema");
     this->setStyleSheet("background-color: #ECEAE5;");
-    this->ui->client_port->setStyleSheet("color: #001f21;");
     this->ui->inter_ip->setStyleSheet("color: #001f21;");
     this->ui->inter_port->setStyleSheet("color: #001f21;");
     this->ui->file_system_ip->setStyleSheet("color: black;");
@@ -19,10 +18,8 @@ sys_config::sys_config(QWidget *parent) :
     this->ui->confirm->setStyleSheet("color: #001f21;");
     this->ui->reset->setStyleSheet("color: #001f21;");
     this->ui->label->setStyleSheet("color: #001f21;");
-    this->ui->label_2->setStyleSheet("color: #001f21;");
     this->ui->label_4->setStyleSheet("color: #001f21;");
     this->ui->label_5->setStyleSheet("color: #001f21;");
-    this->ui->label_6->setStyleSheet("color: #001f21;");
     this->ui->label_7->setStyleSheet("color: #001f21;");
     this->ui->label_8->setStyleSheet("color: #001f21;");
     this->ui->label_9->setStyleSheet("color: #001f21;");
@@ -49,7 +46,6 @@ void sys_config::set_user_login(login_info* user_login) {
 
 void sys_config::on_reset_clicked() {
     //Reset the window
-    this->ui->client_port->clear();
     this->ui->inter_ip->clear();
     this->ui->inter_port->clear();
     this->ui->file_system_ip->clear();
@@ -72,17 +68,22 @@ void sys_config::on_confirm_clicked() {
             // std::string to_send = "";
             // this->prepare_string(to_send);
             std::string to_send = "A";
-            // The client port is avoided
-            for (size_t i = 1; i < this->current_text.size() - 1; ++i) {
+            to_send[0] = ((char)MODIFY_NETWORK);
+            to_send += "1";
+            for (size_t i = 2; i < this->current_text.size() - 1; ++i) {
                 qDebug() << this->current_text[i];
                 to_send += this->current_text[i];
                 to_send += ":";
             }
             // Set the client up
-            this->set_up_client();
+            // this->set_up_client();
 
-            std::string answer = this->local_client->send_and_receive(to_send);
-            if (answer[0] == '1') {
+            std::string first_answer = this->local_client->send_and_receive(to_send);
+            std::string second_answer;
+            std::string third_answer;
+
+
+            if (first_answer[0] == '1') {
               this->show_success("FULVO");
             } else {
               this->show_error("NO FULVO");
@@ -96,7 +97,6 @@ void sys_config::on_confirm_clicked() {
         this->show_error("Por favor rellene todas las opciones");
     }
     //Reset the window
-    this->ui->client_port->clear();
     this->ui->inter_ip->clear();
     this->ui->inter_port->clear();
     this->ui->file_system_ip->clear();
@@ -144,7 +144,7 @@ void decrypt_salary(std::string salary) {
     qDebug() << "desde DECRYPT";
     qDebug() << salary_temp;
 
-    for (int j = 0; j < salary_temp.size(); ++j) {
+    for (size_t j = 0; j < salary_temp.size(); ++j) {
         qDebug() << (int)salary_temp[j];
         qDebug() << salary_temp[j];
     }
@@ -181,7 +181,6 @@ bool sys_config::check_if_empty() {
     // Clear the current_text vector
     this->current_text.clear();
     // Append to current text vector
-    this->current_text.push_back(this->ui->client_port->toPlainText().toStdString());
     this->current_text.push_back(this->ui->inter_ip->toPlainText().toStdString());
     this->current_text.push_back(this->ui->inter_port->toPlainText().toStdString());
     this->current_text.push_back(this->ui->file_system_ip->toPlainText().toStdString());
