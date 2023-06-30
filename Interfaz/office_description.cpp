@@ -47,11 +47,11 @@ void office_description::load_data() {
     for(size_t i = 0; i < data_received.length(); ++i) {
         if (data_received[i] != ',') {
             while(data_received[i] != '.') {  // find the name
-                new_office += data_received[i];
+                new_office += data_received[i++];
             }
             ++i;  // move from the ','
             while(data_received[i] != ',') {  // find the id
-                new_office_id += data_received[i];
+                new_office_id += data_received[i++];
             }
 
             this->names.push_back(new_office);
