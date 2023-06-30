@@ -15,7 +15,7 @@
 intermediary::intermediary() {
   this->logger = new log ("intermediary_LOG.txt", "Intermediary Server");
   this->continue_waiting = true;
-
+  this->client_port = PORT_C;
   std::ifstream config_file("intermediary.config");
     if (config_file.is_open()) {
         getline(config_file, this->file_system_ip);
