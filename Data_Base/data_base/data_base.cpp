@@ -667,7 +667,7 @@ std::string data_base::consult_requests(std::string user) {
         } while (consult_requests.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {
-        qDebug() << "[BASE_DATOS] Error consultando las solicitudes de: " << user;
+        qDebug() << "[BASE_DATOS] Error consultando las solicitudes de: " << QString::fromStdString(user);
     }
 
     return result;
@@ -759,7 +759,7 @@ std::string data_base::consult_records(std::string user) {
         } while (consult_record.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {
-        qDebug() << "[BASE_DATOS] Error consultando anotaciones de: " << user;
+        qDebug() << "[BASE_DATOS] Error consultando anotaciones de: " << QString::fromStdString(user);
     }
 
     return result;
@@ -977,7 +977,7 @@ std::string data_base::consult_laboral_datas(std::string user) {
             result[result.length()-1] = '|';
         } while (consult_laboral_data.next());
     } else {
-        qDebug() << "[BASE_DATOS] Error buscando los datos laborales de: " << user;
+        qDebug() << "[BASE_DATOS] Error buscando los datos laborales de: " << QString::fromStdString(user);
     }
     return result;
 }
