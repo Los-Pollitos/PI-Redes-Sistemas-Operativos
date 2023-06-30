@@ -8,6 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <string>
+#include <fstream>
 
 #include "log_generator.h"
 
