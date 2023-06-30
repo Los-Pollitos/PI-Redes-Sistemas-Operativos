@@ -164,6 +164,11 @@ void initial::set_client(client* local_client){
     this->vacation_manager->set_client(this->local_client);
     this->see_vacations->set_client(this->local_client);
     this->see_office->set_client(this->local_client);
+
+
+    qDebug() << "Set client llamado";
+
+    this->sys_config_page->set_client(this->local_client);
 }
 
 /**
@@ -531,6 +536,7 @@ void initial::create_windows(int id, int type) {
       break;
     case SYS_PAGE:
       this->sys_config_page->setModal(true);
+      this->sys_config_page->set_user_login(this->users_login);
       this->sys_config_page->show();
       break;
    }
