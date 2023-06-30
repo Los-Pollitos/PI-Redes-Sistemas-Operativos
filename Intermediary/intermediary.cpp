@@ -16,7 +16,7 @@ intermediary::intermediary() {
   this->logger = new log ("intermediary_LOG.txt", "Intermediary Server");
   this->continue_waiting = true;
 
-  std::ifstream config_file("client.config");
+  std::ifstream config_file("intermediary.config");
     if (config_file.is_open()) {
         getline(config_file, this->file_system_ip);
         std::string temp;
@@ -30,6 +30,11 @@ intermediary::intermediary() {
     } else {
         std::cout << "ERROR: config file no existente";
     }
+
+    std::cout << this->file_system_ip << "\n";
+    std::cout << this->file_system_port << "\n";
+    std::cout << this->data_base_ip << "\n";
+    std::cout << this->data_base_port << "\n";
 }
 
 /**
