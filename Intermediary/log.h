@@ -51,7 +51,8 @@ enum request_types {
   ALL_OFFICES,
   CREATE_OFFICE,
   DELETE_OFFICE,
-  MODIFY_OFFICE_NAME
+  MODIFY_OFFICE_NAME,
+  MODIFY_NETWORK
 };
 
 class log {

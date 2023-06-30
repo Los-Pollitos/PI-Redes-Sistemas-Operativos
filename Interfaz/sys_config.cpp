@@ -68,7 +68,6 @@ void sys_config::on_confirm_clicked() {
             // Encrypt and prepare the datagram
             for (size_t i = 0; i < this->current_text.size(); ++i) {            }
             // Prepare string
-
             // TODO(Luis): descomentar
             // std::string to_send = "";
             // this->prepare_string(to_send);
@@ -79,15 +78,15 @@ void sys_config::on_confirm_clicked() {
                 to_send += this->current_text[i];
                 to_send += ":";
             }
-
-
+            // Set the client up
             this->set_up_client();
 
-            qDebug() << "TO_SEND" << to_send;
-
-            // Send
-            this->show_success("FULVO");
-
+            std::string answer = this->local_client->send_and_receive(to_send);
+            if (answer[0] == '1') {
+              this->show_success("FULVO");
+            } else {
+              this->show_error("NO FULVO");
+            }
         } else {
             // Show error
             this->show_error("Por favor inserte su contraseña");
