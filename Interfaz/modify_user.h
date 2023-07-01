@@ -22,6 +22,7 @@ public:
     explicit modify_user(QWidget *parent = nullptr);
     ~modify_user();
     void set_login_info(login_info* info);
+    void set_user_role(char role);
     void set_client(client* local_client);
     void add_data_to_combobox();
     void load_user_data(std::string& data);
@@ -50,6 +51,7 @@ private:
     Ui::modify_user* ui;
     client* local_client;
     login_info* user_login;
+    int user_login_role;
     user_data user_info;
     std::vector<std::string> user_names;
     bool correct_changes;
