@@ -73,14 +73,14 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="delete_2">
+     <widget class="QPushButton" name="create">
       <property name="text">
        <string>Crear sucursal</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="create">
+     <widget class="QPushButton" name="detele">
       <property name="text">
        <string>Borrar sucursal</string>
       </property>
