@@ -210,6 +210,7 @@ void initial::setParent_Button(logout_button * parent_button){
  */
 void initial::update_scrollbar() {
     if ((this->role & UNEMPLOYEED) == UNEMPLOYEED) {
+        // show the neccesary buttons
         this->layout->addWidget(this->requests_buttons[WORK_PAGE]);
         this->layout->addWidget(this->requests_buttons[PAYMENT_PAGE]);
         this->layout->addWidget(this->requests_buttons[SALARY_PAGE]);
@@ -220,6 +221,41 @@ void initial::update_scrollbar() {
         this->requests_buttons[SALARY_PAGE]->show();
         this->requests_buttons[PENDING_REQUESTS]->show();
         this->requests_buttons[SEE_RECORD]->show();
+
+        // remove and hid ethe others
+        this->layout->removeWidget(this->requests_buttons[EMPLOYEE_SEP]);
+        this->layout->removeWidget(this->requests_buttons[SEE_SALARY]);
+        this->layout->removeWidget(this->requests_buttons[VACATION_MANAGER]);
+        this->layout->removeWidget(this->requests_buttons[SEE_VACATIONS]);
+        this->layout->removeWidget(this->requests_buttons[SUPERVISOR_SEP]);
+        this->layout->removeWidget(this->requests_buttons[REQUEST_HANDLER]);
+        this->layout->removeWidget(this->requests_buttons[USER_SEP]);
+        this->layout->removeWidget(this->requests_buttons[USER_MANAGER]);
+        this->layout->removeWidget(this->requests_buttons[USER_MOD]);
+        this->layout->removeWidget(this->requests_buttons[CHANGE_TOKEN]);
+        this->layout->removeWidget(this->requests_buttons[SEE_OFFICE]);
+        this->layout->removeWidget(this->requests_buttons[OFFICE_MOD]);
+        this->layout->removeWidget(this->requests_buttons[AUDITOR_SEP]);
+        this->layout->removeWidget(this->requests_buttons[AUDITOR_PAGE]);
+        this->layout->removeWidget(this->requests_buttons[SYS_SEP]);
+        this->layout->removeWidget(this->requests_buttons[SYS_PAGE]);
+
+        this->requests_buttons[EMPLOYEE_SEP]->hide();
+        this->requests_buttons[SEE_SALARY]->hide();
+        this->requests_buttons[VACATION_MANAGER]->hide();
+        this->requests_buttons[SEE_VACATIONS]->hide();
+        this->requests_buttons[SUPERVISOR_SEP]->hide();
+        this->requests_buttons[REQUEST_HANDLER]->hide();
+        this->requests_buttons[USER_SEP]->hide();
+        this->requests_buttons[USER_MANAGER]->hide();
+        this->requests_buttons[USER_MOD]->hide();
+        this->requests_buttons[CHANGE_TOKEN]->hide();
+        this->requests_buttons[SEE_OFFICE]->hide();
+        this->requests_buttons[OFFICE_MOD]->hide();
+        this->requests_buttons[AUDITOR_SEP]->hide();
+        this->requests_buttons[AUDITOR_PAGE]->hide();
+        this->requests_buttons[SYS_SEP]->hide();
+        this->requests_buttons[SYS_PAGE]->hide();
     } else {
         if (this->role == SUPERUSER) {
             // a superuser can do everything

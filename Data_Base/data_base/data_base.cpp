@@ -410,7 +410,7 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
             }
         }
     } else {
-        qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
+        qDebug() << "[BASE_DATOS] Error al buscar los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
     }
     return result;
 }
