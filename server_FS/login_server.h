@@ -14,9 +14,9 @@
 
 #define PORT 8080
 
+#include "common.h"
 #include "file_system.h"
 #include "log.h"
-#include "../Interfaz/common.h"
 
 #include <arpa/inet.h>
 #include <iostream>
