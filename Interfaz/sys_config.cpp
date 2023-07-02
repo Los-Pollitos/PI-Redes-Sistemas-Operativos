@@ -11,7 +11,6 @@ sys_config::sys_config(QWidget *parent) :
     this->setWindowTitle("Modificar configuración del sistema");
     this->setStyleSheet("background-color: #ECEAE5;");
     this->ui->inter_ip->setStyleSheet("color: #001f21;");
-    this->ui->inter_port->setStyleSheet("color: #001f21;");
     this->ui->file_system_ip->setStyleSheet("color: black;");
     this->ui->file_system_port->setStyleSheet("color: #001f21;");
     this->ui->data_base_ip->setStyleSheet("color: #001f21;");
@@ -23,7 +22,6 @@ sys_config::sys_config(QWidget *parent) :
     this->ui->label_4->setStyleSheet("color: #001f21;");
     this->ui->label_5->setStyleSheet("color: #001f21;");
     this->ui->label_7->setStyleSheet("color: #001f21;");
-    this->ui->label_8->setStyleSheet("color: #001f21;");
     this->ui->label_9->setStyleSheet("color: #001f21;");
     this->ui->label_10->setStyleSheet("color: #001f21;");
     this->ui->label_11->setStyleSheet("color: #001f21;");
@@ -51,7 +49,6 @@ void sys_config::set_user_login(login_info* user_login) {
 void sys_config::on_reset_clicked() {
     //Reset the window
     this->ui->inter_ip->clear();
-    this->ui->inter_port->clear();
     this->ui->file_system_ip->clear();
     this->ui->file_system_port->clear();
     this->ui->data_base_ip->clear();
@@ -81,14 +78,14 @@ void sys_config::on_confirm_clicked() {
 
             // Encrypt and prepare the datagram for file system
             to_encrypt = this->current_text[3];
-            this->encrypter->encrypt(to_send, encrypted);
+            this->encrypter->encrypt(to_encrypt, encrypted);
             to_send = " 2" + encrypted + ":";
             to_send[0] = ((char)MODIFY_NETWORK);
             std::string second_answer = this->local_client->send_and_receive(to_send);
 
             // Encrypt and prepare the datagram for data base
             to_encrypt = this->current_text[5];
-            this->encrypter->encrypt(to_send, encrypted);
+            this->encrypter->encrypt(to_encrypt, encrypted);
             to_send = " 3" + encrypted + ":";
             to_send[0] = ((char)MODIFY_NETWORK);
             std::string third_answer = this->local_client->send_and_receive(to_send);
@@ -108,7 +105,6 @@ void sys_config::on_confirm_clicked() {
     }
     //Reset the window
     this->ui->inter_ip->clear();
-    this->ui->inter_port->clear();
     this->ui->file_system_ip->clear();
     this->ui->file_system_port->clear();
     this->ui->data_base_ip->clear();
@@ -118,9 +114,9 @@ void sys_config::on_confirm_clicked() {
 
 void sys_config::set_up_client() {
     std::string intermediary_ip;
-    this->encrypter->encrypt(this->current_text[1], intermediary_ip);
+    this->encrypter->encrypt(this->current_text[0], intermediary_ip);
     std::string port;
-    this->encrypter->encrypt(this->current_text[0], port);
+    this->encrypter->encrypt(this->current_text[1], port);
     std::ofstream config_file("../client.config", std::fstream::trunc);
     if (config_file.is_open()) {
         config_file << intermediary_ip;
@@ -137,7 +133,7 @@ bool sys_config::check_if_empty() {
     this->current_text.clear();
     // Append to current text vector
     this->current_text.push_back(this->ui->inter_ip->toPlainText().toStdString());
-    this->current_text.push_back(this->ui->inter_port->toPlainText().toStdString());
+    this->current_text.push_back("9090");
     this->current_text.push_back(this->ui->file_system_ip->toPlainText().toStdString());
     this->current_text.push_back(this->ui->file_system_port->toPlainText().toStdString());
     this->current_text.push_back(this->ui->data_base_ip->toPlainText().toStdString());
