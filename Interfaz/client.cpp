@@ -3,22 +3,34 @@
 
 /**
  * @brief Construct a new client::client object
- *
  */
 client::client() {
-    this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
-    // Read the setup files
+    this->decrypter = new common();
 
+    std::string encrypted;
+    std::string temp;
+
+    this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
+
+    // Read the setup files
     std::ifstream config_file("../client.config");
     if (config_file.is_open()) {
-        getline(config_file, this->intermediary_ip);
-        std::string temp;
-        getline(config_file, temp);
+        getline(config_file, encrypted);
+        this->decrypter->decrypt(encrypted, this->intermediary_ip);
+        getline(config_file, encrypted);
+        this->decrypter->decrypt(encrypted, temp);
         this->port = std::stoi(temp);
         config_file.close();
     } else {
         qDebug() << "ERROR: config file no existente";
     }
+}
+
+/**
+ * @brief Default destructor
+ */
+client::~client() {
+    delete this->decrypter;
 }
 
 /**

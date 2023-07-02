@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <fstream>
 
+#include "../Interfaz/common.h"
 #include "log.h"
 
 #define DATA_SIZE 256
@@ -39,6 +40,7 @@ class intermediary {
     int data_base_port;
     std::string file_system_ip;
     std::string data_base_ip;
+    common* decrypter;
 
     struct sockaddr_storage ipRemoto;
     std::string send_and_receive_login(std::string ip_remote);
