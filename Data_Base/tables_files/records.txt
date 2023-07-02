@@ -3,7 +3,7 @@ gmora,1,2,2015,Lleva un mes en el trabajo. Ha mostrado una gran disciplina y ded
 gmora,3,3,2016,Llegada tardía (1 hora).
 eguzman,9,8,2017,No ha revisado solicitudes en 1 mes.
 gmora,26,7,2017,No se presentó para el turno de la mañana.
-gmora,27,7,2017,Presentó justificación médica para la ausensia del 26-07-2017.
+gmora,27,7,2017,Presentó justificación médica para la ausencia del 26-07-17.
 gmora,1,4,2018,Trabajó muy bien. Logró resolver un problema que llevaba meses sin ser resuelto.
 alopez,9,4,2018,Hubo una denuncia en su contra de comportamiento no apto para la oficina.
 alopez,10,4,2018,Explicó su comportamiento del día anterior y pidió las disculpas correspondientes.

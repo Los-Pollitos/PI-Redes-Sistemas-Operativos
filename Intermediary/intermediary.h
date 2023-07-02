@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include <fstream>
 
-#include "../server_FS/common.h"
+#include "common.h"
 #include "log.h"
 
 #define DATA_SIZE 256
