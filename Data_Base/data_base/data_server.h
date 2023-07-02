@@ -18,6 +18,7 @@
 #include "data_base.h"
 #include "log_generator.h"
 #include "security.h"
+#include "../../Interfaz/common.h"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -41,6 +42,7 @@ private:
     struct sockaddr_storage ipRemoto;
     std::string remote_ip;
     int port;
+    common* decrypter;
 
     // Methods
     void adapt_data(char* data, std::string& new_info, int pos);

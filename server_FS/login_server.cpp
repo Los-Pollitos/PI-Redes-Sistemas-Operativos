@@ -13,11 +13,14 @@
  * @brief Default constructor
 */
 login_server::login_server() {
+  this->decrypter = new common();
   std::ifstream config_file("login_server.config");
   if (config_file.is_open()) {
     // The file is open, obtain the info
+    std::string encrypted;
     std::string temp;
-    getline(config_file, temp); 
+    getline(config_file, encrypted);
+    this->decrypter->decrypt(encrypted, temp);
     this->port = std::stoi(temp);
     std::cout << this->port << std::endl;
     // Create the file system
@@ -52,6 +55,7 @@ login_server::~login_server() {
   // Delete the file system
   delete this->file_system;
   delete this->logger;
+  delete this->decrypter;
 }
 
 /*

@@ -16,6 +16,7 @@
 
 #include "file_system.h"
 #include "log.h"
+#include "../Interfaz/common.h"
 
 #include <arpa/inet.h>
 #include <iostream>
@@ -40,6 +41,7 @@ class login_server {
     log* logger;
     bool continue_waiting;
     int port;
+    common* decrypter;
 
     // Methods
     void find_data(std::string& username,  std::string& hash);
