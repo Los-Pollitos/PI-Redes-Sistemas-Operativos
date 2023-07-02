@@ -51,7 +51,7 @@ void consult_requests::update_scroll() {
     // Ask for information from server
     std::string to_send = " " + this->user_login->user;
     to_send[0] = SEE_CONSULT_REQUESTS;
-    to_send =  this->local_client->send_and_receive(to_send);
+    to_send = this->local_client->send_and_receive(to_send);
 
     // Separate the data received
     std::string id_temp = "\0";
