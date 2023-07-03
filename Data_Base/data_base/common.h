@@ -5,7 +5,7 @@
 #include <iostream>
 
 class common {
-  public:
+public:
     void encrypt(std::string& to_encrypt, std::string& encrypted) {
         encrypted = "";
         security security_manager;

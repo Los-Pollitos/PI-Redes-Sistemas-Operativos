@@ -9,9 +9,8 @@
 #ifndef LOG
 #define LOG
 
-
-#include<string>
-#include<fstream> 
+#include <string>
+#include <fstream> 
 
 enum request_types {
   LOGIN = 65,  // A

@@ -84,24 +84,26 @@ void handle_requests::update_scroll() {
                    ++i;
                }
            } else {
-               type = (int)(temp_type[0] -48);
-               id = (int)(temp_id[0] -48);
-               temp_to_show = temp_user;
-               temp_to_show += ": ";
-               switch (type) {
-               case VACATION:
-                   temp_to_show += "Vacaciones";
-                   break;
-               case PROOF:
-                   temp_to_show += "Constancia";
-                   break;
+               if (temp_user != this->user_login->user) {
+                   type = (int)(temp_type[0] -48);
+                   id = (int)(temp_id[0] -48);
+                   temp_to_show = temp_user;
+                   temp_to_show += ": ";
+                   switch (type) {
+                   case VACATION:
+                       temp_to_show += "Vacaciones";
+                       break;
+                   case PROOF:
+                       temp_to_show += "Constancia";
+                       break;
+                   }
+                   this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
+                   this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
+                                 , &handle_requests::update_scroll);
+                   this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::pressed, this
+                                 , &handle_requests::show_description);
+                   layout->addWidget(this->requests_buttons[requests_buttons.size()-1]);
                }
-               this->requests_buttons.push_back(new description_button(QString::fromStdString(temp_to_show), container, requests_buttons.size()-1, type, id));
-               this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::disapear, this
-                             , &handle_requests::update_scroll);
-               this->connect(this->requests_buttons[requests_buttons.size()-1], &description_button::pressed, this
-                             , &handle_requests::show_description);
-               layout->addWidget(this->requests_buttons[requests_buttons.size()-1]);
                temp_user = "";
                temp_id = "";
                temp_type = "";
