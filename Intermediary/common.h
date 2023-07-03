@@ -14,9 +14,6 @@ class common {
             encrypted += std::to_string((int)buffer[i]);
             encrypted += ".";
         }
-
-        // TODO: borrar
-        std::cout << "encrypted: " << encrypted << std::endl;
     }
 
     void decrypt(std::string& to_decrypt, std::string& decrypted) {
@@ -39,9 +36,6 @@ class common {
             }
         }
         decrypted = security_manager.decrypt(temp);
-
-        // TODO: borrar
-        std::cout << "decrypted: " << decrypted << std::endl;
     }
 };
 

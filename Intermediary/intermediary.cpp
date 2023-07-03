@@ -261,10 +261,6 @@ void intermediary::modify_network_case(std::string ip_remote) {
   } else {
     // Package is for FS
     if (this->data[1] == '2') {
-
-      // TODO: borrar
-      std::cout << "Estoy en caso de FILE SYSTEM \n";
-
       this->set_up_file_system(ip_remote);
     } else {
       this->set_up_data_base(ip_remote);
@@ -302,10 +298,6 @@ void intermediary::set_up_file_system(std::string ip_remote) {
   char temporal_data[DATA_SIZE];
   // Remove the &
   read(this->connection, temporal_data, DATA_SIZE);
-
-  // TODO: borrar
-  std::cout << "Se quito el & \n";
-
   std::string answer = this->send_and_receive_login(ip_remote);
   this->data[0] = answer[0];
   write(this->connection, this->data, DATA_SIZE);
