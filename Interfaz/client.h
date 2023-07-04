@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 
+#include "common.h"
 #include "log_generator.h"
 
 
@@ -19,12 +20,14 @@
 class client {
 public:
     client();
+    ~client();
     std::string send_and_receive(std::string to_send);
 private:
     log_generator * logger;
     void adapt_data(char* data, std::string& new_info, int pos);
     std::string intermediary_ip;
     int port;
+    common* decrypter;
 };
 
 #endif // CLIENT_H

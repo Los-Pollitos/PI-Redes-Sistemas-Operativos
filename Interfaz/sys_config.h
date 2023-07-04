@@ -8,7 +8,7 @@
 
 #include "login_info.h"
 #include "client.h"
-#include "security.h"
+#include "common.h"
 
 namespace Ui {
 class sys_config;
@@ -25,9 +25,7 @@ public:
     void set_user_login(login_info* user_login);
 
 private slots:
-
     void on_reset_clicked();
-
     void on_confirm_clicked();
 
 private:
@@ -36,12 +34,13 @@ private:
     login_info* user_login;
     client* local_client;
     std::vector<std::string> current_text;
+    common* encrypter;
+
     // Methods
     bool check_if_empty();
     bool check_password();
     void show_error(std::string error);
     void show_success(std::string success);
-    void prepare_string(std::string& to_send);
     void set_up_client();
 };
 

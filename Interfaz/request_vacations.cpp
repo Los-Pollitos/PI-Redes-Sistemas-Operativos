@@ -14,8 +14,8 @@ request_vacations::request_vacations(QWidget *parent) :
     this->ui->turn_lable->setStyleSheet("color: #001f21;");
     this->ui->comboBox->setStyleSheet("color: #001f21;");
     this->setWindowTitle("Solicitud de vacaciones");
-    ui->add_day->setStyleSheet("background-color: gray");
-    ui->confirm->setStyleSheet("background-color: green");
+    ui->add_day->setStyleSheet("color: #001f21;");
+    ui->confirm->setStyleSheet("color: #001f21;");
     // Set the display format
     this->ui->start_date->setDisplayFormat("dd.MM.yyyy");
     this->whole_day = 0;
@@ -68,6 +68,7 @@ void request_vacations::on_add_day_clicked() {
     } else {
         ++this->half_day;
     }
+    this->show_success("Día agregado con éxito");
 }
 
 void request_vacations::on_confirm_clicked() {
@@ -113,7 +114,7 @@ void request_vacations::show_success(std::string success) {
     QMessageBox success_box;
     success_box.setText(QString::fromStdString(success));
     success_box.setWindowTitle("Información");
-        success_box.setModal(true);
+    success_box.setModal(true);
     success_box.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
     success_box.exec();
 }

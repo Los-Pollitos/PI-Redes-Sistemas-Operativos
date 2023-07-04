@@ -27,11 +27,6 @@
 #include <iostream>
 #include <string>
 
-/*
-TODOS:
- - (El profesor lo movió a la siguiente entrega) Permisos y archivos compartidos
-*/
-
 typedef struct directory_entry {
   int block;
   int size;

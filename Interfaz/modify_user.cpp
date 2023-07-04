@@ -297,7 +297,8 @@ void modify_user::add_data_to_combobox() {
 
     // find all the users of an office
     to_send = "0";
-    if (this->user_info.role == SUPERUSER) {
+
+    if (this->user_login_role == SUPERUSER) {
         to_send[0] = ALL_USERS;  // can access all users
     } else {
         to_send[0] = ALL_USERS_OFFICE;
@@ -434,9 +435,6 @@ void modify_user::update_roles() {
         to_send += "," + this->user_login->user;
 
         this->check_error(this->local_client->send_and_receive(to_send), "Error al despedir el empleado");
-
-        // once fired, nothing can be changed
-        this->set_read_only();
     } else {
         if (this->ui->checkbox_admin_config->checkState() == Qt::Checked
                 && this->ui->checkbox_admin_users->checkState() == Qt::Checked
@@ -668,6 +666,10 @@ void modify_user::check_error(std::string received, QString error) {
 
 void modify_user::set_login_info(login_info* info) {
     this->user_login = info;
+}
+
+void modify_user::set_user_role(char role) {
+    this->user_login_role = (int) role;
 }
 
 void modify_user::set_client(client* local_client) {

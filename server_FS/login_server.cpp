@@ -13,11 +13,14 @@
  * @brief Default constructor
 */
 login_server::login_server() {
+  this->decrypter = new common();
   std::ifstream config_file("login_server.config");
   if (config_file.is_open()) {
     // The file is open, obtain the info
+    std::string encrypted;
     std::string temp;
-    getline(config_file, temp); 
+    getline(config_file, encrypted);
+    this->decrypter->decrypt(encrypted, temp);
     this->port = std::stoi(temp);
     std::cout << this->port << std::endl;
     // Create the file system
@@ -52,6 +55,7 @@ login_server::~login_server() {
   // Delete the file system
   delete this->file_system;
   delete this->logger;
+  delete this->decrypter;
 }
 
 /*
@@ -169,7 +173,6 @@ void login_server::process_data(std::string ip_remote) {
       this->delete_user();
       break;
     case MODIFY_NETWORK:
-      std::cout << "Just antes de modify \n";
       this->modify_network();
   }
   this->logger->add_answer_log(ip_remote, "SENT", this->data);
@@ -177,9 +180,6 @@ void login_server::process_data(std::string ip_remote) {
 }
 
 void login_server::modify_network() {
-
-  std::cout << "Llego \n";
-
   std::string temp = "";
 
   std::ofstream config_file("login_server.config", std::fstream::trunc);
@@ -194,8 +194,6 @@ void login_server::modify_network() {
   this->port = std::stoi(temp);
   this->data[0] = '1';
   write(this->connection, this->data, DATA_SIZE);
-
-  std::cout << "VOy a salir \n";
 }
 
 /**

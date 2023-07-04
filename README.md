@@ -22,11 +22,11 @@
 
 ### **Intermediario**
 
-    g++ -o server main.cpp intermediary.cpp log.cpp
+    g++ -o server main.cpp intermediary.cpp log.cpp -lcrypto
 
 ### **Servidor de login**
 
-    g++ -o server main.cpp file_system.cpp login_server.cpp log.cpp security.cpp -lcrypto
+    g++ -o server main.cpp file_system.cpp login_server.cpp log.cpp -lcrypto
 
 ### **Interfaz y servidor de base de datos**
 

@@ -8,4 +8,3 @@ respinoza,Roberto Espinoza Víquez,612589087,77889900,respinoza@pollitos.inc,4,3
 gherrera,Génesis Monserrath Herrera Knyght,512348739,89012332,gherrera@pollitos.inc,4,38,20,0,6
 rgang,Ricardo De Jesus Gang Vincenzi,900960738,88112265,rgang@pollitos.inc,4,57,14,1,7
 dcabezas,Daniel Armando Cabezas Vindas,110810568,65438901,dcabezas@pollitos.inc,2,56,15,1,8
-d_gmora,Gerardo Mora Ortiz,-,-,-,0,1,0,0,0

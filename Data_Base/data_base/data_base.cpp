@@ -410,7 +410,7 @@ std::string data_base::consult_laboral_data(std::string user, int data_id) {
             }
         }
     } else {
-        qDebug() << "[BASE_DATOS] Error con los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
+        qDebug() << "[BASE_DATOS] Error al buscar los datos laborales #" << data_id << "del usuario:" << QString::fromStdString(user);
     }
     return result;
 }
@@ -447,7 +447,8 @@ std::string data_base::consult_employees_of_an_office(int office_id) {
         } while (consult_employee.next());
         result[result.length()-1] = '\0';  // there was an extra ','
     } else {
-        qDebug() << "[BASE_DATOS] Error buscando el la oficina: " << office_id;
+        qDebug() << "[BASE_DATOS] Error buscando empleados de la oficina:" << office_id;
+        result = "";
     }
     return result;
 }
@@ -1017,7 +1018,7 @@ bool data_base::modify_office_name(int id, std::string name) {
 bool data_base::delete_office(int id) {
     bool success = true;
     QSqlQuery delete_office;
-    std::string command("DELETE FROM offices WHERE id = (:id)");
+    delete_office.prepare("DELETE FROM offices WHERE id = (:id)");
     delete_office.bindValue(":id", id);
     if (!delete_office.exec()) {
         qDebug() << "[BASE_DATOS] Error borrando la oficina" << id;

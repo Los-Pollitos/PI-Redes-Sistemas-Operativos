@@ -14,6 +14,7 @@
 
 #define PORT 8080
 
+#include "common.h"
 #include "file_system.h"
 #include "log.h"
 
@@ -40,6 +41,7 @@ class login_server {
     log* logger;
     bool continue_waiting;
     int port;
+    common* decrypter;
 
     // Methods
     void find_data(std::string& username,  std::string& hash);

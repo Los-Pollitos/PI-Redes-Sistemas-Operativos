@@ -14,12 +14,15 @@
  * @brief Default constructor
 */
 data_server::data_server() {
+    this->decrypter = new common();
     // Setup the server
     std::ifstream config_file("../config/data_server.config");
     if (config_file.is_open()) {
         // Obtain port
+        std::string encrypted;
         std::string temp;
-        getline(config_file, temp);
+        getline(config_file, encrypted);
+        this->decrypter->decrypt(encrypted, temp);
         this->port = std::stoi(temp);
 
         qDebug() << this->port;
@@ -42,6 +45,7 @@ data_server::data_server() {
 */
 data_server::~data_server() {
     delete this->base;
+    delete this->decrypter;
 }
 
 void data_server::adapt_data(char* data, std::string& new_info, int pos) {

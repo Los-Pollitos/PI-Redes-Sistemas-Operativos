@@ -21,8 +21,8 @@ public:
 
 private slots:
     void on_change_name_clicked();
-    void on_delete_2_clicked();
     void on_create_clicked();
+    void on_detele_clicked();
 
 private:
     Ui::modify_office *ui;

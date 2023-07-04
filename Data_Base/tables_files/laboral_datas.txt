@@ -1,7 +1,7 @@
 usuario,diaInicio,mesInicio,añoInicio,diaFin,mesFin,añoFin,salarioBruto,deducibles,títuloPuesto
 cjimenez,5,6,2021,0,0,0,950900,95090,Mantenimiento del sistema
 gmora,1,1,2015,0,0,0,1000000,100000,Empleado
-jnuñez,10,5,2023,0,0,0,325000,32550,Empleado
+jnunez,10,5,2023,0,0,0,325000,32550,Empleado
 eguzman,25,8,2014,0,0,0,1300000,130000,Empleado de Recursos Humanos
 alopez,1,7,2016,1,1,2020,775000,77500,Empleado
 respinoza,20,3,2016,0,0,0,950000,95000,Empleado de contratación
