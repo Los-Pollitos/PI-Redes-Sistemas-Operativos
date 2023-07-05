@@ -6,7 +6,7 @@
  */
 client::client() {
     this->decrypter = new common();
-    this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
+    this->logger = new log_generator("../../intermediary_LOG.txt", "Intermediary Server");
     std::string encrypted;
     std::string temp;
     // Read the setup files
