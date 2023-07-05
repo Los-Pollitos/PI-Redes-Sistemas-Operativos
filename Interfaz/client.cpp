@@ -6,12 +6,9 @@
  */
 client::client() {
     this->decrypter = new common();
-
+    this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
     std::string encrypted;
     std::string temp;
-
-    this->logger = new log_generator("../interface_LOG.txt", "Client Log File");
-
     // Read the setup files
     std::ifstream config_file("../client.config");
     if (config_file.is_open()) {
@@ -54,7 +51,7 @@ void client::adapt_data(char* data, std::string& new_info, int pos) {
  * @return std::string Information received
  */
 std::string client::send_and_receive(std::string to_send) {
-    std::string resultado = "";
+    std::string result = "";
     int s = 0, n = 0; // s:socket  n: contador
     char* data = new char[CLIENT_DATA_SIZE];  // para escribir lo que se lee
     struct sockaddr_in ipServidor;
@@ -69,7 +66,7 @@ std::string client::send_and_receive(std::string to_send) {
         // Se intenta pegar al servidor
         if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
             std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
-                             QMessageBox show_error =  QMessageBox();
+            QMessageBox show_error =  QMessageBox();
             show_error.setWindowTitle("Error");
             show_error.setModal(true);
             show_error.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
@@ -101,11 +98,19 @@ std::string client::send_and_receive(std::string to_send) {
 
             data[0] = '0';
             while (((n = read(s, data, CLIENT_DATA_SIZE)) > 0) && (data[0] != '&')) {
+                // Check for an error
+                if (this->server_error(data)) {
+                    break;
+                }
+
                 // connection es socket cliente
-                resultado += data;
+                result += data;
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
                 this->logger->add_answer_log("AUDITOR", "FROM_SERVER", data);
 
+                // TODO(Luis): borrar
+                qDebug() << "ESTOY ACA";
+                qDebug() << result;
             }
 
             memset(data, '\0', CLIENT_DATA_SIZE);
@@ -120,6 +125,39 @@ std::string client::send_and_receive(std::string to_send) {
         }
     }
     delete [] data;
+    return result;
+}
 
-    return resultado;
+bool client::server_error(char* data) {
+    bool answer = false;
+    std::string data_string = data;
+
+    qDebug() << "DATA STRING" << data_string;
+
+    if (data_string == "LOGIN_SERVER_ERROR") {
+        answer = true;
+        this->show_error("Error de fallo de conexión con servidor de sistema de archivos");
+    } else if (data_string == "DATA_SERVER_ERROR") {
+        answer = true;
+        this->show_error("Error de fallo de conexión con servidor de base de de datos");
+    }
+    return answer;
+}
+
+void client::show_error(std::string error) {
+    QMessageBox error_message;
+    error_message.setText(QString::fromStdString(error));
+    error_message.setWindowTitle("Error");
+    error_message.setModal(true);
+    error_message.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+    error_message.exec();
+}
+
+void client::show_success(std::string success) {
+    QMessageBox success_box;
+    success_box.setText(QString::fromStdString(success));
+    success_box.setWindowTitle("Información");
+    success_box.setModal(true);
+    success_box.setStyleSheet("color: #001f21;background-color: #ECEAE5;");
+    success_box.exec();
 }

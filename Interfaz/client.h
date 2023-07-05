@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <string>
 #include <fstream>
+#include <QMessageBox>
 
 #include "common.h"
 #include "log_generator.h"
@@ -23,8 +24,14 @@ public:
     ~client();
     std::string send_and_receive(std::string to_send);
 private:
-    log_generator * logger;
+    // Methods
+    bool server_error(char* data);
     void adapt_data(char* data, std::string& new_info, int pos);
+    void show_error(std::string error);
+    void show_success(std::string success);
+
+    // Attributes
+    log_generator * logger;
     std::string intermediary_ip;
     int port;
     common* decrypter;

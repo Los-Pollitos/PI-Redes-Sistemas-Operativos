@@ -137,21 +137,18 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
     ipServidorLogin.sin_port = htons(this->file_system_port);
     ipServidorLogin.sin_addr.s_addr = inet_addr(this->file_system_ip.data());
 
-    // Se intenta pegar al servidor
+    // Attempt connection with login server
     if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto con login" << std::endl;
       this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con login");
-
-      // TODO(Luis): ANSWER
-
-
+      // Prepare answer to be the error
+      result = "LOGIN_SERVER_ERROR";
     } else {
       std::cout << "[INTERMEDIARIO -> AUTENTICACION] " << this->data  << std::endl;
       write(s, this->data, DATA_SIZE);
       this->logger->add_to_log(ip_remote, "TO_LOGIN", this->data);
 
       if ((n = read(s, this->data, DATA_SIZE)) > 0) {
-        // connection es socket cliente
         std::cout << "[INTERMEDIARIO RECIBE DE AUTENTICACION] " << this->data << std::endl;
         result = this->data;
         this->logger->add_answer_log(ip_remote, "FROM_LOGIN", this->data);
@@ -161,7 +158,6 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
       data[0] = '#';
       std::cout << "[INTERMEDIARIO -> AUTENTICACION] " << data << std::endl;
       write(s, this->data, DATA_SIZE);
-      // No se logró leer
       if (n < 0) {
         std::cout << std::endl << "Error de lectura" << std::endl;
         this->logger->add_answer_log(ip_remote, "ERROR", "Error de lectura");
@@ -306,8 +302,7 @@ void intermediary::set_up_file_system(std::string ip_remote) {
   // Remove the &
   read(this->connection, temporal_data, DATA_SIZE);
   std::string answer = this->send_and_receive_login(ip_remote);
-  this->data[0] = answer[0];
-  write(this->connection, this->data, DATA_SIZE);
+  write(this->connection, answer.data(), DATA_SIZE);
   memset(this->data, '\0', DATA_SIZE);
   this->data[0] = '&';
   write(this->connection, this->data, DATA_SIZE);
@@ -320,12 +315,10 @@ void intermediary::set_up_data_base(std::string ip_remote) {
 void intermediary::login_requests(std::string ip_remote) {
   std::string to_send_back = "\0";
   to_send_back = this->send_and_receive_login(ip_remote);
-  read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
-
+  // Reads the '&' that won't be used
+  read(this->connection, this->data, DATA_SIZE);
   write(this->connection, to_send_back.data(), DATA_SIZE);
-
   this->logger->add_answer_log(ip_remote, "TO_CLIENT", to_send_back.data());
-
   to_send_back[0] = '&';
   write(this->connection, to_send_back.data(), DATA_SIZE);
 }
