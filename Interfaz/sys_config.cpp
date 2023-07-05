@@ -90,6 +90,19 @@ void sys_config::on_confirm_clicked() {
             to_send[0] = ((char)MODIFY_NETWORK);
             std::string third_answer = this->local_client->send_and_receive(to_send);
 
+            // Encrypt and prepare the datagram for the auditors
+            to_send = " 4";
+            to_send[0] = ((char)MODIFY_NETWORK);
+            to_encrypt = current_text[0];
+            this->encrypter->encrypt(to_encrypt, encrypted);
+            to_send += encrypted + ":";
+            to_encrypt = current_text[1];
+            this->encrypter->encrypt(to_encrypt, encrypted);
+            to_send += encrypted + ":";
+            std::string fourth_answer = this->local_client->send_and_receive(to_send);
+
+            qDebug() << "FOURTH ANSWER " << fourth_answer;
+
             if (first_answer[0] == '1' && third_answer[0] == '1' && second_answer[0] == '1') {
               this->show_success("Los cambios fueron aplicados");
             } else {
