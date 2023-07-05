@@ -24,6 +24,7 @@ SOURCES += \
 HEADERS += \
     auditor.h \
     client.h \
+    common.h \
     log_generator.h \
     login.h \
     login_info.h \
