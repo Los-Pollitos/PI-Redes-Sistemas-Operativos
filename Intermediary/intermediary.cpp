@@ -191,9 +191,16 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
     if (connect(s, (struct sockaddr *)&ip_data_server, sizeof(ip_data_server)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto con la base de datos" << std::endl;
       this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con la base de datos");
-
-      // TODO(Luis): ARREGLAR
-
+      // Handle the error
+      std::string answer = "DATA_SERVER_ERROR";
+      write(this->connection, answer.data(), DATA_SIZE);
+      memset(this->data, '\0', DATA_SIZE);
+      this->data[0] = '&';
+      write(this->connection, this->data, DATA_SIZE);
+      read(this->connection, this->data, sizeof(this->data));
+      std::cout << "[INTERMEDIARIO RECIBE DE CLIENTE] " << this->data << std::endl;
+      read(this->connection, this->data, sizeof(this->data));
+      std::cout << "[INTERMEDIARIO RECIBE DE CLIENTE] " << this->data << std::endl;
     } else {
       // receive everything from client
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
