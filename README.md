@@ -28,6 +28,6 @@
 
     g++ -o server main.cpp file_system.cpp login_server.cpp log.cpp -lcrypto
 
-### **Interfaz y servidor de base de datos**
+### **Interfaz, servidor de base de datos y auditoría**
 
 Compilación desde la interfaz de QT Creator
