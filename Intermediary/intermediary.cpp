@@ -140,7 +140,11 @@ std::string intermediary::send_and_receive_login(std::string ip_remote) {
     // Se intenta pegar al servidor
     if (connect(s, (struct sockaddr *)&ipServidorLogin, sizeof(ipServidorLogin)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto con login" << std::endl;
-          this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con login");
+      this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con login");
+
+      // TODO(Luis): ANSWER
+
+
     } else {
       std::cout << "[INTERMEDIARIO -> AUTENTICACION] " << this->data  << std::endl;
       write(s, this->data, DATA_SIZE);
@@ -191,6 +195,9 @@ void intermediary::send_and_receive_data_base(std::string ip_remote) {
     if (connect(s, (struct sockaddr *)&ip_data_server, sizeof(ip_data_server)) < 0) {
       std::cout << std::endl << "Error de conexión por IP o puerto con la base de datos" << std::endl;
       this->logger->add_answer_log(ip_remote, "ERROR", "Error de conexión por IP o puerto con la base de datos");
+
+      // TODO(Luis): ARREGLAR
+
     } else {
       // receive everything from client
       while (this->connection != -1 && n > 0 && this->data[0] != '&') {
@@ -310,6 +317,19 @@ void intermediary::set_up_data_base(std::string ip_remote) {
   this->send_and_receive_data_base(ip_remote);
 }
 
+void intermediary::login_requests(std::string ip_remote) {
+  std::string to_send_back = "\0";
+  to_send_back = this->send_and_receive_login(ip_remote);
+  read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
+
+  write(this->connection, to_send_back.data(), DATA_SIZE);
+
+  this->logger->add_answer_log(ip_remote, "TO_CLIENT", to_send_back.data());
+
+  to_send_back[0] = '&';
+  write(this->connection, to_send_back.data(), DATA_SIZE);
+}
+
 /**
  * @brief This method extracts the first char of the received data
  * and checks which server must receive the information
@@ -317,23 +337,12 @@ void intermediary::set_up_data_base(std::string ip_remote) {
  * @param ip_remote Ip to save into log
  */
 void intermediary::send_to_server(std::string ip_remote) {
-  std::string to_send_back = "\0";
-  char temp_data[DATA_SIZE];
   switch(data[0]) {
     case LOGIN:
     case TOKEN:
     case CHANGE_PASSWORD:
     case CHANGE_TOKEN:
-      to_send_back = this->send_and_receive_login(ip_remote);
-      read(this->connection, this->data, DATA_SIZE);  // reads the '&' that won't be used
-
-      write(this->connection, to_send_back.data(), DATA_SIZE);
-
-      this->logger->add_answer_log(ip_remote, "TO_CLIENT", to_send_back.data());
-
-      to_send_back[0] = '&';
-      write(this->connection, to_send_back.data(), DATA_SIZE);
-
+      this->login_requests(ip_remote);
       break;
     case CREATE_USER:
     case DELETE_USER:
