@@ -52,18 +52,17 @@ void client::adapt_data(char* data, std::string& new_info, int pos) {
  */
 std::string client::send_and_receive(std::string to_send) {
     std::string result = "";
-    int s = 0, n = 0; // s:socket  n: contador
-    char* data = new char[CLIENT_DATA_SIZE];  // para escribir lo que se lee
+    int s = 0, n = 0; // s:socket  n: counter
+    // Used to write what is read
+    char* data = new char[CLIENT_DATA_SIZE];
     struct sockaddr_in ipServidor;
-
     if ((s = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         std::cout << "Error de creación de socket" << std::endl;
     } else {
         ipServidor.sin_family = AF_INET;
         ipServidor.sin_port = htons(this->port);
         ipServidor.sin_addr.s_addr = inet_addr(this->intermediary_ip.data());
-
-        // Se intenta pegar al servidor
+        // Attempt to connect to the server
         if (connect(s, (struct sockaddr *)&ipServidor, sizeof(ipServidor)) < 0) {
             std::cout << std::endl << "Error de conexión por IP o puerto" << std::endl;
             QMessageBox show_error =  QMessageBox();
@@ -73,12 +72,10 @@ std::string client::send_and_receive(std::string to_send) {
             show_error.setText("Error de conexión por IP o puerto. Favor contactar al encargado");
                 show_error.exec();
         } else {
-            // Se logró pegar, se sacan data
+            // Set the data to \0
             memset(data, '\0', CLIENT_DATA_SIZE);
-
             int total_m = (int) (to_send.length() / (CLIENT_DATA_SIZE-1))
                           + (((int)(to_send.length() % (CLIENT_DATA_SIZE-1)) > 0) ? 1 : 0);
-
             for (int i = 0; i < total_m; ++i) {
                 adapt_data(data, to_send, CLIENT_DATA_SIZE * i);
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
@@ -89,36 +86,27 @@ std::string client::send_and_receive(std::string to_send) {
                     this->logger->add_answer_log("AUDITOR", "TO_SERVER", data);
                 }
             }
-
             memset(data, '\0', CLIENT_DATA_SIZE);
             to_send = "&";
             adapt_data(data, to_send, 0);
             std::cout << "[CLIENTE ENVIA] " << data << std::endl;
             write(s, data, CLIENT_DATA_SIZE);
-
             data[0] = '0';
             while (((n = read(s, data, CLIENT_DATA_SIZE)) > 0) && (data[0] != '&')) {
                 // Check for an error
                 if (this->server_error(data)) {
                     break;
                 }
-
-                // connection es socket cliente
                 result += data;
                 std::cout << "[CLIENTE RECIBE] " << data << std::endl;
                 this->logger->add_answer_log("AUDITOR", "FROM_SERVER", data);
-
-                // TODO(Luis): borrar
-                qDebug() << "ESTOY ACA";
-                qDebug() << result;
             }
-
             memset(data, '\0', CLIENT_DATA_SIZE);
             to_send = "#";
             adapt_data(data, to_send, 0);
             std::cout << "[CLIENTE ENVIA]" << data << std::endl;
             write(s, data, CLIENT_DATA_SIZE);
-            // No se logró leer
+            // Could not read
             if (n < 0) {
                 std::cout << std::endl << "Error de lectura" << std::endl;
             }
@@ -131,9 +119,6 @@ std::string client::send_and_receive(std::string to_send) {
 bool client::server_error(char* data) {
     bool answer = false;
     std::string data_string = data;
-
-    qDebug() << "DATA STRING" << data_string;
-
     if (data_string == "LOGIN_SERVER_ERROR") {
         answer = true;
         this->show_error("Error de fallo de conexión con servidor de sistema de archivos");
