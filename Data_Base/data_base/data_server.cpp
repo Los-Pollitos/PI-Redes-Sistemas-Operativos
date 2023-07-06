@@ -546,7 +546,7 @@ void data_server::wait_for_request() {
     memset(this->data, '\0', sizeof(this->data));
     ip.sin_family = AF_INET;
     ip.sin_addr.s_addr = htonl(INADDR_ANY);
-    ip.sin_port = htons(PORT);
+    ip.sin_port = htons(port);
 
     bind(socketServidor, (struct sockaddr*)& ip, sizeof(ip));
     listen(socketServidor, 20);
@@ -1089,7 +1089,14 @@ void data_server::process_data() {
             break;
 
         case MODIFY_NETWORK:
-            this->modify_network();
+            switch(data[1]) {
+                case '3':
+                    this->modify_network();
+                    break;
+                case '6':
+                    this->setup_client();
+                    break;
+            }
             break;
     }
 }
@@ -1105,12 +1112,44 @@ void data_server::modify_network() {
     }
     temp += "\n\0";
     std::ofstream config_file("../config/data_server.config", std::fstream::trunc);
-    config_file << temp;
-
-    this->data[0] = '1';
-    this->logger->add_to_log(this->remote_ip, "SENT", "1");
+    this->data[0] = '0';
+    if (config_file.is_open()) {
+        config_file << temp;
+        this->data[0] = '1';
+    }
+    this->logger->add_to_log(this->remote_ip, "SENT", this->data);
     write(this->connection, this->data, DATA_SIZE);
+    this->data[0] = '&';
+    std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
+    write(this->connection, this->data, DATA_SIZE);
+}
 
+void data_server::setup_client() {
+    std::string temp = "";
+    // Assume false
+    this->data[0] = '0';
+    std::ofstream config_file("../config/client.config", std::fstream::trunc);
+    std::string current = "";
+    int counter = 0;
+    if (config_file.is_open()) {
+        for(int i = 2; i < DATA_SIZE; ++i) {
+            if (this->data[i] != ':') {
+                current += this->data[i];
+            } else {
+                current += "\n\0";
+                config_file << current;
+                current = "";
+                ++counter;
+                if (counter == 2) {
+                    break;
+                }
+            }
+        }
+        // Answer with success
+        this->data[0] = '1';
+    }
+    this->logger->add_to_log(this->remote_ip, "SENT", this->data);
+    write(this->connection, this->data, DATA_SIZE);
     this->data[0] = '&';
     std::cout << "[SERVIDOR DATOS -> INTERMEDIARIO] " << this->data << "\n";
     write(this->connection, this->data, DATA_SIZE);
@@ -1443,7 +1482,6 @@ void data_server::decrypt_salary(std::string salary, std::string deductibles, in
     }
     salary_int = stoi(security_manager.decrypt(salary_temp));
 
-    // deductibles
     // deductibles
     for (size_t i = 0; i < deductibles.length(); ++i) {
         if (deductibles[i] != '.') {

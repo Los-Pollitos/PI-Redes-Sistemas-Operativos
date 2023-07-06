@@ -215,7 +215,6 @@ void login_server::setup_client() {
   std::string current = "";
 
   int counter = 0;
-
   if (config_file.is_open()) {
     for(int i = 2; i < DATA_SIZE; ++i) {
       if (this->data[i] != ':') {

@@ -12,9 +12,6 @@
 #define DATA_SIZE 256
 #define HASH_SIZE 30
 
-#define PORT 1024
-
-
 #include "data_base.h"
 #include "log_generator.h"
 #include "security.h"
@@ -91,6 +88,7 @@ private:
     void modify_office();
     void delete_office();
     void modify_network();
+    void setup_client();
 
 public:
     data_server();

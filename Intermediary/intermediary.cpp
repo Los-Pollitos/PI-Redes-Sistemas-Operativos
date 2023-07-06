@@ -289,7 +289,7 @@ void intermediary::modify_network_case(std::string ip_remote) {
       break;
     case '6':
       // Set up the data base auditor config
-
+      this->set_up_data_base(ip_remote);
       break;
   }
 }

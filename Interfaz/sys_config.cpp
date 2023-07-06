@@ -104,14 +104,19 @@ void sys_config::on_confirm_clicked() {
             // File system auditor
             to_send[1] = '5';
             std::string fifth_answer = this->local_client->send_and_receive(to_send);
+            // Data base auditor
+            to_send[1] = '6';
+            std::string final_answer = this->local_client->send_and_receive(to_send);
+            // Setup the joint answer
             std::string joint_answer = "";
             joint_answer += first_answer[0];
             joint_answer += second_answer[0];
             joint_answer += third_answer[0];
             joint_answer += fourth_answer[0];
             joint_answer += fifth_answer[0];
+            joint_answer += final_answer[0];
 
-            if (joint_answer == "11111") {
+            if (joint_answer == "111111") {
               this->show_success("Los cambios fueron aplicados");
             } else {
               this->show_error("Error: no se pudieron aplicar los cambios");
