@@ -165,10 +165,6 @@ void initial::set_client(client* local_client){
     this->see_vacations->set_client(this->local_client);
     this->see_office->set_client(this->local_client);
     this->office_mod->set_client(this->local_client);
-
-
-    qDebug() << "Set client llamado";
-
     this->sys_config_page->set_client(this->local_client);
 }
 
@@ -222,7 +218,7 @@ void initial::update_scrollbar() {
         this->requests_buttons[PENDING_REQUESTS]->show();
         this->requests_buttons[SEE_RECORD]->show();
 
-        // remove and hid ethe others
+        // remove and hide the others
         this->layout->removeWidget(this->requests_buttons[EMPLOYEE_SEP]);
         this->layout->removeWidget(this->requests_buttons[SEE_SALARY]);
         this->layout->removeWidget(this->requests_buttons[VACATION_MANAGER]);

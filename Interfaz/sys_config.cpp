@@ -91,6 +91,7 @@ void sys_config::on_confirm_clicked() {
             std::string third_answer = this->local_client->send_and_receive(to_send);
 
             // Encrypt and prepare the datagram for the auditors
+            // Intermediary auditor
             to_send = " 4";
             to_send[0] = ((char)MODIFY_NETWORK);
             to_encrypt = current_text[0];
@@ -100,10 +101,17 @@ void sys_config::on_confirm_clicked() {
             this->encrypter->encrypt(to_encrypt, encrypted);
             to_send += encrypted + ":";
             std::string fourth_answer = this->local_client->send_and_receive(to_send);
+            // File system auditor
+            to_send[1] = '5';
+            std::string fifth_answer = this->local_client->send_and_receive(to_send);
+            std::string joint_answer = "";
+            joint_answer += first_answer[0];
+            joint_answer += second_answer[0];
+            joint_answer += third_answer[0];
+            joint_answer += fourth_answer[0];
+            joint_answer += fifth_answer[0];
 
-            qDebug() << "FOURTH ANSWER " << fourth_answer;
-
-            if (first_answer[0] == '1' && third_answer[0] == '1' && second_answer[0] == '1') {
+            if (joint_answer == "11111") {
               this->show_success("Los cambios fueron aplicados");
             } else {
               this->show_error("Error: no se pudieron aplicar los cambios");

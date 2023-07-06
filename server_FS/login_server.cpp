@@ -173,7 +173,14 @@ void login_server::process_data(std::string ip_remote) {
       this->delete_user();
       break;
     case MODIFY_NETWORK:
-      this->modify_network();
+      switch (data[1]) {
+        case '2':
+          this->modify_network();
+          break;
+        case '5':
+          this->setup_client();
+          break;
+      }
   }
   this->logger->add_answer_log(ip_remote, "SENT", this->data);
   this->file_system->write_unit();
@@ -181,18 +188,51 @@ void login_server::process_data(std::string ip_remote) {
 
 void login_server::modify_network() {
   std::string temp = "";
-
+  // Assume false
+  this->data[0] = '0';
   std::ofstream config_file("login_server.config", std::fstream::trunc);
-  for (int i = 2; i < DATA_SIZE; ++i) {
-    if (this->data[i] != ':') {
-      temp += this->data[i];
-    } else {
-      break;
+  if (config_file.is_open()) {
+    for (int i = 2; i < DATA_SIZE; ++i) {
+      if (this->data[i] != ':') {
+        temp += this->data[i];
+      } else {
+        break;
+      }
     }
+    config_file << temp;
+    this->port = std::stoi(temp);
+    // Set true
+    this->data[0] = '1';
   }
-  config_file << temp;
-  this->port = std::stoi(temp);
-  this->data[0] = '1';
+  write(this->connection, this->data, DATA_SIZE);
+}
+
+void login_server::setup_client() {
+  std::string temp = "";
+  // Assume false
+  this->data[0] = '0';
+  std::ofstream config_file("client.config", std::fstream::trunc);
+  std::string current = "";
+
+  int counter = 0;
+
+  if (config_file.is_open()) {
+    for(int i = 2; i < DATA_SIZE; ++i) {
+      if (this->data[i] != ':') {
+        current += this->data[i];
+      } else {
+        current += "\n\0";
+        config_file << current;
+        current = "";
+        ++counter;
+        if (counter == 2) {
+          break;
+        }
+      }
+    }
+    // Answer with success
+    this->data[0] = '1';
+  }
   write(this->connection, this->data, DATA_SIZE);
 }
 

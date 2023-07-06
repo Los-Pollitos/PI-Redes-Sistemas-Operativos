@@ -284,11 +284,11 @@ void intermediary::modify_network_case(std::string ip_remote) {
       this->set_up_auditor(ip_remote);
       break;
     case '5':
-      // Set up the auditor config
-
+      // Set up the file system auditor config
+      this->set_up_file_system(ip_remote);
       break;
     case '6':
-      // Set up the auditor config
+      // Set up the data base auditor config
 
       break;
   }
@@ -300,7 +300,7 @@ void intermediary::set_up_intermediary(std::string ip_remote) {
   read(this->connection, temporal_data, DATA_SIZE);
 
   std::ofstream config_file("intermediary.config", std::fstream::trunc);
-  std::string current = "0";
+  std::string current = "";
   if (config_file.is_open()) {
     for(int i = 2; i < DATA_SIZE; ++i) {
       if (this->data[i] != ':') {
@@ -325,11 +325,8 @@ void intermediary::set_up_auditor(std::string ip_remote) {
   // Remove the &
   read(this->connection, temporal_data, DATA_SIZE);
   std::ofstream config_file("auditor_interface/client.config", std::fstream::trunc);
-  std::string current = "0";
+  std::string current = "";
   if (config_file.is_open()) {
-
-    std::cout << "AAAAAAAAAAAAAAAA\n";
-
     for(int i = 2; i < DATA_SIZE; ++i) {
       if (this->data[i] != ':') {
         current += this->data[i];
